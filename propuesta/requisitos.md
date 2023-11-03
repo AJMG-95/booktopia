@@ -8,7 +8,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [151](https://github.com/AJMG-95/booktopia/issues/151) |
 
 | **R2**     | **Código fuente**         |
 | --------------: | :------------------- |
@@ -17,7 +17,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [152](https://github.com/AJMG-95/booktopia/issues/152) |
 
 | **R3**     | **Estilo del código**         |
 | --------------: | :------------------- |
@@ -26,7 +26,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [153](https://github.com/AJMG-95/booktopia/issues/153) |
 
 | **R4**     | **Tres lanzamientos**         |
 | --------------: | :------------------- |
@@ -35,7 +35,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [154](https://github.com/AJMG-95/booktopia/issues/154) |
 
 | **R5**     | **README.md**         |
 | --------------: | :------------------- |
@@ -44,7 +44,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [155](https://github.com/AJMG-95/booktopia/issues/155) |
 
 | **R6**     | **Documentación**         |
 | --------------: | :------------------- |
@@ -53,7 +53,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [156](https://github.com/AJMG-95/booktopia/issues/156) |
 
 | **R7**     | **Incidencias en GitHub**         |
 | --------------: | :------------------- |
@@ -62,7 +62,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [157](https://github.com/AJMG-95/booktopia/issues/157) |
 
 | **R8**     | **Etiquetas e hitos**         |
 | --------------: | :------------------- |
@@ -71,7 +71,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [158](https://github.com/AJMG-95/booktopia/issues/158) |
 
 | **R9**     | **Rama master**         |
 | --------------: | :------------------- |
@@ -80,7 +80,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [159](https://github.com/AJMG-95/booktopia/issues/159) |
 
 | **R10**     | **Gestión del proyecto**         |
 | --------------: | :------------------- |
@@ -89,7 +89,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [160](https://github.com/AJMG-95/booktopia/issues/160) |
 
 | **R11**     | **Final de cada iteración**         |
 | --------------: | :------------------- |
@@ -98,7 +98,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [161](https://github.com/AJMG-95/booktopia/issues/161) |
 
 | **R12**     | **Validación de formularios**         |
 | --------------: | :------------------- |
@@ -107,7 +107,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [162](https://github.com/AJMG-95/booktopia/issues/162) |
 
 | **R13**     | **Gestión de ventanas**         |
 | --------------: | :------------------- |
@@ -116,7 +116,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [163](https://github.com/AJMG-95/booktopia/issues/163) |
 
 | **R14**     | **Manejo de eventos**         |
 | --------------: | :------------------- |
@@ -125,7 +125,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [164](https://github.com/AJMG-95/booktopia/issues/164) |
 
 | **R15**     | **DOM**         |
 | --------------: | :------------------- |
@@ -134,7 +134,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [165](https://github.com/AJMG-95/booktopia/issues/165) |
 
 | **R16**     | **Almacenamiento en el lado del cliente**         |
 | --------------: | :------------------- |
@@ -143,7 +143,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [166](https://github.com/AJMG-95/booktopia/issues/166) |
 
 | **R17**     | **Alpine.js**         |
 | --------------: | :------------------- |
@@ -152,7 +152,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [167](https://github.com/AJMG-95/booktopia/issues/167) |
 
 | **R18**     | **Plugin no trabajado en clase**         |
 | --------------: | :------------------- |
@@ -161,7 +161,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [168](https://github.com/AJMG-95/booktopia/issues/168) |
 
 | **R19**     | **Utilización de AJAX**         |
 | --------------: | :------------------- |
@@ -170,7 +170,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [169](https://github.com/AJMG-95/booktopia/issues/169) |
 
 | **R20**     | **ECMAScript2015 (ES6)**         |
 | --------------: | :------------------- |
@@ -179,7 +179,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [170](https://github.com/AJMG-95/booktopia/issues/170) |
 
 | **R21**     | **PHP**         |
 | --------------: | :------------------- |
@@ -188,7 +188,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [171](https://github.com/AJMG-95/booktopia/issues/171) |
 
 | **R22**     | **Laravel Framework**         |
 | --------------: | :------------------- |
@@ -197,7 +197,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [172](https://github.com/AJMG-95/booktopia/issues/172) |
 
 | **R23**     | **PostgreSQL**         |
 | --------------: | :------------------- |
@@ -206,7 +206,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [173](https://github.com/AJMG-95/booktopia/issues/173) |
 
 | **R24**     | **Cloud computing**         |
 | --------------: | :------------------- |
@@ -215,7 +215,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [174](https://github.com/AJMG-95/booktopia/issues/174) |
 
 | **R25**     | **Pruebas funcionales**         |
 | --------------: | :------------------- |
@@ -224,7 +224,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [175](https://github.com/AJMG-95/booktopia/issues/175) |
 
 | **R26**     | **Aplicación escalable**         |
 | --------------: | :------------------- |
@@ -233,7 +233,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [176](https://github.com/AJMG-95/booktopia/issues/176) |
 
 | **R27**     | **Etiquetas semánticas de HTML5**         |
 | --------------: | :------------------- |
@@ -242,7 +242,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [177](https://github.com/AJMG-95/booktopia/issues/177) |
 
 | **R28**     | **Presentación mediante CSS**         |
 | --------------: | :------------------- |
@@ -251,7 +251,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [178](https://github.com/AJMG-95/booktopia/issues/178) |
 
 | **R29**     | **Diseño flexible**         |
 | --------------: | :------------------- |
@@ -260,7 +260,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [179](https://github.com/AJMG-95/booktopia/issues/179) |
 
 | **R30**     | **Transiciones, transformaciones, animaciones y contenido multimedia**         |
 | --------------: | :------------------- |
@@ -269,7 +269,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [180](https://github.com/AJMG-95/booktopia/issues/180) |
 
 | **R31**     | **Uso de microdatos**         |
 | --------------: | :------------------- |
@@ -278,7 +278,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [181](https://github.com/AJMG-95/booktopia/issues/181) |
 
 | **R32**     | **Validación HTML5, CSS3 y accesibilidad**         |
 | --------------: | :------------------- |
@@ -287,7 +287,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [182](https://github.com/AJMG-95/booktopia/issues/182) |
 
 | **R33**     | **Diseño para varias resoluciones**         |
 | --------------: | :------------------- |
@@ -296,7 +296,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [183](https://github.com/AJMG-95/booktopia/issues/183) |
 
 | **R34**     | **Varios navegadores**         |
 | --------------: | :------------------- |
@@ -305,7 +305,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [184](https://github.com/AJMG-95/booktopia/issues/184) |
 
 | **R35**     | **Despliegue en un Host**         |
 | --------------: | :------------------- |
@@ -314,7 +314,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [185](https://github.com/AJMG-95/booktopia/issues/185) |
 
 | **R36**     | **Despliegue en un servidor local**         |
 | --------------: | :------------------- |
@@ -323,7 +323,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [186](https://github.com/AJMG-95/booktopia/issues/186) |
 
 | **R37**     | **Crear usuario**         |
 | --------------: | :------------------- |
@@ -332,7 +332,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [187](https://github.com/AJMG-95/booktopia/issues/187) |
 
 | **R38**     | **Borrar usuario**         |
 | --------------: | :------------------- |
@@ -341,7 +341,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [188](https://github.com/AJMG-95/booktopia/issues/188) |
 
 | **R39**     | **Modificar usuario**         |
 | --------------: | :------------------- |
@@ -350,7 +350,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [189](https://github.com/AJMG-95/booktopia/issues/189) |
 
 | **R40**     | **Comprar libros**         |
 | --------------: | :------------------- |
@@ -359,7 +359,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [190](https://github.com/AJMG-95/booktopia/issues/190) |
 
 | **R41**     | **Añadir libro a favoritos**         |
 | --------------: | :------------------- |
@@ -368,7 +368,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [191](https://github.com/AJMG-95/booktopia/issues/191) |
 
 | **R42**     | **Añadir libro a deseos**         |
 | --------------: | :------------------- |
@@ -377,7 +377,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [192](https://github.com/AJMG-95/booktopia/issues/192) |
 
 | **R43**     | **Valorar libros**         |
 | --------------: | :------------------- |
@@ -386,7 +386,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [193](https://github.com/AJMG-95/booktopia/issues/193) |
 
 | **R44**     | **Comentar libros**         |
 | --------------: | :------------------- |
@@ -395,7 +395,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [194](https://github.com/AJMG-95/booktopia/issues/194) |
 
 | **R45**     | **Dar like a comentario**         |
 | --------------: | :------------------- |
@@ -404,7 +404,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [195](https://github.com/AJMG-95/booktopia/issues/195) |
 
 | **R46**     | **Dar dislike  a comentario**         |
 | --------------: | :------------------- |
@@ -413,7 +413,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [196](https://github.com/AJMG-95/booktopia/issues/196) |
 
 | **R47**     | **Reporta  comentario**         |
 | --------------: | :------------------- |
@@ -422,7 +422,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [197](https://github.com/AJMG-95/booktopia/issues/197) |
 
 | **R48**     | **Eliminar comentario**         |
 | --------------: | :------------------- |
@@ -431,7 +431,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [198](https://github.com/AJMG-95/booktopia/issues/198) |
 
 | **R49**     | **leer libros**         |
 | --------------: | :------------------- |
@@ -440,7 +440,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [199](https://github.com/AJMG-95/booktopia/issues/199) |
 
 | **R50**     | **Crear notas**         |
 | --------------: | :------------------- |
@@ -449,7 +449,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [200](https://github.com/AJMG-95/booktopia/issues/200) |
 
 | **R51**     | **Modificar notas**         |
 | --------------: | :------------------- |
@@ -458,7 +458,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [201](https://github.com/AJMG-95/booktopia/issues/201) |
 
 | **R52**     | **Borrar notas**         |
 | --------------: | :------------------- |
@@ -467,7 +467,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [202](https://github.com/AJMG-95/booktopia/issues/202) |
 
 | **R53**     | **Postear en un foro**         |
 | --------------: | :------------------- |
@@ -476,7 +476,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [203](https://github.com/AJMG-95/booktopia/issues/203) |
 
 | **R54**     | **Dar like a posts**         |
 | --------------: | :------------------- |
@@ -485,7 +485,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [204](https://github.com/AJMG-95/booktopia/issues/204) |
 
 | **R55**     | **Dar dislike  a posts**         |
 | --------------: | :------------------- |
@@ -494,7 +494,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [205](https://github.com/AJMG-95/booktopia/issues/205) |
 
 | **R56**     | **Reporta posts**         |
 | --------------: | :------------------- |
@@ -503,7 +503,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [206](https://github.com/AJMG-95/booktopia/issues/206) |
 
 | **R57**     | **Suscribirse**         |
 | --------------: | :------------------- |
@@ -512,7 +512,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [207](https://github.com/AJMG-95/booktopia/issues/207) |
 
 | **R58**     | **Desuscribirse**         |
 | --------------: | :------------------- |
@@ -521,7 +521,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [208](https://github.com/AJMG-95/booktopia/issues/208) |
 
 | **R59**     | **Iniciar sesión**         |
 | --------------: | :------------------- |
@@ -530,7 +530,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [209](https://github.com/AJMG-95/booktopia/issues/209) |
 
 | **R60**     | **Cerrar sesión**         |
 | --------------: | :------------------- |
@@ -539,7 +539,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Fácil         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [210](https://github.com/AJMG-95/booktopia/issues/210) |
 
 | **R61**     | **Borrar post**         |
 | --------------: | :------------------- |
@@ -548,7 +548,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [211](https://github.com/AJMG-95/booktopia/issues/211) |
 
 | **R62**     | **Autopublicación de libros**         |
 | --------------: | :------------------- |
@@ -557,7 +557,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [212](https://github.com/AJMG-95/booktopia/issues/212) |
 
 | **R63**     | **Buscador**         |
 | --------------: | :------------------- |
@@ -566,7 +566,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [213](https://github.com/AJMG-95/booktopia/issues/213) |
 
 | **R64**     | **Contacto**         |
 | --------------: | :------------------- |
@@ -575,7 +575,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v1             |
-
+| **Incidencia**  | [214](https://github.com/AJMG-95/booktopia/issues/214) |
 
 | **R65**     | **Bloqueo/desbloqueo de usuarios**         |
 | --------------: | :------------------- |
@@ -584,7 +584,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [215](https://github.com/AJMG-95/booktopia/issues/215) |
 
 | **R66**     | **Eliminar comentarios **         |
 | --------------: | :------------------- |
@@ -593,7 +593,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [216](https://github.com/AJMG-95/booktopia/issues/216) |
 
 | **R67**     | **Visibilidad de libros**         |
 | --------------: | :------------------- |
@@ -602,7 +602,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [217](https://github.com/AJMG-95/booktopia/issues/217) |
 
 | **R68**     | **Insertar libros/ediciones**         |
 | --------------: | :------------------- |
@@ -611,7 +611,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [218](https://github.com/AJMG-95/booktopia/issues/218) |
 
 | **R69**     | **Borrar libros/ediciones**         |
 | --------------: | :------------------- |
@@ -620,7 +620,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [219](https://github.com/AJMG-95/booktopia/issues/219) |
 
 | **R70**     | **Modificar libros/ediciones**         |
 | --------------: | :------------------- |
@@ -629,7 +629,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [220](https://github.com/AJMG-95/booktopia/issues/220) |
 
 | **R71**     | **Eliminar post**         |
 | --------------: | :------------------- |
@@ -638,7 +638,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [221](https://github.com/AJMG-95/booktopia/issues/221) |
 
 | **R72**     | **Crear  subadministradores**         |
 | --------------: | :------------------- |
@@ -647,7 +647,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [222](https://github.com/AJMG-95/booktopia/issues/222) |
 
 | **R73**     | **Registro por autenticación externa**         |
 | --------------: | :------------------- |
@@ -656,7 +656,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [223](https://github.com/AJMG-95/booktopia/issues/223) |
 
 | **R74**     | **API**         |
 | --------------: | :------------------- |
@@ -665,7 +665,7 @@
 | **Tipo**        | Técnico                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [224](https://github.com/AJMG-95/booktopia/issues/224) |
 
 | **R75**     | **Marcado de página**         |
 | --------------: | :------------------- |
@@ -674,7 +674,7 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Difícil         |
 | **Entrega**     | v3             |
-
+| **Incidencia**  | [225](https://github.com/AJMG-95/booktopia/issues/225) |
 
 | **R76**     | **Libros gratuitos**         |
 | --------------: | :------------------- |
@@ -683,86 +683,86 @@
 | **Tipo**        | Funcional                |
 | **Complejidad** | Media         |
 | **Entrega**     | v2             |
-
+| **Incidencia**  | [226](https://github.com/AJMG-95/booktopia/issues/226) |
 
 
 ## Cuadro resumen
 
-| **Requisito** | **Prioridad** | **Tipo** | **Complejidad** | **Entrega** |
-| :------------ | :-----------: | :------: | :-------------: | :---------: |
-| (**R1**) Requisitos como incidencias | Mínimo | Técnico | Fácil | v1 | 
-| (**R2**) Código fuente | Mínimo | Técnico | Fácil | v1 | 
-| (**R3**) Estilo del código | Mínimo | Técnico | Fácil | v1 | 
-| (**R4**) Tres lanzamientos | Mínimo | Técnico | Fácil | v1 | 
-| (**R5**) README.md | Mínimo | Técnico | Fácil | v1 | 
-| (**R6**) Documentación | Mínimo | Técnico | Fácil | v1 | 
-| (**R7**) Incidencias en GitHub | Mínimo | Técnico | Fácil | v1 | 
-| (**R8**) Etiquetas e hitos | Mínimo | Técnico | Fácil | v1 | 
-| (**R9**) Rama master | Mínimo | Técnico | Fácil | v1 | 
-| (**R10**) Gestión del proyecto | Mínimo | Técnico | Fácil | v1 | 
-| (**R11**) Final de cada iteración | Mínimo | Técnico | Fácil | v1 | 
-| (**R12**) Validación de formularios | Mínimo | Técnico | Fácil | v1 | 
-| (**R13**) Gestión de ventanas | Mínimo | Técnico | Fácil | v1 | 
-| (**R14**) Manejo de eventos | Mínimo | Técnico | Fácil | v1 | 
-| (**R15**) DOM | Mínimo | Técnico | Fácil | v1 | 
-| (**R16**) Almacenamiento en el lado del cliente | Mínimo | Técnico | Fácil | v1 | 
-| (**R17**) Alpine.js | Mínimo | Técnico | Fácil | v1 | 
-| (**R18**) Plugin no trabajado en clase | Mínimo | Técnico | Fácil | v1 | 
-| (**R19**) Utilización de AJAX | Mínimo | Técnico | Fácil | v1 | 
-| (**R20**) ECMAScript2015 (ES6) | Mínimo | Técnico | Fácil | v1 | 
-| (**R21**) PHP | Mínimo | Técnico | Fácil | v1 | 
-| (**R22**) Laravel Framework | Mínimo | Técnico | Fácil | v1 | 
-| (**R23**) PostgreSQL | Mínimo | Técnico | Fácil | v1 | 
-| (**R24**) Cloud computing | Mínimo | Técnico | Fácil | v1 | 
-| (**R25**) Pruebas funcionales | Mínimo | Técnico | Fácil | v1 | 
-| (**R26**) Aplicación escalable | Mínimo | Técnico | Fácil | v1 | 
-| (**R27**) Etiquetas semánticas de HTML5 | Mínimo | Técnico | Fácil | v1 | 
-| (**R28**) Presentación mediante CSS | Mínimo | Técnico | Fácil | v1 | 
-| (**R29**) Diseño flexible | Mínimo | Técnico | Fácil | v1 | 
-| (**R30**) Transiciones, transformaciones, animaciones y contenido multimedia | Mínimo | Técnico | Fácil | v1 | 
-| (**R31**) Uso de microdatos | Mínimo | Técnico | Fácil | v1 | 
-| (**R32**) Validación HTML5, CSS3 y accesibilidad | Mínimo | Técnico | Fácil | v1 | 
-| (**R33**) Diseño para varias resoluciones | Mínimo | Técnico | Fácil | v1 | 
-| (**R34**) Varios navegadores | Mínimo | Técnico | Fácil | v1 | 
-| (**R35**) Despliegue en un Host | Mínimo | Técnico | Fácil | v1 | 
-| (**R36**) Despliegue en un servidor local | Mínimo | Técnico | Fácil | v1 | 
-| (**R37**) Crear usuario | Importante | Funcional | Fácil | v1 | 
-| (**R38**) Borrar usuario | Importante | Funcional | Fácil | v1 | 
-| (**R39**) Modificar usuario | Importante | Funcional | Fácil | v1 | 
-| (**R40**) Comprar libros | Importante | Funcional | Media | v2 | 
-| (**R41**) Añadir libro a favoritos | Importante | Funcional | Fácil | v2 | 
-| (**R42**) Añadir libro a deseos | Importante | Funcional | Fácil | v2 | 
-| (**R43**) Valorar libros | Importante | Funcional | Fácil | v2 | 
-| (**R44**) Comentar libros | Importante | Funcional | Fácil | v2 | 
-| (**R45**) Dar like a comentario | Opcional | Funcional | Fácil | v2 | 
-| (**R46**) Dar dislike  a comentario | Opcional | Funcional | Fácil | v2 | 
-| (**R47**) Reporta  comentario | Opcional | Funcional | Media | v2 | 
-| (**R48**) Eliminar comentario | Opcional | Funcional | Media | v2 | 
-| (**R49**) leer libros | Importante | Funcional | Difícil | v2 | 
-| (**R50**) Crear notas | Opcional | Funcional | Fácil | v2 | 
-| (**R51**) Modificar notas | Opcional | Funcional | Fácil | v2 | 
-| (**R52**) Borrar notas | Opcional | Funcional | Fácil | v2 | 
-| (**R53**) Postear en un foro | Importante | Funcional | Media | v2 | 
-| (**R54**) Dar like a posts | Opcional | Funcional | Fácil | v2 | 
-| (**R55**) Dar dislike  a posts | Opcional | Funcional | Fácil | v2 | 
-| (**R56**) Reporta posts | Opcional | Funcional | Media | v2 | 
-| (**R57**) Suscribirse | Importante | Funcional | Difícil | v3 | 
-| (**R58**) Desuscribirse | Opcional | Funcional | Difícil | v3 | 
-| (**R59**) Iniciar sesión | Importante | Funcional | Fácil | v1 | 
-| (**R60**) Cerrar sesión | Importante | Funcional | Fácil | v1 | 
-| (**R61**) Borrar post | Opcional | Funcional | Media | v2 | 
-| (**R62**) Autopublicación de libros | Importante | Funcional | Difícil | v3 | 
-| (**R63**) Buscador | Importante | Funcional | Media | v2 | 
-| (**R64**) Contacto | Importante | Funcional | Media | v1 | 
-| (**R65**) Bloqueo/desbloqueo de usuarios | Importante | Funcional | Media | v2 | 
-| (**R66**) Eliminar comentarios  | Importante | Funcional | Media | v2 | 
-| (**R67**) Visibilidad de libros | Opcional | Funcional | Media | v2 | 
-| (**R68**) Insertar libros/ediciones | Importante | Funcional | Media | v2 | 
-| (**R69**) Borrar libros/ediciones | Opcional | Funcional | Difícil | v2 | 
-| (**R70**) Modificar libros/ediciones | Importante | Funcional | Media | v2 | 
-| (**R71**) Eliminar post | Opcional | Funcional | Media | v2 | 
-| (**R72**) Crear  subadministradores | Opcional | Funcional | Difícil | v3 | 
-| (**R73**) Registro por autenticación externa | Opcional | Funcional | Difícil | v3 | 
-| (**R74**) API | Opcional | Técnico | Difícil | v3 | 
-| (**R75**) Marcado de página | Opcional | Funcional | Difícil | v3 | 
-| (**R76**) Libros gratuitos | Importante | Funcional | Media | v2 | 
+| **Requisito** | **Prioridad** | **Tipo** | **Complejidad** | **Entrega** | **Incidencia** |
+| :------------ | :-----------: | :------: | :-------------: | :---------: | :------------: |
+| (**R1**) Requisitos como incidencias | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [151](https://github.com/AJMG-95/booktopia/issues/151) |
+| (**R2**) Código fuente | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [152](https://github.com/AJMG-95/booktopia/issues/152) |
+| (**R3**) Estilo del código | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [153](https://github.com/AJMG-95/booktopia/issues/153) |
+| (**R4**) Tres lanzamientos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [154](https://github.com/AJMG-95/booktopia/issues/154) |
+| (**R5**) README.md | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [155](https://github.com/AJMG-95/booktopia/issues/155) |
+| (**R6**) Documentación | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [156](https://github.com/AJMG-95/booktopia/issues/156) |
+| (**R7**) Incidencias en GitHub | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [157](https://github.com/AJMG-95/booktopia/issues/157) |
+| (**R8**) Etiquetas e hitos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [158](https://github.com/AJMG-95/booktopia/issues/158) |
+| (**R9**) Rama master | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [159](https://github.com/AJMG-95/booktopia/issues/159) |
+| (**R10**) Gestión del proyecto | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [160](https://github.com/AJMG-95/booktopia/issues/160) |
+| (**R11**) Final de cada iteración | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [161](https://github.com/AJMG-95/booktopia/issues/161) |
+| (**R12**) Validación de formularios | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [162](https://github.com/AJMG-95/booktopia/issues/162) |
+| (**R13**) Gestión de ventanas | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [163](https://github.com/AJMG-95/booktopia/issues/163) |
+| (**R14**) Manejo de eventos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [164](https://github.com/AJMG-95/booktopia/issues/164) |
+| (**R15**) DOM | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [165](https://github.com/AJMG-95/booktopia/issues/165) |
+| (**R16**) Almacenamiento en el lado del cliente | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [166](https://github.com/AJMG-95/booktopia/issues/166) |
+| (**R17**) Alpine.js | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [167](https://github.com/AJMG-95/booktopia/issues/167) |
+| (**R18**) Plugin no trabajado en clase | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [168](https://github.com/AJMG-95/booktopia/issues/168) |
+| (**R19**) Utilización de AJAX | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [169](https://github.com/AJMG-95/booktopia/issues/169) |
+| (**R20**) ECMAScript2015 (ES6) | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [170](https://github.com/AJMG-95/booktopia/issues/170) |
+| (**R21**) PHP | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [171](https://github.com/AJMG-95/booktopia/issues/171) |
+| (**R22**) Laravel Framework | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [172](https://github.com/AJMG-95/booktopia/issues/172) |
+| (**R23**) PostgreSQL | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [173](https://github.com/AJMG-95/booktopia/issues/173) |
+| (**R24**) Cloud computing | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [174](https://github.com/AJMG-95/booktopia/issues/174) |
+| (**R25**) Pruebas funcionales | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [175](https://github.com/AJMG-95/booktopia/issues/175) |
+| (**R26**) Aplicación escalable | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [176](https://github.com/AJMG-95/booktopia/issues/176) |
+| (**R27**) Etiquetas semánticas de HTML5 | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [177](https://github.com/AJMG-95/booktopia/issues/177) |
+| (**R28**) Presentación mediante CSS | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [178](https://github.com/AJMG-95/booktopia/issues/178) |
+| (**R29**) Diseño flexible | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [179](https://github.com/AJMG-95/booktopia/issues/179) |
+| (**R30**) Transiciones, transformaciones, animaciones y contenido multimedia | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [180](https://github.com/AJMG-95/booktopia/issues/180) |
+| (**R31**) Uso de microdatos | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [181](https://github.com/AJMG-95/booktopia/issues/181) |
+| (**R32**) Validación HTML5, CSS3 y accesibilidad | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [182](https://github.com/AJMG-95/booktopia/issues/182) |
+| (**R33**) Diseño para varias resoluciones | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [183](https://github.com/AJMG-95/booktopia/issues/183) |
+| (**R34**) Varios navegadores | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [184](https://github.com/AJMG-95/booktopia/issues/184) |
+| (**R35**) Despliegue en un Host | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [185](https://github.com/AJMG-95/booktopia/issues/185) |
+| (**R36**) Despliegue en un servidor local | Mínimo | Técnico | Fácil | v1 | | **Incidencia**  | [186](https://github.com/AJMG-95/booktopia/issues/186) |
+| (**R37**) Crear usuario | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [187](https://github.com/AJMG-95/booktopia/issues/187) |
+| (**R38**) Borrar usuario | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [188](https://github.com/AJMG-95/booktopia/issues/188) |
+| (**R39**) Modificar usuario | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [189](https://github.com/AJMG-95/booktopia/issues/189) |
+| (**R40**) Comprar libros | Importante | Funcional | Media | v2 | | **Incidencia**  | [190](https://github.com/AJMG-95/booktopia/issues/190) |
+| (**R41**) Añadir libro a favoritos | Importante | Funcional | Fácil | v2 | | **Incidencia**  | [191](https://github.com/AJMG-95/booktopia/issues/191) |
+| (**R42**) Añadir libro a deseos | Importante | Funcional | Fácil | v2 | | **Incidencia**  | [192](https://github.com/AJMG-95/booktopia/issues/192) |
+| (**R43**) Valorar libros | Importante | Funcional | Fácil | v2 | | **Incidencia**  | [193](https://github.com/AJMG-95/booktopia/issues/193) |
+| (**R44**) Comentar libros | Importante | Funcional | Fácil | v2 | | **Incidencia**  | [194](https://github.com/AJMG-95/booktopia/issues/194) |
+| (**R45**) Dar like a comentario | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [195](https://github.com/AJMG-95/booktopia/issues/195) |
+| (**R46**) Dar dislike  a comentario | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [196](https://github.com/AJMG-95/booktopia/issues/196) |
+| (**R47**) Reporta  comentario | Opcional | Funcional | Media | v2 | | **Incidencia**  | [197](https://github.com/AJMG-95/booktopia/issues/197) |
+| (**R48**) Eliminar comentario | Opcional | Funcional | Media | v2 | | **Incidencia**  | [198](https://github.com/AJMG-95/booktopia/issues/198) |
+| (**R49**) leer libros | Importante | Funcional | Difícil | v2 | | **Incidencia**  | [199](https://github.com/AJMG-95/booktopia/issues/199) |
+| (**R50**) Crear notas | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [200](https://github.com/AJMG-95/booktopia/issues/200) |
+| (**R51**) Modificar notas | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [201](https://github.com/AJMG-95/booktopia/issues/201) |
+| (**R52**) Borrar notas | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [202](https://github.com/AJMG-95/booktopia/issues/202) |
+| (**R53**) Postear en un foro | Importante | Funcional | Media | v2 | | **Incidencia**  | [203](https://github.com/AJMG-95/booktopia/issues/203) |
+| (**R54**) Dar like a posts | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [204](https://github.com/AJMG-95/booktopia/issues/204) |
+| (**R55**) Dar dislike  a posts | Opcional | Funcional | Fácil | v2 | | **Incidencia**  | [205](https://github.com/AJMG-95/booktopia/issues/205) |
+| (**R56**) Reporta posts | Opcional | Funcional | Media | v2 | | **Incidencia**  | [206](https://github.com/AJMG-95/booktopia/issues/206) |
+| (**R57**) Suscribirse | Importante | Funcional | Difícil | v3 | | **Incidencia**  | [207](https://github.com/AJMG-95/booktopia/issues/207) |
+| (**R58**) Desuscribirse | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [208](https://github.com/AJMG-95/booktopia/issues/208) |
+| (**R59**) Iniciar sesión | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [209](https://github.com/AJMG-95/booktopia/issues/209) |
+| (**R60**) Cerrar sesión | Importante | Funcional | Fácil | v1 | | **Incidencia**  | [210](https://github.com/AJMG-95/booktopia/issues/210) |
+| (**R61**) Borrar post | Opcional | Funcional | Media | v2 | | **Incidencia**  | [211](https://github.com/AJMG-95/booktopia/issues/211) |
+| (**R62**) Autopublicación de libros | Importante | Funcional | Difícil | v3 | | **Incidencia**  | [212](https://github.com/AJMG-95/booktopia/issues/212) |
+| (**R63**) Buscador | Importante | Funcional | Media | v2 | | **Incidencia**  | [213](https://github.com/AJMG-95/booktopia/issues/213) |
+| (**R64**) Contacto | Importante | Funcional | Media | v1 | | **Incidencia**  | [214](https://github.com/AJMG-95/booktopia/issues/214) |
+| (**R65**) Bloqueo/desbloqueo de usuarios | Importante | Funcional | Media | v2 | | **Incidencia**  | [215](https://github.com/AJMG-95/booktopia/issues/215) |
+| (**R66**) Eliminar comentarios  | Importante | Funcional | Media | v2 | | **Incidencia**  | [216](https://github.com/AJMG-95/booktopia/issues/216) |
+| (**R67**) Visibilidad de libros | Opcional | Funcional | Media | v2 | | **Incidencia**  | [217](https://github.com/AJMG-95/booktopia/issues/217) |
+| (**R68**) Insertar libros/ediciones | Importante | Funcional | Media | v2 | | **Incidencia**  | [218](https://github.com/AJMG-95/booktopia/issues/218) |
+| (**R69**) Borrar libros/ediciones | Opcional | Funcional | Difícil | v2 | | **Incidencia**  | [219](https://github.com/AJMG-95/booktopia/issues/219) |
+| (**R70**) Modificar libros/ediciones | Importante | Funcional | Media | v2 | | **Incidencia**  | [220](https://github.com/AJMG-95/booktopia/issues/220) |
+| (**R71**) Eliminar post | Opcional | Funcional | Media | v2 | | **Incidencia**  | [221](https://github.com/AJMG-95/booktopia/issues/221) |
+| (**R72**) Crear  subadministradores | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [222](https://github.com/AJMG-95/booktopia/issues/222) |
+| (**R73**) Registro por autenticación externa | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [223](https://github.com/AJMG-95/booktopia/issues/223) |
+| (**R74**) API | Opcional | Técnico | Difícil | v3 | | **Incidencia**  | [224](https://github.com/AJMG-95/booktopia/issues/224) |
+| (**R75**) Marcado de página | Opcional | Funcional | Difícil | v3 | | **Incidencia**  | [225](https://github.com/AJMG-95/booktopia/issues/225) |
+| (**R76**) Libros gratuitos | Importante | Funcional | Media | v2 | | **Incidencia**  | [226](https://github.com/AJMG-95/booktopia/issues/226) |
