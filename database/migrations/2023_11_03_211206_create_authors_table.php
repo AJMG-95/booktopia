@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
+            $table->string('name', 255);
+            $table->string('surnames', 255)->nullable();
+            $table->date('birth_at')->nullable();
+            $table->bigInteger('country_id')->unsigned()->nullable();
+            $table->string('biography', 1000)->nullable();
             $table->timestamps();
+
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

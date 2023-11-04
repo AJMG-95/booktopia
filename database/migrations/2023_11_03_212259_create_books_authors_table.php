@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('books_authors', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('author_id')->unsigned();
+            $table->bigInteger('book_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('book_id')->references('id')->on('books');
         });
     }
 

@@ -13,7 +13,12 @@ return new class extends Migration
     {
         Schema::create('books_invoices', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('book_id')->unsigned();
+            $table->bigInteger('invoive_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('book_id')->references('id')->on('books')->onDelete('cascade');
+            $table->foreign('invoice_id')->constrained()->onDelete('cascade');
         });
     }
 

@@ -13,7 +13,19 @@ return new class extends Migration
     {
         Schema::create('book_editions', function (Blueprint $table) {
             $table->id();
+            $table->string('isbn')->nullable();
+            $table->string('title');
+            $table->string('description');
+            $table->string('editorial')->nullable();
+            $table->date('publication_date')->nullable();
+            $table->decimal('price', 8, 2)->unsigned();
+            $table->string('url')->nullable();
+            $table->bigInteger('book_id')->unsigned();
+            $table->bigInteger('language_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('language_id')->references('id')->on('languages');
         });
     }
 

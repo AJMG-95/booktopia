@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('credit_cards', function (Blueprint $table) {
             $table->id();
+            $table->string('card_number', 4);
+            $table->string('card_holder_name', 50);
+            $table->date('expiration_date');
+            $table->bigInteger('country_id')->unsigned();
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('country_id')->references('id')->on('countries');
         });
     }
 

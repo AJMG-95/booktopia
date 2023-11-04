@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('invoices', function (Blueprint $table) {
             $table->id();
+            $table->string('invoice_code', 255);
+            $table->float('amount');
+            $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('card_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('card_id')->references('id')->on('cards');
         });
     }
 

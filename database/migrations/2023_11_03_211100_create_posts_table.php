@@ -13,7 +13,15 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('post_title', 50)->nullable();
+            $table->text('post_content', 255);
+            $table->bigInteger('likes')->unsigned()->default(0);
+            $table->bigInteger('dislikes')->unsigned()->default(0);
+            $table->bigInteger('reports')->unsigned()->default(0);
+            $table->bigInteger('user_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
