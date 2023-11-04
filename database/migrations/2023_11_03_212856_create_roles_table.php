@@ -16,11 +16,6 @@ return new class extends Migration
             $table->string('rol_name');
             $table->timestamps();
 
-            $table->insert([
-                ['rol_name' => 'admin', 'id' => 1],
-                ['rol_name' => 'sub_admin', 'id' => 2],
-                ['rol_name' => 'user', 'id' => 3],
-            ]);
         });
     }
 

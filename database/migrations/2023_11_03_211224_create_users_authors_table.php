@@ -18,7 +18,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('author_id')->references('id')->on('authos');
+            $table->foreign('author_id')->references('id')->on('authors');
         });
     }
 
