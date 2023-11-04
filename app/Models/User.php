@@ -18,9 +18,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nickname',
         'name',
+        'surnames',
         'email',
         'password',
+        'fecha_nacimiento',
+        'country_id', // Añade el campo country_id si es necesario
+        'rol_id', // Añade el campo rol_id si es necesario
+        'blocked', // Añade el campo blocked si es necesario
+        'strikes', // Añade el campo strikes si es necesario
     ];
 
     /**
