@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name', 50);
             $table->string('surnames', 50);
             $table->string('password', 255);
-            $table->date('fecha_nacimiento');
+            $table->date('birth_date');
             $table->bigInteger('country_id')->nullable()->unsigned();
             $table->string('email', 255)->unique();
             $table->timestamp('email_verified_at')->nullable();
