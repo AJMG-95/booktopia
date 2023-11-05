@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('book_id')->unsigned();
+            $table->bigInteger('edition_id')->unsigned();
             $table->text('body');
             $table->integer('likes')->unsigned()->default(0);
             $table->integer('dislikes')->unsigned()->default(0);
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('edition_id')->references('id')->on('book_editions');
         });
     }
 
