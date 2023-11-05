@@ -5,19 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Comment extends Model
+class UserBook extends Model
 {
     use HasFactory;
 
-    protected $table = 'comments';
-    protected $fillable = [
-        'user_id',
-        'book_id',
-        'body',
-        'likes',
-        'dislikes',
-        'reports'
-    ];
+    protected $table = 'users_books';
+    protected $fillable = ['user_id', 'book_id', 'read'];
 
     public function user()
     {
@@ -29,16 +22,8 @@ class Comment extends Model
         return $this->belongsTo(BookEdition::class, 'edition_id');
     }
 
-/*     public function book()
+    /*     public function book()
     {
         return $this->belongsTo(Book::class, 'book_id');
     } */
-
-
-
-    // public function replies()
-    // {
-    //     return $this->hasMany(CommentReply::class, 'comment_id');
-    //S }
-
 }

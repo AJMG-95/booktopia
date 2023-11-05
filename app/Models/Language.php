@@ -11,4 +11,9 @@ class Language extends Model
 
     protected $table = 'languages';
     protected $fillable = ['language', 'iso_code'];
+
+    public function bookEditions()
+    {
+        return $this->hasMany(BookEdition::class, 'language_id');
+    }
 }
