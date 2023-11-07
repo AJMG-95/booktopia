@@ -14,6 +14,8 @@
                         </div>
                     @endif
 
+                    <button class="btn btn-success">Boton</button>
+
                     {{ __('You are logged in USER!') }}
                 </div>
             </div>

@@ -59,4 +59,16 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Country::class, 'country_id');
     }
+
+    // Verifica si el rol del usuario es 'admin'
+    public function isAdmin()
+{
+    return $this->role->rol_name === 'admin';
+}
+
+// Verifica si el rol del usuario es 'subadmin'
+public function isSubadmin()
+{
+    return $this->role->rol_name === 'subadmin';
+}
 }
