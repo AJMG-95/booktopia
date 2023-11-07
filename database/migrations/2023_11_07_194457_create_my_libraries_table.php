@@ -11,18 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comments', function (Blueprint $table) {
+        Schema::create('my_libraries', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
             $table->bigInteger('edition_id')->unsigned();
-            $table->text('body');
-            $table->integer('likes')->unsigned()->default(0);
-            $table->integer('dislikes')->unsigned()->default(0);
-            $table->integer('reports')->unsigned()->default(0);
+            $table->bigInteger('read')->default(false);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('edition_id')->references('id')->on('book_editions');
+
         });
     }
 
@@ -31,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('my_libraries');
     }
 };

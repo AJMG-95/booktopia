@@ -16,13 +16,12 @@ return new class extends Migration
             $table->bigInteger('author_id')->unsigned();
             $table->boolean('self_published')->default(false);
             $table->string('original_title', 255);
+            $table->string('cover')->nullable();
             $table->boolean('visible')->default('true');
             $table->timestamps();
 
             $table->foreign('author_id')->references('id')->on('authors');
         });
-
-
     }
 
     /**

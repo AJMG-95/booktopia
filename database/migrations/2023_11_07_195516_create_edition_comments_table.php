@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('users_authors', function (Blueprint $table) {
+        Schema::create('edition_comments', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('author_id')->unsigned();
+            $table->bigInteger('edition_id')->unsigned();
+            $table->text('body');
+            $table->integer('likes')->unsigned()->default(0);
+            $table->integer('dislikes')->unsigned()->default(0);
+            $table->integer('reports')->unsigned()->default(0);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('author_id')->references('id')->on('authors');
+            $table->foreign('edition_id')->references('id')->on('book_editions');
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users_authors');
+        Schema::dropIfExists('edition_comments');
     }
 };

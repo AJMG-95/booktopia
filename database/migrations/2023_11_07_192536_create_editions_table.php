@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('book_editions', function (Blueprint $table) {
+        Schema::create('editions', function (Blueprint $table) {
             $table->id();
             $table->string('isbn')->nullable();
             $table->string('title');
             $table->string('description');
+            $table->string('cover')->nullable();
             $table->string('editorial')->nullable();
             $table->date('publication_date')->nullable();
             $table->decimal('price', 8, 2)->unsigned();
@@ -34,6 +35,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('book_editions');
+        Schema::dropIfExists('editions');
     }
 };
