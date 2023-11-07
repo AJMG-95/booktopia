@@ -18,27 +18,32 @@ class CountriesTableSeeder extends Seeder
             [
                 'country_name' => 'España',
                 'iso_code' => 'ES',
-                'flag_url' => 'images/flags/espana.svg',
+                'flag_url' => 'images/flags/es.svg',
+                'id' => '1',
             ],
             [
-                'country_name' => 'Estados Unidos',
-                'iso_code' => 'US',
-                'flag_url' => 'images/flags/usa.svg',
+                'country_name' => 'Reino Unido',
+                'iso_code' => 'EN',
+                'flag_url' => 'images/flags/en.svg',
+                'id' => '2',
             ],
             [
                 'country_name' => 'Francia',
                 'iso_code' => 'FR',
-                'flag_url' => 'images/flags/francia.svg',
+                'flag_url' => 'images/flags/fr.svg',
+                'id' => '3',
             ],
             [
                 'country_name' => 'Italia',
                 'iso_code' => 'IT',
-                'flag_url' => 'images/flags/italia.svg',
+                'flag_url' => 'images/flags/it.svg',
+                'id' => '4',
             ],
             [
                 'country_name' => 'Alemania',
                 'iso_code' => 'DE',
-                'flag_url' => 'images/flags/alemania.svg',
+                'flag_url' => 'images/flags/de.svg',
+                'id' => '5',
             ],
         ];
 

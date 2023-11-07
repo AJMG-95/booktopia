@@ -18,7 +18,9 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
+        'nickname',
         'name',
+        'surnames',
         'email',
         'password',
     ];
@@ -42,4 +44,19 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+
+    protected $table = 'users'; // Especifica el nombre de la tabla si es diferente al nombre predeterminado.
+
+    // Relación con la tabla "roles"
+    public function role()
+    {
+        return $this->belongsTo(Role::class, 'rol_id');
+    }
+
+    // Relación con la tabla "countries"
+    public function country()
+    {
+        return $this->belongsTo(Country::class, 'country_id');
+    }
 }
