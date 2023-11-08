@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class UserController extends Controller
+class AuthController extends Controller
 {
 
     public function index()
@@ -13,12 +13,12 @@ class UserController extends Controller
         // Obtener el rol del usuario
         $rol = Auth::user()->role->rol_name;
 
-        if ($rol == 'user') {
-            return view('user.home');
-        } elseif ($rol == 'admin') {
+        if ($rol == 'admin' || $rol == 'subadmin') {
             return view('admin.home');
+        } elseif ($rol == 'user') {
+            return view('user.home');
         } else {
-            return view('subadmin.home');
+            return view('welcome');
         }
     }
 }

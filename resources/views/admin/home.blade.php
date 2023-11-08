@@ -14,10 +14,22 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in ADMIN!') }}
+                    <h3>Funcionalidades de Administrador:</h3>
+                    <ul class="list-group">
+                        <li class="list-group-item">
+                            <a href="{{ route('user.management') }}">Gestión de Usuarios</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('book.management') }}">Gestión de Libros/Ediciones</a>
+                        </li>
+                        <li class="list-group-item">
+                            <a href="{{ route('subadmin.management') }}">Gestión de Subadministradores</a>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+
