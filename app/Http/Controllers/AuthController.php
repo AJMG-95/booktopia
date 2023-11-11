@@ -7,18 +7,25 @@ use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-
     public function index()
     {
-        // Obtener el rol del usuario
-        $rol = Auth::user()->role->rol_name;
+        $user = Auth::user();
+        $rol = $user->role->rol_name;
 
-        if ($rol == 'admin' || $rol == 'subadmin') {
-            return view('admin.home');
-        } elseif ($rol == 'user') {
-            return view('user.home');
-        } else {
-            return view('welcome');
+        switch ($rol) {
+            case 'admin':
+            case 'subadmin':
+                return view('authenticated.admin.home');
+                break;
+
+            case 'user':
+                return view('welcome');
+                break;
+
+            default:
+                return view('welcome');
+                break;
         }
     }
 }
+

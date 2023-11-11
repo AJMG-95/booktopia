@@ -1,0 +1,10 @@
+.dropdown {
+    border: 1px solid #ccc; /* Borde normal */
+    padding: 10px 20px; /* Ajustar el relleno según sea necesario */
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+.dropdown:active {
+    border-color: transparent; /* Hacer el borde transparente al pulsar */
+}
