@@ -90,7 +90,7 @@ class User extends Authenticatable
         return $this->role->rol_name === 'subadmin';
     }
 
-        /**
+    /**
      * Determine if the user is a subscriber based on the end_at field.
      *
      * @return bool
@@ -109,5 +109,44 @@ class User extends Authenticatable
         return $this->hasOne(Subscriber::class);
     }
 
+    /**
+     * Get the sticky notes for the user.
+     */
+    public function stickyNotes()
+    {
+        return $this->hasMany(StickyNote::class);
+    }
 
+
+    /**
+     * Get the books in the user's library.
+     */
+    public function library()
+    {
+        return $this->hasMany(MyLibrary::class);
+    }
+
+    /**
+     * Get the books wished by the user.
+     */
+    public function wishedBooks()
+    {
+        return $this->hasMany(Wish::class);
+    }
+
+    /**
+     * Get the favorite books of the user.
+     */
+    public function favoriteBooks()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * Get the author profile if the user is also an author.
+     */
+    public function authorProfile()
+    {
+        return $this->hasOne(UserAuthor::class);
+    }
 }

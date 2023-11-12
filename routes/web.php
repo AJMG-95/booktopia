@@ -12,8 +12,21 @@ use App\Http\Controllers\SubscribeController;
 //*Rutas del grupo de middleware que requieren autenticación
 Route::middleware(['auth'])->group(function () {
 
+
     //* Rutas para las funcionalidades del administrador
     Route::middleware(['auth', 'role:admin'])->group(function () {
+        /* Administración de Subadmins */
+        Route::get('/subadmin-management', [SubadminController::class, 'index'])->name('subadmin.management');
+        Route::get('/subadmin/create', [SubadminController::class, 'create'])->name('subadmin.create');
+        Route::post('/subadmin/store', [SubadminController::class, 'store'])->name('subadmin.store');
+        Route::get('/subadmin/edit/{id}', [SubadminController::class, 'edit'])->name('subadmin.edit');
+        Route::put('/subadmin/update/{id}', [SubadminController::class, 'update'])->name('subadmin.update');
+        Route::delete('/subadmin/destroy/{id}', [SubadminController::class, 'destroy'])->name('subadmin.destroy');
+    });
+
+
+    //* Rutas para las funcionalidades del administrador y Subadministradores
+    Route::middleware(['auth', 'role:admin|subadmin'])->group(function () {
         /* Administración de Usuarios */
         Route::get('/user-management', [UserController::class, 'index'])->name('user.management');
         Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
@@ -21,8 +34,7 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-
-        /* Administración de Subadmins */
+ /* Administración de Subadmins */
         Route::get('/subadmin-management', [SubadminController::class, 'index'])->name('subadmin.management');
         Route::get('/subadmin/create', [SubadminController::class, 'create'])->name('subadmin.create');
         Route::post('/subadmin/store', [SubadminController::class, 'store'])->name('subadmin.store');
@@ -36,23 +48,6 @@ Route::middleware(['auth'])->group(function () {
         })->name('book.management');
     });
 
-
-    //* Rutas para las funcionalidades de Subadministradores
-    Route::middleware(['auth', 'role:subadmin'])->group(function () {
-
-        /* Administración de Usuarios */
-        Route::get('/user-management', [UserController::class, 'index'])->name('user.management');
-        Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
-        Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
-        Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-        Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
-        Route::delete('/user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
-
-        /* Administración de libros */
-        Route::get('/book-management', function () {
-            return view('book.management');
-        })->name('book.management');
-    });
 
     //* Rutas para las funcionalidades de Usuarios
     Route::middleware(['auth', 'role:user'])->group(function () {
