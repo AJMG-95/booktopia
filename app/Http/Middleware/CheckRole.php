@@ -4,19 +4,20 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class CheckRole
 {
     public function handle($request, Closure $next, $role)
     {
         if (!Auth::check()) {
-            return redirect('/'); // Redirige si el usuario no está autenticado.
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión para acceder a esta página.');
         }
 
         $user = Auth::user();
 
         if ($user->role->name !== $role) {
-            abort(403, 'Acceso no autorizado.'); // 403 Forbidden si el usuario no tiene el rol requerido.
+            throw new AuthorizationException('Acceso no autorizado.');
         }
 
         return $next($request);
