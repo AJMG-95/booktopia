@@ -10,22 +10,17 @@ class AuthController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $rol = $user->role->rol_name;
+        $role = $user->role->rol_name;
 
-        switch ($rol) {
-            case 'admin':
-            case 'subadmin':
-                return view('authenticated.admin.home');
-                break;
+        $adminRoles = ['admin', 'subadmin'];
 
-            case 'user':
-                return view('welcome');
-                break;
-
-            default:
-                return view('welcome');
-                break;
+        if (in_array($role, $adminRoles)) {
+            return view('authenticated.admin.home');
+        } elseif ($role === 'user') {
+            return view('welcome');
+        } else {
+            // Consider a different action for the default case, e.g., showing an error page
+            return view('error')->with('message', 'Acceso no autorizado.');
         }
     }
 }
-

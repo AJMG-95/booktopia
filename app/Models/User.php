@@ -149,4 +149,26 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserAuthor::class);
     }
+
+    /**
+     * Muestra todos los usuarios.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showAllUsers()
+    {
+        $users = User::all();
+        return view('user.index', compact('users'));
+    }
+
+    /**
+     * Muestra todos los subadmins.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function showAllSubadmins()
+    {
+        $subadmins = User::where('rol_id', 2)->get();
+        return view('subadmin.index', compact('subadmins'));
+    }
 }
