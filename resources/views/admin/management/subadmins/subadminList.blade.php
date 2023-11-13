@@ -7,7 +7,7 @@
     <!-- Mostrar mensajes de éxito o error aquí -->
 
     <div class="mb-3">
-        <a href="{{ route('subadmin.create') }}" class="btn btn-success">Crear Subadmin</a>
+        <a href="{{ route('subadmins.create') }}" class="btn btn-success">Crear Subadmin</a>
     </div>
 
     <table class="table">
@@ -27,8 +27,9 @@
                     <td>{{ $subadmin->name }}</td>
                     <td>{{ $subadmin->email }}</td>
                     <td>
-                        <a href="{{ route('subadmin.edit', $subadmin->id) }}" class="btn btn-warning">Editar</a>
-                        <form action="{{ route('subadmin.destroy', $subadmin->id) }}" method="POST" style="display: inline;">
+                        <a href="{{ route('subadmins.update', $subadmin->id) }}" class="btn btn-warning">Editar</a>
+                        <a href="{{ route('subadmins.demote', $subadmin->id) }}" class="btn btn-info">Degradar a Usuario</a>
+                        <form action="{{ route('subadmins.destroy', $subadmin->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>

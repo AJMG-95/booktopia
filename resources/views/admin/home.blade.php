@@ -17,15 +17,15 @@
                         <h3>Funcionalidades de Administrador:</h3>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="{{ route('admin.users.index') }}">Gestión de Usuarios</a>
+                                <a href="">Gestión de Usuarios</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="{{-- {{ route('book.management') }} --}}">Gestión de Libros/Ediciones</a>
+                                <a href="">Gestión de Libros/Ediciones</a>
                             </li>
                             @if (Auth::user()->isAdmin())
-                                <li class="list-group-item">
-                                    <a href="{{-- {{ route('subadmin.management') }} --}}">Gestión de Subadministradores</a>
-                                </li>
+                            <li class="list-group-item">
+                                <a href="{{ route('subadmins.list') }}">{{ __('Gestión de Subadministradores') }}</a>
+                            </li>
                             @endif
                         </ul>
                     </div>

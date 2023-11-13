@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class LanguagesTableSeeder extends Seeder
 {
@@ -21,8 +22,8 @@ class LanguagesTableSeeder extends Seeder
             ['language' => 'Alemán', 'iso_code' => 'de'],
         ];
 
-        foreach ($languages as $language) {
-            \App\Models\Language::create($language);
+        foreach ($languages as $data) {
+            DB::table('languages')->insert($data);
         }
     }
 }

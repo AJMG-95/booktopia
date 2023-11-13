@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="col-6 d-flex flex-col justify-content-center align-content-center">
                                     <span class="me-3">Subscribe now</span>
-                                    <a href="{{ route('subscribe') }}"
+                                    <a href="{{-- {{ route('subscribe') }} --}}"
                                         class="btn btn-outline-light btn-rounded">Subscribe</a>
                                 </div>
                             </article>

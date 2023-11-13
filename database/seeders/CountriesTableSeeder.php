@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use App\Models\Country;
+use Illuminate\Support\Facades\DB;
 
 class CountriesTableSeeder extends Seeder
 {
@@ -49,7 +49,7 @@ class CountriesTableSeeder extends Seeder
 
         // Insert the data into the "countries" table using Eloquent
         foreach ($countriesData as $data) {
-            Country::create($data);
+            DB::table('countries')->insert($data);
         }
     }
 }

@@ -66,6 +66,10 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class, 'rol_id');
     }
 
+    public function hasRole($role)
+    {
+        return $this->role && $this->role->rol_name === $role;
+    }
     /**
      * Get the country that owns the user.
      */

@@ -15,26 +15,11 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            [
-                'nickname' => 'subadmin',
-                'name' => 'subadmin',
-                'surnames' => 'subadmin',
-                'password' => Hash::make('subadmin'),
-                'birth_date' => '1995-09-27',
-                'country_id' => 1, // Ajusta el ID del país según sea necesario
-                'email' => 'subadmin@subadmin.com',
-                'email_verified_at' => now(),
-                'rol_id' => 2, // Ajusta el ID del rol según sea necesario
-                'blocked' => false,
-                'strikes' => 0,
-                'created_at' => now(),
-            ],
-            // You can add more user data here if needed
-        ]);
 
-/*         DB::table('users')->insert([
+
+        $users = [
             [
+                'id' => 1,
                 'nickname' => 'admin',
                 'name' => 'admin',
                 'surnames' => 'admin',
@@ -48,7 +33,44 @@ class UsersTableSeeder extends Seeder
                 'strikes' => 0,
                 'created_at' => now(),
             ],
-            // You can add more user data here if needed
-        ]); */
+            [
+                'id' => 2,
+                'nickname' => 'subadmin',
+                'name' => 'subadmin',
+                'surnames' => 'subadmin',
+                'password' => Hash::make('subadmin'),
+                'birth_date' => '1995-09-27',
+                'country_id' => 1, // Ajusta el ID del país según sea necesario
+                'email' => 'subadmin@subadmin.com',
+                'email_verified_at' => now(),
+                'rol_id' => 2, // Ajusta el ID del rol según sea necesario
+                'blocked' => false,
+                'strikes' => 0,
+                'created_at' => now(),
+            ],
+            [
+                'id' => 3,
+                'nickname' => 'pepe',
+                'name' => 'pepe',
+                'surnames' => 'pepe',
+                'password' => Hash::make('pepe'),
+                'birth_date' => '1995-09-27',
+                'country_id' => 1, // Adjust the country ID as needed
+                'email' => 'pepe@pepe.com',
+                'email_verified_at' => now(),
+                'rol_id' => 3, // Adjust the role ID as needed
+                'blocked' => false,
+                'strikes' => 0,
+                'created_at' => now(),
+            ],
+
+        ];
+
+        foreach ($users as $user) {
+            DB::table('users')->insert($user);
+        }
+
+
+
     }
 }
