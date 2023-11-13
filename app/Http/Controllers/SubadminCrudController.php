@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Role;
 
 class SubadminCrudController extends Controller
 {
@@ -23,19 +24,73 @@ class SubadminCrudController extends Controller
 
     public function create()
     {
-        // Lógica para mostrar el formulario de creación de subadmins
-        return view('admin.management.subadmins.subadminCreate');
+        // Obtén todos los roles disponibles
+        $roles = Role::all();
+
+        return view('admin.management.subadmins.subadminCreate', compact('roles'));
     }
 
-    // Lógica para almacenar nuevos subadmins (puede que necesites una función store aquí)
-
-    public function update($id)
+    public function store(Request $request)
     {
-        // Lógica para mostrar el formulario de actualización de subadmins
-        return view('admin.management.subadmins.subadminUpdate', compact('id'));
+        // Validar los datos del formulario
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'surnames' => 'nullable|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        // Crear el subadmin utilizando el modelo específico
+        $subadmin = User::create([
+            'nickname' => 'subadmin', // Puedes dejar el nickname fijo o cambiarlo según tus necesidades
+            'name' => $validatedData['name'],
+            'surnames' => $validatedData['surnames'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+            'rol_id' => 2, // Asumiendo que el ID del rol para subadmins es 2
+        ]);
+
+        return redirect()->route('subadmins.list')->with('success', 'Subadmin creado exitosamente.');
     }
 
-    // Lógica para actualizar subadmins (puede que necesites una función update aquí)
+    public function update(Request $request, $id)
+    {
+        // Valida los datos del formulario
+        $request->validate([
+            'nickname' => 'required|string',
+            'name' => 'required|string',
+            // Agrega las validaciones para otros campos si es necesario
+            'role_id' => 'required|exists:roles,id',
+        ]);
+
+        // Encuentra el subadmin que se está actualizando
+        $subadmin = User::findOrFail($id);
+
+        // Actualiza los campos con los nuevos valores
+        $subadmin->nickname = $request->input('nickname');
+        $subadmin->name = $request->input('name');
+        // Actualiza otros campos según sea necesario
+        $subadmin->rol_id = $request->input('role_id');
+
+        // Guarda los cambios en la base de datos
+        $subadmin->save();
+
+        // Redirige de vuelta a la lista de subadmins con un mensaje de éxito
+        return redirect()->route('subadmins.list')->with('success', 'Subadmin actualizado exitosamente.');
+    }
+
+
+    public function edit($id)
+    {
+        // Obtén el subadmin que deseas editar
+        $subadmin = User::findOrFail($id);
+
+        // Obtén todos los roles disponibles
+        $roles = Role::all();
+
+        // Pasa los datos a la vista de edición
+        return view('admin.management.subadmins.subadminEdit', compact('subadmin', 'roles'));
+    }
 
     public function delete($id)
     {
@@ -43,7 +98,15 @@ class SubadminCrudController extends Controller
         return view('admin.management.subadmins.subadminDelete', compact('id'));
     }
 
-    // Lógica para eliminar subadmins (puede que necesites una función destroy aquí)
+    public function destroy($id)
+    {
+        $subadmin = User::findOrFail($id);
+
+        // Elimina definitivamente al subadmin
+        $subadmin->delete();
+
+        return redirect()->route('subadmins.list')->with('success', 'El subadmin ha sido eliminado definitivamente.');
+    }
 
 
     public function demoteToUser($id)

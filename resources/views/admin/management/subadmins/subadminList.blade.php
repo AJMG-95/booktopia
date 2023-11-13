@@ -29,11 +29,7 @@
                     <td>
                         <a href="{{ route('subadmins.update', $subadmin->id) }}" class="btn btn-warning">Editar</a>
                         <a href="{{ route('subadmins.demote', $subadmin->id) }}" class="btn btn-info">Degradar a Usuario</a>
-                        <form action="{{ route('subadmins.destroy', $subadmin->id) }}" method="POST" style="display: inline;">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar este usuario?')">Eliminar</button>
-                        </form>
+                        <a href="{{ route('subadmins.destroy', $subadmin->id) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar definitivamente este subadmin?')">Eliminar Definitivamente</a>
                     </td>
                 </tr>
             @endforeach

@@ -21,20 +21,21 @@ Route::middleware(['auth'])->group(function () {
             // Formulario de creación de subadmins
             Route::get('/create', [SubadminCrudController::class, 'create'])->name('subadmins.create');
 
-            // Lógica para almacenar nuevos subadmins (POST)
-            Route::post('/store', [SubadminCrudController::class, 'store'])->name('subadmins.store');
+            // Acción para almacenar un nuevo subadmin
+            Route::post('/subadmins/store', [SubadminCrudController::class, 'store'])->name('subadmins.store');
 
             // Formulario de actualización de subadmins
-            Route::get('/update/{id}', [SubadminCrudController::class, 'update'])->name('subadmins.update');
+            Route::get('/subadmins/edit/{id}', [SubadminCrudController::class, 'edit'])->name('subadmins.edit');
 
             // Lógica para actualizar subadmins (PUT o PATCH)
-            Route::put('/update/{id}', [SubadminCrudController::class, 'update'])->name('subadmins.update');
+            Route::patch('/subadmins/update/{id}', [SubadminCrudController::class, 'update'])->name('subadmins.update');
 
             // Formulario de eliminación de subadmins
-            Route::get('/delete/{id}', [SubadminCrudController::class, 'delete'])->name('subadmins.delete');
+            // Route::get('/delete/{id}', [SubadminCrudController::class, 'delete'])->name('subadmins.delete');
             Route::get('/subadmins/demote/{id}', [SubadminCrudController::class, 'demoteToUser'])->name('subadmins.demote');
+
             // Lógica para eliminar subadmins (DELETE)
-            Route::delete('/delete/{id}', [SubadminCrudController::class, 'destroy'])->name('subadmins.destroy');
+            Route::get('/subadmins/destroy/{id}', [SubadminCrudController::class, 'destroy'])->name('subadmins.destroy');
         });
     });
 
