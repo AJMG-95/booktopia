@@ -15,7 +15,7 @@ class AuthController extends Controller
         $adminRoles = ['admin', 'subadmin'];
 
         if (in_array($role, $adminRoles)) {
-            return view('authenticated.admin.home');
+            return view('admin.home');
         } elseif ($role === 'user') {
             return view('welcome');
         } else {
