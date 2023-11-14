@@ -25,10 +25,9 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/subadmins/store', [SubadminCrudController::class, 'store'])->name('subadmins.store');
 
             // Formulario de actualización de subadmins
-            Route::get('/subadmins/edit/{id}', [SubadminCrudController::class, 'edit'])->name('subadmins.edit');
-
+            //* Route::get('/subadmins/edit/{id}', [SubadminCrudController::class, 'edit'])->name('subadmins.edit');
             // Lógica para actualizar subadmins (PUT o PATCH)
-            Route::patch('/subadmins/update/{id}', [SubadminCrudController::class, 'update'])->name('subadmins.update');
+            //* Route::patch('/subadmins/update/{id}', [SubadminCrudController::class, 'update'])->name('subadmins.update');
 
             // Formulario de eliminación de subadmins
             // Route::get('/delete/{id}', [SubadminCrudController::class, 'delete'])->name('subadmins.delete');

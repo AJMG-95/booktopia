@@ -6,7 +6,7 @@
 
         <!-- Mostrar mensajes de éxito o error aquí -->
 
-        <form action="{{ route('subadmins.update') }}" method="POST">
+        <form action="{{ route('subadmins.update', $subadmin->id) }}" method="POST">
             @csrf
             @method('PATCH')
 
@@ -17,7 +17,12 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $subadmin->name) }}" required>
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $subadmin->name) }}" required readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="surnames" class="form-label">Apellidos</label>
+                <input type="text" class="form-control" id="surnames" name="surnames" value="{{ old('surnames', $subadmin->surnames) }}" required readonly>
             </div>
 
             <!-- Agrega los demás campos del modelo User -->

@@ -34,6 +34,7 @@ class SubadminCrudController extends Controller
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
+            'nickname' => 'required|unique:users,nickname|max:255',
             'name' => 'required|string|max:255',
             'surnames' => 'nullable|string|max:255',
             'email' => 'required|email|unique:users',
@@ -42,7 +43,7 @@ class SubadminCrudController extends Controller
 
         // Crear el subadmin utilizando el modelo específico
         $subadmin = User::create([
-            'nickname' => 'subadmin', // Puedes dejar el nickname fijo o cambiarlo según tus necesidades
+            'nickname' => $validatedData['nickname'], // Puedes dejar el nickname fijo o cambiarlo según tus necesidades
             'name' => $validatedData['name'],
             'surnames' => $validatedData['surnames'],
             'email' => $validatedData['email'],

@@ -27,7 +27,7 @@
                     <td>{{ $subadmin->name }}</td>
                     <td>{{ $subadmin->email }}</td>
                     <td>
-                        <a href="{{ route('subadmins.update', $subadmin->id) }}" class="btn btn-warning">Editar</a>
+                        {{--* <a href="{{ route('subadmins.edit', $subadmin->id) }}" class="btn btn-warning">Editar</a> --}}
                         <a href="{{ route('subadmins.demote', $subadmin->id) }}" class="btn btn-info">Degradar a Usuario</a>
                         <a href="{{ route('subadmins.destroy', $subadmin->id) }}" class="btn btn-danger" onclick="return confirm('¿Estás seguro de eliminar definitivamente este subadmin?')">Eliminar Definitivamente</a>
                     </td>
