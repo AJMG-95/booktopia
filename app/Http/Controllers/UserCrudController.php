@@ -13,7 +13,8 @@ class UserCrudController extends Controller
     {
         // Lógica para mostrar la lista de usuarios
         $users = User::where('rol_id', 3)->get();
-        return view('admin.management.users.userList', compact('users'));
+        return view('admin/management/users/userList', compact('users'));
+
     }
 
     public function create()

@@ -70,6 +70,12 @@ class User extends Authenticatable
     {
         return $this->role && $this->role->rol_name === $role;
     }
+
+    public function hasAnyRole($roles)
+    {
+        return $this->role && in_array($this->role->rol_name, $roles);
+    }
+
     /**
      * Get the country that owns the user.
      */
