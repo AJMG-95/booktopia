@@ -1,4 +1,4 @@
-<!-- resources/views/user/management.blade.php -->
+<!-- resources/views/admin/management/users/userList.blade.php -->
 
 @extends('layouts.app')
 
@@ -9,7 +9,7 @@
     <!-- Mostrar mensajes de éxito o error aquí -->
 
     <div class="mb-3">
-        <a href="{{ route('user.create') }}" class="btn btn-success">Create User</a>
+        <a href="{{ route('users.create') }}" class="btn btn-success">Create User</a>
     </div>
 
     <table class="table">
@@ -28,8 +28,8 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
-                        <form action="{{ route('user.destroy', $user->id) }}" method="POST" style="display: inline;">
+                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>

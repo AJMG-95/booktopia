@@ -1,6 +1,5 @@
 <?php
 
-
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
@@ -39,11 +38,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/list', [UserCrudController::class, 'index'])->name('users.list');
             Route::get('/create', [UserCrudController::class, 'create'])->name('users.create');
             Route::post('/store', [UserCrudController::class, 'store'])->name('users.store');
-            Route::get('/edit/{id}', [UserCrudController::class, 'edit'])->name('users.edit');
-            Route::patch('/update/{id}', [UserCrudController::class, 'update'])->name('users.update');
+            Route::get('/users/edit/{id}', [UserCrudController::class, 'edit'])->name('users.edit');
+            Route::patch('/users/update/{id}', [UserCrudController::class, 'update'])->name('users.update');
             Route::get('/delete/{id}', [UserCrudController::class, 'delete'])->name('users.delete');
+            Route::get('/demote/{id}', [UserCrudController::class, 'demoteToUser'])->name('users.demote');
             Route::get('/destroy/{id}', [UserCrudController::class, 'destroy'])->name('users.destroy');
-            Route::get('/promote/{id}', [UserCrudController::class, 'promoteToSubadmin'])->name('users.promote');
         });
         /* Administración de libros CRUD*/
 
