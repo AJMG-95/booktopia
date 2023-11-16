@@ -15,8 +15,6 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-
-
         $users = [
             [
                 'id' => 1,
@@ -50,27 +48,23 @@ class UsersTableSeeder extends Seeder
             ],
             [
                 'id' => 3,
-                'nickname' => 'pepe',
-                'name' => 'pepe',
-                'surnames' => 'pepe',
-                'password' => Hash::make('pepe'),
+                'nickname' => 'user',
+                'name' => 'user',
+                'surnames' => 'user',
+                'password' => Hash::make('user'),
                 'birth_date' => '1995-09-27',
                 'country_id' => 1, // Adjust the country ID as needed
-                'email' => 'pepe@pepe.com',
+                'email' => 'user@user.com',
                 'email_verified_at' => now(),
                 'rol_id' => 3, // Adjust the role ID as needed
                 'blocked' => false,
                 'strikes' => 0,
                 'created_at' => now(),
             ],
-
         ];
 
         foreach ($users as $user) {
             DB::table('users')->insert($user);
         }
-
-
-
     }
 }
