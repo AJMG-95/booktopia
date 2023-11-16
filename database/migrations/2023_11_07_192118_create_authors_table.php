@@ -18,6 +18,7 @@ return new class extends Migration
             $table->date('birth_at')->nullable();
             $table->bigInteger('country_id')->unsigned()->nullable();
             $table->string('biography', 1000)->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
 
             $table->foreign('country_id')->references('id')->on('countries');
