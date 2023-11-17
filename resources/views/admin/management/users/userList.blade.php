@@ -28,10 +28,11 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a>
+                        {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a> --}}
+                        <a href="{{ route('users.promote', $user->id) }}" class="btn btn-info">Promote to Subadmin</a>
                         <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
                             @csrf
-                            @method('DELETE')
+                            @method('PUT')
                             <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this user?')">Delete</button>
                         </form>
                     </td>

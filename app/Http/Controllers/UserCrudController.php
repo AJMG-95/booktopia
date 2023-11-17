@@ -12,7 +12,7 @@ class UserCrudController extends Controller
     public function index()
     {
         // Lógica para mostrar la lista de usuarios
-        $users = User::where('rol_id', 3)->get();
+        $users = User::where('rol_id', 3)->where('deleted', false)->get();
         return view('admin.management.users.userList', compact('users'));
     }
 
@@ -100,29 +100,27 @@ class UserCrudController extends Controller
      */
     public function destroy($id)
     {
-        // Obtener el usuario que se va a eliminar
+        // Obtener el usuario que se va a "eliminar"
         $user = User::findOrFail($id);
 
-        // Limpiar datos sensibles
-        $user->nickname = null;
-        $user->email = null;
-        $user->password = null;
-        $user->birth_date = null;
-        $user->country_id = null;
-        $user->profile_img = null;
-        $user->rol_id = 3;
-        $user->strikes = 0;
-        $user->blocked = false;
+        // Actualizar los campos y marcar como "eliminado"
+        $user->update([
+            'nickname' => null,
+            'email' => null,
+            'password' => null,
+            'birth_date' => null,
+            'country_id' => null,
+            'profile_img' => null,
+            'rol_id' => null,
+            'strikes' => null,
+            'blocked' => false,
+            'deleted' => true,
+        ]);
 
-        // Marcar el usuario como "eliminado"
-        $user->deleted = true;
-
-        // Guardar los cambios
-        $user->save();
-
-        // Redirigir o realizar otras acciones después de eliminar
+        // Redirigir o realizar otras acciones después de la "eliminación"
         return redirect()->route('users.list')->with('success', 'Usuario eliminado exitosamente.');
     }
+
 
     public function promoteToSubadmin($id)
     {
