@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('nickname', 255)->unique();
+            $table->string('nickname', 255)->unique()->nullable();
             $table->string('name', 255);
             $table->string('surnames', 255);
             $table->string('password', 255)->nullable();
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->bigInteger('country_id')->nullable()->unsigned();
             $table->string('profile_img')->nullable();
             $table->timestamp('email_verified_at')->nullable();
-            $table->bigInteger('rol_id')->unsigned()->default(3);
-            $table->integer('strikes')->unsigned()->default(0);
-            $table->boolean('blocked')->default(false);
+            $table->bigInteger('rol_id')->unsigned()->default(3)->nullable();
+            $table->integer('strikes')->unsigned()->default(0)->nullable();
+            $table->boolean('blocked')->default(false)->nullable();
             $table->boolean('deleted')->default(false);
             $table->rememberToken();
             $table->timestamps();

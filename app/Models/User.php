@@ -24,10 +24,11 @@ class User extends Authenticatable
         'password',
         'birth_date',
         'country_id',
-        'img',
+        'profile_img',
         'rol_id',
-        'blocked',
         'strikes',
+        'blocked',
+        'deleted',
     ];
 
     /**
@@ -49,6 +50,7 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'birth_date' => 'date',
         'blocked' => 'boolean',
+        'deleted' => 'boolean',
     ];
 
     /**
@@ -159,6 +161,37 @@ class User extends Authenticatable
     {
         return $this->hasOne(UserAuthor::class);
     }
+
+
+
+    /**
+     * Override the delete method to mark the user as "deleted" and clear sensitive data.
+     *
+     * @return bool|null
+     * @throws \Exception
+     */
+    public function delete()
+    {
+        // Clear sensitive data
+        $this->nickname = null;
+        $this->email = null;
+        $this->password = null;
+        $this->birth_date = null;
+        $this->country_id = null;
+        $this->profile_img = null;
+        $this->rol_id = null;
+        $this->strikes = null;
+        $this->blocked = false;
+
+        // Mark the user as "deleted"
+        $this->deleted = true;
+
+        // Save the changes
+        $this->save();
+
+        return true;
+    }
+
 
     /**
      * Muestra todos los usuarios.

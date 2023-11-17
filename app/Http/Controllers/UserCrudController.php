@@ -92,14 +92,36 @@ class UserCrudController extends Controller
         return view('admin.management.users.userDelete', compact('id'));
     }
 
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function destroy($id)
     {
+        // Obtener el usuario que se va a eliminar
         $user = User::findOrFail($id);
 
-        // Elimina definitivamente al usuario
-        $user->delete();
+        // Limpiar datos sensibles
+        $user->nickname = null;
+        $user->email = null;
+        $user->password = null;
+        $user->birth_date = null;
+        $user->country_id = null;
+        $user->profile_img = null;
+        $user->rol_id = 3;
+        $user->strikes = 0;
+        $user->blocked = false;
 
-        return redirect()->route('users.list')->with('success', 'El usuario ha sido eliminado definitivamente.');
+        // Marcar el usuario como "eliminado"
+        $user->deleted = true;
+
+        // Guardar los cambios
+        $user->save();
+
+        // Redirigir o realizar otras acciones después de eliminar
+        return redirect()->route('users.list')->with('success', 'Usuario eliminado exitosamente.');
     }
 
     public function promoteToSubadmin($id)

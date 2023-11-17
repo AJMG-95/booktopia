@@ -17,7 +17,7 @@
                         <h3>Funcionalidades de Administrador:</h3>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="{{ route('user.list') }}">{{ __('Gestión de Usuarios') }}</a>
+                                <a href="{{ route('users.list') }}">{{ __('Gestión de Usuarios') }}</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="">Gestión de Libros/Ediciones</a>
