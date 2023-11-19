@@ -136,5 +136,16 @@ class UserCrudController extends Controller
         }
     }
 
+    public function toggleBlock($id)
+    {
+        $user = User::findOrFail($id);
+        $user->blocked = !$user->blocked;
+        $user->save();
+
+        $message = $user->blocked ? 'Usuario bloqueado exitosamente.' : 'Usuario desbloqueado exitosamente.';
+
+        return redirect()->route('users.list')->with('success', $message);
+    }
+
     // Otros métodos para el CRUD de usuarios según sea necesario
 }

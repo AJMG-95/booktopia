@@ -49,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/promote/{id}', [UserCrudController::class, 'promoteToSubadmin'])->name('users.promote');
             Route::resource('users', UserCrudController::class)->except(['destroy']);
             Route::put('/users/destroy/{id}', [UserCrudController::class, 'destroy'])->name('users.destroy');
+            Route::put('/users/toggle-block/{id}', [UserCrudController::class, 'toggleBlock'])->name('users.toggleBlock');
         });
 
         //Administración de libros y ediciones
