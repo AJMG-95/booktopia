@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SubadminCrudController;
 use App\Http\Controllers\UserCrudController;
 use App\Http\Controllers\BooksAndEditionsController;
+use App\Http\Controllers\BooksController;
 
 //*Rutas del grupo de middleware que requieren autenticación
 Route::middleware(['auth'])->group(function () {
@@ -55,8 +56,17 @@ Route::middleware(['auth'])->group(function () {
         //Administración de libros y ediciones
         Route::prefix('admin/books&editions')->group(function () {
             Route::get('/index', [BooksAndEditionsController::class, 'index'])->name('books&editions.index');
-
-            // Agrega otras rutas según sea necesario para la administración de libros y ediciones
+            // CRUD DE LIBROS
+            Route::prefix('books')->group(function () {
+                Route::get('/list', [BooksController::class, 'index'])->name('books.list');
+                Route::get('/create', [BooksController::class, 'create'])->name('books.create');
+                Route::post('/store', [BooksController::class, 'store'])->name('books.store');
+                Route::get('/edit/{id}', [BooksController::class, 'edit'])->name('books.edit');
+                Route::put('/update/{id}', [BooksController::class, 'update'])->name('books.update');
+                Route::get('/delete/{id}', [BooksController::class, 'delete'])->name('books.delete');
+                Route::get('/api/authors/search', [BooksController::class, 'searchAuthors'])->name('authors.search');
+            });
+            // CRUD DE EDICIONES
         });
     });
 

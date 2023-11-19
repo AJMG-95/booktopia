@@ -17,7 +17,13 @@
                         <h3>{{ __('Gestión de libros y ediciones:') }}</h3>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="{{-- {{ route('books&editions.books.list') }} --}}">{{ __('Gestión de Libros') }}</a>
+                                <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Autores') }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Generos') }}</a>
+                            </li>
+                            <li class="list-group-item">
+                                <a href="{{ route('books.list') }}">{{ __('Gestión de Libros') }}</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Ediciones') }}</a>

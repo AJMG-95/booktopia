@@ -40,4 +40,14 @@ class Book extends Model
     {
         return $this->belongsToMany(Genre::class, 'book_genres');
     }
+
+    /**
+     * Custom method to retrieve existing authors and return the view.
+     */
+    public static function getExistingAuthors()
+    {
+        $existingAuthors = Author::all();
+
+        return view('bookList', compact('existingAuthors'));
+    }
 }
