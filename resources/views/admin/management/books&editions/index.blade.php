@@ -17,10 +17,10 @@
                         <h3>{{ __('Gestión de libros y ediciones:') }}</h3>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Autores') }}</a>
+                                <a href=" {{ route('authors.list') }}">{{ __('Gestión de Autores') }}</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Generos') }}</a>
+                                <a href="{{ route('genres.list') }}">{{ __('Gestión de Generos') }}</a>
                             </li>
                             <li class="list-group-item">
                                 <a href="{{ route('books.list') }}">{{ __('Gestión de Libros') }}</a>

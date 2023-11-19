@@ -15,6 +15,7 @@ class Author extends Model
         'birth_at',
         'country_id',
         'biography',
+        'photo'
     ];
 
     /**

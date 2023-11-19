@@ -7,6 +7,8 @@ use App\Http\Controllers\SubadminCrudController;
 use App\Http\Controllers\UserCrudController;
 use App\Http\Controllers\BooksAndEditionsController;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\GenreController;
 
 //*Rutas del grupo de middleware que requieren autenticación
 Route::middleware(['auth'])->group(function () {
@@ -56,7 +58,30 @@ Route::middleware(['auth'])->group(function () {
         //Administración de libros y ediciones
         Route::prefix('admin/books&editions')->group(function () {
             Route::get('/index', [BooksAndEditionsController::class, 'index'])->name('books&editions.index');
-            // CRUD DE LIBROS
+
+            // CRUD DE Autores
+            Route::prefix('/authors')->group(function () {
+                Route::get('/list', [AuthorController::class, 'index'])->name('authors.list');
+                Route::get('/create', [AuthorController::class, 'create'])->name('authors.create');
+                Route::post('/store', [AuthorController::class, 'store'])->name('authors.store');
+                Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name('authors.edit');
+                Route::put('/update/{id}', [AuthorController::class, 'update'])->name('authors.update');
+                Route::get('/delete/{id}', [AuthorController::class, 'delete'])->name('authors.delete');
+                Route::delete('/destroy/{id}', [AuthorController::class, 'destroy'])->name('authors.destroy');
+            });
+
+            // CRUD DE Generos
+            Route::prefix('/genres')->group(function () {
+                Route::get('/list', [GenreController::class, 'index'])->name('genres.list');
+                Route::get('/create', [GenreController::class, 'create'])->name('genres.create');
+                Route::post('/store', [GenreController::class, 'store'])->name('genres.store');
+                Route::get('/edit/{id}', [GenreController::class, 'edit'])->name('genres.edit');
+                Route::put('/update/{id}', [GenreController::class, 'update'])->name('genres.update');
+                Route::get('/delete/{id}', [GenreController::class, 'delete'])->name('genres.delete');
+                Route::delete('/destroy/{id}', [GenreController::class, 'destroy'])->name('genres.destroy');
+            });
+
+            // CRUD DE Libros
             Route::prefix('books')->group(function () {
                 Route::get('/list', [BooksController::class, 'index'])->name('books.list');
                 Route::get('/create', [BooksController::class, 'create'])->name('books.create');
@@ -66,8 +91,13 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/delete/{id}', [BooksController::class, 'delete'])->name('books.delete');
                 Route::get('/api/authors/search', [BooksController::class, 'searchAuthors'])->name('authors.search');
             });
-            // CRUD DE EDICIONES
+
+            // CRUD DE Ediciones
+            Route::prefix('editions')->group(function () {
+                // Agrega rutas para ediciones aquí si es necesario
+            });
         });
+
     });
 
 
