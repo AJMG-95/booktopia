@@ -14,20 +14,15 @@
                             </div>
                         @endif
 
-                        <h3>Funcionalidades de Administrador:</h3>
+                        <h3>Gestion de libros y ediciones:</h3>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="{{ route('users.list') }}">{{ __('Gestión de Usuarios') }}</a>
+                                <a href="">{{ __('Gestión de Libros') }}</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="{{ route('books&editons.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
+                                <a href="">{{ __('Gestión de Ediciones') }}</a>
                             </li>
-                            @if (Auth::user()->isAdmin())
-                            <li class="list-group-item">
-                                <a href="{{ route('subadmins.list') }}">{{ __('Gestión de Subadministradores') }}</a>
-                            </li>
-                            @endif
-                        </ul>
+
                     </div>
                 </div>
             </div>

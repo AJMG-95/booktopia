@@ -10,6 +10,8 @@ use App\Http\Controllers\UserCrudController;
 Route::middleware(['auth'])->group(function () {
 
 
+
+
     //* Rutas para las funcionalidades del administrador
     Route::middleware(['auth', 'role:admin'])->group(function () {
         // Rutas para la administración de subadmins
@@ -47,9 +49,16 @@ Route::middleware(['auth'])->group(function () {
             Route::resource('users', UserCrudController::class)->except(['destroy']);
             Route::put('/users/destroy/{id}', [UserCrudController::class, 'destroy'])->name('users.destroy');
         });
-        /* Administración de libros CRUD*/
 
-        /* Administración de ediciones CRUD*/
+        //Administración de libros y ediciones
+        Route::prefix('admin/books&editions')->group(function () {
+            Route::get('/index', function () {
+                return view('admin.management.books&editions.index');
+            })->name('books&editions.index');
+            /* Administración de libros CRUD*/
+
+            /* Administración de ediciones CRUD*/
+        });
     });
 
 
@@ -59,6 +68,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
+Route::get('/home', [AuthController::class, "index"])->name('home');
 
 //* Otras rutas pueden ir fuera del grupo de middleware si no requieren autenticación
 Route::get('/', function () {
@@ -66,5 +76,3 @@ Route::get('/', function () {
 })->name('welcome');
 
 Auth::routes();
-
-Route::get('/home', [AuthController::class, "index"])->name('home');
