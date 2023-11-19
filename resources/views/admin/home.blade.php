@@ -20,7 +20,7 @@
                                 <a href="{{ route('users.list') }}">{{ __('Gestión de Usuarios') }}</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="{{ route('books&editons.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
+                                <a href="{{ route('books&editions.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
                             </li>
                             @if (Auth::user()->isAdmin())
                             <li class="list-group-item">

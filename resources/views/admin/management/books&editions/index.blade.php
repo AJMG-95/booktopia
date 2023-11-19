@@ -14,15 +14,15 @@
                             </div>
                         @endif
 
-                        <h3>Gestion de libros y ediciones:</h3>
+                        <h3>{{ __('Gestión de libros y ediciones:') }}</h3>
                         <ul class="list-group">
                             <li class="list-group-item">
-                                <a href="">{{ __('Gestión de Libros') }}</a>
+                                <a href="{{-- {{ route('books&editions.books.list') }} --}}">{{ __('Gestión de Libros') }}</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="">{{ __('Gestión de Ediciones') }}</a>
+                                <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Ediciones') }}</a>
                             </li>
-
+                        </ul>
                     </div>
                 </div>
             </div>

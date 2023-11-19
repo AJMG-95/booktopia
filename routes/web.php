@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SubadminCrudController;
 use App\Http\Controllers\UserCrudController;
+use App\Http\Controllers\BooksAndEditionsController;
 
 //*Rutas del grupo de middleware que requieren autenticación
 Route::middleware(['auth'])->group(function () {
@@ -52,12 +53,9 @@ Route::middleware(['auth'])->group(function () {
 
         //Administración de libros y ediciones
         Route::prefix('admin/books&editions')->group(function () {
-            Route::get('/index', function () {
-                return view('admin.management.books&editions.index');
-            })->name('books&editions.index');
-            /* Administración de libros CRUD*/
+            Route::get('/index', [BooksAndEditionsController::class, 'index'])->name('books&editions.index');
 
-            /* Administración de ediciones CRUD*/
+            // Agrega otras rutas según sea necesario para la administración de libros y ediciones
         });
     });
 
