@@ -25,6 +25,7 @@
                 <input type="text" class="form-control" id="original_title" name="original_title" required>
             </div>
 
+
             <!-- Selección múltiple de autores -->
             <div class="form-group">
                 <label for="authors">Authors:</label>
@@ -49,15 +50,6 @@
                 <div id="selectedGenres" class="mt-2"></div>
             </div>
 
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="published_date">Published Date:</label>
-                <input type="date" class="form-control" id="published_date" name="published_date">
-            </div>
 
             <div class="form-group">
                 <label for="cover_image">Cover Image:</label>

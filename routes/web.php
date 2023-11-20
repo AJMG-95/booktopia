@@ -89,7 +89,9 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/edit/{id}', [BooksController::class, 'edit'])->name('books.edit');
                 Route::put('/update/{id}', [BooksController::class, 'update'])->name('books.update');
                 Route::get('/delete/{id}', [BooksController::class, 'delete'])->name('books.delete');
+                Route::put('/visibility/{id}', [BooksController::class,'toggleVisibility'])->name('books.toggleVisibility');
                 Route::get('/api/authors/search', [BooksController::class, 'searchAuthors'])->name('authors.search');
+                Route::delete('/books/{id}', [BooksController::class, 'destroy'])->name('books.destroy');
             });
 
             // CRUD DE Ediciones

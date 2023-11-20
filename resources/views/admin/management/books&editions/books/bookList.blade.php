@@ -1,5 +1,3 @@
-<!-- resources/views/admin/management/books/bookList.blade.php -->
-
 @extends('layouts.app')
 
 @section('content')
@@ -16,7 +14,7 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Título </th>
+                    <th>Título</th>
                     <th>Autor/es</th>
                     <th>Género/s</th>
                     <th>Autopublicado</th>
@@ -43,7 +41,7 @@
                         <td>{{ $book->self_published ? 'Yes' : 'No' }}</td>
                         <td>
                             @if ($book->visible)
-                                <form action="{{ route('books&editions.books.toggleVisibility', $book->id) }}" method="POST"
+                                <form action="{{ route('books.toggleVisibility', $book->id) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
                                     @method('PUT')
@@ -63,8 +61,7 @@
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this book?')">
+                                <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this book?')">
                                     <i class="bi bi-trash3"></i> &nbsp; Borrar
                                 </button>
                             </form>

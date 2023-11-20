@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Author;
 use App\Models\Genre;
+use App\Models\BookAuthor;
+use App\Models\BookGenre;
 
 class BooksController extends Controller
 {
@@ -29,44 +31,35 @@ class BooksController extends Controller
 
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $validatedData = $request->validate([
-            'original_title' => 'required|string|max:255',
-            'description' => 'nullable|string',
-            'published_date' => 'nullable|date',
-            'cover_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'self_published' => 'nullable|boolean',
-            'visible' => 'nullable|boolean',
-            'authors' => 'required|array',
-            'authors.*' => 'exists:authors,id',
-            'genres' => 'required|array',
-            'genres.*' => 'exists:genres,id',
+        // Validación de formulario aquí si es necesario
+        $request->validate([
+            'original_title' => 'required|max:255',
+            // Agrega otras reglas de validación según tus necesidades
         ]);
 
-        // Subir la imagen de la portada y obtener la ruta almacenada
-        $coverImagePath = $request->file('cover_image')->store('public/assets/images/covers');
+        // Crear un nuevo libro
+        $book = new Book();
+        $book->original_title = $request->input('original_title');
+        $book->self_published = $request->has('self_published');
+        $book->visible = $request->has('visible');
 
-        // Crear el libro utilizando el modelo específico
-        $book = new Book([
-            'original_title' => $validatedData['original_title'],
-            'description' => $validatedData['description'],
-            'published_date' => $validatedData['published_date'],
-            'cover_image' => $coverImagePath,
-            'self_published' => $validatedData['self_published'] ?? false,
-            'visible' => $validatedData['visible'] ?? true,
-        ]);
+        // Guardar la imagen de la portada
+        if ($request->hasFile('cover_image')) {
+            $coverImage = $request->file('cover_image');
+            $coverImageName = time() . '_' . $coverImage->getClientOriginalName();
+            $coverImage->storeAs('public/book_covers', $coverImageName);
+            $book->cover = 'book_covers/' . $coverImageName;
+        }
 
-        // Guardar el libro en la base de datos
         $book->save();
 
-        // Adjuntar autores al libro
-        $book->authors()->attach($validatedData['authors']);
+        // Attach autores y géneros utilizando las relaciones definidas en el modelo
+        $book->authors()->attach($request->input('authors'));
+        $book->genres()->attach($request->input('genres'));
 
-        // Adjuntar géneros al libro
-        $book->genres()->attach($validatedData['genres']);
-
-        return redirect()->route('books.list')->with('success', 'Libro creado exitosamente.');
+        return redirect()->route('books.list')->with('success', 'Book created successfully');
     }
+
 
     public function edit($id)
     {
@@ -93,5 +86,27 @@ class BooksController extends Controller
     public function delete($id)
     {
         // Lógica para eliminar un libro
+    }
+
+    public function destroy($id)
+    {
+        // Buscar el libro por ID
+        $book = Book::findOrFail($id);
+
+        // Verificar si el libro está asociado a alguna edición
+        if ($book->editions()->exists()) {
+            return redirect()->route('books.list')->with('error', 'No se puede eliminar el libro porque está asociado a una edición.');
+        }
+
+        // Eliminar las relaciones en la tabla book_authors
+        BookAuthor::where('book_id', $book->id)->delete();
+
+        // Eliminar las relaciones en la tabla book_genres
+        BookGenre::where('book_id', $book->id)->delete();
+
+        // Si no está asociado a ninguna edición, proceder con la eliminación
+        $book->delete();
+
+        return redirect()->route('books.list')->with('success', 'Libro eliminado exitosamente.');
     }
 }
