@@ -57,12 +57,16 @@
                                     <button type="submit" class="btn btn-success">Mostrar</button>
                                 </form>
                             @endif
-                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('books.edit', $book->id) }}" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> &nbsp; Editar
+                            </a>
                             <form action="{{ route('books.destroy', $book->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this book?')">Delete</button>
+                                    onclick="return confirm('Are you sure you want to delete this book?')">
+                                    <i class="bi bi-trash3"></i> &nbsp; Borrar
+                                </button>
                             </form>
                         </td>
                     </tr>

@@ -37,24 +37,31 @@
                                     style="display: inline;">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-success">Desbloquear</button>
+                                    <button type="submit" class="btn btn-success">
+                                        <i class="bi bi-ban-fill"></i> &nbsp; Desbloquear
+                                    </button>
                                 </form>
                             @else
                                 <form action="{{ route('users.toggleBlock', $user->id) }}" method="POST"
                                     style="display: inline;">
                                     @csrf
                                     @method('PUT')
-                                    <button type="submit" class="btn btn-danger">Bloquear</button>
+                                    <button type="submit" class="btn btn-danger">
+                                        <i class="bi bi-ban"></i> &nbsp; Bloquear
+                                    </button>
                                 </form>
                             @endif
                             {{-- <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning">Edit</a> --}}
-                            <a href="{{ route('users.promote', $user->id) }}" class="btn btn-info">Hacer
-                                Subadministrador</a>
+                            <a href="{{ route('users.promote', $user->id) }}" class="btn btn-info">
+                                <i class="bi bi-person-up"></i> &nbsp; Ascender
+                            </a>
                             <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display: inline;">
                                 @csrf
                                 @method('PUT')
                                 <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('¿Estas seguro de elimininar este usuario?')">Borrar</button>
+                                    onclick="return confirm('¿Estas seguro de elimininar este usuario?')">
+                                    <i class="bi bi-trash3"></i> &nbsp; Borrar
+                                </button>
                             </form>
                         </td>
 

@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Book;
 use App\Models\Author;
+use App\Models\Genre;
 
 class BooksController extends Controller
 {
@@ -17,35 +18,54 @@ class BooksController extends Controller
     }
 
     public function create()
-{
-    // Obtener la lista de autores existentes
-    $existingAuthors = Author::all();
+    {
+        // Obtener la lista de autores existentes
+        $authors = Author::all();
+        $genres = Genre::all();
 
-    // Lógica para mostrar el formulario de creación con la lista de autores
-    return view('admin.management.books&editions.books.bookCreate', compact('existingAuthors'));
-}
+        // Lógica para mostrar el formulario de creación con la lista de autores
+        return view('admin.management.books&editions.books.bookCreate', compact('authors', 'genres'));
+    }
 
     public function store(Request $request)
     {
         // Validar los datos del formulario
         $validatedData = $request->validate([
-            'author_id' => 'required|exists:authors,id',
-            'self_published' => 'required|boolean',
             'original_title' => 'required|string|max:255',
-            'cover' => 'nullable|string|max:255',
-            'visible' => 'required|boolean',
+            'description' => 'nullable|string',
+            'published_date' => 'nullable|date',
+            'cover_image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'self_published' => 'nullable|boolean',
+            'visible' => 'nullable|boolean',
+            'authors' => 'required|array',
+            'authors.*' => 'exists:authors,id',
+            'genres' => 'required|array',
+            'genres.*' => 'exists:genres,id',
         ]);
 
+        // Subir la imagen de la portada y obtener la ruta almacenada
+        $coverImagePath = $request->file('cover_image')->store('public/assets/images/covers');
+
         // Crear el libro utilizando el modelo específico
-        $book = Book::create($validatedData);
+        $book = new Book([
+            'original_title' => $validatedData['original_title'],
+            'description' => $validatedData['description'],
+            'published_date' => $validatedData['published_date'],
+            'cover_image' => $coverImagePath,
+            'self_published' => $validatedData['self_published'] ?? false,
+            'visible' => $validatedData['visible'] ?? true,
+        ]);
 
-        // Asociar géneros al libro si se han seleccionado
-        if ($request->has('genres')) {
-            $book->genres()->sync($request->input('genres'));
-        }
+        // Guardar el libro en la base de datos
+        $book->save();
 
-        // Redirigir a la lista de libros con un mensaje de éxito
-        return redirect()->route('books&editions.index')->with('success', 'Libro creado exitosamente.');
+        // Adjuntar autores al libro
+        $book->authors()->attach($validatedData['authors']);
+
+        // Adjuntar géneros al libro
+        $book->genres()->attach($validatedData['genres']);
+
+        return redirect()->route('books.list')->with('success', 'Libro creado exitosamente.');
     }
 
     public function edit($id)
@@ -75,4 +95,3 @@ class BooksController extends Controller
         // Lógica para eliminar un libro
     }
 }
-

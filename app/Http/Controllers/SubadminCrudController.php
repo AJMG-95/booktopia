@@ -103,11 +103,24 @@ class SubadminCrudController extends Controller
     {
         $subadmin = User::findOrFail($id);
 
-        // Elimina definitivamente al subadmin
-        $subadmin->delete();
+        // Actualizar los campos y marcar como "eliminado"
+        $subadmin->update([
+            'nickname' => null,
+            'email' => null,
+            'password' => null,
+            'birth_date' => null,
+            'country_id' => null,
+            'profile_img' => null,
+            'rol_id' => null,
+            'strikes' => null,
+            'blocked' => false,
+            'deleted' => true,
+        ]);
 
-        return redirect()->route('subadmins.list')->with('success', 'El subadmin ha sido eliminado definitivamente.');
+        // Redirigir o realizar otras acciones después de la "eliminación"
+        return redirect()->route('subadmins.list')->with('success', 'Subadmin eliminado exitosamente.');
     }
+
 
 
     public function demoteToUser($id)

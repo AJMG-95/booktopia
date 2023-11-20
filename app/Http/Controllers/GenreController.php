@@ -29,7 +29,7 @@ class GenreController extends Controller
                 'required',
                 'string',
                 'max:255',
-                Rule::unique('genres', 'genre'), // Verificar que el nombre sea único en la tabla 'genres'
+                Rule::unique('genres', 'genre'),
             ],
             'description' => 'nullable|string|max:1000',
             'img_url' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
@@ -39,7 +39,10 @@ class GenreController extends Controller
         if ($request->hasFile('img_url')) {
             $image = $request->file('img_url');
             $imageName = Str::slug($validatedData['genre']) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/assets/images/genres', $imageName);
+
+            // Mueve la imagen al directorio público
+            $image->move(public_path('assets/images/genres'), $imageName);
+
             $validatedData['img_url'] = $imageName;
         }
 

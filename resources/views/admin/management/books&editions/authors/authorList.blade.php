@@ -26,13 +26,17 @@
                         <td>{{ $author->name }}</td>
                         <td>{{ $author->surnames }}</td>
                         <td>
-                            <a href="{{ route('authors.edit', $author->id) }}" class="btn btn-warning">Edit</a>
+                            <a href="{{ route('authors.edit', $author->id) }}" class="btn btn-warning">
+                                <i class="bi bi-pencil-square"></i> &nbsp; Editar
+                            </a>
                             <form action="{{ route('authors.destroy', $author->id) }}" method="POST"
                                 style="display: inline;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this author?')">Delete</button>
+                                    onclick="return confirm('Are you sure you want to delete this author?')">
+                                    <i class="bi bi-trash3"></i> &nbsp; Borrar
+                                </button>
                             </form>
                         </td>
                     </tr>
