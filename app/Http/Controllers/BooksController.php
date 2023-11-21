@@ -51,7 +51,7 @@ class BooksController extends Controller
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');
             $imageName = Str::slug($request->input('original_title')) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('assets/images/bookCovers', $imageName);
+            $image->move(public_path('assets/images/bookCovers'), $imageName);
             $validatedData['cover'] = $imageName;
             $book->cover = $imageName;
         }
@@ -98,7 +98,7 @@ class BooksController extends Controller
         if ($request->hasFile('cover')) {
             $image = $request->file('cover');
             $imageName = Str::slug($request->input('original_title')) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('assets/images/bookCovers', $imageName);
+            $image->move(public_path('assets/images/bookCovers'), $imageName);
 
             // Eliminar la imagen anterior
             if ($book->cover) {

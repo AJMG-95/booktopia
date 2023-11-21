@@ -84,7 +84,7 @@ class GenreController extends Controller
 
             $image = $request->file('img_url');
             $imageName = Str::slug($validatedData['genre']) . '.' . $image->getClientOriginalExtension();
-            $image->storeAs('public/assets/images/genres', $imageName);
+            $image->move(public_path('assets/images/genres'), $imageName);
             $validatedData['img_url'] = $imageName;
         }
 
