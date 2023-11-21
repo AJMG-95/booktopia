@@ -6,13 +6,13 @@
     <div class="container">
         <h2>Create Book</h2>
 
-        @if(session('success'))
+        @if (session('success'))
             <div class="alert alert-success">
                 {{ session('success') }}
             </div>
         @endif
 
-        @if(session('error'))
+        @if (session('error'))
             <div class="alert alert-danger">
                 {{ session('error') }}
             </div>
@@ -25,35 +25,31 @@
                 <input type="text" class="form-control" id="original_title" name="original_title" required>
             </div>
 
-
             <!-- Selección múltiple de autores -->
             <div class="form-group">
-                <label for="authors">Authors:</label>
-                <select id="authors" name="authors[]" class="form-control" multiple size="4">
-                    @foreach ($authors as $author)
-                        <option value="{{ $author->id }}">{{ $author->name }} {{$author->surnames}}</option>
-                    @endforeach
-                </select>
-                <button type="button" id="addAuthorBtn" class="btn btn-primary mt-2">Add Selected Authors</button>
-                <div id="selectedAuthors" class="mt-2"></div>
+                <p>Authors:</p>
+                @foreach ($authors as $author)
+                    <label for="author_{{ $author->id }}">
+                        {{ $author->name }} {{ $author->surnames }}
+                    </label>
+                    <input type="checkbox" name="authors[]" id="author_{{ $author->id }}" value="{{ $author->id }}">
+                @endforeach
             </div>
 
             <!-- Selección múltiple de géneros -->
             <div class="form-group">
-                <label for="genres">Genres:</label>
-                <select id="genres" name="genres[]" class="form-control" multiple size="4">
-                    @foreach ($genres as $genre)
-                        <option value="{{ $genre->id }}">{{ $genre->genre }}</option>
-                    @endforeach
-                </select>
-                <button type="button" id="addGenreBtn" class="btn btn-primary mt-2">Add Selected Genres</button>
-                <div id="selectedGenres" class="mt-2"></div>
+                <p>Genres:</p>
+                @foreach ($genres as $genre)
+                    <label for="genre_{{ $genre->id }}">
+                        {{ $genre->genre }}
+                    </label>
+                    <input type="checkbox" name="genres[]" id="genre_{{ $genre->id }}" value="{{ $genre->id }}">
+                @endforeach
             </div>
 
-
             <div class="form-group">
-                <label for="cover_image">Cover Image:</label>
-                <input type="file" class="form-control" id="cover_image" name="cover_image" accept="image/*" required>
+                <label for="cover">Cover Image:</label>
+                <input type="file" class="form-control" id="cover" name="cover" accept="image/*">
             </div>
 
             <div class="form-group">
@@ -66,53 +62,7 @@
                 <input type="checkbox" class="form-check" id="visible" name="visible" value="1">
             </div>
 
-
             <button type="submit" class="btn btn-success mt-3">Create Book</button>
         </form>
     </div>
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet"/>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-
-    <script>
-        $(document).ready(function () {
-            var selectedAuthors = [];
-            var selectedGenres = [];
-
-            // Evento de clic en el botón para autores
-            $('#addAuthorBtn').click(function () {
-                var selectedAuthorsList = $('#authors option:selected');
-                selectedAuthorsList.each(function (index, element) {
-                    var authorId = $(element).val();
-                    if (!selectedAuthors.includes(authorId)) {
-                        selectedAuthors.push(authorId);
-                    }
-                });
-                updateSelectedAuthors();
-            });
-
-            // Evento de clic en el botón para géneros
-            $('#addGenreBtn').click(function () {
-                var selectedGenresList = $('#genres option:selected');
-                selectedGenresList.each(function (index, element) {
-                    var genreId = $(element).val();
-                    if (!selectedGenres.includes(genreId)) {
-                        selectedGenres.push(genreId);
-                    }
-                });
-                updateSelectedGenres();
-            });
-
-            // Función para actualizar la lista de autores seleccionados
-            function updateSelectedAuthors() {
-                $('#selectedAuthors').html('<strong>Selected Authors:</strong> ' + selectedAuthors.join(', '));
-            }
-
-            // Función para actualizar la lista de géneros seleccionados
-            function updateSelectedGenres() {
-                $('#selectedGenres').html('<strong>Selected Genres:</strong> ' + selectedGenres.join(', '));
-            }
-        });
-    </script>
 @endsection

@@ -24,6 +24,7 @@ class Book extends Model
         return $this->belongsToMany(Author::class, 'book_authors');
     }
 
+
     /**
      * Get the editions of the book.
      */
@@ -39,6 +40,7 @@ class Book extends Model
     {
         return $this->belongsToMany(Genre::class, 'book_genres');
     }
+
 
     /**
      * Custom method to retrieve existing authors and return the view.
