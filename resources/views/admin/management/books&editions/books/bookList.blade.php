@@ -33,8 +33,6 @@
                                 No Image
                             @endif
                         </td>
-
-
                         <td>{{ $book->id }}</td>
                         <td>{{ $book->original_title }}</td>
                         <td>
@@ -82,7 +80,6 @@
                         </td>
                     </tr>
                 @endforeach
-
             </tbody>
         </table>
     </div>

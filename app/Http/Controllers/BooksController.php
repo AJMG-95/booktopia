@@ -71,13 +71,55 @@ class BooksController extends Controller
     public function edit($id)
     {
         $book = Book::findOrFail($id);
-        return view('admin.books.edit', compact('book'));
+        $authors = Author::all();
+        $genres = Genre::all();
+
+        return view('admin.management.books&editions.books.bookEdit', compact('book', 'authors', 'genres'));
     }
+
 
     public function update(Request $request, $id)
     {
-        // Lógica para actualizar un libro
+        $request->validate([
+            'self_published' => 'boolean',
+            'original_title' => 'required|string|max:255',
+            'visible' => 'boolean',
+            'cover' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'authors' => 'required|array',
+            'genres' => 'required|array',
+        ]);
+
+        $book = Book::findOrFail($id);
+        $book->self_published = $request->input('self_published', 0);
+        $book->original_title = $request->input('original_title');
+        $book->visible = $request->input('visible', 1);
+
+        // Procesar la imagen de la portada si se proporciona
+        if ($request->hasFile('cover')) {
+            $image = $request->file('cover');
+            $imageName = Str::slug($request->input('original_title')) . '.' . $image->getClientOriginalExtension();
+            $image->storeAs('assets/images/bookCovers', $imageName);
+
+            // Eliminar la imagen anterior
+            if ($book->cover) {
+                $coverPath = public_path('assets/images/bookCovers') . '/' . $book->cover;
+                if (File::exists($coverPath)) {
+                    File::delete($coverPath);
+                }
+            }
+
+            $book->cover = $imageName;
+        }
+
+        $book->save();
+
+        // Sincronizar autores y géneros
+        $book->authors()->sync($request->input('authors'));
+        $book->genres()->sync($request->input('genres'));
+
+        return redirect()->route('books.list')->with('success', 'Book updated successfully!');
     }
+
 
     public function toggleVisibility($id)
     {
