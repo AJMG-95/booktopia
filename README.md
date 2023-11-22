@@ -68,4 +68,6 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ## Install
 
     1. npm install
-    2. composer require twbs/bootstrap-icons, npm i bootstrap-icons
+    2. npm i bootstrap@5.3.2
+    3. npm i bootstrap-icons
+    4. composer require twbs/bootstrap-icons

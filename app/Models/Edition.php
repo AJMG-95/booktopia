@@ -59,7 +59,7 @@ class Edition extends Model
      */
     public function invoices()
     {
-        return $this->belongsToMany(Invoice::class, 'book_invoices');
+        return $this->belongsToMany(Invoice::class, 'edition_invoices');
     }
 
     /**

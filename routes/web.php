@@ -7,8 +7,10 @@ use App\Http\Controllers\SubadminCrudController;
 use App\Http\Controllers\UserCrudController;
 use App\Http\Controllers\BooksAndEditionsController;
 use App\Http\Controllers\BooksController;
+use App\Http\Controllers\EditionsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
+
 
 //*Rutas del grupo de middleware que requieren autenticación
 Route::middleware(['auth'])->group(function () {
@@ -96,7 +98,13 @@ Route::middleware(['auth'])->group(function () {
 
             // CRUD DE Ediciones
             Route::prefix('editions')->group(function () {
-                // Agrega rutas para ediciones aquí si es necesario
+                Route::get('/list', [EditionsController::class, 'index'])->name('editions.list');
+                Route::get('/create', [EditionsController::class, 'create'])->name('editions.create');
+                Route::post('/store', [EditionsController::class, 'store'])->name('editions.store');
+                Route::get('/edit/{id}', [EditionsController::class, 'edit'])->name('editions.edit');
+                Route::put('/update/{id}', [EditionsController::class, 'update'])->name('editions.update');
+                Route::get('/delete/{id}', [EditionsController::class, 'delete'])->name('editions.delete');
+                Route::delete('/destroy/{id}', [EditionsController::class, 'destroy'])->name('editions.destroy');
             });
         });
 

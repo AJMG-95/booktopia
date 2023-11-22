@@ -26,7 +26,7 @@
                                 <a href="{{ route('books.list') }}">{{ __('Gestión de Libros') }}</a>
                             </li>
                             <li class="list-group-item">
-                                <a href="{{-- {{ route('books&editions.editions.list') }} --}}">{{ __('Gestión de Ediciones') }}</a>
+                                <a href="{{ route('editions.list') }}">{{ __('Gestión de Ediciones') }}</a>
                             </li>
                         </ul>
                     </div>
