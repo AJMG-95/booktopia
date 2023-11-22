@@ -47,7 +47,7 @@
                         <td>{{ $edition->isbn }}</td>
                         <td>{{ $edition->title }}</td>
                         <td>{{ $edition->editorial }}</td>
-                        <td>{{ $edition->language->language_name }}</td>
+                        <td>{{ $edition->language->language }}</td>
                         <td>{{ $edition->price }}</td>
                         <td>
                             <a href="{{ route('editions.edit', $edition->id) }}" class="btn btn-warning">

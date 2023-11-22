@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('editorial');
             $table->date('publication_date')->nullable();
             $table->decimal('price', 8, 2)->unsigned();
-            $table->string('url')->nullable();
+            $table->string('document')->nullable();
             $table->bigInteger('book_id')->unsigned();
             $table->bigInteger('language_id')->unsigned();
             $table->boolean('deleted')->default(false);

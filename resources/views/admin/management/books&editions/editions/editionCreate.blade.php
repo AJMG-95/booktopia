@@ -55,14 +55,14 @@
                 <label for="language_id" class="form-label">Idioma</label>
                 <select class="form-select" id="language_id" name="language_id" required>
                     @foreach ($languages as $language)
-                        <option value="{{ $language->id }}">{{ $language->language_name }}</option>
+                        <option value="{{ $language->id }}">{{ $language->language }}</option>
                     @endforeach
                 </select>
             </div>
 
             <div class="mb-3">
                 <label for="price" class="form-label">Precio</label>
-                <input type="number" class="form-control" id="price" name="price" required>
+                <input type="number" step="0.01" class="form-control" id="price" name="price" required>
             </div>
 
             <div class="mb-3">
@@ -73,6 +73,11 @@
             <div class="mb-3">
                 <label for="cover" class="form-label">Cover</label>
                 <input type="file" class="form-control" id="cover" name="cover" accept="image/*" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="document" class="form-label">Documento PDF</label>
+                <input type="file" class="form-control" id="document" name="document" accept=".pdf" required>
             </div>
 
             <button type="submit" class="btn btn-primary">Crear Edición</button>
