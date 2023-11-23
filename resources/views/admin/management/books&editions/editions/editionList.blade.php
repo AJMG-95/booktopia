@@ -67,6 +67,7 @@
                 @endforeach
             </tbody>
         </table>
+        <a href="{{ route('books&editions.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
     </div>
 @endsection
 

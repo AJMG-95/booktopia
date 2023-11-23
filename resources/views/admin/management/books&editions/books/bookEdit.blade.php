@@ -67,7 +67,7 @@
                     value="1" {{ $book->visible ? 'checked' : '' }}>
             </div>
 
-            <button type="submit" class="btn btn-success mt-3">Update Book</button>
+            <button type="submit" class="btn btn-success mt-3">Acctualizar libro</button>
         </form>
     </div>
 @endsection

@@ -81,7 +81,7 @@ class EditionsController extends Controller
         $books = Book::all();
         $languages = Language::all();
         $genres = Genre::all();
-        return view('editions.edit', compact('edition', 'books', 'languages', 'genres'));
+        return view('admin.management.books&editions.editions.editionEdit', compact('edition', 'books', 'languages', 'genres'));
     }
 
     public function update(Request $request, $id)
