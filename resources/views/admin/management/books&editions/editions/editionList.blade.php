@@ -40,8 +40,8 @@
                 @foreach ($editions as $edition)
                     <tr>
                         <td>
-                            <img src="{{ $edition->cover ? asset('assets/images/editionCovers/' . $edition->cover) : 'No Image' }}" alt="{{ $edition->cover }}"
-                                class="img-thumbnail" style="max-height:5vh ">
+                            <img src="{{ $edition->cover ? asset('assets/images/editionCovers/' . $edition->cover) : 'No Image' }}"
+                                alt="{{ $edition->cover }}" class="img-thumbnail" style="max-height:5vh ">
                         </td>
                         <td>{{ $edition->id }}</td>
                         <td>{{ $edition->isbn }}</td>
@@ -70,4 +70,3 @@
         <a href="{{ route('books&editions.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
     </div>
 @endsection
-
