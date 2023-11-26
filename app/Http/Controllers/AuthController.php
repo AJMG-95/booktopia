@@ -16,11 +16,8 @@ class AuthController extends Controller
 
         if (in_array($role, $adminRoles)) {
             return view('admin.home');
-        } elseif ($role === 'user') {
-            return view('welcome');
         } else {
-            // Consider a different action for the default case, e.g., showing an error page
-            return view('error')->with('message', 'Acceso no autorizado.');
+            return view('welcome');
         }
     }
 }

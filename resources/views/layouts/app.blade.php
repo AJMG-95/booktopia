@@ -13,23 +13,29 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
-
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([
+        'resources/css/app.css',
+        'resources/css/navigation.css',
+        'resources/css/footer.css',
+        'resources/js/app.js'
+        ])
 </head>
 
 <body class="container-fluid appBody">
     <header class="appHeader">
         @include('partials.navigation')
     </header>
-    <main class="container-fluid appMain" id="app">
+
+    <div class="container-fluid appMain" id="app">
         @yield('content')
-    </main>
+    </div>
+
     <footer class="appFooter">
         @include('partials.footer')
     </footer>
-</body>
 
-<script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}"></script>
+</body>
 
 </html>

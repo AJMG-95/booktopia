@@ -118,8 +118,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/home', [AuthController::class, "index"])->name('home');
 Route::get('/', [WelcomeController::class, "index"])->name('welcome');
+Route::get('/', [AuthController::class, "index"]);
 Auth::routes();
 
 //* Otras rutas pueden ir fuera del grupo de middleware si no requieren autenticación

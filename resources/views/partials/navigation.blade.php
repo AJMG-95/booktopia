@@ -1,12 +1,16 @@
-<nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-    <div class="container">
-        @guest
-            <!-- Logo y Enlaces para Usuario No Autenticado -->
-            <a class="navbar-brand" href="{{ route('welcome') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <div class="container-fluid ms-5">
+        <a class="navbar-brand" href="{{ route('welcome') }}">
+            {{ config('app.name', 'Laravel') }}
+        </a>
+        <button class="navbar-toggler me-5" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+            aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            @guest
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                     </li>
@@ -14,48 +18,42 @@
                         <a class="nav-link" href="{{-- {{ route('shop') }} --}}">Tienda</a>
                     </li>
                 </ul>
-
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            data-bs-toggle="dropdown" aria-haspopup="true">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-person" viewBox="0 0 16 16">
                                 <path
                                     d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                             </svg>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('register') }}">Registrarse</a>
-                            <a class="dropdown-item" href="{{ route('login') }}">Iniciar Sesión</a>
-                        </div>
+                        <ul class="dropdown-menu " aria-labelledby="navbarDropdown">
+                            <li>
+                                <a class="dropdown-item" href="{{ route('login') }}">Iniciar Sesión</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('register') }}">Registrarse</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
-
-            </div>
-        @else
-            <!-- Enlaces para Usuario Autenticado -->
-            <a class="navbar-brand" href="{{ route('welcome') }}">
-                {{ config('app.name', 'Laravel') }}
-            </a>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto">
+            @else
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                     </li>
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{-- {{ route('shop') }} --}}">Tienda</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{-- {{ route('posts') }} --}}">Foro</a>
                     </li>
-
                 </ul>
-                <ul class="navbar-nav ms-auto">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                            data-bs-toggle="dropdown" aria-haspopup="true">
                             {{ Auth::user()->name }}
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                 class="bi bi-person" viewBox="0 0 16 16">
@@ -63,24 +61,39 @@
                                     d="M8 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0Zm4 8c0 1-1 1-1 1H3s-1 0-1-1 1-4 6-4 6 3 6 4Zm-1-.004c-.001-.246-.154-.986-.832-1.664C11.516 10.68 10.289 10 8 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10Z" />
                             </svg>
                         </a>
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{-- {{ route('profile') }} --}}">Perfil</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
+                            <li>
+                                <a class="dropdown-item" href="{{-- {{ route('profile') }} --}}">Perfil</a>
+                            </li>
                             @if (Auth::user()->isAdmin() || Auth::user()->isSubadmin())
-                                <a class="dropdown-item" href="{{ route('home') }}">Home</a>
+                                <li>
+                                    <a class="dropdown-item" href="{{ route('home') }}">Home</a>
+                                </li>
                             @else
-                                <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Notas</a>
-                                <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
-                                <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Autopublicacines</a>
+                                <li>
+                                    <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Notas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Autopublicacines</a>
+                                </li>
                             @endif
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault();
-                                             document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                    onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                    {{ __('Logout') }}
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link" href="{{-- {{ route('') }} --}}">
@@ -92,7 +105,7 @@
                         </a>
                     </li>
                 </ul>
-            </div>
-        @endguest
+            @endguest
+        </div>
     </div>
 </nav>
