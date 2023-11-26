@@ -13,11 +13,8 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\WelcomeController;
 
 //*Rutas del grupo de middleware que requieren autenticación
+Route::get('/home', [AuthController::class, "index"])->name('home');
 Route::middleware(['auth'])->group(function () {
-
-
-
-
     //* Rutas para las funcionalidades del administrador
     Route::middleware(['auth', 'role:admin'])->group(function () {
         // Rutas para la administración de subadmins
@@ -118,9 +115,10 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('/', [WelcomeController::class, "index"])->name('welcome');
-Route::get('/', [AuthController::class, "index"]);
+Route::get('/', [BooksController::class, "randomBooks"])->name('welcome');
+
 Auth::routes();
+
 
 //* Otras rutas pueden ir fuera del grupo de middleware si no requieren autenticación
 /* Route::get('/', function () {

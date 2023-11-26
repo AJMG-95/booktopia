@@ -176,4 +176,10 @@ class BooksController extends Controller
 
         return response()->json($authors);
     }
+
+    public function randomBooks() {
+        $randomBooks = Book::inRandomOrder()->take(4)->get();
+
+        return view('welcome', compact('randomBooks'));
+    }
 }

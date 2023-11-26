@@ -6,8 +6,9 @@ export default defineConfig({
         laravel({
             input: [
                 'resources/css/app.css',
-                'resources/css/navigation.css',
-                'resources/css/footer.css',
+                'resources/css/partials/navigation.css',
+                'resources/css/partials/footer.css',
+                'resources/css/partials/randomBooks.css',
                 'resources/js/app.js',
             ],
             refresh: true,
