@@ -1,8 +1,19 @@
 @import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
 
 
+
+
+.randomBookList {
+    padding: 10px 60px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
 .bookCard {
-    width: 300px;
+    width: 200px;
+    height: 300px;
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -14,7 +25,7 @@
 
 .image-container {
     width: 100%;
-    height: 250px;
+    height: 30.599vh;
     border-top-left-radius: inherit;
     border-top-right-radius: inherit;
     overflow: hidden;
@@ -26,6 +37,10 @@
 }
 .content {
     padding: 24px 16px;
+}
+
+.content ul {
+    list-style-type: none;
 }
 
 .profile-name {

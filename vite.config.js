@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/partials/navigation.css',
                 'resources/css/partials/footer.css',
                 'resources/css/partials/randomBooks.css',
+                'resources/css/partials/adminsHome.css',
                 'resources/js/app.js',
             ],
             refresh: true,
