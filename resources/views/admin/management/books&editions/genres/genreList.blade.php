@@ -3,14 +3,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="btn genreList-btn ms-4">
+    <div class="btn editionList-btn ms-4">
         <a href="{{ route('home') }}">Administración General</a>
     </div>
-    <div class="btn genreList-btn">
+    <div class="btn editionList-btn">
         <a href="{{ route('books&editions.index') }}">Gestión de Libros/Ediciones</a>
     </div>
-    <div class="container">
-        <h2>Genre List</h2>
+    <div class="container editionListCard">
+        <h2 class="editionListCard-header">Genre List</h2>
 
         @if (session('success'))
             <div class="alert alert-success">
@@ -24,7 +24,9 @@
             </div>
         @endif
 
-        <a href="{{ route('genres.create') }}" class="btn btn-primary mb-2">Create Genre</a>
+        <a href="{{ route('genres.create') }}" class="btn editions-btn">
+            Create Genre
+        </a>
 
         <table class="table">
             <thead>
@@ -43,7 +45,7 @@
                         <td>
                             @if ($genre->img_url)
                                 <img src="{{ asset('assets/images/genres/' . $genre->img_url) }}" alt="{{ $genre->genre }}"
-                                    class="img-thumbnail" style="max-height:5vh ">
+                                    class="img-thumbnail" style="max-height: 5vh ">
                             @else
                                 No Image
                             @endif
@@ -62,9 +64,7 @@
                                     onclick="return confirm('Are you sure you want to delete this genre?')">
                                     <i class="bi bi-trash3"></i> &nbsp; Borrar
                                 </button>
-
                             </form>
-
                         </td>
                     </tr>
                 @endforeach
