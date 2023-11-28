@@ -16,16 +16,26 @@
                             <li><h5>Autores</h5></li>
                             <li>
                                 <ul>
-                                    @foreach ($book->authors as $author)
-                                        <li><p>{{ $author->name }}</p></li>
+                                    @foreach ($book->authors->take(1) as $author)
+                                        <li><p>
+                                            {{ $author->name }}
+                                            @if ($book->authors->count() > 1)
+                                                <span>...</span>
+                                            @endif
+                                        </p></li>
                                     @endforeach
                                 </ul>
-                            </li>
+                            </li
                             <li><h5>Géneros</h5></li>
                             <li>
                                 <ul>
-                                    @foreach ($book->genres as $genre)
-                                        <li><p>{{ $genre->genre }}</p></li>
+                                    @foreach ($book->genres->take(1) as $genre)
+                                        <li><p>
+                                            {{ $genre->genre }}
+                                            @if ($book->genres->count() > 1)
+                                                <span>...</span>
+                                            @endif
+                                        </p></li>
                                     @endforeach
                                 </ul>
                             </li>
