@@ -7,7 +7,14 @@
  .appBody {
     width: 100%;
     padding: 0;
+    height: fit-content;
+    padding-top: 56px; /* Altura del appHeader */
+    padding-bottom: 80px;
+}
 
+
+.appMain {
+    min-height: calc(100vh - 136px);
 }
 
  .appHeader {
@@ -17,7 +24,7 @@
 
 
 .appFooter {
-    position: fixed;
+    position: relative;
     bottom: 0;
     background-color: #333; /* Cambia esto al color de fondo deseado */
     color: white; /* Cambia esto al color de texto deseado */

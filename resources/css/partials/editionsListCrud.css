@@ -1,0 +1,85 @@
+.container.editionListCard {
+    margin-top: 4vh;
+    border: 1px solid #d3d9df;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 20px;
+    padding: 0px;
+}
+
+.editionListCard-header {
+    background: linear-gradient(135deg, #87CEEB, #6fa1d6);
+    color: #fff;
+    font-weight: bold;
+    padding: 20px;
+    border-bottom: 1px solid #d3d9df;
+    border-radius: 15px 15px 0 0;
+}
+
+.editionListCard-body {
+    background-color: #f8f9fa;
+    padding: 30px;
+}
+
+.alert {
+    margin-bottom: 20px;
+}
+
+.editionListCard .mb-3 a.btn {
+    background: linear-gradient(135deg, #87CEEB, #6fa1d6);
+    border: 1px solid #4285f4;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    margin-left: 2vw;
+}
+
+.editionListCard .mb-3 a.btn:hover {
+    background: #4285f4;
+    color: #fff;
+}
+
+.table th, .table td {
+    text-align: center;
+}
+
+.table img {
+    max-height: 5vh;
+    max-width: 100%;
+    object-fit: cover;
+}
+
+.btn-warning, .btn-danger {
+    margin-right: 5px;
+}
+
+.editionList-btn a {
+    display: inline-block;
+    padding: 15px 30px;
+    background: linear-gradient(135deg, #87CEEB, #6fa1d6);
+    border: 1px solid #4285f4;
+    color: black;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    margin-top: 2vh;
+}
+
+.editionList-btn a:hover {
+    background: #4285f4;
+    color: #fff;
+}
+
+/* Estilos para pantallas pequeñas (menores a 770px) */
+@media (max-width: 770px) {
+    .container.editionListCard {
+        border-radius: 0;
+    }
+
+    .editionListCard-header {
+        border-radius: 0;
+    }
+}

@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="card adminCard">
-                    <div class="card-header admin-card-header">{{ __('Dashboard') }}</div>
+                    <div class="card-header admin-card-header">{{ __('Administración General') }}</div>
 
                     <div class="card-body admin-card-body">
                         @if (session('status'))
@@ -14,7 +14,6 @@
                             </div>
                         @endif
 
-                        <h3 class="admin-h3">Funcionalidades de Administrador:</h3>
                         <ul class="list-group admin-list-group">
                             <li class="list-group-item admin-list-group-item">
                                 <a class="admin-a " href="{{ route('users.list') }}">{{ __('Gestión de Usuarios') }}</a>

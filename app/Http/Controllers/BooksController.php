@@ -178,7 +178,7 @@ class BooksController extends Controller
     }
 
     public function randomBooks() {
-        $randomBooks = Book::inRandomOrder()->take(4)->get();
+        $randomBooks = Book::inRandomOrder()->take(10)->get();
 
         return view('welcome', compact('randomBooks'));
     }

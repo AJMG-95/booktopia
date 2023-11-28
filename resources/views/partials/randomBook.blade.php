@@ -3,36 +3,36 @@
         <div>
             <h2>Libros recomendados</h2>
         </div>
-        <div class="row ms-5" style="">
+        <div class="row ms-5 cardsContainer" style="">
             @foreach ($randomBooks as $book)
                 <div class="bookCard card col-md-2">
                     <div class="image-container">
                         <img src="{{ 'assets/images/bookCovers' . '/' . $book->cover }}" alt="Portada del libro">
                     </div>
                     <div class="content">
-                        <dl>
-                            <dt>Título</dt>
-                            <dd>{{ $book->original_title }}</dd>
-                            <dt>Autores</dt>
-                            <dd>
+                        <ul class="cardDefinition">
+                            <li><h5>Título</h5></li>
+                            <li><p>{{ $book->original_title }}</p></li>
+                            <li><h5>Autores</h5></li>
+                            <li>
                                 <ul>
                                     @foreach ($book->authors as $author)
-                                        <li>{{ $author->name }}</li>
+                                        <li><p>{{ $author->name }}</p></li>
                                     @endforeach
                                 </ul>
-                            </dd>
-                            <dt>Géneros</dt>
-                            <dd>
+                            </li>
+                            <li><h5>Géneros</h5></li>
+                            <li>
                                 <ul>
                                     @foreach ($book->genres as $genre)
-                                        <li>{{ $genre->genre }}</li>
+                                        <li><p>{{ $genre->genre }}</p></li>
                                     @endforeach
                                 </ul>
-                            </dd>
-                        </dl>
+                            </li>
+                        <ul/>
                     </div>
-                    <div class="social-links">
-                        <a class="instagram" href="https://instagram.com/parth.webdev">
+                    <div class="verDetalle">
+                        <a class="" href="">
                             Ver
                         </a>
                     </div>

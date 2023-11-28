@@ -10,6 +10,8 @@ export default defineConfig({
                 'resources/css/partials/footer.css',
                 'resources/css/partials/randomBooks.css',
                 'resources/css/partials/adminsHome.css',
+                'resources/css/partials/booksEditionsIndex.css',
+                'resources/css/partials/editionsListCrud.css',
                 'resources/js/app.js',
             ],
             refresh: true,

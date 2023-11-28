@@ -3,8 +3,14 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Edition List</h2>
+    <div class="btn editionList-btn ms-4">
+        <a href="{{ route('home') }}">Administración General</a>
+    </div>
+    <div class="btn editionList-btn">
+        <a href="{{ route('books&editions.index') }}">Gestión de Libros/Ediciones</a>
+    </div>
+    <div class="container editionListCard">
+        <h2 class="editionListCard-header">Lista de ediciones</h2>
 
         <!-- Mostrar mensajes de éxito o error aquí -->
         @if (session('success'))
@@ -20,7 +26,9 @@
         @endif
 
         <div class="mb-3">
-            <a href="{{ route('editions.create') }}" class="btn btn-success">Añadir Edition</a>
+            <a href="{{ route('editions.create') }}" class="btn editions-btn">
+                Añadir Edition
+            </a>
         </div>
 
         <table class="table">
@@ -41,7 +49,7 @@
                     <tr>
                         <td>
                             <img src="{{ $edition->cover ? asset('assets/images/editionCovers/' . $edition->cover) : 'No Image' }}"
-                                alt="{{ $edition->cover }}" class="img-thumbnail" style="max-height:5vh ">
+                                alt="{{ $edition->cover }}" class="img-thumbnail" style="max-height: 5vh ">
                         </td>
                         <td>{{ $edition->id }}</td>
                         <td>{{ $edition->isbn }}</td>
@@ -67,6 +75,7 @@
                 @endforeach
             </tbody>
         </table>
-        <a href="{{ route('books&editions.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
+
+
     </div>
 @endsection

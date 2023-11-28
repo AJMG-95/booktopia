@@ -3,6 +3,12 @@
 @extends('layouts.app')
 
 @section('content')
+    <div class="btn genreList-btn ms-4">
+        <a href="{{ route('home') }}">Administración General</a>
+    </div>
+    <div class="btn genreList-btn">
+        <a href="{{ route('books&editions.index') }}">Gestión de Libros/Ediciones</a>
+    </div>
     <div class="container">
         <h2>Genre List</h2>
 
@@ -36,7 +42,8 @@
                         <td>{{ $genre->id }}</td>
                         <td>
                             @if ($genre->img_url)
-                                <img src="{{ asset('assets/images/genres/' . $genre->img_url) }}" alt="{{ $genre->genre }}" class="img-thumbnail" style="max-height:5vh ">
+                                <img src="{{ asset('assets/images/genres/' . $genre->img_url) }}" alt="{{ $genre->genre }}"
+                                    class="img-thumbnail" style="max-height:5vh ">
                             @else
                                 No Image
                             @endif
