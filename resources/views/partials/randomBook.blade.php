@@ -42,7 +42,7 @@
                         <ul/>
                     </div>
                     <div class="verDetalle">
-                        <a class="" href="">
+                        <a class="" href="{{ route('books.show', ['id' => $book->id]) }}">
                             Ver
                         </a>
                     </div>

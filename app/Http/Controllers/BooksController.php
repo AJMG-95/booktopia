@@ -185,4 +185,10 @@ class BooksController extends Controller
 
         return view('welcome', compact('randomBooks'));
     }
+
+    public function show($id)
+    {
+        $book = Book::findOrFail($id);
+        return view('components.book.bookDetail', compact('book'));
+    }
 }
