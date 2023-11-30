@@ -174,4 +174,10 @@ class EditionsController extends Controller
             return redirect()->route('editions.list')->with('error', 'La edición no puede ser eliminada, pero se actualizó.');
         }
     }
+
+    public function editionsForBook(Book $book)
+    {
+        $editions = $book->editions;
+        return view('components.editions.forBook', compact('book', 'editions'));
+    }
 }

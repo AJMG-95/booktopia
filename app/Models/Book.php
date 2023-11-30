@@ -51,4 +51,17 @@ class Book extends Model
 
         return view('bookList', compact('existingAuthors'));
     }
+
+
+    public function averageRating()
+    {
+        $editions = $this->editions;
+
+        if ($editions->count() > 0) {
+            $totalRating = $editions->pluck('ratings')->flatten()->pluck('rating')->sum();
+            return $totalRating / $editions->count();
+        }
+
+        return 0;
+    }
 }

@@ -12,6 +12,7 @@ export default defineConfig({
                 'resources/css/partials/adminsHome.css',
                 'resources/css/partials/booksEditionsIndex.css',
                 'resources/css/partials/editionsListCrud.css',
+                'resources/css/components/bookDetail.css',
                 'resources/js/app.js',
             ],
             refresh: true,

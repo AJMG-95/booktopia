@@ -1,0 +1,11 @@
+.related-editions{
+    position: relative;
+    display: inline-block;
+  }
+
+  .book-icon {
+    position: absolute;
+    top: 53%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+  }
