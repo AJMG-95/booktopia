@@ -17,10 +17,12 @@ class GenreController extends Controller
         return view('admin.management.books&editions.genres.genreList', compact('genres'));
     }
 
+
     public function create()
     {
         return view('admin.management.books&editions.genres.genreCreate');
     }
+
 
     public function store(Request $request)
     {
@@ -50,10 +52,6 @@ class GenreController extends Controller
 
         return redirect()->route('genres.list')->with('success', 'Género creado exitosamente.');
     }
-
-
-
-
 
 
     public function edit($id)
@@ -93,10 +91,12 @@ class GenreController extends Controller
         return redirect()->route('genres.list')->with('success', 'Género actualizado exitosamente.');
     }
 
+
     public function delete($id)
     {
         return view('admin.management.books&editions.genres.genreDelete', compact('id'));
     }
+
 
     public function destroy($id)
     {
@@ -119,4 +119,28 @@ class GenreController extends Controller
 
         return redirect()->route('genres.list')->with('success', 'Género eliminado exitosamente.');
     }
+
+    public static function randomGenres()
+    {
+        $randomGenres = Genre::inRandomOrder()
+            ->get();
+
+        return $randomGenres ? $randomGenres->take(10) : collect();
+    }
+
+    public function show($id)
+    {
+        $genre = Genre::findOrFail($id);
+        return view('components.genres.genreDetail', compact('genre'));
+    }
+
+
+    public function booksForGenre($id)
+    {
+        $genre = Genre::findOrFail($id);
+        $books = $genre->books;
+
+        return view('components.book.forGenre', compact('genre', 'books'));
+    }
+
 }

@@ -21,6 +21,7 @@ class BooksController extends Controller
         return view('admin.management.books&editions.books.bookList', compact('books'));
     }
 
+
     public function create()
     {
         // Obtener la lista de autores existentes
@@ -30,6 +31,7 @@ class BooksController extends Controller
         // Lógica para mostrar el formulario de creación con la lista de autores
         return view('admin.management.books&editions.books.bookCreate', compact('authors', 'genres'));
     }
+
 
     public function store(Request $request)
     {
@@ -134,10 +136,12 @@ class BooksController extends Controller
         return redirect()->route('books.list')->with('success', 'La visibilidad del libro ha sido cambiada exitosamente.');
     }
 
+
     public function delete($id)
     {
         // Lógica para eliminar un libro
     }
+
 
     public function destroy($id)
     {
@@ -166,6 +170,7 @@ class BooksController extends Controller
         return redirect()->route('books.list')->with('success', 'Libro eliminado exitosamente.');
     }
 
+
     public function searchAuthors(Request $request)
     {
         $searchTerm = $request->term;
@@ -177,14 +182,15 @@ class BooksController extends Controller
         return response()->json($authors);
     }
 
+
     public function randomBooks() {
         $randomBooks = Book::where('visible', true)
                         ->inRandomOrder()
-                        ->take(10)
                         ->get();
 
-        return view('welcome', compact('randomBooks'));
+        return $randomBooks ? $randomBooks->take(10) : collect();
     }
+
 
     public function show($id)
     {

@@ -2,4 +2,5 @@
 
 @section('content')
     @include('partials.randomBook')
+    @include('partials.randomGenres')
 @endsection

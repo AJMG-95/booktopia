@@ -116,9 +116,18 @@ Route::middleware(['auth'])->group(function () {
 
 
 //! Otras rutas que no requieren autenticación
-Route::get('/', [BooksController::class, "randomBooks"])->name('welcome');
+
+Route::get('/', function () {
+    $randomBooks = app(BooksController::class)->randomBooks();
+    $randomGenres = app(GenreController::class)->randomGenres();
+
+    return view('welcome', compact('randomBooks', 'randomGenres'));
+})->name('welcome');
+
 Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
 Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
+Route::get('/genres/{id}', [GenreController::class, "show"])->name('genre.show');
+Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])->name('books.forGenre');
 
 
 Auth::routes();

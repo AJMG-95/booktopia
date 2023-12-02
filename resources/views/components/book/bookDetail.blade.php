@@ -1,4 +1,4 @@
-{{-- resources/views/books/bookDetail.blade.php --}}
+{{-- resources/views/components/book/bookDetail.blade.php --}}
 
 @extends('layouts.app') {{-- Ajusta según la estructura de tu layout --}}
 
