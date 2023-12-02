@@ -14,17 +14,10 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite([
-        'resources/css/app.css',
-        'resources/css/partials/navigation.css',
-        'resources/css/partials/footer.css',
-        'resources/css/partials/randomBooks.css',
-        'resources/css/partials/adminsHome.css',
-        'resources/css/partials/booksEditionsIndex.css',
-        'resources/css/partials/editionsListCrud.css',
-        'resources/css/components/bookDetail.css',
-        'resources/js/app.js'
-        ])
+    @vite(['resources/css/app.css',
+    'resources/css/editionsListCrud.css',
+    'resources/css/components/bookDetail.css',
+    'resources/js/app.js'])
 </head>
 
 <body class="container-fluid appBody">

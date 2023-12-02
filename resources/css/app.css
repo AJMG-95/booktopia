@@ -26,10 +26,7 @@
 .appFooter {
     position: relative;
     bottom: 0;
-    background-color: #333; /* Cambia esto al color de fondo deseado */
     color: white; /* Cambia esto al color de texto deseado */
-    padding: 20px;
-    margin-top: auto; /* Asegura que se quede en la parte inferior */
     width: 100%;
 }
 

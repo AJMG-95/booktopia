@@ -1,5 +1,4 @@
 <!-- resources/views/components/book/forGenre.blade.php -->
-
 @extends('layouts.app') {{-- Adjust according to the structure of your layout --}}
 
 @section('content')
@@ -11,25 +10,31 @@
             @forelse ($books as $book)
                 <div class="col-md-4">
                     <div class="card">
-                        <img src="{{ asset('assets/images/bookCovers/' . $book->cover) }}" class="card-img-top" alt="Portada del libro">
+                        <img src="{{ asset('assets/images/bookCovers/' . $book->cover) }}" class="card-img-top"
+                            alt="Portada del libro">
                         <div class="card-body">
                             <h5 class="card-title">{{ $book->original_title }}</h5>
                             <p class="card-text">{{ $book->description }}</p>
                             <p class="card-text">Autores:
                                 @forelse ($book->authors->take(2) as $author)
-                                    {{ $author->name }}@if (!$loop->last), @endif
+                                    {{ $author->name }}@if (!$loop->last)
+                                        ,
+                                    @endif
                                 @empty
                                     <em>No hay autores asignados.</em>
                                 @endforelse
                             </p>
                             <p class="card-text">Géneros:
                                 @forelse ($book->genres->take(2) as $bookGenre)
-                                    {{ $bookGenre->genre }}@if (!$loop->last), @endif
+                                    {{ $bookGenre->genre }}@if (!$loop->last)
+                                        ,
+                                    @endif
                                 @empty
                                     <em>No hay géneros asignados.</em>
                                 @endforelse
                             </p>
-                            <a href="{{ route('books.show', ['id' => $book->id]) }}" class="btn btn-primary">Ver Detalles</a>
+                            <a href="{{ route('books.show', ['id' => $book->id]) }}" class="btn btn-primary">Ver
+                                Detalles</a>
                         </div>
                     </div>
                 </div>
