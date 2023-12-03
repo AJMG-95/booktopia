@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->boolean('self_published')->default(false);
             $table->string('original_title', 255);
+            $table->string('translated_title', 255)->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('description')->nullable();
             $table->string('cover')->nullable();
             $table->boolean('visible')->default(true);
             $table->timestamps();
