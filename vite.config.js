@@ -14,6 +14,7 @@ export default defineConfig({
                 'resources/css/partials/editionsListCrud.css',
                 'resources/css/components/bookDetail.css',
                 'resources/js/app.js',
+                'resources/js/loginValidation.js'
             ],
             refresh: true,
         }),
