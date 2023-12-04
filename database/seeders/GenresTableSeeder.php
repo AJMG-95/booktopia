@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -112,6 +114,11 @@ class GenresTableSeeder extends Seeder
                 'genre' => 'Viajes',
                 'description' => 'Género literario que narra experiencias de viaje y descubrimientos de lugares.',
                 'img_url' => 'assets/images/genres/viajes.jpg',
+            ],
+            [
+                'genre' => 'Desconocido',
+                'description' => 'No existe el género.',
+                'img_url' => 'assets/images/genres/desconocido.jpg',
             ],
         ];
 
