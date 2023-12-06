@@ -13,13 +13,15 @@ class Edition extends Model
         'isbn',
         'title',
         'description',
+        'short_description',
         'cover',
         'editorial',
         'publication_date',
         'price',
-        'url',
+        'document',
         'book_id',
         'language_id',
+        'deleted',
     ];
 
     /**
