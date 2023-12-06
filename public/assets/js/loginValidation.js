@@ -1,46 +1,49 @@
-// loginValidation.js
-
-// Función para validar el formulario
-function formValidator(event) {
-    // Evitar el envío del formulario por defecto
+//Función para validar el formulario
+function formValidation(event) {
+    //Evitar el envio del formulario por defecto
     event.preventDefault();
 
-    // Obtener datos del formulario
+    //Obtner datos del formulario
     var email = document.getElementById("email").value;
     var password = document.getElementById("password").value;
 
-    // Validar campos
-    if (!validarCampoRequerido(email, "Correo electrónico es obligatorio")) {
+    //validar Campos
+
+    if (!validarCampoRequerido(email, "EL correo electrónico es obligatorio")) {
         return;
     }
 
     if (!validarEmail(email)) {
-        alert("Correo electrónico incorrecto");
+        alert("Correo electronico no valido");
+    }
+
+    if (!validarCampoRequerido(password, "La contraseña es obligatoria")) {
         return;
     }
 
-    if (!validarCampoRequerido(password, "Contraseña es obligatoria")) {
-        return;
-    }
-
-    // Si la validación pasa, puedes enviar el formulario
+    //Si la validación pasa, se puede enviar el formulario
     event.target.submit();
 }
 
-// Función para validar campo requerido
+//Funcion para Validar campo requerido
 function validarCampoRequerido(valor, mensajeError) {
-    if (valor.trim() === "") {
+    if (valor.trim === "") {
         alert(mensajeError);
         return false;
     }
     return true;
 }
 
-// Función para validar email
+//Función para validar el email
 function validarEmail(email) {
     var regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return regex.test(email);
 }
 
-// Agregar el evento submit al formulario
-document.querySelector("form").addEventListener("submit", formValidator);
+//Agrega el evento de submit al formulario
+window.onload = function() {
+    var form = document.getElementById('loginForm');
+    if(form) {
+        form.addEventListener('submit', formValidation);
+    }
+}
