@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Edition;
-use App\Models\Book;
 use App\Models\Author;
 use App\Models\Genre;
 
@@ -16,7 +15,7 @@ class EditionsShopController extends Controller
         $query = Edition::query();
 
         // Incluir relaciones necesarias para evitar consultas N+1
-        $query->with(['book.author', 'language']);
+        $query->with(['book.authors', 'language']); // Corrección: 'book.author' a 'book.authors'
 
         // Aplicar filtros según los parámetros de la solicitud
         if ($request->has('title')) {
@@ -24,13 +23,13 @@ class EditionsShopController extends Controller
         }
 
         if ($request->has('author')) {
-            $query->whereHas('book.author', function($q) use ($request) {
+            $query->whereHas('book.authors', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->get('author') . '%');
             });
         }
 
         if ($request->has('genre')) {
-            $query->whereHas('book.genres', function($q) use ($request) {
+            $query->whereHas('book.genres', function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->get('genre') . '%');
             });
         }
@@ -78,3 +77,4 @@ class EditionsShopController extends Controller
         return view('layouts.shop.editionsShop', compact('editions', 'authors', 'genres'));
     }
 }
+

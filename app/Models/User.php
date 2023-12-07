@@ -155,11 +155,11 @@ class User extends Authenticatable
     }
 
     /**
-     * Obtener los libros deseados por el usuario.
+     * Obtener las ediciones  deseadas por el usuario.
      */
-    public function wishedBooks()
+    public function wishes()
     {
-        return $this->hasMany(Wish::class);
+        return $this->belongsToMany(Edition::class, 'wishes')->withTimestamps()->withPivot('id')->withTimestamps();
     }
 
     /**

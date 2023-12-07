@@ -11,6 +11,7 @@ use App\Http\Controllers\EditionsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\EditionsShopController;
+use App\Http\Controllers\WishController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -112,6 +113,8 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:user'])->group(function () {
         // Rutas para la suscripción
     });
+
+    Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
 });
 
 

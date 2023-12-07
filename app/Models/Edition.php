@@ -95,4 +95,16 @@ class Edition extends Model
     {
         return $this->belongsToMany(User::class, 'favorites');
     }
+
+    public function wishes()
+    {
+        return $this->belongsToMany(User::class, 'wishes')->withTimestamps()->withPivot('id')->withTimestamps();
+    }
+
+    // Método para verificar si la edición está en la lista de deseos del usuario
+    public function isInWishlist($userId)
+    {
+        return $this->wishes->where('user_id', $userId)->isNotEmpty();
+    }
+
 }

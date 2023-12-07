@@ -6,7 +6,7 @@
             {{-- Menú lateral de filtros --}}
             <aside class="col-lg-3 col-md-4 pt-4">
                 <h2>Buscar...</h2>
-                <form action="{{  route('shop')  }}" method="GET" class="p-3">
+                <form action="{{ route('shop') }}" method="GET" class="p-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                         <input type="text" name="title" class="form-control" placeholder="Buscar por Título" />
@@ -45,7 +45,7 @@
             <main class="col-lg-9 col-md-8 pt-4">
                 <div class="d-flex justify-content-between align-items-center mb-4">
                     <select name="shortBy" class="form-select w-auto">
-                        <option value="asc_price">Menor a mayor €</option>
+                        <option value="asc_price">Menor a mayorg €</option>
                         <option value="desc_price">Mayor a menor €</option>
                         <option value="asc_title">A-Z</option>
                         <option value="desc_title">Z-A</option>
@@ -60,21 +60,33 @@
                                 <div class="card-body">
                                     <h5>{{ $edition->title }}</h5>
                                     <p class="card-text">
-                                        <strong>Autor:</strong> {{ $edition->book->author->name }}
+                                        <strong>Autor:</strong>
+                                        @if ($edition->book->authors->isNotEmpty())
+                                            {{ $edition->book->authors->first()->name }}
+                                        @else
+                                            Sin autor
+                                        @endif
                                     </p>
                                     <p class="card-text">
-                                        <strong>Género:</strong> {{ $edition->book->genres->implode('name', ', ') }}
+                                        <strong>Género:</strong>
+                                        @if ($edition->book->genres->isNotEmpty())
+                                            {{ $edition->book->genres->first()->genre }}
+                                        @else
+                                            Sin género
+                                        @endif
                                     </p>
                                     <p class="card-text">{{ $edition->short_description }} </p>
                                 </div>
-                                <div class="card-footer">
-                                    <div class="form-check form-switch">
-                                        <input type="checkbox" class="form-check-input" id="wishes{{ $edition->id }}"
-                                            onchange="toggleWishes({{ $edition->id }})">
-                                        <label class="form-check-label" for="wishes{{ $edition->id }}">Deseo</label>
+                                @auth
+                                    <div class="card-footer">
+                                        <small class="text-muted">€{{ $edition->price }}</small><br />
+                                        <form action="{{ route('wishes.add', ['id' => $edition->id]) }}" method="POST">
+                                            @csrf
+                                            <button type="submit" class="btn btn-primary">Añadir a la lista de deseos</button>
+                                        </form>
+                                        <button class="">Comprar</button>
                                     </div>
-                                    <button class="">Comprar</button>
-                                </div>
+                                @endauth
                             </div>
                         </div>
                     @endforeach
@@ -82,15 +94,29 @@
             </main>
         </div>
     </div>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script>
-        function toggleWishes(edicionId) {
-            var checkbox = document.getElementById('wishes' * libroId);
-            //Aquí deberías hacer una solcitud AJAX a tu servidor para actualizar la lista de deseos
-            if (checkbox.checked) {
-                //Código para añadir el libro a deseos
-            } else {
-                //Código para eliminar del listado de deseos
-            }
+        function toggleWishes(editionId) {
+            var checkbox = document.getElementById('wishes' + editionId);
+
+            // Realiza una solicitud AJAX para agregar o eliminar la edición de la lista de deseos
+            fetch(`/wishes/toggle/${editionId}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        editionId: editionId
+                    }),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message) {
+                        console.log(data.message);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
         }
     </script>
 @endsection

@@ -39,6 +39,7 @@ class EditionsController extends Controller
             'language_id' => 'required|exists:languages,id',
             'price' => 'required|numeric',
             'description' => '',
+            'short_description' => 'max:255',
             'cover' => 'image|mimes:jpeg,png,jpg|max:2048',
             'document' => 'required|mimes:pdf|max:2048',
         ]);
@@ -68,6 +69,7 @@ class EditionsController extends Controller
             'language_id' => $request->input('language_id'),
             'price' => $request->input('price'),
             'description' => $request->input('description'),
+            'short_description' => $request->input('short_description'),
             'cover' => $imageName ?? null,
             'document' => $pdfFileName ?? null,
         ]);
@@ -95,6 +97,7 @@ class EditionsController extends Controller
             'language_id' => 'required|exists:languages,id',
             'price' => 'required|numeric',
             'description' => '',
+            'short_description' => 'max:255',
             'cover' => 'image|mimes:jpeg,png,jpg|max:2048',
             'document' => 'nullable|mimes:pdf|max:2048', // Validación para el documento PDF
         ]);
@@ -132,6 +135,7 @@ class EditionsController extends Controller
             'isbn' => $request->input('isbn'),
             'title' => $request->input('title'),
             'description' => $request->input('description'),
+            'short_description' => $request->input('short_description'),
             'editorial' => $request->input('editorial'),
             'publication_date' => $request->input('publication_date'),
             'price' => $request->input('price'),
@@ -162,6 +166,7 @@ class EditionsController extends Controller
         if (!$libraryReferences && $invoiceReferences) {
             $edition->update([
                 'description' => null,
+                'short_description' => null,
                 'cover' => null,
                 'url' => null,
                 'deleted' => true,
