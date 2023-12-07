@@ -19,7 +19,7 @@ class Author extends Model
     ];
 
     /**
-     * Get the country that the author belongs to.
+     * Toma el pais del autor
      */
     public function country()
     {
@@ -27,12 +27,10 @@ class Author extends Model
     }
 
     /**
-     * Get the books written by the author.
+     * Toma los libros escrtos por el autor
      */
     public function books()
     {
         return $this->belongsToMany(Book::class, 'book_authors');
     }
-
-
 }

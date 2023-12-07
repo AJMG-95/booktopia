@@ -15,7 +15,7 @@ class Wish extends Model
     ];
 
     /**
-     * Get the user associated with the wish.
+     * Obtener el usuario asociado con el deseo.
      */
     public function user()
     {
@@ -23,10 +23,10 @@ class Wish extends Model
     }
 
     /**
-     * Get the edition associated with the wish.
+     * Obtener la edición asociada con el deseo.
      */
     public function edition()
     {
-        return $this->belongsTo(BookEdition::class);
+        return $this->belongsTo(Edition::class);
     }
 }

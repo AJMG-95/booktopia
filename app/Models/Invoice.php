@@ -17,7 +17,7 @@ class Invoice extends Model
     ];
 
     /**
-     * Get the user associated with the invoice.
+     * Obtener el usuario asociado con la factura.
      */
     public function user()
     {
@@ -25,7 +25,7 @@ class Invoice extends Model
     }
 
     /**
-     * Get the credit card associated with the invoice.
+     * Obtener la tarjeta de crédito asociada con la factura.
      */
     public function creditCard()
     {

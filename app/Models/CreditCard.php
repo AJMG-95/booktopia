@@ -18,7 +18,7 @@ class CreditCard extends Model
     ];
 
     /**
-     * Get the country associated with the credit card.
+     * Obtener el país asociado con la tarjeta de crédito.
      */
     public function country()
     {
@@ -26,7 +26,7 @@ class CreditCard extends Model
     }
 
     /**
-     * Get the user associated with the credit card.
+     * Obtener el usuario asociado con la tarjeta de crédito.
      */
     public function user()
     {
@@ -34,7 +34,7 @@ class CreditCard extends Model
     }
 
     /**
-     * Get the invoices associated with the credit card.
+     * Obtener las facturas asociadas con la tarjeta de crédito.
      */
     public function invoices()
     {

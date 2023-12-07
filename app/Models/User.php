@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -12,7 +13,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     * Los atributos que se pueden asignar masivamente.
      *
      * @var array
      */
@@ -32,7 +33,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     * Los atributos que deben ser ocultos para la serialización.
      *
      * @var array
      */
@@ -42,7 +43,7 @@ class User extends Authenticatable
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Los atributos que deben ser convertidos a tipos nativos.
      *
      * @var array
      */
@@ -54,34 +55,44 @@ class User extends Authenticatable
     ];
 
     /**
-     * The table associated with the model.
+     * La tabla asociada con el modelo.
      *
      * @var string
      */
     protected $table = 'users';
 
     /**
-     * Get the role that owns the user.
+     * Obtener el rol que es dueño del usuario.
      */
     public function role()
     {
         return $this->belongsTo(Role::class, 'rol_id');
     }
 
+    /**
+     * Verificar si el usuario tiene un rol específico.
+     *
+     * @param  string  $role
+     * @return bool
+     */
     public function hasRole($role)
     {
         return $this->role && $this->role->rol_name === $role;
     }
 
-
-
+    /**
+     * Verificar si el usuario tiene al menos uno de los roles especificados.
+     *
+     * @param  array  $roles
+     * @return bool
+     */
     public function hasAnyRole($roles)
     {
         return $this->role && in_array($this->role->rol_name, $roles);
     }
 
     /**
-     * Get the country that owns the user.
+     * Obtener el país que es dueño del usuario.
      */
     public function country()
     {
@@ -89,7 +100,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if the user has admin role.
+     * Determinar si el usuario tiene el rol de administrador.
+     *
+     * @return bool
      */
     public function isAdmin()
     {
@@ -97,7 +110,9 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if the user has subadmin role.
+     * Determinar si el usuario tiene el rol de subadministrador.
+     *
+     * @return bool
      */
     public function isSubadmin()
     {
@@ -105,18 +120,18 @@ class User extends Authenticatable
     }
 
     /**
-     * Determine if the user is a subscriber based on the end_at field.
+     * Determinar si el usuario es un suscriptor basado en el campo `end_at`.
      *
      * @return bool
      */
     public function isSubscriber()
     {
-        // Check if the user has an active subscription
+        // Verificar si el usuario tiene una suscripción activa
         return $this->subscriber && $this->subscriber->end_at >= now() && $this->subscriber->is_active;
     }
 
     /**
-     * Get the subscriber record associated with the user.
+     * Obtener el registro de suscriptor asociado con el usuario.
      */
     public function subscriber()
     {
@@ -124,16 +139,15 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the sticky notes for the user.
+     * Obtener las notas adhesivas del usuario.
      */
     public function stickyNotes()
     {
         return $this->hasMany(StickyNote::class);
     }
 
-
     /**
-     * Get the books in the user's library.
+     * Obtener los libros en la biblioteca del usuario.
      */
     public function library()
     {
@@ -141,7 +155,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the books wished by the user.
+     * Obtener los libros deseados por el usuario.
      */
     public function wishedBooks()
     {
@@ -149,7 +163,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the favorite books of the user.
+     * Obtener los libros favoritos del usuario.
      */
     public function favoriteBooks()
     {
@@ -157,24 +171,22 @@ class User extends Authenticatable
     }
 
     /**
-     * Get the author profile if the user is also an author.
+     * Obtener el perfil de autor si el usuario también es un autor.
      */
     public function authorProfile()
     {
         return $this->hasOne(UserAuthor::class);
     }
 
-
-
     /**
-     * Override the delete method to mark the user as "deleted" and clear sensitive data.
+     * Anular el método de eliminación para marcar al usuario como "eliminado" y borrar los datos sensibles.
      *
      * @return bool|null
      * @throws \Exception
      */
     public function delete()
     {
-        // Clear sensitive data
+        // Limpiar datos sensibles
         $this->nickname = null;
         $this->email = null;
         $this->password = null;
@@ -185,10 +197,10 @@ class User extends Authenticatable
         $this->strikes = null;
         $this->blocked = false;
 
-        // Mark the user as "deleted"
+        // Marca al usuario como borrado
         $this->deleted = true;
 
-        // Save the changes
+        // Guarda los cambios
         $this->save();
 
         return true;

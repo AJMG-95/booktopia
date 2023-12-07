@@ -15,15 +15,15 @@ class BookInvoice extends Model
     ];
 
     /**
-     * Get the edition associated with the book invoice.
+     * Toma las ediciones asociadas a la factura
      */
     public function edition()
     {
-        return $this->belongsTo(BookEdition::class, 'edition_id');
+        return $this->belongsTo(Edition::class, 'edition_id');
     }
 
     /**
-     * Get the invoice associated with the book invoice.
+     * Toma la factura asociada a la factura del libro
      */
     public function invoice()
     {

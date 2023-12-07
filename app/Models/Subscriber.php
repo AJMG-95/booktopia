@@ -10,7 +10,7 @@ class Subscriber extends Model
     use HasFactory;
 
     /**
-     * The attributes that are mass assignable.
+     * Los atributos que se pueden asignar masivamente.
      *
      * @var array
      */
@@ -21,7 +21,7 @@ class Subscriber extends Model
     ];
 
     /**
-     * The attributes that should be cast to native types.
+     * Los atributos que deben ser convertidos a tipos nativos.
      *
      * @var array
      */
@@ -31,7 +31,7 @@ class Subscriber extends Model
     ];
 
     /**
-     * Get the user that owns the subscription.
+     * Obtener el usuario que es dueño de la suscripción.
      */
     public function user()
     {

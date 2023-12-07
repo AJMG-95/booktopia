@@ -16,7 +16,7 @@ class MyLibrary extends Model
     ];
 
     /**
-     * Get the user who owns the library entry.
+     * Obtener el usuario que posee la entrada en la biblioteca.
      */
     public function user()
     {
@@ -24,7 +24,7 @@ class MyLibrary extends Model
     }
 
     /**
-     * Get the edition associated with the library entry.
+     * Obtener la edición asociada con la entrada en la biblioteca.
      */
     public function edition()
     {

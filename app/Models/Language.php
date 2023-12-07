@@ -16,7 +16,7 @@ class Language extends Model
     ];
 
     /**
-     * Get the editions associated with the language.
+     * Obtener las ediciones asociadas con el idioma.
      */
     public function editions()
     {

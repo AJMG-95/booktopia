@@ -16,7 +16,7 @@ class Genre extends Model
     ];
 
     /**
-     * Get the books associated with the genre.
+     * Obtener los libros asociados con el género.
      */
     public function books()
     {

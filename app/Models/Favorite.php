@@ -15,7 +15,7 @@ class Favorite extends Model
     ];
 
     /**
-     * Get the user who marked the edition as favorite.
+     * Obtener el usuario que marcó la edición como favorita.
      */
     public function user()
     {
@@ -23,7 +23,7 @@ class Favorite extends Model
     }
 
     /**
-     * Get the edition associated with the favorite.
+     * Obtener la edición asociada con la favorita.
      */
     public function edition()
     {

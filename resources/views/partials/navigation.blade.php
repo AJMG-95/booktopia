@@ -30,7 +30,7 @@
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{-- {{ route('shop') }} --}}">Tienda</a>
+                            <a class="nav-link" href="{{ route('shop') }}">Tienda</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
@@ -59,7 +59,7 @@
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{-- {{ route('shop') }} --}}">Tienda</a>
+                            <a class="nav-link" href="{{ route('shop') }}">Tienda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{-- {{ route('posts') }} --}}">Foro</a>

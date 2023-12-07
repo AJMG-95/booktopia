@@ -16,7 +16,7 @@ class Country extends Model
     ];
 
     /**
-     * Get the authors associated with the country.
+     * Toma los autores asociados al pais
      */
     public function authors()
     {
@@ -24,7 +24,7 @@ class Country extends Model
     }
 
     /**
-     * Get the users associated with the country.
+     * Toma los usuarios asociados al pais
      */
     public function users()
     {
@@ -32,7 +32,7 @@ class Country extends Model
     }
 
     /**
-     * Get the credit cards associated with the country.
+     * Toma las tarjetas asociados al pais
      */
     public function creditCards()
     {

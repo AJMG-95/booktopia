@@ -10,7 +10,7 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\EditionsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\EditionsShopController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -128,6 +128,6 @@ Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
 Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
 Route::get('/genres/{id}', [GenreController::class, "show"])->name('genre.show');
 Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])->name('books.forGenre');
-
+Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
 
 Auth::routes();
