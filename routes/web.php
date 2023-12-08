@@ -115,6 +115,14 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
+
+    Route::get('/purchase/{id}', [EditionsShopController::class, 'showPurchaseForm'])->name('purchase.show');
+    Route::get('/editions/{id}/purchase', [EditionsShopController::class, 'showPurchaseForm'])
+        ->name('purchase.form');
+    Route::post('/editions/{id}/purchase', [EditionsShopController::class, 'processPurchase'])
+        ->name('purchase.process');
+    // En tu archivo web.php (o en el archivo de rutas correspondiente)
+    Route::get('/purchase/success', [PurchaseController::class, 'success'])->name('purchase.success');
 });
 
 

@@ -84,7 +84,10 @@
                                             @csrf
                                             <button type="submit" class="btn btn-primary">Añadir a la lista de deseos</button>
                                         </form>
-                                        <button class="">Comprar</button>
+                                        <form action="{{ route('purchase.show', ['id' => $edition->id]) }}" method="GET">
+                                            @csrf
+                                            <button type="submit" class="btn btn-success">Comprar</button>
+                                        </form>
                                     </div>
                                 @endauth
                             </div>

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('invoice_code', 255);
             $table->float('amount');
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('edition_id')->unsigned();
             $table->bigInteger('card_id')->unsigned();
             $table->timestamps();
 
