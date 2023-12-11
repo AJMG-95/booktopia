@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-Use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 
@@ -101,11 +101,22 @@ class EditionsShopController extends Controller
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-            // Crear el PaymentIntent
+            list($expirationMonth, $expirationYear) = explode('/', $request->expiration_date);
+            // Crear un Token de Stripe utilizando los Elementos de Stripe
+            $token = \Stripe\Token::create([
+                'card' => [
+                    'number' => $request->card_number,
+                    'exp_month' => $expirationMonth,
+                    'exp_year' => $expirationYear,
+                    'cvc' => $request->cvc,
+                ],
+            ]);
+
+            // Crear el PaymentIntent utilizando el Token
             $paymentIntent = \Stripe\PaymentIntent::create([
                 'amount' => $edition->price * 100, // Precio en centavos
                 'currency' => 'eur',
-                'payment_method' => $request->payment_method,
+                'payment_method' => $token->id,
                 'confirmation_method' => 'manual',
                 'confirm' => true,
                 'return_url' => route('purchase.success'), // Especifica tu ruta de éxito aquí
@@ -196,5 +207,4 @@ class EditionsShopController extends Controller
             ]);
         }
     }
-
 }

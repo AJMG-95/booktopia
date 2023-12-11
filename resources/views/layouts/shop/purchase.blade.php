@@ -16,24 +16,33 @@
                         <form action="{{ route('purchase.process', ['id' => $edition->id]) }}" method="post" id="payment-form">
                             @csrf
                             <div id="card-element">
-                                <!-- Elemento donde se mostrará el formulario de Stripe -->
+                                <div class="form-group mt-3">
+                                    <label for="card_holder_name">Nombre del titular de la tarjeta</label>
+                                    <input type="text" name="card_holder_name" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="card_number">Número de tarjeta</label>
+                                    <input type="text" name="card_number" class="form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="expiration_date">Fecha de caducidad  (MM/YY)</label>
+                                    <input type="text" name="expiration_date" class="form-control" placeholder="MM/YY" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="payment_method">Método de pago</label>
+                                    <select name="payment_method" class="form-control" required>
+                                        <option value="card">Tarjeta de crédito/débito</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="cvv">CVV</label>
+                                    <input type="text" name="cvv" class="form-control" required>
+                                </div>
                             </div>
 
                             <!-- Se muestra el resultado de la validación -->
                             <div id="card-errors" role="alert"></div>
 
-                            <!-- Hidden input para almacenar el PaymentMethod ID -->
-                            <input type="hidden" name="payment_method" id="payment_method">
-
-                            <div class="form-group mt-3">
-                                <label for="card_holder_name">Nombre del titular de la tarjeta</label>
-                                <input type="text" name="card_holder_name" class="form-control" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="expiration_date">Fecha de caducidad</label>
-                                <input type="text" name="expiration_date" class="form-control" placeholder="MM/YY" required>
-                            </div>
 
                             <button type="submit" class="btn btn-primary">Realizar Pago</button>
                         </form>
