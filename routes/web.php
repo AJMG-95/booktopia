@@ -13,6 +13,7 @@ use App\Http\Controllers\GenreController;
 use App\Http\Controllers\EditionsShopController;
 use App\Http\Controllers\WishController;
 use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\StickyNotesController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -112,10 +113,18 @@ Route::middleware(['auth'])->group(function () {
 
     //* Rutas para las funcionalidades de Usuarios
     Route::middleware(['auth', 'role:user'])->group(function () {
-        // Rutas para la suscripción
     });
 
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
+
+
+    Route::get('/notes', [StickyNotesController::class, 'index'])->name('notes.index');
+    Route::get('/notes/create', [StickyNotesController::class, 'create'])->name('notes.create');
+    Route::post('/notes', [StickyNotesController::class, 'store'])->name('notes.store');
+    Route::get('/notes/{stickyNote}', [StickyNotesController::class, 'show'])->name('notes.show');
+    Route::get('/notes/{stickyNote}/edit', [StickyNotesController::class, 'edit'])->name('notes.edit');
+    Route::put('/notes/{stickyNote}', [StickyNotesController::class, 'update'])->name('notes.update');
+    Route::delete('/notes/{stickyNote}', [StickyNotesController::class, 'destroy'])->name('notes.destroy');
 
     Route::get('/purchase/{id}', [EditionsShopController::class, 'showPurchaseForm'])->name('purchase.show');
     Route::get('/editions/{id}/purchase', [EditionsShopController::class, 'showPurchaseForm'])
@@ -124,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('purchase.process');
     // En tu archivo web.php (o en el archivo de rutas correspondiente)
     Route::get('/purchase/success', [PurchaseController::class, 'success'])->name('purchase.success');
+
 });
 
 

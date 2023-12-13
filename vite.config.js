@@ -13,6 +13,7 @@ export default defineConfig({
                 'resources/css/partials/booksEditionsIndex.css',
                 'resources/css/partials/editionsListCrud.css',
                 'resources/css/components/bookDetail.css',
+                'resources/css/layouts/notesList.css',
                 'resources/js/app.js',
                 'resources/js/loginValidation.js'
             ],

@@ -86,7 +86,7 @@
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Notas</a>
+                                        <a class="dropdown-item" href="{{ route('notes.index') }}">Mis Notas</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
