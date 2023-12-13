@@ -12,6 +12,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\EditionsShopController;
 use App\Http\Controllers\WishController;
+use App\Http\Controllers\PurchaseController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -140,5 +141,9 @@ Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->
 Route::get('/genres/{id}', [GenreController::class, "show"])->name('genre.show');
 Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])->name('books.forGenre');
 Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
+
+Route::get('/compra/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
+Route::post('/compra', [PurchaseController::class, 'make'])->name('purchase.make');
+
 
 Auth::routes();

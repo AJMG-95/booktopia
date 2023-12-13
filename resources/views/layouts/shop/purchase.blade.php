@@ -2,97 +2,53 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">Realizar Compra</div>
+        <h2>Formulario de pago</h2>
+        <form action="{{ route('purchase.make') }}" method="POST" id="payment-form">
+            @csrf
+            <input type="hidden" name="edition_id" value="{{ $edition->id }}">
+            <div id="card_element">
 
-                    <div class="card-body">
-                        <h2>{{ $edition->book->title }}</h2>
-                        <p><strong>Autor:</strong> {{ $edition->book->authors->pluck('name')->implode(', ') }}</p>
-                        <p><strong>Género:</strong> {{ $edition->book->genres->pluck('genre')->implode(', ') }}</p>
-                        <p><strong>Precio:</strong> €{{ $edition->price }}</p>
-
-                        <form action="{{ route('purchase.process', ['id' => $edition->id]) }}" method="post" id="payment-form">
-                            @csrf
-                            <div id="card-element">
-                                <div class="form-group mt-3">
-                                    <label for="card_holder_name">Nombre del titular de la tarjeta</label>
-                                    <input type="text" name="card_holder_name" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="card_number">Número de tarjeta</label>
-                                    <input type="text" name="card_number" class="form-control" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="expiration_date">Fecha de caducidad  (MM/YY)</label>
-                                    <input type="text" name="expiration_date" class="form-control" placeholder="MM/YY" required>
-                                </div>
-                                <div class="form-group">
-                                    <label for="payment_method">Método de pago</label>
-                                    <select name="payment_method" class="form-control" required>
-                                        <option value="card">Tarjeta de crédito/débito</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="cvv">CVV</label>
-                                    <input type="text" name="cvv" class="form-control" required>
-                                </div>
-                            </div>
-
-                            <!-- Se muestra el resultado de la validación -->
-                            <div id="card-errors" role="alert"></div>
-
-
-                            <button type="submit" class="btn btn-primary">Realizar Pago</button>
-                        </form>
-                    </div>
-                </div>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="card-holder-name" class="form-label">
+                    Nombre del titular de la tarjeta
+                </label>
+                <input type="text" class="form-control" id="card-holder-name" name="card-holder-name" required>
+            </div>
+            <div class="mb-3">
+                <label for="payment-method" class="form-label">
+                    Método de pago
+                </label>
+                <select class="form-control" id="payment_method" name="payment_method" required disabled>
+                    <option value="card" selected>Tarjeta de crédito</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="card-holder-name" class="form-label">
+                    Número de la tarjeta
+                </label>
+                <input type="text" class="form-control" id="card-number" name="card-number" required>
+            </div>
+            <div class="mb-3">
+                <label for="card-cvv" class="form-label">
+                    Código CVV
+                </label>
+                <input type="text" class="form-control" id="card-cvv" name="card-cvv" required>
+            </div>
+            <div class="mb-3">
+                <label for="expiry" class="form-label">Fecha de expiración (MM/YY)</label>
+                <input type="text" class="form-control" id="expiry" name="expiry" required>
+            </div>
+            <div class="mb-3">
+                <label for="edition-price" class="form-label">
+                    Precio
+                </label>
+                <input type="text" class="form-control" name="edition_price" id="edition_price"
+                    value="{{ $edition->price }}" readonly>
+            </div>
+            <button type="submit" class="btn btn-primary" id="submit-button">Comprar</button>
+
+        </form>
     </div>
 
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        var stripe = Stripe('{{ config('services.stripe.key') }}');
-        var elements = stripe.elements();
-
-        var style = {
-            base: {
-                fontSize: '16px',
-                color: '#32325d',
-            },
-        };
-
-        var card = elements.create('card', { style: style });
-        card.mount('#card-element');
-
-        card.addEventListener('change', function(event) {
-            var displayError = document.getElementById('card-errors');
-            if (event.error) {
-                displayError.textContent = event.error.message;
-            } else {
-                displayError.textContent = '';
-            }
-        });
-
-        var form = document.getElementById('payment-form');
-
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-
-            stripe.createPaymentMethod({
-                type: 'card',
-                card: card,
-            }).then(function(result) {
-                if (result.error) {
-                    var errorElement = document.getElementById('card-errors');
-                    errorElement.textContent = result.error.message;
-                } else {
-                    document.getElementById('payment_method').value = result.paymentMethod.id;
-                    form.submit();
-                }
-            });
-        });
-    </script>
 @endsection

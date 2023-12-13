@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
+use Stripe\Stripe;
+use Stripe\PaymentIntent;
 
 use App\Models\Edition;
 use App\Models\Author;
@@ -101,42 +103,29 @@ class EditionsShopController extends Controller
         \Stripe\Stripe::setApiKey(config('services.stripe.secret'));
 
         try {
-            list($expirationMonth, $expirationYear) = explode('/', $request->expiration_date);
-            // Crear un Token de Stripe utilizando los Elementos de Stripe
-            $token = \Stripe\Token::create([
-                'card' => [
-                    'number' => $request->card_number,
-                    'exp_month' => $expirationMonth,
-                    'exp_year' => $expirationYear,
-                    'cvc' => $request->cvc,
-                ],
-            ]);
-
             // Crear el PaymentIntent utilizando el Token
             $paymentIntent = \Stripe\PaymentIntent::create([
                 'amount' => $edition->price * 100, // Precio en centavos
                 'currency' => 'eur',
-                'payment_method' => $token->id,
+                'payment_method' => $request->stripeToken,
                 'confirmation_method' => 'manual',
                 'confirm' => true,
-                'return_url' => route('purchase.success'), // Especifica tu ruta de éxito aquí
             ]);
 
             // Guardar la tarjeta en la base de datos
             $user = Auth::user();
             $this->saveCreditCard($request, $user->id);
 
-            // Actualizar el estado del PaymentIntent (confirmar el pago)
-            $paymentIntent->confirm();
-
             // Crear la factura
             $this->createInvoice($user->id, $edition->id, $paymentIntent->id, $edition->price);
 
-            return response()->json(['success' => true, 'paymentIntent' => $paymentIntent->client_secret]);
+            return response()->json(['success' => true, 'paymentIntentId' => $paymentIntent->id, 'clientSecret' => $paymentIntent->client_secret]);
         } catch (\Stripe\Exception\CardException $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
     }
+
+
 
     private function saveCreditCard($request, $userId)
     {
