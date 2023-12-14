@@ -78,7 +78,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
                                 <li>
-                                    <a class="dropdown-item" href="{{-- {{ route('profile') }} --}}">Perfil</a>
+                                    <a class="dropdown-item" href="{{ route('user.show') }}">Mi Perfil</a>
                                 </li>
                                 @if (Auth::user()->isAdmin() || Auth::user()->isSubadmin())
                                     <li>

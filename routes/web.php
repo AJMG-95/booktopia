@@ -14,6 +14,7 @@ use App\Http\Controllers\EditionsShopController;
 use App\Http\Controllers\WishController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StickyNotesController;
+use App\Http\Controllers\UserController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -112,9 +113,6 @@ Route::middleware(['auth'])->group(function () {
 
 
     //* Rutas para las funcionalidades de Usuarios
-    Route::middleware(['auth', 'role:user'])->group(function () {
-    });
-
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
 
 
@@ -126,14 +124,30 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/notes/{stickyNote}', [StickyNotesController::class, 'update'])->name('notes.update');
     Route::delete('/notes/{stickyNote}', [StickyNotesController::class, 'destroy'])->name('notes.destroy');
 
+
+    Route::get('/profile', [UserController::class, 'show'])->name('user.show');
+
+    Route::get('/user/edit/{field}', [UserController::class, 'edit'])->name('user.edit');
+    Route::post('/user/update/{field}', [UserController::class, 'update'])->name('user.update');
+
+
+
+    Route::get('/user/editNickname', [UserController::class, 'editNickname'])->name('user.editNickname');
+    Route::put('/user/updateNickname', [UserController::class, 'updateNickname'])->name('user.updateNickname');
+    Route::get('/user/editEmail', [UserController::class, 'editEmail'])->name('user.editEmail');
+    Route::put('/user/updateEmail', [UserController::class, 'updateEmail'])->name('user.updateEmail');
+    Route::get('/user/editPassword', [UserController::class, 'editPassword'])->name('user.editPassword');
+    Route::put('/user/updatePassword', [UserController::class, 'updatePassword'])->name('user.updatePassword');
+
+
+
+    //! NO FUNCIONA AUN
     Route::get('/purchase/{id}', [EditionsShopController::class, 'showPurchaseForm'])->name('purchase.show');
     Route::get('/editions/{id}/purchase', [EditionsShopController::class, 'showPurchaseForm'])
         ->name('purchase.form');
     Route::post('/editions/{id}/purchase', [EditionsShopController::class, 'processPurchase'])
         ->name('purchase.process');
-    // En tu archivo web.php (o en el archivo de rutas correspondiente)
     Route::get('/purchase/success', [PurchaseController::class, 'success'])->name('purchase.success');
-
 });
 
 
