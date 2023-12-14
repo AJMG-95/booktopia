@@ -14,6 +14,8 @@ export default defineConfig({
                 'resources/css/partials/editionsListCrud.css',
                 'resources/css/components/bookDetail.css',
                 'resources/css/layouts/notesList.css',
+                'resources/css/layouts/notesCreate.css',
+                'resources/css/layouts/notesShow.css',
                 'resources/js/app.js',
                 'resources/js/loginValidation.js'
             ],

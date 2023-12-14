@@ -1,0 +1,81 @@
+        /* Estilos para la vista de detalle de la nota */
+        .note-container {
+            max-width: 800px;
+            margin: 20px auto;
+            background-color: #ffc;
+            padding: 20px;
+            box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+            transition: transform 0.15s linear;
+        }
+
+        .note-container:hover {
+            box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+        }
+
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+
+        a {
+
+            text-decoration: none !important;
+        }
+
+        a:hover {
+            text-decoration: underline !important;
+        }
+
+        form>button {
+            padding: 10px 15px;
+            background-color: #dc3545;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form>button:hover {
+            background-color: #c82333;
+        }
+
+        .edit-link {
+            padding: 10px 15px;
+            background-color: #32cc4b;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .edit-link:hover {
+            text-decoration: none;
+            background-color: #23c87b;
+        }
+
+
+        .back-link {
+            padding: 9px 9px;
+            background-color: #323ccc;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            text-decoration: none;
+            background-color: #233cc8;
+        }
