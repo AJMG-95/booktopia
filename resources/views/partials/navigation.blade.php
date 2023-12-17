@@ -88,6 +88,9 @@
                                         <a class="dropdown-item" href="{{ route('notes.index') }}">Mis Notas</a>
                                     </li>
                                     <li>
+                                        <a class="dropdown-item" href="{{ route('wishlist.show') }}">Mi Lista de Deseos</a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
                                     </li>
                                     <li>

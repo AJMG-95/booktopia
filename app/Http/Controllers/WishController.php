@@ -5,9 +5,28 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Wish;
+use App\Models\Edition;
 
 class WishController extends Controller
 {
+
+
+    /**
+     * Mostrar la lista de ediciones deseadas por el usuario.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showWishlist()
+    {
+        // Obtener el ID del usuario actual
+        $userId = Auth::id();
+
+        // Obtener la lista de ediciones deseadas por el usuario
+        $wishlist = Wish::where('user_id', $userId)->with('edition')->get();
+
+        return view('layouts.user.wishes.wishesList', compact('wishlist'));
+    }
+
     /**
      * Agregar una edición a la lista de deseos.
      *
@@ -53,7 +72,4 @@ class WishController extends Controller
         // Devolver una respuesta JSON indicando que la edición no estaba en la lista de deseos
         return response()->json(['message' => 'La edición no estaba en la lista de deseos']);
     }
-
-
-
 }

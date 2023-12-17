@@ -78,17 +78,22 @@
                                     <p class="card-text">{{ $edition->short_description }} </p>
                                 </div>
                                 @auth
-                                    <div class="card-footer">
-                                        <small class="text-muted">€{{ $edition->price }}</small><br />
-                                        <form action="{{ route('wishes.add', ['id' => $edition->id]) }}" method="POST">
-                                            @csrf
-                                            <button type="submit" class="btn btn-primary">Añadir a la lista de deseos</button>
-                                        </form>
-                                        <form action="{{ route('purchase.show', ['id' => $edition->id]) }}" method="GET">
-                                            @csrf
-                                            <button type="submit" class="btn btn-success">Comprar</button>
-                                        </form>
-                                    </div>
+                                    @if (!Auth::user()->isAdmin())
+                                        @if (!Auth::user()->isSubadmin())
+                                            <div class="card-footer">
+                                                <small class="text-muted">€{{ $edition->price }}</small><br />
+                                                <form action="{{ route('wishes.add', ['id' => $edition->id]) }}" method="POST">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-primary">Añadir a deseos</button>
+                                                </form>
+                                                <form action="{{ route('purchase.show', ['id' => $edition->id]) }}"
+                                                    method="GET">
+                                                    @csrf
+                                                    <button type="submit" class="btn btn-success">Comprar</button>
+                                                </form>
+                                            </div>
+                                        @endif
+                                    @endif
                                 @endauth
                             </div>
                         </div>

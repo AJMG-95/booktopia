@@ -123,6 +123,7 @@ Route::middleware(['auth'])->group(function () {
 
     /* Rutas para los deseos */
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
+    Route::get('/wishlist', [WishController::class, 'showWishlist'])->name('wishlist.show');
 
 
     /* Rutas para las notas */
