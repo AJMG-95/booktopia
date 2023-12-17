@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Navigation</title>
-    @vite([
-    'resources/css/partials/navigation.css'])
+    @vite(['resources/css/partials/navigation.css'])
 </head>
 
 <body>
@@ -78,7 +77,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
                                 <li>
-                                    <a class="dropdown-item" href="{{-- {{ route('profile') }} --}}">Perfil</a>
+                                    <a class="dropdown-item" href="{{ route('profile.edit') }}">Perfil</a>
                                 </li>
                                 @if (Auth::user()->isAdmin() || Auth::user()->isSubadmin())
                                     <li>

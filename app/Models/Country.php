@@ -30,12 +30,4 @@ class Country extends Model
     {
         return $this->hasMany(User::class);
     }
-
-    /**
-     * Toma las tarjetas asociados al pais
-     */
-    public function creditCards()
-    {
-        return $this->hasMany(CreditCard::class);
-    }
 }

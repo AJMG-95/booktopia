@@ -14,6 +14,7 @@ use App\Http\Controllers\EditionsShopController;
 use App\Http\Controllers\WishController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\StickyNotesController;
+use App\Http\Controllers\ProfileController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -115,9 +116,16 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:user'])->group(function () {
     });
 
+    /* Rutas para el perfil */
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    /* Rutas para los deseos */
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
 
 
+    /* Rutas para las notas */
     Route::get('/notes', [StickyNotesController::class, 'index'])->name('notes.index');
     Route::get('/notes/create', [StickyNotesController::class, 'create'])->name('notes.create');
     Route::post('/notes', [StickyNotesController::class, 'store'])->name('notes.store');
@@ -126,6 +134,8 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/notes/{stickyNote}', [StickyNotesController::class, 'update'])->name('notes.update');
     Route::delete('/notes/{stickyNote}', [StickyNotesController::class, 'destroy'])->name('notes.destroy');
 
+
+    /*Rutas para las compras  */
     Route::get('/purchase/{id}', [EditionsShopController::class, 'showPurchaseForm'])->name('purchase.show');
     Route::get('/editions/{id}/purchase', [EditionsShopController::class, 'showPurchaseForm'])
         ->name('purchase.form');
@@ -138,7 +148,6 @@ Route::middleware(['auth'])->group(function () {
 
 
 //! Otras rutas que no requieren autenticación
-
 Route::get('/', function () {
     $randomBooks = app(BooksController::class)->randomBooks();
     $randomGenres = app(GenreController::class)->randomGenres();
@@ -157,3 +166,6 @@ Route::post('/compra', [PurchaseController::class, 'make'])->name('purchase.make
 
 
 Auth::routes();
+
+
+require __DIR__.'/auth.php';

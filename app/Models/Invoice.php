@@ -24,11 +24,4 @@ class Invoice extends Model
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Obtener la tarjeta de crédito asociada con la factura.
-     */
-    public function creditCard()
-    {
-        return $this->belongsTo(CreditCard::class, 'card_id');
-    }
 }

@@ -37,4 +37,3 @@ class LanguagesTableSeeder extends Seeder
         }
     }
 }
-

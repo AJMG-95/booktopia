@@ -73,4 +73,3 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
     4. composer require twbs/bootstrap-icons
     4. composer require stripe/stripe-php
     5. npm install font-awesome
-

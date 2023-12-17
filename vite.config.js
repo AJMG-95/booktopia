@@ -5,19 +5,8 @@ export default defineConfig({
     plugins: [
         laravel({
             input: [
-                'resources/css/app.css',
-                'resources/css/partials/navigation.css',
-                'resources/css/partials/footer.css',
-                'resources/css/partials/randomBooks.css',
-                'resources/css/partials/adminsHome.css',
-                'resources/css/partials/booksEditionsIndex.css',
-                'resources/css/partials/editionsListCrud.css',
-                'resources/css/components/bookDetail.css',
-                'resources/css/layouts/notesList.css',
-                'resources/css/layouts/notesCreate.css',
-                'resources/css/layouts/notesShow.css',
+                'resources/sass/app.scss',
                 'resources/js/app.js',
-                'resources/js/loginValidation.js'
             ],
             refresh: true,
         }),

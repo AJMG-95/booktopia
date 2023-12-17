@@ -26,7 +26,7 @@ return new class extends Migration
             $table->integer('strikes')->unsigned()->default(0)->nullable();
             $table->boolean('blocked')->default(false)->nullable();
             $table->boolean('deleted')->default(false);
-            $table->string('biography')->nullable();
+            $table->text('biography')->nullable();
             $table->rememberToken();
             $table->timestamps();
 
