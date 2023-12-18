@@ -38,4 +38,6 @@ class Wish extends Model
     {
         return $this->belongsTo(Edition::class);
     }
+
+
 }

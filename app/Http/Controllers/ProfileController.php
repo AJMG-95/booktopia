@@ -8,9 +8,21 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\Wish;
 
 class ProfileController extends Controller
 {
+
+    public function index()
+    {
+        $user = auth()->user();
+
+        // Obtener deseos del usuario con las ediciones asociadas
+        $wishlistBooks = Wish::with('edition')->where('user_id', $user->id)->get();
+
+        return view('profile.profileIndex', compact('wishlistBooks'));
+    }
+
     /**
      * Display the user's profile form.
      */
