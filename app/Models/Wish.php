@@ -9,13 +9,22 @@ class Wish extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'user_id',
-        'edition_id',
-    ];
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'wishes';
 
     /**
-     * Get the user associated with the wish.
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = ['user_id', 'edition_id'];
+
+    /**
+     * Get the user that owns the wish.
      */
     public function user()
     {
@@ -23,10 +32,12 @@ class Wish extends Model
     }
 
     /**
-     * Get the edition associated with the wish.
+     * Get the edition that the wish belongs to.
      */
     public function edition()
     {
-        return $this->belongsTo(BookEdition::class);
+        return $this->belongsTo(Edition::class);
     }
+
+
 }

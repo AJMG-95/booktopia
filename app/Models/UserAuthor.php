@@ -15,7 +15,7 @@ class UserAuthor extends Model
     ];
 
     /**
-     * Get the user associated with the author profile.
+     * Obtener el usuario asociado con el perfil de autor.
      */
     public function user()
     {
@@ -23,7 +23,7 @@ class UserAuthor extends Model
     }
 
     /**
-     * Get the author associated with the UserAuthor.
+     * Obtener el autor asociado con UserAuthor.
      */
     public function author()
     {

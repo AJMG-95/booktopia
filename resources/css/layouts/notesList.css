@@ -1,0 +1,117 @@
+    body {
+        margin: 20px auto;
+        font-family: 'Lato', sans-serif;
+        background: #666;
+        color: #fff;
+    }
+
+    .note-list {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .note-card {
+        list-style: none;
+        margin: 1em;
+        position: relative;
+    }
+
+    .note-content {
+        text-decoration: none;
+        color: #000;
+        background: #ffc;
+        display: block;
+        height: 10em;
+        width: 10em;
+        padding: 1em;
+        box-shadow: 5px 5px 7px rgba(33, 33, 33, 0.7);
+        transform: rotate(-6deg);
+        transition: transform 0.15s linear;
+    }
+
+    .note-content:nth-child(even) {
+        transform: rotate(4deg);
+        position: relative;
+        top: 5px;
+        background: #cfc;
+    }
+
+    .note-content:nth-child(3n) {
+        transform: rotate(-3deg);
+        position: relative;
+        top: -5px;
+        background: #ccf;
+    }
+
+    .note-content:nth-child(5n) {
+        transform: rotate(5deg);
+        position: relative;
+        top: -10px;
+    }
+
+    .note-content:hover,
+    .note-content:focus {
+        box-shadow: 10px 10px 7px rgba(0, 0, 0, 0.7);
+        transform: scale(1.25);
+        position: relative;
+        z-index: 5;
+    }
+
+    .note-actions {
+        margin-top: 10px;
+    }
+
+    .note-actions a,
+    .note-actions button {
+        display: inline-block;
+        padding: 4px;
+        margin-right: 10px;
+        text-decoration: none;
+        color: #fff;
+        background-color: #007bff;
+        border: 1px solid #007bff;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .note-actions a  {
+        width:2vw;
+    }
+
+    .note-actions button {
+        width: 4vw;
+    }
+
+    .note-actions a:hover,
+    .note-actions button:hover {
+        background-color: #0056b3;
+    }
+
+    .note-actions button {
+        background-color: #dc3545;
+        border-color: #dc3545;
+    }
+
+    .note-actions button:hover {
+        background-color: #c82333;
+    }
+
+
+    .showBtn,
+    .deleteBtn {
+        display: inline-block;
+        text-decoration: none;
+        font-weight: bold;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .note-content h2 {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+

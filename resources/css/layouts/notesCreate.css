@@ -1,0 +1,95 @@
+body {
+    margin: 20px auto;
+    font-family: 'Lato', sans-serif;
+    background: #666;
+    color: #fff;
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+h1 {
+    color: #007bff;
+}
+
+form {
+    margin-top: 20px;
+    background: #fffad4;
+    /* Amarillo claro */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ffc107;
+    /* Amarillo oscuro */
+    border-radius: 4px;
+    color: #333;
+    background: #fff;
+    /* Fondo blanco */
+}
+
+button {
+    background-color: #ffc107;
+    /* Amarillo oscuro */
+    color: #333;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #ffca2c;
+    /* Amarillo más claro */
+}
+
+.cancel-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 15px;
+    padding: 10px 20px;
+    color: #fff;
+    text-decoration: none;
+    background-color: #ec1c31c0;
+    /* Rojo */
+    border: 1px solid #dc3545;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.cancel-link:hover {
+    background-color: #c82333;
+    /* Rojo más oscuro */
+}
+
+.cancel-icon {
+    margin-right: 10px;
+    fill: #fff;
+}
+
+/* Detalle de esquina que asemeja una nota adhesiva */
+form::before {
+    content: '';
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    border-width: 0 10px 10px;
+    border-style: solid;
+    border-color: transparent transparent #fffad4;
+    /* Amarillo claro */
+}

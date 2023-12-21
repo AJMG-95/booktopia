@@ -19,7 +19,7 @@ class EditionComment extends Model
     ];
 
     /**
-     * Get the user who made the comment.
+     * Obtener el usuario que realizó el comentario.
      */
     public function user()
     {
@@ -27,7 +27,7 @@ class EditionComment extends Model
     }
 
     /**
-     * Get the edition associated with the comment.
+     * Obtener la edición asociada con el comentario.
      */
     public function edition()
     {

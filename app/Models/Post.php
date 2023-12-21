@@ -19,7 +19,7 @@ class Post extends Model
     ];
 
     /**
-     * Get the user who made the post.
+     * Obtener el usuario que creó la publicación.
      */
     public function user()
     {

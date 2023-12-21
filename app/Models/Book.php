@@ -17,16 +17,15 @@ class Book extends Model
     ];
 
     /**
-     * Get the author of the book.
+     * Toma los autores del libro
      */
     public function authors()
     {
         return $this->belongsToMany(Author::class, 'book_authors');
     }
 
-
     /**
-     * Get the editions of the book.
+     * Toma las ediciones del libro
      */
     public function editions()
     {
@@ -34,16 +33,15 @@ class Book extends Model
     }
 
     /**
-     * Get the genres associated with the book.
+     * Toma los generos asociados al libor
      */
     public function genres()
     {
         return $this->belongsToMany(Genre::class, 'book_genres');
     }
 
-
     /**
-     * Custom method to retrieve existing authors and return the view.
+     * Método Custom para obtener autores existetes y devolver la vista bookList
      */
     public static function getExistingAuthors()
     {
@@ -52,7 +50,11 @@ class Book extends Model
         return view('bookList', compact('existingAuthors'));
     }
 
-
+    /**
+     * Calcula la valoración media basandose en las valoraciones de las ediciones
+     *
+     * @return float
+     */
     public function averageRating()
     {
         $editions = $this->editions;

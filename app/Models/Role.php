@@ -14,7 +14,7 @@ class Role extends Model
     ];
 
     /**
-     * Get the users with this role.
+     * Obtener los usuarios con este rol.
      */
     public function users()
     {

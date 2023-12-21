@@ -15,7 +15,7 @@ class BookGenre extends Model
     ];
 
     /**
-     * Get the book associated with the book-genre relationship.
+     * Toma el libro asociado a la relacion libro-genero
      */
     public function book()
     {
@@ -23,7 +23,7 @@ class BookGenre extends Model
     }
 
     /**
-     * Get the genre associated with the book-genre relationship.
+     * Toma el genero asociado a la relacion libro-genero
      */
     public function genre()
     {

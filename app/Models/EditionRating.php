@@ -16,7 +16,7 @@ class EditionRating extends Model
     ];
 
     /**
-     * Get the user who made the rating.
+     * Obtener el usuario que hizo la calificación.
      */
     public function user()
     {
@@ -24,7 +24,7 @@ class EditionRating extends Model
     }
 
     /**
-     * Get the edition associated with the rating.
+     * Obtener la edición asociada con la calificación.
      */
     public function edition()
     {

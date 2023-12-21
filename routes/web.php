@@ -10,7 +10,11 @@ use App\Http\Controllers\BooksController;
 use App\Http\Controllers\EditionsController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\EditionsShopController;
+use App\Http\Controllers\WishController;
+use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\StickyNotesController;
+use App\Http\Controllers\ProfileController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -110,13 +114,42 @@ Route::middleware(['auth'])->group(function () {
 
     //* Rutas para las funcionalidades de Usuarios
     Route::middleware(['auth', 'role:user'])->group(function () {
-        // Rutas para la suscripción
     });
+
+    /* Rutas para el perfil */
+    Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    /* Rutas para los deseos */
+    Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
+    Route::get('/wishlist', [WishController::class, 'showWishlist'])->name('wishlist.show');
+
+
+    /* Rutas para las notas */
+    Route::get('/notes', [StickyNotesController::class, 'index'])->name('notes.index');
+    Route::get('/notes/create', [StickyNotesController::class, 'create'])->name('notes.create');
+    Route::post('/notes', [StickyNotesController::class, 'store'])->name('notes.store');
+    Route::get('/notes/{stickyNote}', [StickyNotesController::class, 'show'])->name('notes.show');
+    Route::get('/notes/{stickyNote}/edit', [StickyNotesController::class, 'edit'])->name('notes.edit');
+    Route::put('/notes/{stickyNote}', [StickyNotesController::class, 'update'])->name('notes.update');
+    Route::delete('/notes/{stickyNote}', [StickyNotesController::class, 'destroy'])->name('notes.destroy');
+
+
+    /*Rutas para las compras  */
+    Route::get('/purchase/{id}', [EditionsShopController::class, 'showPurchaseForm'])->name('purchase.show');
+    Route::get('/editions/{id}/purchase', [EditionsShopController::class, 'showPurchaseForm'])
+        ->name('purchase.form');
+    Route::post('/editions/{id}/purchase', [EditionsShopController::class, 'processPurchase'])
+        ->name('purchase.process');
+    // En tu archivo web.php (o en el archivo de rutas correspondiente)
+    Route::get('/purchase/success', [PurchaseController::class, 'success'])->name('purchase.success');
+
 });
 
 
 //! Otras rutas que no requieren autenticación
-
 Route::get('/', function () {
     $randomBooks = app(BooksController::class)->randomBooks();
     $randomGenres = app(GenreController::class)->randomGenres();
@@ -128,7 +161,14 @@ Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
 Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
 Route::get('/genres/{id}', [GenreController::class, "show"])->name('genre.show');
 Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])->name('books.forGenre');
+Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
+
+Route::get('/compra/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
+Route::post('/compra', [PurchaseController::class, 'make'])->name('purchase.make');
 
 
 Auth::routes();
+
+
+/* require __DIR__.'/auth.php'; */
 

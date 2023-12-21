@@ -13,17 +13,19 @@ class Edition extends Model
         'isbn',
         'title',
         'description',
+        'short_description',
         'cover',
         'editorial',
         'publication_date',
         'price',
-        'url',
+        'document',
         'book_id',
         'language_id',
+        'deleted',
     ];
 
     /**
-     * Get the book associated with the edition.
+     * Obtener el libro asociado con la edición.
      */
     public function book()
     {
@@ -31,7 +33,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the language associated with the edition.
+     * Obtener el idioma asociado con la edición.
      */
     public function language()
     {
@@ -39,7 +41,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the ratings associated with the edition.
+     * Obtener las calificaciones asociadas con la edición.
      */
     public function ratings()
     {
@@ -47,7 +49,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the comments associated with the edition.
+     * Obtener los comentarios asociados con la edición.
      */
     public function comments()
     {
@@ -55,7 +57,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the invoices associated with the edition.
+     * Obtener las facturas asociadas con la edición.
      */
     public function invoices()
     {
@@ -63,7 +65,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the genres associated with the edition.
+     * Obtener los géneros asociados con la edición.
      */
     public function genres()
     {
@@ -71,7 +73,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the users who have the edition in their library.
+     * Obtener los usuarios que tienen la edición en su biblioteca.
      */
     public function users()
     {
@@ -79,7 +81,7 @@ class Edition extends Model
     }
 
     /**
-     * Get the users who have the edition in their wishlist.
+     * Obtener los usuarios que tienen la edición en su lista de deseos.
      */
     public function wishlistUsers()
     {
@@ -87,10 +89,22 @@ class Edition extends Model
     }
 
     /**
-     * Get the users who have the edition as their favorite.
+     * Obtener los usuarios que tienen la edición como favorita.
      */
     public function favoriteUsers()
     {
         return $this->belongsToMany(User::class, 'favorites');
     }
+
+    public function wishes()
+    {
+        return $this->belongsToMany(User::class, 'wishes')->withTimestamps()->withPivot('id')->withTimestamps();
+    }
+
+    // Método para verificar si la edición está en la lista de deseos del usuario
+    public function isInWishlist($userId)
+    {
+        return $this->wishes->where('user_id', $userId)->isNotEmpty();
+    }
+
 }

@@ -17,18 +17,11 @@ class Invoice extends Model
     ];
 
     /**
-     * Get the user associated with the invoice.
+     * Obtener el usuario asociado con la factura.
      */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the credit card associated with the invoice.
-     */
-    public function creditCard()
-    {
-        return $this->belongsTo(CreditCard::class, 'card_id');
-    }
 }

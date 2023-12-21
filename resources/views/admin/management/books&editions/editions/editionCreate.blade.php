@@ -71,6 +71,11 @@
             </div>
 
             <div class="mb-3">
+                <label for="short_description" class="form-label">Descripción Corta</label>
+                <textarea class="form-control" id="short_description" name="short_description" rows="3" required></textarea>
+            </div>
+
+            <div class="mb-3">
                 <label for="cover" class="form-label">Cover</label>
                 <input type="file" class="form-control" id="cover" name="cover" accept="image/*" required>
             </div>

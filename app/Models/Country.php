@@ -16,7 +16,7 @@ class Country extends Model
     ];
 
     /**
-     * Get the authors associated with the country.
+     * Toma los autores asociados al pais
      */
     public function authors()
     {
@@ -24,18 +24,10 @@ class Country extends Model
     }
 
     /**
-     * Get the users associated with the country.
+     * Toma los usuarios asociados al pais
      */
     public function users()
     {
         return $this->hasMany(User::class);
-    }
-
-    /**
-     * Get the credit cards associated with the country.
-     */
-    public function creditCards()
-    {
-        return $this->hasMany(CreditCard::class);
     }
 }

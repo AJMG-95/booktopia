@@ -15,7 +15,7 @@ class BookAuthor extends Model
     ];
 
     /**
-     * Get the book associated with the book-author relationship.
+     * Toma el libro asociado en la relacion autor-libro
      */
     public function book()
     {
@@ -23,7 +23,7 @@ class BookAuthor extends Model
     }
 
     /**
-     * Get the author associated with the book-author relationship.
+     * Toma el autor asociado en la relacion autor-libro
      */
     public function author()
     {

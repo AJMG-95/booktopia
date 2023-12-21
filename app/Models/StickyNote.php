@@ -16,7 +16,7 @@ class StickyNote extends Model
     ];
 
     /**
-     * Get the user who owns the sticky note.
+     * Obtener el usuario dueño de la nota adhesiva.
      */
     public function user()
     {

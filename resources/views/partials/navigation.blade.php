@@ -6,8 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Navigation</title>
-    @vite([
-    'resources/css/partials/navigation.css'])
+    @vite(['resources/css/partials/navigation.css'])
 </head>
 
 <body>
@@ -30,7 +29,7 @@
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{-- {{ route('shop') }} --}}">Tienda</a>
+                            <a class="nav-link" href="{{ route('shop') }}">Tienda</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
@@ -59,7 +58,7 @@
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{-- {{ route('shop') }} --}}">Tienda</a>
+                            <a class="nav-link" href="{{ route('shop') }}">Tienda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{-- {{ route('posts') }} --}}">Foro</a>
@@ -78,7 +77,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
                                 <li>
-                                    <a class="dropdown-item" href="{{-- {{ route('profile') }} --}}">Perfil</a>
+                                    <a class="dropdown-item" href="{{ route('profile.index') }}">Perfil</a>
                                 </li>
                                 @if (Auth::user()->isAdmin() || Auth::user()->isSubadmin())
                                     <li>
@@ -86,7 +85,10 @@
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Notas</a>
+                                        <a class="dropdown-item" href="{{ route('notes.index') }}">Mis Notas</a>
+                                    </li>
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('wishlist.show') }}">Mi Lista de Deseos</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
