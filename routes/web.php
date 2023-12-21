@@ -131,3 +131,4 @@ Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])-
 
 
 Auth::routes();
+
