@@ -14,10 +14,7 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css',
-    'resources/css/editionsListCrud.css',
-    'resources/css/components/bookDetail.css',
-    'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/editionsListCrud.css', 'resources/css/components/bookDetail.css', 'resources/js/app.js'])
 </head>
 
 <body class="container-fluid appBody">
@@ -26,6 +23,26 @@
     </header>
 
     <div class="container-fluid appMain" id="app">
+        <div class="container-fluid">
+            @if (isset($errors) && $errors->any())
+                <div class="alert alert-danger mt-2">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+            @if (session()->has('success'))
+                <div class="alert alert-success mt-2">
+                    <ul>
+                        @foreach (session()->get('success') as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+        </div>
         @yield('content')
     </div>
 
