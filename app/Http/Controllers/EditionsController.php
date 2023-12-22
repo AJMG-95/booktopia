@@ -185,4 +185,10 @@ class EditionsController extends Controller
         $editions = $book->editions;
         return view('components.editions.forBook', compact('book', 'editions'));
     }
+
+    public function show($id)
+    {
+        $edition = Edition::findOrFail($id);
+        return view('components.editions.editionDetail', compact('edition'));
+    }
 }

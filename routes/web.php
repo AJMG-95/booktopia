@@ -12,7 +12,7 @@ use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
 use App\Http\Controllers\EditionsShopController;
 use App\Http\Controllers\WishController;
-use App\Http\Controllers\PurchaseController;
+use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StickyNotesController;
 use App\Http\Controllers\ProfileController;
 
@@ -138,13 +138,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     /*Rutas para las compras  */
-    Route::get('/purchase/{id}', [EditionsShopController::class, 'showPurchaseForm'])->name('purchase.show');
-    Route::get('/editions/{id}/purchase', [EditionsShopController::class, 'showPurchaseForm'])
-        ->name('purchase.form');
-    Route::post('/editions/{id}/purchase', [EditionsShopController::class, 'processPurchase'])
-        ->name('purchase.process');
-    // En tu archivo web.php (o en el archivo de rutas correspondiente)
-    Route::get('/purchase/success', [PurchaseController::class, 'success'])->name('purchase.success');
+    Route::post('stripe', [StripeController::class, 'stripe'])->name('stripe');
+    Route::get('success', [StripeController::class], 'success')->name('success');
+    Route::get('cancel', [StripeController::class], 'cancel')->name('cancel');
 
 });
 
@@ -158,17 +154,18 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
+Route::get('/editions/{edition}', [EditionsController::class, 'show'])->name('edition.show');
+
+
 Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
 Route::get('/genres/{id}', [GenreController::class, "show"])->name('genre.show');
 Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])->name('books.forGenre');
-Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
 
-Route::get('/compra/{id}', [PurchaseController::class, 'show'])->name('purchase.show');
-Route::post('/compra', [PurchaseController::class, 'make'])->name('purchase.make');
+Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
 
 
 Auth::routes();
 
 
-/* require __DIR__.'/auth.php'; */
+ require __DIR__.'/auth.php';
 

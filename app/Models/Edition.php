@@ -107,4 +107,23 @@ class Edition extends Model
         return $this->wishes->where('user_id', $userId)->isNotEmpty();
     }
 
+      /**
+     * Calculate the average rating for the edition.
+     *
+     * @return float|null
+     */
+    public function averageRating()
+    {
+        return $this->ratings()->avg('rating');
+    }
+
+    /**
+     * Get all comments associated with the edition.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function allComments()
+    {
+        return $this->comments()->orderBy('created_at', 'desc');
+    }
 }

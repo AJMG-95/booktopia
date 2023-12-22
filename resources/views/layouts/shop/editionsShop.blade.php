@@ -1,3 +1,4 @@
+{{-- resources/views/layouts/shop/editionsShop.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
@@ -86,10 +87,10 @@
                                                     @csrf
                                                     <button type="submit" class="btn btn-primary">Añadir a deseos</button>
                                                 </form>
-                                                <form action="{{ route('purchase.show', ['id' => $edition->id]) }}"
+                                                <form action="{{ route('edition.show', ['id' => $edition->id]) }}"
                                                     method="GET">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-success">Comprar</button>
+                                                    <button type="submit" class="btn btn-success">Ver/Comprar</button>
                                                 </form>
                                             </div>
                                         @endif
