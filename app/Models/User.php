@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -154,12 +155,12 @@ class User extends Authenticatable
         return $this->hasMany(MyLibrary::class);
     }
 
-    /**
-     * Obtener las ediciones  deseadas por el usuario.
+ /**
+     * Obtener los deseos asociados al usuario.
      */
-    public function wishes()
+    public function wishes(): HasMany
     {
-        return $this->belongsToMany(Edition::class, 'wishes')->withTimestamps()->withPivot('id')->withTimestamps();
+        return $this->hasMany(Wish::class);
     }
 
     /**

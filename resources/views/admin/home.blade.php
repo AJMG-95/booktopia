@@ -33,7 +33,7 @@
 
                         <ul class="list-group admin-list-group">
                             <li class="list-group-item admin-list-group-item">
-                                <a class="admin-a " href="{{ route('users.list') }}">{{ __('Gestión de Usuarios') }}</a>
+                                <a class="admin-a " href="{{ route('user.list') }}">{{ __('Gestión de Usuarios') }}</a>
                             </li>
                             <li class="list-group-item admin-list-group-item">
                                 <a class="admin-a "

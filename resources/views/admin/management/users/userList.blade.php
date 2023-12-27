@@ -9,7 +9,7 @@
         <!-- Mostrar mensajes de éxito o error aquí -->
 
         <div class="mb-3">
-            <a href="{{ route('users.create') }}" class="btn btn-success">Create User</a>
+            <a href="{{ route('user.create') }}" class="btn btn-success">Create User</a>
         </div>
 
         <table class="table">

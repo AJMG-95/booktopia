@@ -45,7 +45,7 @@ class UserCrudController extends Controller
             'rol_id' => 3, // Rol de usuario
         ]);
 
-        return redirect()->route('users.list')->with('success', 'Usuario creado exitosamente.');
+        return redirect()->route('user.list')->with('success', 'Usuario creado exitosamente.');
     }
 
     public function update(Request $request, $id)
@@ -71,7 +71,7 @@ class UserCrudController extends Controller
         $user->save();
 
         // Redirige de vuelta a la lista de usuarios con un mensaje de éxito
-        return redirect()->route('users.list')->with('success', 'Usuario actualizado exitosamente.');
+        return redirect()->route('user.list')->with('success', 'Usuario actualizado exitosamente.');
     }
 
     public function edit($id)
@@ -118,7 +118,7 @@ class UserCrudController extends Controller
         ]);
 
         // Redirigir o realizar otras acciones después de la "eliminación"
-        return redirect()->route('users.list')->with('success', 'Usuario eliminado exitosamente.');
+        return redirect()->route('user.list')->with('success', 'Usuario eliminado exitosamente.');
     }
 
 
@@ -130,9 +130,9 @@ class UserCrudController extends Controller
         if (!$user->hasRole('subadmin') && !$user->hasRole('admin')) {
             $user->rol_id = 2; // Rol de subadmin
             $user->save();
-            return redirect()->route('users.list')->with('success', 'El usuario ha sido ascendido a subadmin exitosamente.');
+            return redirect()->route('user.list')->with('success', 'El usuario ha sido ascendido a subadmin exitosamente.');
         } else {
-            return redirect()->route('users.list')->with('error', 'El usuario ya es un subadmin o admin.');
+            return redirect()->route('user.list')->with('error', 'El usuario ya es un subadmin o admin.');
         }
     }
 
@@ -144,7 +144,7 @@ class UserCrudController extends Controller
 
         $message = $user->blocked ? 'Usuario bloqueado exitosamente.' : 'Usuario desbloqueado exitosamente.';
 
-        return redirect()->route('users.list')->with('success', $message);
+        return redirect()->route('user.list')->with('success', $message);
     }
 
     // Otros métodos para el CRUD de usuarios según sea necesario

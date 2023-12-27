@@ -44,9 +44,9 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:admin,subadmin'])->group(function () {
         /* Administración de Usuarios CRUD*/
         Route::prefix('admin/users')->group(function () {
-            Route::get('/list', [UserCrudController::class, 'index'])->name('users.list');
-            Route::get('/create', [UserCrudController::class, 'create'])->name('users.create');
-            Route::post('/store', [UserCrudController::class, 'store'])->name('users.store');
+            Route::get('/list', [UserCrudController::class, 'index'])->name('user.list');
+            Route::get('/create', [UserCrudController::class, 'create'])->name('user.create');
+            Route::post('/store', [UserCrudController::class, 'store'])->name('user.store');
             // Formulario de actualización de users
             //* Route::get('/edit/{id}', [UserCrudController::class, 'edit'])->name('users.edit');
             // Lógica para actualizar users (PUT o PATCH)
@@ -124,6 +124,7 @@ Route::middleware(['auth'])->group(function () {
 
     /* Rutas para los deseos */
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');
+    Route::delete('/wishes/remove/{id}', [WishController::class, 'remove'])->name('wishes.remove');
     Route::get('/wishlist', [WishController::class, 'showWishlist'])->name('wishlist.show');
 
 
@@ -138,10 +139,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     /*Rutas para las compras  */
-    Route::post('stripe', [StripeController::class, 'stripe'])->name('stripe');
-    Route::get('success', [StripeController::class], 'success')->name('success');
-    Route::get('cancel', [StripeController::class], 'cancel')->name('cancel');
-
+    Route::post('/stripe', [StripeController::class, 'stripe'])->name('stripe');
+    Route::get('/success', [StripeController::class, 'success'])->name('success');
+    Route::get('/cancel', [StripeController::class, 'cancel'])->name('cancel');
 });
 
 
@@ -154,7 +154,7 @@ Route::get('/', function () {
 })->name('welcome');
 
 Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
-Route::get('/editions/{edition}', [EditionsController::class, 'show'])->name('edition.show');
+Route::get('/editions/{id}', [EditionsController::class, 'show'])->name('edition.show');
 
 
 Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
@@ -167,5 +167,4 @@ Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
 Auth::routes();
 
 
- require __DIR__.'/auth.php';
-
+require __DIR__ . '/auth.php';

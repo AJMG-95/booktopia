@@ -79,21 +79,36 @@
                                     <p class="card-text">{{ $edition->short_description }} </p>
                                 </div>
                                 @auth
-                                    @if (!Auth::user()->isAdmin())
-                                        @if (!Auth::user()->isSubadmin())
-                                            <div class="card-footer">
-                                                <small class="text-muted">€{{ $edition->price }}</small><br />
-                                                <form action="{{ route('wishes.add', ['id' => $edition->id]) }}" method="POST">
+                                    @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+                                        <div class="card-footer row">
+                                            @php
+                                                // Verificar si la edición está en la lista de deseos del usuario actual
+                                                $isInWishlist = Auth::user()->wishes->contains('edition_id', $edition->id);
+                                            @endphp
+
+                                            @if ($isInWishlist)
+                                                <!-- Si está en la lista de deseos, mostrar botón para eliminar -->
+                                                <form action="{{ route('wishes.remove', ['id' => $edition->id]) }}"
+                                                    method="POST" class="col">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-primary">Añadir a deseos</button>
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger"><i
+                                                            class="bi bi-balloon-heart-fill"></i></button>
                                                 </form>
-                                                <form action="{{ route('edition.show', ['id' => $edition->id]) }}"
-                                                    method="GET">
+                                            @else
+                                                <!-- Si no está en la lista de deseos, mostrar botón para añadir -->
+                                                <form action="{{ route('wishes.add', ['id' => $edition->id]) }}" method="POST" class="col">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-success">Ver/Comprar</button>
+                                                    <button type="submit" class="btn btn-primary"><i
+                                                            class="bi bi-balloon-heart"></i></button>
                                                 </form>
-                                            </div>
-                                        @endif
+                                            @endif
+
+                                            <form action="{{ route('edition.show', ['id' => $edition->id]) }}" method="GET" class="col">
+                                                @csrf
+                                                <button type="submit" class="btn btn-success"><i class="bi bi-eye"></i> / <i class="bi bi-basket"></i></button>
+                                            </form>
+                                        </div>
                                     @endif
                                 @endauth
                             </div>
