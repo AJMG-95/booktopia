@@ -52,13 +52,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-3"><p>Precio: {{$edition->price}} €</p></div>
+                <div class="col-3">
+                    <p>Precio: {{ $edition->price }} €</p>
+                </div>
                 <div class="col-9">
-                    <form  action="{{ route('stripe') }}" method="POST">
+                    <form action="{{ route('stripe') }}" method="POST">
                         @csrf
-                        <input type="hidden" name="price" value="{{$edition->price}}">
-                        <input type="hidden" name="title" value="{{$edition->title}}">
+                        <input type="hidden" name="price" value="{{ $edition->price }}">
+                        <input type="hidden" name="title" value="{{ $edition->title }}">
                         <input type="hidden" name="quantity" value="1">
+                        <input type="hidden" name="edition_id" value="{{ $edition->id }}">
+
+                        <!-- Include customer details if available -->
+                        @if(auth()->check())
+                            <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
+                        @endif
+
                         <button type="submit">Comprar</button>
                     </form>
                 </div>

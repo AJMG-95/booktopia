@@ -14,12 +14,12 @@ return new class extends Migration
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
             $table->string('payment_id');
-            $table->bigInteger('edition_id')->unsigned();
-            $table->bigInteger('edition_name')->unsigned();
-            $table->unsignedTinyInteger('quantity')->default(1); // Maximum value of 1
+            $table->unsignedBigInteger('edition_id'); // Change data type
+            $table->string('edition_name'); // Change data type
+            $table->unsignedTinyInteger('quantity')->default(1);
             $table->string('amount');
             $table->string('currency');
-            $table->bigInteger('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
             $table->string('customer_name');
             $table->string('customer_email');
             $table->string('payment_status');
