@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Edition extends Model
 {
@@ -107,7 +108,7 @@ class Edition extends Model
         return $this->wishes->where('user_id', $userId)->isNotEmpty();
     }
 
-      /**
+    /**
      * Calculate the average rating for the edition.
      *
      * @return float|null
@@ -125,5 +126,21 @@ class Edition extends Model
     public function allComments()
     {
         return $this->comments()->orderBy('created_at', 'desc');
+    }
+
+
+    /*     public function payments(): HasManyThrough
+    {
+        return $this->hasManyThrough(Payment::class, User::class);
+    }
+ */
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function hasBeenPurchasedByUser($userId)
+    {
+        return $this->payments()->where('user_id', $userId)->exists();
     }
 }

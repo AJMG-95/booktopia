@@ -189,6 +189,10 @@ class EditionsController extends Controller
     public function show($id)
     {
         $edition = Edition::findOrFail($id);
-        return view('components.editions.editionDetail', compact('edition'));
+
+        // Check if the user has purchased this edition
+        $userHasPurchased = auth()->check() && $edition->hasBeenPurchasedByUser(auth()->id());
+
+        return view('components.editions.editionDetail', compact('edition', 'userHasPurchased'));
     }
 }
