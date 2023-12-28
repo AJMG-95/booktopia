@@ -34,15 +34,19 @@
                 </div>
             @endif
             @if (is_array(session()->get('success')))
+            <div class="alert alert-success  mt-2">
                 <ul>
                     @foreach (session()->get('success') as $message)
                         <li>{{ $message }}</li>
                     @endforeach
                 </ul>
+            </div>
             @elseif (session()->get('success'))
+            <div class="alert alert-success  mt-2">
                 <ul>
                     <li>{{ session()->get('success') }}</li>
                 </ul>
+            </div>
             @endif
         </div>
         @yield('content')
