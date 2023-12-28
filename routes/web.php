@@ -15,6 +15,7 @@ use App\Http\Controllers\WishController;
 use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StickyNotesController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\EditionsBuyedController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -113,8 +114,9 @@ Route::middleware(['auth'])->group(function () {
 
 
     //* Rutas para las funcionalidades de Usuarios
-    Route::middleware(['auth', 'role:user'])->group(function () {
-    });
+    /* Ruta para listar ediciones compradas */
+    Route::get('/user/editions/buyed', [EditionsBuyedController::class, 'index'])
+    ->name('user.buyed.editions');
 
     /* Rutas para el perfil */
     Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');

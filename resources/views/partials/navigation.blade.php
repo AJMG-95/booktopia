@@ -10,8 +10,6 @@
 </head>
 
 <body>
-
-
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
         <div class="container-fluid ms-5">
             <a class="navbar-brand" href="{{ route('welcome') }}">
@@ -83,7 +81,10 @@
                                     <li>
                                         <a class="dropdown-item" href="{{ route('home') }}">Home</a>
                                     </li>
-                                @else
+                                    @else
+                                    <li>
+                                        <a class="dropdown-item" href="{{ route('user.buyed.editions') }}">Mi Libreria</a>
+                                    </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('notes.index') }}">Mis Notas</a>
                                     </li>
@@ -96,6 +97,7 @@
                                     <li>
                                         <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Autopublicacines</a>
                                     </li>
+
                                 @endif
                                 <li>
                                     <hr class="dropdown-divider">

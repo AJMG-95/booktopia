@@ -1,10 +1,8 @@
-{{-- resources/views/layouts/shop/editionsShop.blade.php --}}
+{{-- resources/views/layouts/user/editions/buyedEditions.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
     <style>
-
-
         /* Barra de navegación */
         .navbar {
             background-color: #00274e;
@@ -173,64 +171,8 @@
                                     </p>
                                     <p class="card-text">{{ $edition->short_description }} </p>
                                 </div>
-                                <div class="card-footer row">
-                                    @auth
-                                        @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-                                            @php
-                                                // Verificar si la edición está en la lista de deseos del usuario actual
-                                                $isInWishlist = Auth::user()->wishes->contains('edition_id', $edition->id);
-                                            @endphp
 
-                                            @if ($isInWishlist)
-                                                <!-- Si está en la lista de deseos, mostrar botón para eliminar -->
-                                                <form action="{{ route('wishes.remove', ['id' => $edition->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn "><svg width="2.5vw" height="auto"
-                                                            viewBox="0 0 24.00 24.00" fill="none"
-                                                            xmlns="http://www.w3.org/2000/svg"
-                                                            transform="rotate(-45)matrix(1, 0, 0, 1, 0, 0)" stroke="#000000"
-                                                            stroke-width="0.672">
-                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"
-                                                                transform="translate(1.92,1.92), scale(0.84)">
-                                                                <rect x="0" y="0" width="24.00" height="24.00"
-                                                                    rx="12" fill="#eec42b" strokewidth="0"></rect>
-                                                            </g>
-                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                stroke-linejoin="round" stroke="#CCCCCC"
-                                                                stroke-width="0.144"></g>
-                                                            <g id="SVGRepo_iconCarrier">
-                                                                <path
-                                                                    d="M14.65 8.93274L12.4852 4.30901C12.2923 3.89699 11.7077 3.897 11.5148 4.30902L9.35002 8.93274L4.45559 9.68243C4.02435 9.74848 3.84827 10.2758 4.15292 10.5888L7.71225 14.2461L6.87774 19.3749C6.80571 19.8176 7.27445 20.1487 7.66601 19.9317L12 17.5299L16.334 19.9317C16.7256 20.1487 17.1943 19.8176 17.1223 19.3749L16.2878 14.2461L19.8471 10.5888C20.1517 10.2758 19.9756 9.74848 19.5444 9.68243L14.65 8.93274Z"
-                                                                    stroke="#000000" stroke-linecap="round"
-                                                                    stroke-linejoin="round"></path>
-                                                            </g>
-                                                        </svg></button>
-                                                </form>
-                                            @else
-                                                <!-- Si no está en la lista de deseos, mostrar botón para añadir -->
-                                                <form action="{{ route('wishes.add', ['id' => $edition->id]) }}"
-                                                    method="POST" class="col">
-                                                    @csrf
-                                                    <button type="submit" class="btn ">
-                                                        <svg viewBox="0 0 24 24" fill="none" width="2.5vw"
-                                                            height="auto" xmlns="http://www.w3.org/2000/svg">
-                                                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round"
-                                                                stroke-linejoin="round"></g>
-                                                            <g id="SVGRepo_iconCarrier">
-                                                                <path
-                                                                    d="M14.65 8.93274L12.4852 4.30901C12.2923 3.89699 11.7077 3.897 11.5148 4.30902L9.35002 8.93274L4.45559 9.68243C4.02435 9.74848 3.84827 10.2758 4.15292 10.5888L7.71225 14.2461L6.87774 19.3749C6.80571 19.8176 7.27445 20.1487 7.66601 19.9317L12 17.5299L16.334 19.9317C16.7256 20.1487 17.1943 19.8176 17.1223 19.3749L16.2878 14.2461L19.8471 10.5888C20.1517 10.2758 19.9756 9.74848 19.5444 9.68243L14.65 8.93274Z"
-                                                                    stroke="#000000" stroke-linecap="round"
-                                                                    stroke-linejoin="round"></path>
-                                                            </g>
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                            @endif
-                                        @endif
-                                    @endauth
+                                <div class="card-footer row">
                                     <form action="{{ route('edition.show', ['id' => $edition->id]) }}" method="GET"
                                         class="col">
                                         @csrf
@@ -262,6 +204,7 @@
                                         </button>
                                     </form>
                                 </div>
+
                             </div>
                         </div>
                     @endforeach
@@ -270,28 +213,4 @@
         </div>
     </div>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script>
-        function toggleWishes(editionId) {
-            var checkbox = document.getElementById('wishes' + editionId);
-
-            // Realiza una solicitud AJAX para agregar o eliminar la edición de la lista de deseos
-            fetch(`/wishes/toggle/${editionId}`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    },
-                    body: JSON.stringify({
-                        editionId: editionId
-                    }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.message) {
-                        console.log(data.message);
-                    }
-                })
-                .catch(error => console.error('Error:', error));
-        }
-    </script>
 @endsection
