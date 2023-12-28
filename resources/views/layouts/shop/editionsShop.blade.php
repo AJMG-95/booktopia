@@ -3,66 +3,67 @@
 
 @section('content')
 <style>
-    /* Colores principales */
-    body {
-        background-color: #005f40; /* Verde oscuro */
-        color: #ffffff; /* Texto blanco sobre fondo oscuro */
-    }
 
-    /* Barra de navegación */
-    .navbar {
-        background-color: #00274e; /* Azul oscuro */
-    }
+        /* Colores principales */
+        body {
+    background-color: #194435; /* Verde más claro */
+    color: #ffffff; /* Texto blanco sobre fondo oscuro */
+}
 
-    /* Botones y enlaces principales */
-    .btn-primary,
-    .btn-primary:hover,
-    .btn-primary:active,
-    .btn-primary:focus,
-    .btn-secondary,
-    .btn-secondary:hover,
-    .btn-secondary:active,
-    .btn-secondary:focus {
-        background-color: #ffc107; /* Amarillo */
-        border-color: #ffc107; /* Amarillo */
-        color: #000000; /* Texto negro sobre fondo amarillo */
-    }
+        /* Barra de navegación */
+        .navbar {
+            background-color: #00274e; /* Azul oscuro */
+        }
 
-    /* Botones de resaltado (eliminar, añadir, etc.) */
-    .btn-danger,
-    .btn-danger:hover,
-    .btn-danger:active,
-    .btn-danger:focus,
-    .btn-dark,
-    .btn-dark:hover,
-    .btn-dark:active,
-    .btn-dark:focus {
-        background-color: #ff0000; /* Rojo */
-        border-color: #ff0000; /* Rojo */
-        color: #ffffff; /* Texto blanco sobre fondo rojo */
-    }
+        /* Botones y enlaces principales */
+        .btn-primary,
+        .btn-primary:hover,
+        .btn-primary:active,
+        .btn-primary:focus,
+        .btn-secondary,
+        .btn-secondary:hover,
+        .btn-secondary:active,
+        .btn-secondary:focus {
+            background-color: #ffc107; /* Amarillo */
+            border-color: #ffc107; /* Amarillo */
+            color: #000000; /* Texto negro sobre fondo amarillo */
+        }
 
-    /* Detalles resaltados en negro */
-    .text-black {
-        color: #000000;
-    }
+        /* Botones de resaltado (eliminar, añadir, etc.) */
+        .btn-danger,
+        .btn-danger:hover,
+        .btn-danger:active,
+        .btn-danger:focus,
+        .btn-dark,
+        .btn-dark:hover,
+        .btn-dark:active,
+        .btn-dark:focus {
+            background-color: #ff0000; /* Rojo */
+            border-color: #ff0000; /* Rojo */
+            color: #ffffff; /* Texto blanco sobre fondo rojo */
+        }
 
-    /* Detalles resaltados en rojo */
-    .text-red {
-        color: #ff0000;
-    }
+        /* Detalles resaltados en negro */
+        .text-black {
+            color: #000000;
+        }
 
-    /* Detalles resaltados en amarillo */
-    .text-yellow {
-        color: #ffc107;
-    }
+        /* Detalles resaltados en rojo */
+        .text-red {
+            color: #ff0000;
+        }
 
-    /* Detalles resaltados en verde */
-    .text-green {
-        color: #005f40;
-    }
+        /* Detalles resaltados en amarillo */
+        .text-yellow {
+            color: #ffc107;
+        }
+
+        /* Detalles resaltados en verde */
+        .text-green {
+            color: #3fb88c;
+        }
 </style>
-    <div class="container-fluid">
+    <div class="container-fluid mb-4">
         <div class="row">
             {{-- Menú lateral de filtros --}}
             <aside class="col-lg-3 col-md-4 pt-4">
