@@ -34,7 +34,7 @@ class StripeController extends Controller
         ]);
 
         if (isset($response->id) && $response->id != "") {
-            session()->put('product_name', $request->product_name);
+            session()->put('product_name', $request->title);
             session()->put('product_id', $request->edition_id);
             session()->put('quantity', $request->quantity);
             session()->put('price', $request->price);
@@ -50,29 +50,31 @@ class StripeController extends Controller
         if (isset($request->session_id)) {
             $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
             $response = $stripe->checkout->sessions->retrieve($request->session_id);
-
-            dd(session()->all());
+            /* dd($response); */
 
             $payment = new Payment();
             $payment->payment_id = $response->id;
-            $payment->edition_id = $request->edition_id;
-            $payment->edition_name = $request->title;
-            $payment->quantity = $request->quantity;
-            $payment->amount = $request->price;
+            $payment->edition_name = session()->get('product_name');
+            $payment->edition_id = session()->get('product_id');
+            $payment->quantity = session()->get('quantity');
+            $payment->amount = session()->get('price');
             $payment->user_id = auth()->id();
             $payment->currency = $response->currency;
-            $payment->customer_name = $request->customer_name;
-            $payment->customer_email = $request->customer_email;
+            $payment->customer_name = $response->customer_details->name;
+            $payment->customer_email = $response->customer_details->email;
             $payment->payment_status = $response->status;
             $payment->payment_method = "Stripe";
             $payment->save();
 
 
+            return redirect()->route('shop')->with('success', 'Compra realizada con éxito.');
+
             session()->forget('product_name');
+            session()->forget('product_id');
             session()->forget('quantity');
             session()->forget('price');
+            /* unset($request->session_id); */
 
-            return redirect()->route('shop')->with('success', 'Compra realizada con éxito.');
         } else {
             return redirect()->route('cancel');
         }
