@@ -112,10 +112,6 @@ class EditionsBuyedController extends Controller
             abort(404, 'Archivo no encontrado');
         }
 
-        $headers = [
-            'Content-Type' => 'application/pdf',
-        ];
-
-        return response()->file($path, $headers);
+        return view('layouts/user/editions/pdf', ['filename' => $filename]);
     }
 }

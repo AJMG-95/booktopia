@@ -15,7 +15,6 @@
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
     <!-- Agrega este enlace en la sección head de tu HTML -->
-    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 
 
     <!-- Scripts -->
