@@ -1,74 +1,12 @@
-{{-- resources/views/layouts/user/editions/buyedEditions.blade.php --}}
 @extends('layouts.app')
 
 @section('content')
-    <style>
-        /* Barra de navegación */
-        .navbar {
-            background-color: #00274e;
-            /* Azul oscuro */
-        }
-
-        /* Botones y enlaces principales */
-        .btn-primary,
-        .btn-primary:hover,
-        .btn-primary:active,
-        .btn-primary:focus,
-        .btn-secondary,
-        .btn-secondary:hover,
-        .btn-secondary:active,
-        .btn-secondary:focus {
-            background-color: #ffc107;
-            /* Amarillo */
-            border-color: #ffc107;
-            /* Amarillo */
-            color: #000000;
-            /* Texto negro sobre fondo amarillo */
-        }
-
-        /* Botones de resaltado (eliminar, añadir, etc.) */
-        .btn-danger,
-        .btn-danger:hover,
-        .btn-danger:active,
-        .btn-danger:focus,
-        .btn-dark,
-        .btn-dark:hover,
-        .btn-dark:active,
-        .btn-dark:focus {
-            background-color: #ff0000;
-            /* Rojo */
-            border-color: #ff0000;
-            /* Rojo */
-            color: #ffffff;
-            /* Texto blanco sobre fondo rojo */
-        }
-
-        /* Detalles resaltados en negro */
-        .text-black {
-            color: #000000;
-        }
-
-        /* Detalles resaltados en rojo */
-        .text-red {
-            color: #ff0000;
-        }
-
-        /* Detalles resaltados en amarillo */
-        .text-yellow {
-            color: #ffc107;
-        }
-
-        /* Detalles resaltados en verde */
-        .text-green {
-            color: #3fb88c;
-        }
-    </style>
     <div class="container-fluid mb-4">
         <div class="row">
             {{-- Menú lateral de filtros --}}
             <aside class="col-lg-3 col-md-4 pt-4">
                 <h2>Buscar...</h2>
-                <form action="{{ route('shop') }}" method="GET" class="p-3">
+                <form action="{{ route('user.buyed.editions') }}" method="GET" class="p-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                         <input type="text" name="title" class="form-control" placeholder="Buscar por Título"
@@ -123,14 +61,14 @@
                         <button type="submit" class="btn btn-primary btn-block">Aplicar Filtros</button>
                     </div>
                     <div class="d-grid gap-2 mt-3">
-                        <a href="{{ route('shop') }}" class="btn btn-secondary btn-block">Borrar Filtros</a>
+                        <a href="{{ route('user.buyed.editions') }}" class="btn btn-secondary btn-block">Borrar Filtros</a>
                     </div>
                 </form>
             </aside>
 
             {{-- Área principal para mostrar los libros --}}
             <main class="col-lg-9 col-md-8 pt-4">
-                <form action="{{ route('shop') }}" method="GET" class="me-2">
+                <form action="{{ route('user.buyed.editions') }}" method="GET" class="me-2">
                     <div class="d-flex justify-content-left align-items-center mb-4">
                         <select name="sortBy" class="form-select w-auto">
                             <option value="asc_price" @if (request('sortBy') == 'asc_price') selected @endif>Menor a mayor €
@@ -145,35 +83,20 @@
                         <button type="submit" class="btn btn-primary">Ordenar</button>
                     </div>
                 </form>
+
                 <div class="row row-cols-1 row-cols-md-3 g4">
-                    @foreach ($editions as $edition)
+                    @foreach ($purchasedEditions as $purchase)
                         <div class="col">
                             <div class="card h-100">
-                                <img src="{{ $edition->cover ? asset('assets/images/editionCovers/' . $edition->cover) : 'No Image' }}"
-                                    class="card-img-top" alt="{{ $edition->title }}">
+                                <img src="{{ $purchase->edition->cover ? asset('assets/images/editionCovers/' . $purchase->edition->cover) : 'No Image' }}"
+                                    class="card-img-top" alt="{{ $purchase->edition->title }}">
                                 <div class="card-body">
-                                    <h5>{{ $edition->title }}</h5>
-                                    <p class="card-text">
-                                        <strong>Autor:</strong>
-                                        @if ($edition->book->authors->isNotEmpty())
-                                            {{ $edition->book->authors->first()->name }}
-                                        @else
-                                            Sin autor
-                                        @endif
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Género:</strong>
-                                        @if ($edition->book->genres->isNotEmpty())
-                                            {{ $edition->book->genres->first()->genre }}
-                                        @else
-                                            Sin género
-                                        @endif
-                                    </p>
-                                    <p class="card-text">{{ $edition->short_description }} </p>
+                                    <h5>{{ $purchase->edition->title }}</h5>
+                                    <p class="card-text">{{ $purchase->edition->short_description }} </p>
                                 </div>
 
                                 <div class="card-footer row">
-                                    <form action="{{ route('edition.show', ['id' => $edition->id]) }}" method="GET"
+                                    <form action="{{ route('edition.show', ['id' => $purchase->edition->id]) }}" method="GET"
                                         class="col">
                                         @csrf
                                         <button type="submit" class="btn ">
@@ -203,8 +126,8 @@
                                             </svg>
                                         </button>
                                     </form>
+                                    <a href="{{ route('pdf.show', ['editionId' => $purchase->edition->id]) }}" target="_blank">Ver PDF</a>
                                 </div>
-
                             </div>
                         </div>
                     @endforeach

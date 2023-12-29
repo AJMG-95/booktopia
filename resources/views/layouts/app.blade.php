@@ -14,8 +14,12 @@
     <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
 
+    <!-- Agrega este enlace en la sección head de tu HTML -->
+    <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
+
+
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/css/editionsListCrud.css', 'resources/css/components/bookDetail.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/partials/editionsListCrud.css', 'resources/css/components/bookDetail.css', 'resources/js/app.js'])
 </head>
 
 <body class="container-fluid appBody">
@@ -35,19 +39,19 @@
                 </div>
             @endif
             @if (is_array(session()->get('success')))
-            <div class="alert alert-success  mt-2">
-                <ul>
-                    @foreach (session()->get('success') as $message)
-                        <li>{{ $message }}</li>
-                    @endforeach
-                </ul>
-            </div>
+                <div class="alert alert-success  mt-2">
+                    <ul>
+                        @foreach (session()->get('success') as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             @elseif (session()->get('success'))
-            <div class="alert alert-success  mt-2">
-                <ul>
-                    <li>{{ session()->get('success') }}</li>
-                </ul>
-            </div>
+                <div class="alert alert-success  mt-2">
+                    <ul>
+                        <li>{{ session()->get('success') }}</li>
+                    </ul>
+                </div>
             @endif
         </div>
         @yield('content')

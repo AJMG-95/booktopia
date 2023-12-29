@@ -144,7 +144,7 @@ class Edition extends Model
         return $this->payments()->where('user_id', $userId)->exists();
     }
 
-    public function editionInPayments()
+    public function editionsInPayments()
     {
         return $this->hasMany(Payment::class, 'edition_id');
     }

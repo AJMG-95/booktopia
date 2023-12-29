@@ -115,8 +115,8 @@ Route::middleware(['auth'])->group(function () {
 
     //* Rutas para las funcionalidades de Usuarios
     /* Ruta para listar ediciones compradas */
-    Route::get('/user/editions/buyed', [EditionsBuyedController::class, 'index'])
-    ->name('user.buyed.editions');
+    Route::get('/user/buyed-editions', [EditionsBuyedController::class, 'index'])->name('user.buyed.editions');
+    Route::get('/user/buyed-editions/pdf/{editionId}', [EditionsBuyedController::class,'show'])->name('pdf.show');
 
     /* Rutas para el perfil */
     Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
