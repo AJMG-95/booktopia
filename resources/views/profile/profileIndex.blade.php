@@ -71,13 +71,8 @@
 
     @section('content')
         <div class="container-fluid">
-            <div class="row mt-4">
+            <div class="row">
                 <div class="col-auto">
-                    <div class="mb-3">
-                        <a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse"
-                            class="border rounded-3 p-1 text-decoration-none ms-2"><i class="bi bi-list bi-lg py-2 p-1"></i>
-                            Menu</a>
-                    </div>
                     <div id="sidebar" class="collapse collapse-horizontal show border-end">
                         <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start min-vh-99">
                             <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate"
@@ -98,50 +93,77 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-9">
-                    <div>
-                        <div class="card">
-                            <div class="card-header">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <img src="{{ asset('assets/images/profile/' . Auth::user()->profile_img) }}"
-                                            alt="{{ Auth::user()->name }} Profile" class="img-fluid rounded-circle">
+                <div class="col-2 mt-4">
+                    <a href="#" data-bs-target="#sidebar" data-bs-toggle="collapse"
+                    class="rounded-3 p-1 text-decoration-none ms-2">
+                    <svg width="4vw" height="8vh" viewBox="0 0 24 24" fill="none"
+                        xmlns="http://www.w3.org/2000/svg" transform="rotate(0)">
+                        <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"
+                            stroke="#ffffff" stroke-width="0.24000000000000005"></g>
+                        <g id="SVGRepo_iconCarrier">
+                            <path
+                                d="M9 12C9 12.5523 8.55228 13 8 13C7.44772 13 7 12.5523 7 12C7 11.4477 7.44772 11 8 11C8.55228 11 9 11.4477 9 12Z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M13 12C13 12.5523 12.5523 13 12 13C11.4477 13 11 12.5523 11 12C11 11.4477 11.4477 11 12 11C12.5523 11 13 11.4477 13 12Z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M17 12C17 12.5523 16.5523 13 16 13C15.4477 13 15 12.5523 15 12C15 11.4477 15.4477 11 16 11C16.5523 11 17 11.4477 17 12Z"
+                                fill="#ffffff"></path>
+                            <path
+                                d="M22 12C22 16.714 22 19.0711 20.5355 20.5355C19.0711 22 16.714 22 12 22C7.28595 22 4.92893 22 3.46447 20.5355C2 19.0711 2 16.714 2 12C2 7.28595 2 4.92893 3.46447 3.46447C4.92893 2 7.28595 2 12 2C16.714 2 19.0711 2 20.5355 3.46447C21.5093 4.43821 21.8356 5.80655 21.9449 8"
+                                stroke="#ffffff" stroke-width="1.5" stroke-linecap="round"></path>
+                        </g>
+                    </svg>
+                </a>
+                </div>
+                <div class="col-7 mt-4 ms-1">
+                    <div class="card">
+                        <div class="card-header row justify-content-center">
+                            <div class="col-5">
+                                <img src="{{ asset('assets/images/profile/' . Auth::user()->profile_img) }}"
+                                    alt="{{ Auth::user()->name }} Profile" class="img-fluid rounded-circle">
+                            </div>
+                            <div class="col-5 d-flex align-items-center">
+                                <p id="user_nick">
+                                    {{ Auth::user()->nickname }}
+                                </p>
+                            </div>
+                            <div class="col-2 d-flex align-items-center">
+                                <div class="card text-start">
+                                    <div class="card-header d-flex align-items-md-center justify-content-center">
+                                        <img src="/assets/images/icons/yellow-card.png" alt="strikes"
+                                            style="height: auto; max-width: 3vw;">
                                     </div>
-                                    <div class="col-5">
-                                        <p id="user_nick">
-                                            {{ Auth::user()->nickname }}
-                                        </p>
-                                        <hr>
-                                        <h5>{{ Auth::user()->name }} {{ Auth::user()->surnames }}</h5>
-                                    </div>
-                                    <div class="col-2">
-                                        <p>
-                                            Strikes
-                                        </p>
-                                        <hr>
-                                        <p>{{ Auth::user()->strikes }}</p>
+                                    <div
+                                        class="card-body rounded-bottom d-flex align-items-md-center justify-content-center">
+                                        <h5 class="card-text">{{ Auth::user()->strikes }} </h5>
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-body">
-                                <p class="card-text">Correo Electrónico: {{ Auth::user()->email }}</p>
-                                <p class="card-text">Fecha de Nacimiento: {{ Auth::user()->birth_date }}</p>
-                                <p class="card-text">País:
-                                    {{ Auth::user()->country ? Auth::user()->country->name : 'N/A' }}</p>
-                                <p class="card-text">Rol:
-                                    {{ Auth::user()->role ? Auth::user()->role->rol_name : 'N/A' }}</p>
-                                <p class="card-text">Biografía:
-                                    {{ Auth::user()->biography ? Auth::user()->biography : 'N/A' }}
-                                </p>
-                                <!-- Add more user details as needed -->
-                            </div>
-                            <div class="card-footer">
-                                @if (Auth::check())
-                                    <a href="{{ route('profile.edit') }}" class="btn btn-primary">Editar perfil</a>
-                                @endif
-                            </div>
+                        </div>
+
+                        <div class="card-body">
+                            <p class="card-text">Nombre: {{ Auth::user()->surnames }}, {{ Auth::user()->name }}</p>
+                            <p class="card-text">Correo Electrónico: {{ Auth::user()->email }}</p>
+                            <p class="card-text">Fecha de Nacimiento: {{ Auth::user()->birth_date }}</p>
+                            <p class="card-text">País:
+                                {{ Auth::user()->country ? Auth::user()->country->name : 'N/A' }}</p>
+                            <p class="card-text">Rol:
+                                {{ Auth::user()->role ? Auth::user()->role->rol_name : 'N/A' }}</p>
+                            <p class="card-text">Biografía:
+                                {{ Auth::user()->biography ? Auth::user()->biography : 'N/A' }}
+                            </p>
+                            <!-- Add more user details as needed -->
+                        </div>
+                        <div class="card-footer">
+                            @if (Auth::check())
+                                <a href="{{ route('profile.edit') }}" class="btn btn-primary">Editar perfil</a>
+                            @endif
                         </div>
                     </div>
+
                     <div class="m-auto p-4">
                         <h2 class="mt-4">Lista de Deseos</h2>
                         <div id="carouselWishlist" class="carousel slide mt-4 text-center row" data-bs-ride="carousel">
@@ -159,15 +181,16 @@
                                                 <!-- Add more details or customize as needed -->
                                             </div>
                                             <div class="card-footer">
-                                                <form action="{{ route('edition.show', ['id' => $wishlistBook->edition->id]) }}" method="GET"
-                                                    class="col">
+                                                <form
+                                                    action="{{ route('edition.show', ['id' => $wishlistBook->edition->id]) }}"
+                                                    method="GET" class="col">
                                                     @csrf
                                                     <button type="submit" class="btn ">
                                                         <svg version="1.1" id="Uploaded to svgrepo.com"
                                                             xmlns="http://www.w3.org/2000/svg"
-                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="2.5vw" height="auto"
-                                                            viewBox="0 0 32.00 32.00" xml:space="preserve" fill="#000000"
-                                                            transform="rotate(0)">
+                                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="2.5vw"
+                                                            height="auto" viewBox="0 0 32.00 32.00" xml:space="preserve"
+                                                            fill="#000000" transform="rotate(0)">
                                                             <g id="SVGRepo_bgCarrier" stroke-width="0"
                                                                 transform="translate(0,0), scale(1)">
                                                                 <path transform="translate(0, 0), scale(1)"
