@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 
 class User extends Authenticatable
@@ -101,6 +102,7 @@ class User extends Authenticatable
         return $this->belongsTo(Country::class, 'country_id');
     }
 
+
     /**
      * Determinar si el usuario tiene el rol de administrador.
      *
@@ -156,7 +158,7 @@ class User extends Authenticatable
         return $this->hasMany(MyLibrary::class);
     }
 
- /**
+    /**
      * Obtener los deseos asociados al usuario.
      */
     public function wishes(): HasMany
@@ -175,11 +177,28 @@ class User extends Authenticatable
     /**
      * Obtener el perfil de autor si el usuario también es un autor.
      */
-    public function authorProfile()
+    public function authors(): HasMany
     {
-        return $this->hasOne(UserAuthor::class);
+        return $this->hasMany(Author::class);
     }
 
+      /**
+     * Obtener el autor asociado con el usuario.
+     */
+    public function author()
+    {
+        return $this->hasOne(UserAuthor::class, 'user_id', 'id')->with('author');
+    }
+
+    /**
+     * Determina si el usuario ya está registrado como autor.
+     *
+     * @return bool
+     */
+    public function isAuthor()
+    {
+        return $this->author !== null;
+    }
     /**
      * Anular el método de eliminación para marcar al usuario como "eliminado" y borrar los datos sensibles.
      *

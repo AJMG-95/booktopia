@@ -33,4 +33,12 @@ class Author extends Model
     {
         return $this->belongsToMany(Book::class, 'book_authors');
     }
+
+    /**
+     * Get the user associated with the author.
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_authors');
+    }
 }

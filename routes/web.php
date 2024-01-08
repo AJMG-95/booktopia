@@ -123,6 +123,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/register/author', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form');
+    Route::post('/register/author', [AuthorController::class, 'registerAsAuthor'])->name('author.register');
+
+
 
     /* Rutas para los deseos */
     Route::post('/wishes/add/{id}', [WishController::class, 'add'])->name('wishes.add');

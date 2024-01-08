@@ -109,4 +109,10 @@ class ProfileController extends Controller
 
         return Redirect::to('/');
     }
+
+
+    public function showAuthorRegistrationForm()
+    {
+        return view('layouts.user.asAuthor.register');
+    }
 }
