@@ -10,9 +10,11 @@
         <div class="row">
             @foreach ($editions as $edition)
                 <div class="col-md-4">
-                    <div class="card">
-                        <img src="{{ asset('assets/images/editionCovers/' . $edition->cover) }}" class="card-img-top" alt="Portada de la edición">
-                        <div class="card-body">
+                    <div class="card border rounded">
+                        <div class="card-header">
+                            <img src="{{ asset('assets/images/editionCovers/' . $edition->cover) }}" class="card-img-top" alt="Portada de la edición">
+                        </div>
+                        <div class="card-body rounded">
                             <h5 class="card-title">{{ $edition->title }}</h5>
                             <p class="card-text">{{ $edition->description }}</p>
                             <p class="card-text">ISBN: {{ $edition->isbn }}</p>

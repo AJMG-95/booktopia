@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -18,7 +19,7 @@ return new class extends Migration
             $table->string('surnames', 255);
             $table->string('password', 255)->nullable();
             $table->string('email', 255)->unique()->nullable();
-            $table->date('birth_date')->nullable();
+            $table->date('birth_date')->nullable()->default(now());
             $table->bigInteger('country_id')->nullable()->unsigned();
             $table->string('profile_img')->nullable();
             $table->timestamp('email_verified_at')->nullable();
@@ -27,10 +28,18 @@ return new class extends Migration
             $table->boolean('blocked')->default(false)->nullable();
             $table->boolean('deleted')->default(false);
             $table->text('biography')->nullable();
+            $table->boolean('isAuthor')->default(false);
+            $table->bigInteger('user_as_author_id')->unsigned()->nullable();
             $table->rememberToken();
             $table->timestamps();
 
+            $table->foreign('user_as_author_id')->references('id')->on('authors');
             $table->foreign('country_id')->references('id')->on('countries');
+        });
+
+        // Add a constraint to ensure birth_date is not in the future
+        Schema::table('users', function (Blueprint $table) {
+            $table->check('birth_date < CURRENT_DATE');
         });
     }
 

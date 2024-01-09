@@ -94,7 +94,7 @@
                                     <i class="bi bi-envelope"></i> <span>Registrarse como autor</span>
                                 </a>
                             @else
-                            <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate"
+                            <a href="{{route('publications.index')}}" class="list-group-item border-end-0 d-inline-block text-truncate"
                                 data-bs-parent="#sidebar"><i class="bi bi-bootstrap"></i> <span>Mis publicaciones</span>
                             </a>
                             @endif

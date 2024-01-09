@@ -11,16 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('books', function (Blueprint $table) {
+        Schema::create('edition_books', function (Blueprint $table) {
             $table->id();
+            $table->string('isbn')->nullable();
             $table->boolean('self_published')->default(false);
-            $table->string('original_title', 255);
-            $table->string('translated_title', 255)->nullable();
+            $table->string('title', 255)->nullable();
             $table->text('short_description')->nullable();
             $table->text('description')->nullable();
             $table->string('cover')->nullable();
             $table->boolean('visible')->default(true);
+            $table->string('editorial')->nullable();
+            $table->decimal('price', 8, 2)->nullable();
+            $table->string('document')->nullable();
+            $table->bigInteger('language_id')->unsigned()->nullable();
+            $table->boolean('deleted')->default(false);
             $table->timestamps();
+
+            $table->foreign('language_id')->references('id')->on('languages')->onDelete('set null');
         });
     }
 
@@ -29,6 +36,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('books');
+        Schema::dropIfExists('edition_books');
     }
 };

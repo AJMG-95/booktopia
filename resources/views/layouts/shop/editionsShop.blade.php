@@ -147,7 +147,7 @@
                         <button type="submit" class="btn btn-primary">Ordenar</button>
                     </div>
                 </form>
-                <div class="row row-cols-1 row-cols-md-3 g4">
+                <div class="row row-cols-1 row-cols-md-3 pe-4">
                     @foreach ($editions as $edition)
                         <div class="col">
                             <div class="card h-100">

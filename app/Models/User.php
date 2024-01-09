@@ -24,15 +24,20 @@ class User extends Authenticatable
         'nickname',
         'name',
         'surnames',
-        'email',
         'password',
+        'email',
         'birth_date',
         'country_id',
         'profile_img',
+        'email_verified_at',
         'rol_id',
         'strikes',
         'blocked',
         'deleted',
+        'biography',
+        'isAuthor',
+        'user_as_author_id',
+        'remember_token',
     ];
 
     /**
@@ -51,10 +56,11 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
         'birth_date' => 'date',
+        'email_verified_at' => 'datetime',
         'blocked' => 'boolean',
         'deleted' => 'boolean',
+        'isAuthor' => 'boolean',
     ];
 
     /**
@@ -177,28 +183,11 @@ class User extends Authenticatable
     /**
      * Obtener el perfil de autor si el usuario también es un autor.
      */
-    public function authors(): HasMany
-    {
-        return $this->hasMany(Author::class);
-    }
-
-      /**
-     * Obtener el autor asociado con el usuario.
-     */
     public function author()
     {
-        return $this->hasOne(UserAuthor::class, 'user_id', 'id')->with('author');
+        return $this->belongsTo(Author::class, 'user_as_author_id');
     }
 
-    /**
-     * Determina si el usuario ya está registrado como autor.
-     *
-     * @return bool
-     */
-    public function isAuthor()
-    {
-        return $this->author !== null;
-    }
     /**
      * Anular el método de eliminación para marcar al usuario como "eliminado" y borrar los datos sensibles.
      *

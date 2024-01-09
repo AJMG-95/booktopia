@@ -22,7 +22,7 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
-            $table->foreign('edition_id')->references('id')->on('editions');
+            $table->foreign('edition_id')->references('id')->on('edition_books');
         });
     }
 

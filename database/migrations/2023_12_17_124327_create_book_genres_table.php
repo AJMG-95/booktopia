@@ -17,7 +17,7 @@ return new class extends Migration
             $table->bigInteger('genre_id')->unsigned();
             $table->timestamps();
 
-            $table->foreign('book_id')->references('id')->on('books');
+            $table->foreign('book_id')->references('id')->on('edition_books');
             $table->foreign('genre_id')->references('id')->on('genres');
         });
     }

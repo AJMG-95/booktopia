@@ -16,6 +16,7 @@ use App\Http\Controllers\StripeController;
 use App\Http\Controllers\StickyNotesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\EditionsBuyedController;
+use App\Http\Controllers\PublicationController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -116,15 +117,24 @@ Route::middleware(['auth'])->group(function () {
     //* Rutas para las funcionalidades de Usuarios
     /* Ruta para listar ediciones compradas */
     Route::get('/user/buyed-editions', [EditionsBuyedController::class, 'index'])->name('user.buyed.editions');
-    Route::get('/user/buyed-editions/pdf/{editionId}', [EditionsBuyedController::class,'show'])->name('pdf.show');
+    Route::get('/user/buyed-editions/pdf/{editionId}', [EditionsBuyedController::class, 'show'])->name('pdf.show');
 
     /* Rutas para el perfil */
-    Route::get('/profile/index', [ProfileController::class, 'index'])->name('profile.index');
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-    Route::get('/register/author', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form');
-    Route::post('/register/author', [AuthorController::class, 'registerAsAuthor'])->name('author.register');
+    Route::prefix('/profile')->group(function () {
+        Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
+        Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+        Route::get('/register_as_author', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form');
+        Route::post('/register_as_author/register', [AuthorController::class, 'registerAsAuthor'])->name('author.register');
+    });
+
+
+    Route::prefix('mis-publicaciones')->name('publications.')->group(function () {
+        Route::get('/', [PublicationController::class, 'index'])->name('index');
+        Route::get('/nueva-publicacion', [PublicationController::class, 'create'])->name('create');
+        Route::post('/nueva-publicacion', [PublicationController::class, 'store'])->name('store');
+    });
 
 
 
@@ -159,13 +169,14 @@ Route::get('/', function () {
     return view('welcome', compact('randomBooks', 'randomGenres'));
 })->name('welcome');
 
-Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
-Route::get('/editions/{id}', [EditionsController::class, 'show'])->name('edition.show');
 
 
-Route::get('/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
+Route::get('/book/editions/{book}', [EditionsController::class, 'editionsForBook'])->name('editions.forBook');
 Route::get('/genres/{id}', [GenreController::class, "show"])->name('genre.show');
 Route::get('/book/forGenre/{genre}', [GenreController::class, 'booksForGenre'])->name('books.forGenre');
+
+Route::get('/books/{id}', [BooksController::class, "show"])->name('books.show');
+Route::get('/editions/{id}', [EditionsController::class, 'show'])->name('edition.show');
 
 Route::get('/shop', [EditionsShopController::class, 'index'])->name('shop');
 
