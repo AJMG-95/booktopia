@@ -7,7 +7,7 @@
         <!-- Mostrar mensajes de éxito o error aquí -->
 
         <div class="mb-3">
-            <a href="{{ route('books.create') }}" class="btn btn-success">Añadir Book</a>
+            <a href="{{ route('books.create') }}" class="btn btn-success">Añadir Libro</a>
         </div>
 
         <table class="table">
@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($books as $book)
+                @forelse ($books as $book)
                     <tr>
                         <td>
                             @if ($book->cover)
@@ -79,7 +79,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+                    @empty
+                    <tr>
+                        <td colspan="7">No se ha encontado ningún libro.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
     </div>
