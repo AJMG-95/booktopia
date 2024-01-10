@@ -8,18 +8,17 @@ use Illuminate\Support\Facades\DB;
 class RolesTableSeeder extends Seeder
 {
     /**
-     * Run the seeder.
+     * Run the database seeds.
+     *
+     * @return void
      */
     public function run()
     {
-        $roles = [
-            ['rol_name' => 'admin', 'id' => 1],
-            ['rol_name' => 'subadmin', 'id' => 2],
-            ['rol_name' => 'user', 'id' => 3],
-        ];
-
-        foreach ($roles as $role) {
-            DB::table('roles')->insert($role);
-        }
+        // Insertar registros en la tabla roles
+        DB::table('roles')->insert([
+            ['rol_name' => 'admin', 'created_at' => now(), 'updated_at' => now()],
+            ['rol_name' => 'subadmin', 'created_at' => now(), 'updated_at' => now()],
+            ['rol_name' => 'user', 'created_at' => now(), 'updated_at' => now()],
+        ]);
     }
 }

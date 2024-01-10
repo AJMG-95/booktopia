@@ -15,18 +15,18 @@ class BookGenre extends Model
     ];
 
     /**
-     * Toma el libro asociado a la relacion libro-genero
+     * Get the book that owns the genre relationship.
      */
     public function book()
     {
-        return $this->belongsTo(Book::class);
+        return $this->belongsTo(EditionBook::class, 'book_id');
     }
 
     /**
-     * Toma el genero asociado a la relacion libro-genero
+     * Get the genre that owns the book relationship.
      */
     public function genre()
     {
-        return $this->belongsTo(Genre::class);
+        return $this->belongsTo(Genre::class, 'genre_id');
     }
 }

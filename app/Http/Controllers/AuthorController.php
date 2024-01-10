@@ -2,239 +2,134 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Author;
 use App\Models\Country;
-use App\Models\User;
-use App\Models\UserAuthor;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
-
+use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    /**
+     * Display a listing of the resource.
+     */
     public function index()
     {
         $authors = Author::all();
-        return view('admin.management.books&editions.authors.authorList', compact('authors'));
+        return view('admin.management.authors.authorList', compact('authors'));
     }
 
+    /**
+     * Show the form for creating a new resource.
+     */
     public function create()
     {
-        // Obtener la lista de países
         $countries = Country::all();
-
-        return view('admin.management.books&editions.authors.authorCreate', compact('countries'));
+        return view('admin.management.authors.authorCreate', compact('countries'));
     }
 
+    /**
+     * Store a newly created resource in storage.
+     */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'surnames' => 'nullable|string|max:255',
-            'birth_at' => 'nullable|date',
-            'country_id' => 'nullable|exists:countries,id',
-            'biography' => 'nullable|string|max:1000',
+        try {
+            $validatedData = $request->validate([
+                'nickname' => 'nullable|string|max:255',
+                'name' => 'required|string|max:255',
+                'surnames' => 'nullable|string|max:255',
+                'birth_at' => 'nullable|date',
+                'country_id' => 'nullable|exists:countries,id',
+                'biography' => 'nullable|string|max:1000',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-            // Agrega más validaciones según tus necesidades
-        ]);
+            // Obtén el nombre del autor
+            $authorName = $validatedData['name'];
 
-        // Buscar autores existentes con nombres y apellidos similares
-        $existingAuthor = Author::where('name', $validatedData['name'])
-            ->where('surnames', $validatedData['surnames'])
-            ->first();
+            // Construye el nombre único para la imagen
+            $imageName = strtolower(str_replace(' ', '_', $authorName));
 
-        // Verificar si ya existe un autor similar
-        if ($existingAuthor) {
-            return redirect()->route('authors.list')->with('error', 'Ya existe un autor similar.');
+            // Subir la foto y obtener la ruta
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->storeAs('authors_photos', $imageName, 'public');
+                $validatedData['photo'] = $photoPath;
+            }
+
+            $author = Author::create($validatedData);
+
+            return redirect()->route('authors.list')->with('success', 'Autor creado exitosamente.');
+        } catch (\Exception $e) {
+            // Manejar la excepción
+            return redirect()->back()->with('error', 'Error al crear el autor: ' . $e->getMessage());
         }
-
-        // Crear el autor si no hay duplicados
-        Author::create($validatedData);
-
-        return redirect()->route('authors.list')->with('success', 'Autor creado exitosamente.');
     }
 
-    public function edit($id)
+    /**
+     * Display the specified resource.
+     */
+    /*     public function show(Author $author)
     {
-        $author = Author::findOrFail($id);
+        return view('admin.management.authors.show', compact('author'));
+    }
+ */
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Author $author)
+    {
         $countries = Country::all();
-        return view('admin.management.books&editions.authors.authorEdit', compact('author', 'countries'));
+        return view('admin.management.authors.authorEdit', compact('author', 'countries'));
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Author $author)
     {
-        // Validar los datos del formulario
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'surnames' => 'nullable|string|max:255',
-            'birth_at' => 'nullable|date',
-            'country_id' => 'nullable|exists:countries,id',
-            'biography' => 'nullable|string|max:1000',
-            // Agrega más validaciones según tus necesidades
-        ]);
+        try {
+            $validatedData = $request->validate([
+                'nickname' => 'nullable|string|max:255',
+                'name' => 'required|string|max:255',
+                'surnames' => 'nullable|string|max:255',
+                'birth_at' => 'nullable|date',
+                'country_id' => 'nullable|exists:countries,id',
+                'biography' => 'nullable|string|max:1000',
+                'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            ]);
 
-        // Buscar autores existentes con nombres y apellidos similares
-        $existingAuthor = Author::where('name', $validatedData['name'])
-            ->where('surnames', $validatedData['surnames'])
-            ->where('id', '!=', $id) // Excluir el autor actual de la búsqueda
-            ->first();
+            // Obtén el nombre del autor
+            $authorName = $validatedData['name'];
 
-        // Verificar si ya existe un autor similar
-        if ($existingAuthor) {
-            return redirect()->route('authors.list')->with('error', 'Ya existe un autor similar.');
+            // Construye el nombre único para la imagen
+            $imageName = strtolower(str_replace(' ', '_', $authorName));
+
+            // Subir la foto y obtener la ruta
+            if ($request->hasFile('photo')) {
+                $photoPath = $request->file('photo')->storeAs('authors_photos', $imageName, 'public');
+                $validatedData['photo'] = $photoPath;
+            }
+
+            $author->update($validatedData);
+
+            return redirect()->route('authors.list')->with('success', 'Autor actualizado exitosamente.');
+        } catch (\Exception $e) {
+            // Manejar la excepción
+            return redirect()->back()->with('error', 'Error al actualizar el autor: ' . $e->getMessage());
         }
-
-        // Actualizar el autor si no hay duplicados
-        $author = Author::findOrFail($id);
-        $author->update($validatedData);
-
-        return redirect()->route('authors.list')->with('success', 'Autor actualizado exitosamente.');
     }
 
-    public function delete($id)
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Author $author)
     {
-        return view('admin.management.books&editions.authors.authorDelete', compact('id'));
-    }
-
-    public function destroy($id)
-    {
-        $author = Author::findOrFail($id);
-
-        // Verificar si el autor tiene libros asociados
-        if ($author->books()->exists()) {
-            return redirect()->route('authors.list')->with('error', 'No se puede eliminar el autor, ya que tiene libros asociados.');
-        }
-
-        // Si no hay libros asociados, lo elimina
-        $author->delete();
-
-        return redirect()->route('authors.list')->with('success', 'Autor eliminado exitosamente.');
-    }
-
-
-
-/*     public function registerAsAuthor(Request $request)
-    {
-        $request->validate([
-            'nickname' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'surnames' => 'required|string|max:255',
-            'birth_at' => 'required|date',
-            'biography' => 'required|string|max:1000',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        // Comienza una transacción de base de datos
-        DB::beginTransaction();
 
         try {
-            // Recupera el usuario conectado
-            $user = Auth::user();
+            $author->delete();
 
-            // Verifica si el usuario ya es un autor
-            if ($user->author) {
-                throw new \Exception('User is already registered as an author.');
-            }
-
-            // Guarda la información del autor en la base de datos
-            $author = new Author([
-                'nickname' => $request->input('nickname'),
-                'name' => $request->input('name'),
-                'surnames' => $request->input('surnames'),
-                'birth_at' => $request->input('birth_at'),
-                'biography' => $request->input('biography'),
-                'country_id' => $user->country_id,
-            ]);
-
-            // Guarda la foto del autor si se proporciona
-            if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->store('author_photos', 'public');
-                $author->photo = $photoPath;
-            }
-
-            $author->save();
-
-            // Confirma la transacción
-            DB::commit();
-
-            // Luego puedes redirigir a otra vista o realizar más acciones si es necesario
-
-            return redirect()->route('profile.index')->with('success', 'Author registration successful.');
+            return redirect()->route('authors.list')->with('success', 'Autor eliminado exitosamente.');
         } catch (\Exception $e) {
-            // Si ocurre un error, revierte la transacción
-            DB::rollback();
-            Log::error('Author registration error: ' . $e->getMessage());
-
-            // Maneja el error, puedes registrarlo o mostrar un mensaje de error
-            return redirect('/')->with('error', $e->getMessage());
-        }
-    } */
-
-    public function registerAsAuthor(Request $request)
-    {
-        $request->validate([
-            'nickname' => 'required|string|max:255',
-            'name' => 'required|string|max:255',
-            'surnames' => 'required|string|max:255',
-            'birth_at' => 'required|date',
-            'biography' => 'required|string|max:1000',
-            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
-
-        // Comienza una transacción de base de datos
-        DB::beginTransaction();
-
-        try {
-            // Recupera el usuario conectado
-            $user = Auth::user();
-
-            // Verifica si el usuario ya es un autor
-            if ($user->author) {
-                throw new \Exception('User is already registered as an author.');
-            }
-
-            // Guarda la información del autor en la base de datos
-            $author = new Author([
-                'nickname' => $request->input('nickname'),
-                'name' => $request->input('name'),
-                'surnames' => $request->input('surnames'),
-                'birth_at' => $request->input('birth_at'),
-                'biography' => $request->input('biography'),
-                'country_id' => $user->country_id,
-            ]);
-
-            // Guarda la foto del autor si se proporciona
-            if ($request->hasFile('photo')) {
-                $photoPath = $request->file('photo')->store('author_photos', 'public');
-                $author->photo = $photoPath;
-            }
-
-            $author->save();
-
-            // Asocia al autor con el usuario actual
-            $userAuthor = new UserAuthor([
-                'user_id' => $user->id,
-                'author_id' => $author->id,
-            ]);
-
-            $userAuthor->save();
-
-            // Confirma la transacción
-            DB::commit();
-
-            // Luego puedes redirigir a otra vista o realizar más acciones si es necesario
-
-            return redirect()->route('profile.index')->with('success', 'Author registration successful.');
-        } catch (\Exception $e) {
-            // Si ocurre un error, revierte la transacción
-            DB::rollback();
-            Log::error('Author registration error: ' . $e->getMessage());
-
-            // Maneja el error, puedes registrarlo o mostrar un mensaje de error
-            return redirect('/')->with('error', $e->getMessage());
+            // Manejar la excepción
+            return redirect()->back()->with('error', 'Error al eliminar el autor: ' . $e->getMessage());
         }
     }
 }

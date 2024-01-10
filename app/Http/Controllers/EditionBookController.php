@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
+use App\Models\EditionBook;
 use Illuminate\Http\Request;
 
-class GenreController extends Controller
+
+class EditionBookController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function list()
     {
         //
     }
@@ -34,7 +35,7 @@ class GenreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Genre $genre)
+    public function show(EditionBook $editionBook)
     {
         //
     }
@@ -42,7 +43,7 @@ class GenreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genre $genre)
+    public function edit(EditionBook $editionBook)
     {
         //
     }
@@ -50,7 +51,7 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genre $genre)
+    public function update(Request $request, EditionBook $editionBook)
     {
         //
     }
@@ -58,16 +59,22 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $genre)
+    public function destroy(EditionBook $editionBook)
     {
         //
     }
 
-    public static function randomGenres()
-    {
-        $randomGenres = Genre::inRandomOrder()
-            ->get();
+    /**
+     * Obtiene una colección de libros aleatorios que son deseos de los usuarios.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function randomBooks() {
+        $randomBooks = EditionBook::where('visible', true)
+                        ->inRandomOrder()
+                        ->get();
 
-        return $randomGenres ? $randomGenres->take(10) : collect();
+        return $randomBooks ? $randomBooks->take(10) : collect();
     }
+
 }

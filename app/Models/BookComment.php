@@ -1,13 +1,11 @@
 <?php
 
-// app\Models\Wish.php
-
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Wish extends Model
+class BookComment extends Model
 {
 
     use HasFactory;
@@ -15,21 +13,19 @@ class Wish extends Model
     protected $fillable = [
         'user_id',
         'book_id',
+        'body',
+        'likes',
+        'dislikes',
+        'reports',
     ];
 
-    /**
-     * Get the user that owns the wish.
-     */
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    /**
-     * Get the book that the wish belongs to.
-     */
     public function book()
     {
-        return $this->belongsTo(EditionBook::class);
+        return $this->belongsTo(EditionBook::class, 'book_id');
     }
 }

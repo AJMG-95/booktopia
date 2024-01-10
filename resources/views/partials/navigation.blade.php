@@ -27,7 +27,7 @@
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('shop') }}">Tienda</a>
+                            <a class="nav-link" href="{{ route('books.shop') }}">Tienda</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">
@@ -56,7 +56,7 @@
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('shop') }}">Tienda</a>
+                            <a class="nav-link" href="{{ route('books.shop') }}">Tienda</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="{{-- {{ route('posts') }} --}}">Foro</a>
@@ -81,15 +81,15 @@
                                     <li>
                                         <a class="dropdown-item" href="{{ route('home') }}">Home</a>
                                     </li>
-                                    @else
+                                @else
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('user.buyed.editions') }}">Mi Libreria</a>
+                                        <a class="dropdown-item" href="{{-- {{ route('user.buyed.editions') }} --}}">Mi Libreria</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('notes.index') }}">Mis Notas</a>
+                                        <a class="dropdown-item" href="{{-- {{ route('notes.index') }} --}}">Mis Notas</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('wishlist.show') }}">Mi Lista de Deseos</a>
+                                        <a class="dropdown-item" href="{{-- {{ route('wishlist.show') }} --}}">Mi Lista de Deseos</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
@@ -97,7 +97,6 @@
                                     <li>
                                         <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Autopublicacines</a>
                                     </li>
-
                                 @endif
                                 <li>
                                     <hr class="dropdown-divider">

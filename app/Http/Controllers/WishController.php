@@ -2,71 +2,64 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use App\Models\Wish;
-use App\Models\Edition;
+use Illuminate\Http\Request;
 
 class WishController extends Controller
 {
-
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
 
     /**
-     * Mostrar la lista de ediciones deseadas por el usuario.
-     *
-     * @return \Illuminate\Http\Response
+     * Show the form for creating a new resource.
      */
-    public function showWishlist()
+    public function create()
     {
-        // Obtener el ID del usuario actual
-        $userId = Auth::id();
-
-        // Obtener la lista de ediciones deseadas por el usuario
-        $wishlist = Wish::where('user_id', $userId)->with('edition')->get();
-
-        return view('layouts.user.wishes.wishesList', compact('wishlist'));
+        //
     }
-
-   /**
-     * Agregar una edición a la lista de deseos.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function add($id)
-    {
-        $userId = Auth::id();
-
-        $wish = Wish::where('edition_id', $id)->where('user_id', $userId)->first();
-
-        if (!$wish) {
-            Wish::create(['edition_id' => $id, 'user_id' => $userId]);
-            return redirect()->back()->with('success', 'Edición añadida a la lista de deseos');
-        } else {
-            return redirect()->back()->with('info', 'Esta edición ya está en tu lista de deseos');
-        }
-    }
-
 
     /**
-     * Eliminar una edición de la lista de deseos.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage.
      */
-    public function remove($id)
+    public function store(Request $request)
     {
-        $userId = Auth::id();
-
-        $wish = Wish::where('edition_id', $id)->where('user_id', $userId)->first();
-
-        if ($wish) {
-            $wish->delete();
-            return redirect()->back()->with('success', 'Edición eliminada de la lista de deseos');
-        }
-
-        return redirect()->back()->with('error', 'Esta edición no estaba en tu lista de deseos');
+        //
     }
 
+    /**
+     * Display the specified resource.
+     */
+    public function show(Wish $wish)
+    {
+        //
+    }
 
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(Wish $wish)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Wish $wish)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(Wish $wish)
+    {
+        //
+    }
 }

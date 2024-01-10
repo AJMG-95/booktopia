@@ -9,17 +9,13 @@ class Genre extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'genre',
-        'description',
-        'img_url',
-    ];
+    protected $fillable = ['genre_name', 'description', 'img_url'];
 
     /**
-     * Obtener los libros asociados con el género.
+     * Obtener todos los libros asociados a este género.
      */
     public function books()
     {
-        return $this->belongsToMany(Book::class, 'book_genres');
+        return $this->belongsToMany(EditionBook::class, 'book_genres');
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Language extends Model
 {
+
     use HasFactory;
 
     protected $fillable = [
@@ -16,10 +17,10 @@ class Language extends Model
     ];
 
     /**
-     * Obtener las ediciones asociadas con el idioma.
+     * Get the edition books associated with the language.
      */
-    public function editions()
+    public function editionBooks()
     {
-        return $this->hasMany(Edition::class);
+        return $this->hasMany(EditionBook::class);
     }
 }

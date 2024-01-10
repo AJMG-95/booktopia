@@ -29,8 +29,8 @@ class Payment extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function edition()
+    public function book()
     {
-        return $this->belongsTo(Edition::class, 'edition_id');
+        return $this->belongsTo(EditionBook::class, 'edition_id');
     }
 }

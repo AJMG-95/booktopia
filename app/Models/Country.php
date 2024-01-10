@@ -16,7 +16,7 @@ class Country extends Model
     ];
 
     /**
-     * Toma los autores asociados al pais
+     * Get the authors associated with the country.
      */
     public function authors()
     {
@@ -24,10 +24,18 @@ class Country extends Model
     }
 
     /**
-     * Toma los usuarios asociados al pais
+     * Get the users associated with the country.
      */
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    /**
+     * Get the edition books written in this country's language.
+     */
+    public function editionBooks()
+    {
+        return $this->hasManyThrough(EditionBook::class, Language::class);
     }
 }

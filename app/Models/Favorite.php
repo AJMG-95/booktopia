@@ -11,11 +11,11 @@ class Favorite extends Model
 
     protected $fillable = [
         'user_id',
-        'edition_id',
+        'book_id',
     ];
 
     /**
-     * Obtener el usuario que marcó la edición como favorita.
+     * Get the user that owns the favorite.
      */
     public function user()
     {
@@ -23,10 +23,10 @@ class Favorite extends Model
     }
 
     /**
-     * Obtener la edición asociada con la favorita.
+     * Get the book that is favorited.
      */
-    public function edition()
+    public function book()
     {
-        return $this->belongsTo(Edition::class);
+        return $this->belongsTo(EditionBook::class);
     }
 }

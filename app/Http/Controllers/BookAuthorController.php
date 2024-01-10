@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Genre;
+use App\Models\BookAuthor;
 use Illuminate\Http\Request;
 
-class GenreController extends Controller
+class BookAuthorController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +34,7 @@ class GenreController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Genre $genre)
+    public function show(BookAuthor $bookAuthor)
     {
         //
     }
@@ -42,7 +42,7 @@ class GenreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Genre $genre)
+    public function edit(BookAuthor $bookAuthor)
     {
         //
     }
@@ -50,7 +50,7 @@ class GenreController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Genre $genre)
+    public function update(Request $request, BookAuthor $bookAuthor)
     {
         //
     }
@@ -58,16 +58,8 @@ class GenreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Genre $genre)
+    public function destroy(BookAuthor $bookAuthor)
     {
         //
-    }
-
-    public static function randomGenres()
-    {
-        $randomGenres = Genre::inRandomOrder()
-            ->get();
-
-        return $randomGenres ? $randomGenres->take(10) : collect();
     }
 }

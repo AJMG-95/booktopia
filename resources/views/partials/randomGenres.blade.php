@@ -1,38 +1,22 @@
-<div class="container-fluid mt-4">
-    <div class="mt-4 ms-4">
-        <h2>Géneros recomendados</h2>
-    </div>
+<div class="container ">
+    <h2 >Géneros Recomendos</h2>
 
-    <div class=" cardsContainer" style="">
-        @foreach ($randomGenres as $genre)
-            <div class="bookCard card ">
-                <div class="image-container">
-                    <img src="{{ asset('assets/images/genres/' . $genre->img_url) }}" alt="{{ $genre->genre }}">
-
+    <!-- Carrusel de Libros Aleatorios -->
+    <div id="carouselGenres" class="carousel slide " data-bs-ride="carousel">
+        <div class="carousel-inner">
+            @foreach ($randomGenres as $index => $genre)
+                <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
+                    @include('partials.genre_card', ['genre' => $genre])
                 </div>
-                <div class="content">
-                    <ul class="cardDefinition">
-                        <li>
-                            <h5>Nombre</h5>
-                        </li>
-                        <li>
-                            <p>{{ $genre->genre }}</p>
-                        </li>
-                        <li>
-                            <h5>Descrición</h5>
-                        </li>
-                        <li>
-                            <p>{{ $genre->description }}</p>
-                        </li>
-
-                    </ul>
-                </div>
-                <div class="verDetalle">
-                    <a class="" href="{{ route('genre.show', ['id' => $genre->id]) }}">
-                        Ver
-                    </a>
-                </div>
-            </div>
-        @endforeach
+            @endforeach
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselGenres" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Anterior</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselGenres" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Siguiente</span>
+        </button>
     </div>
 </div>

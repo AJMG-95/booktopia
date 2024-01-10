@@ -37,7 +37,7 @@
                             </li>
                             <li class="list-group-item admin-list-group-item">
                                 <a class="admin-a "
-                                    href="{{ route('books&editions.index') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
+                                    href="{{ route('books.management') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
                             </li>
                             @if (Auth::user()->isAdmin())
                                 <li class="list-group-item admin-list-group-item">
