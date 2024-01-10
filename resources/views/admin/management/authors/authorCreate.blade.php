@@ -1,8 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Create Author</h2>
+    <div class="container mt-4 border rounded">
+        <h2>Crear Autor</h2>
 
         <!-- Mostrar mensajes de éxito o error aquí -->
 
@@ -29,7 +29,7 @@
             </div>
 
             <div class="mb-3">
-                <label for="country_id" class="form-label">Country:</label>
+                <label for="country_id" class="form-label">País:</label>
                 <select class="form-control" id="country_id" name="country_id">
                     <!-- Include options for countries -->
                     @foreach ($countries as $country)
@@ -39,16 +39,18 @@
             </div>
 
             <div class="mb-3">
-                <label for="biography" class="form-label">Biography:</label>
+                <label for="biography" class="form-label">Biografias:</label>
                 <textarea class="form-control" id="biography" name="biography" rows="4"></textarea>
             </div>
 
             <div class="mb-3">
-                <label for="photo" class="form-label">Photo:</label>
+                <label for="photo" class="form-label">Foto:</label>
                 <input type="file" class="form-control" id="photo" name="photo">
             </div>
 
-            <button type="submit" class="btn btn-primary">Create Author</button>
+            <button type="submit" class="btn btn-primary mb-3">Crear autor</button>
+            <a href="{{ route('authors.list') }}" class="btn btn-primary  mb-3">Cancelar</a>
+
         </form>
     </div>
 @endsection

@@ -88,7 +88,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/create', [AuthorController::class, 'create'])->name('authors.create');
                 Route::post('/store', [AuthorController::class, 'store'])->name('authors.store');
                 Route::get('/edit/{id}', [AuthorController::class, 'edit'])->name('authors.edit');
-                Route::put('/update/{id}', [AuthorController::class, 'update'])->name('authors.update');
+                Route::patch('/update/{id}', [AuthorController::class, 'update'])->name('authors.update');
                 Route::get('/delete/{id}', [AuthorController::class, 'delete'])->name('authors.delete');
                 Route::delete('/destroy/{id}', [AuthorController::class, 'destroy'])->name('authors.destroy');
             });

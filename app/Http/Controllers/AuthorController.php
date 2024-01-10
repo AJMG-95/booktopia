@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use App\Models\Country;
 use Illuminate\Http\Request;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AuthorController extends Controller
 {
@@ -13,8 +14,13 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        $authors = Author::all();
-        return view('admin.management.authors.authorList', compact('authors'));
+        try {
+            $authors = Author::all();
+            return view('admin.management.authors.authorList', compact('authors'));
+        } catch (ModelNotFoundException $exception) {
+            // Manejar la excepción aquí, por ejemplo, redirigir a una página de error 404
+            return abort(404);
+        }
     }
 
     /**
@@ -22,8 +28,13 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        $countries = Country::all();
-        return view('admin.management.authors.authorCreate', compact('countries'));
+        try {
+            $countries = Country::all();
+            return view('admin.management.authors.authorCreate', compact('countries'));
+        } catch (ModelNotFoundException $exception) {
+            // Manejar la excepción aquí, por ejemplo, redirigir a una página de error 404
+            return abort(404);
+        }
     }
 
     /**
@@ -74,18 +85,25 @@ class AuthorController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Author $author)
+    public function edit($id)
     {
-        $countries = Country::all();
-        return view('admin.management.authors.authorEdit', compact('author', 'countries'));
+        try {
+            $author = Author::findOrFail($id);
+            $countries = Country::all();
+            return view('admin.management.authors.authorEdit', compact('author', 'countries'));
+        } catch (ModelNotFoundException $exception) {
+            // Manejar la excepción aquí, por ejemplo, redirigir a una página de error 404
+            return abort(404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Author $author)
+    public function update(Request $request, $id)
     {
         try {
+            $author = Author::findOrFail($id);
             $validatedData = $request->validate([
                 'nickname' => 'nullable|string|max:255',
                 'name' => 'required|string|max:255',
@@ -112,18 +130,27 @@ class AuthorController extends Controller
 
             return redirect()->route('authors.list')->with('success', 'Autor actualizado exitosamente.');
         } catch (\Exception $e) {
-            // Manejar la excepción
             return redirect()->back()->with('error', 'Error al actualizar el autor: ' . $e->getMessage());
+        } catch (ModelNotFoundException $e) {
+            return abort(404);
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Author $author)
+    public function destroy($id)
     {
 
         try {
+            $author = Author::findOrFail($id);
+
+            // Verificar si el autor tiene libros asociados
+            if ($author->books()->exists()) {
+                return redirect()->route('authors.list')->with('error', 'No se puede eliminar el autor, ya que tiene libros asociados.');
+            }
+
+            // Si no hay libros asociados, lo elimina
             $author->delete();
 
             return redirect()->route('authors.list')->with('success', 'Autor eliminado exitosamente.');
