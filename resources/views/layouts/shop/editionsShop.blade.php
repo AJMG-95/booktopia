@@ -10,12 +10,12 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                         <input type="text" name="title" class="form-control" placeholder="Buscar por Título"
-                          {{--   value="{{ old('title', $request->get('title')) }}" --}} />
+                            {{--   value="{{ old('title', $request->get('title')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
                         <input type="text" name="author" class="form-control" placeholder="Buscar por Autor"
-                           {{--  value="{{ old('author', $request->get('author')) }}"  --}}/>
+                            {{--  value="{{ old('author', $request->get('author')) }}"  --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-list"></i></span>
@@ -29,13 +29,11 @@
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(max.) €</span>
-                        <input type="number" name="max_price" class="form-control"
-                           {{--  value="{{ old('max_price', $request->get('max_price')) }}" --}} />
+                        <input type="number" name="max_price" class="form-control" {{--  value="{{ old('max_price', $request->get('max_price')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(min.) €</span>
-                        <input type="number" name="min_price" class="form-control"
-                           {{--  value="{{ old('min_price', $request->get('min_price')) }}" --}} />
+                        <input type="number" name="min_price" class="form-control" {{--  value="{{ old('min_price', $request->get('min_price')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-upc-scan"></i></span>
@@ -45,7 +43,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-globe"></i></span>
                         <input list="languages" name="language" class="form-control" placeholder="Seleccionar Idioma"
-                         {{--    value="{{ old('language', $request->get('language')) }}" --}}>
+                            {{--    value="{{ old('language', $request->get('language')) }}" --}}>
                         <datalist id="languages">
                             @foreach ($languages as $language)
                                 <option value="{{ $language->iso_code }}">{{ $language->language }}</option>
@@ -54,7 +52,7 @@
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" name="autopublicado" value="0" class="form-check-input"
-                           {{--  {{ old('autopublicado', $request->get('autopublicado')) == '0' ? 'checked' : '' }} --}}>
+                            {{--  {{ old('autopublicado', $request->get('autopublicado')) == '0' ? 'checked' : '' }} --}}>
                         <label for="autopublicado">Mostrar solo libros autopublicados</label>
                     </div>
                     <div class="d-grid gap-2">
@@ -68,7 +66,7 @@
 
             {{-- Área principal para mostrar los libros --}}
             <main class="col-lg-9 col-md-8 col-ms-7 pt-4">
-                <form action="{{ route('books.shop') }}" method="GET" >
+                <form action="{{ route('books.shop') }}" method="GET">
                     <div class="d-flex justify-content-left align-items-center mb-4">
                         <select name="sortBy" class="form-select w-auto">
                             <option value="asc_price" @if (request('sortBy') == 'asc_price') selected @endif>Menor a mayor €
@@ -85,42 +83,44 @@
                 </form>
                 <div class="row row-cols-1 row-cols-md-3 pe-4">
                     @foreach ($books as $book)
-                        <div class="col">
-                            <div class="card h-100">
-                                <img src="{{ $book->cover ? asset('assets/images/editionCovers/' . $book->cover) : 'No Image' }}"
-                                    class="card-img-top" alt="{{ $book->title }}">
-                                <div class="card-body">
-                                    <h5>{{ $book->title }}</h5>
-                                    <p class="card-text">
-                                        <strong>Autor:</strong>
-                                     {{--    @if ($book->book->authors->isNotEmpty())
+                        <div class="card" style="max-width: 15vw; background-color:bisque">
+                            <div style="width: 150px; height:150px; margin: auto" class="mt-1 border rounded-1 ">
+                                <img src="{{ $book->cover ? asset('storage/' . $book->cover) : 'No Image' }}"
+                                    class="card-img-top rounded-1" alt="{{ $book->title }}"
+                                    style="object-fit: cover; width:100%; height: 100%">
+                            </div>
+                            <div class="card-body">
+                                <h5>{{ $book->title }}</h5>
+                                <p class="card-text">
+                                    <strong>Autor:</strong>
+                                    {{--    @if ($book->book->authors->isNotEmpty())
                                             {{ $book->book->authors->first()->name }}
                                         @else
                                             Sin autor
                                         @endif --}}
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Género:</strong>
-                                        {{-- @if ($book->book->genres->isNotEmpty())
+                                </p>
+                                <p class="card-text">
+                                    <strong>Género:</strong>
+                                    {{-- @if ($book->book->genres->isNotEmpty())
                                             {{ $book->book->genres->first()->genre }}
                                         @else
                                             Sin género
                                         @endif --}}
-                                    </p>
-                                    <p class="card-text">{{ $book->short_description }} </p>
-                                </div>
-                                <div class="card-footer row">
-                                    @auth
-                                        @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-                                            @php
-                                                // Verificar si la edición está en la lista de deseos del usuario actual
-                                                $isInWishlist = Auth::user()->wishes->contains('edition_id', $book->id);
-                                            @endphp
+                                </p>
+                            </div>
+                            <div class="card-footer row">
+                                @auth
+                                    @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+                                        @php
+                                            // Verificar si la edición está en la lista de deseos del usuario actual
+                                            $isInWishlist = Auth::user()->wishes->contains('edition_id', $book->id);
+                                        @endphp
+
+                                        <div class="col-6">
 
                                             @if ($isInWishlist)
                                                 <!-- Si está en la lista de deseos, mostrar botón para eliminar -->
-                                                <form action="{{ route('wishes.remove', ['id' => $book->id]) }}"
-                                                    method="POST">
+                                                <form action="{{ route('wishes.remove', ['id' => $book->id]) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn "><svg width="2.5vw" height="auto"
@@ -146,8 +146,8 @@
                                                 </form>
                                             @else
                                                 <!-- Si no está en la lista de deseos, mostrar botón para añadir -->
-                                                <form action="{{ route('wishes.add', ['id' => $book->id]) }}"
-                                                    method="POST" class="col">
+                                                <form action="{{ route('wishes.add', ['id' => $book->id]) }}" method="POST"
+                                                    class="col">
                                                     @csrf
                                                     <button type="submit" class="btn ">
                                                         <svg viewBox="0 0 24 24" fill="none" width="2.5vw"
@@ -165,10 +165,12 @@
                                                     </button>
                                                 </form>
                                             @endif
-                                        @endif
-                                    @endauth
-                                    <form action="{{-- {{ route('book.show', ['id' => $book->id]) }} --}}" method="GET"
-                                        class="col">
+                                        </div>
+                                    @endif
+                                @endauth
+                                <div class="col-6">
+
+                                    <form action="{{-- {{ route('book.show', ['id' => $book->id]) }} --}}" method="GET" class="col">
                                         @csrf
                                         <button type="submit" class="btn ">
                                             <svg version="1.1" id="Uploaded to svgrepo.com"
