@@ -1,74 +1,83 @@
-<!-- resources/views/admin/management/books&editions/genres/genreList.blade.php -->
-
-@extends('layouts.app')
+@extends('layouts.app') <!-- Asegúrate de tener una plantilla base en 'resources/views/layouts/admin.blade.php' -->
 
 @section('content')
-    <div class="btn editionList-btn ms-4">
-        <a href="{{ route('home') }}">Administración General</a>
-    </div>
-    <div class="btn editionList-btn">
-        <a href="{{ route('books&editions.index') }}">Gestión de Libros/Ediciones</a>
-    </div>
-    <div class="container editionListCard">
-        <h2 class="editionListCard-header">Genre List</h2>
+    <div class="container mt-4">
 
-        @if (session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <a href="{{ route('genres.create') }}" class="btn editions-btn">
-            Create Genre
-        </a>
+        <div class="mb-3">
+            <a href="{{ route('genres.create') }}" class="btn btn-primary">Añadir Genero</a>
+        </div>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Imagen</th>
-                    <th>Nombre</th>
-                    <th>Descripción</th>
-                    <th>Acciones</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($genres as $genre)
+                @forelse($genres as $genre)
                     <tr>
-                        <td>{{ $genre->id }}</td>
-                        <td>
-                            @if ($genre->img_url)
-                                <img src="{{ asset('assets/images/genres/' . $genre->img_url) }}" alt="{{ $genre->genre }}"
-                                    class="img-thumbnail" style="max-height: 5vh ">
-                            @else
-                                No Image
-                            @endif
-                        </td>
-                        <td>{{ $genre->genre }}</td>
+                        <td>{{ $genre->genre_name }}</td>
                         <td>{{ $genre->description }}</td>
                         <td>
-                            <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-warning">
-                                <i class="bi bi-pencil-square"></i> &nbsp; Editar
-                            </a>
-                            <form action="{{ route('genres.destroy', $genre->id) }}" method="POST"
-                                style="display: inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger"
-                                    onclick="return confirm('Are you sure you want to delete this genre?')">
-                                    <i class="bi bi-trash3"></i> &nbsp; Borrar
-                                </button>
-                            </form>
+                            @if (isset($genre) && $genre->img_url)
+                                <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género">
+                            @else
+                                No imagen
+                            @endif
+                        </td>
+                        <td>
+                            <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-primary">Editar</a>
+
+                            <!-- Botón de Borrar con Modal de Confirmación -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal" data-genre-id="{{ $genre->id }}">
+                                Borrar
+                            </button>
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr>
+                        <td colspan="5">No hay géneros disponibles.</td>
+                    </tr>
+                @endforelse
             </tbody>
         </table>
+
+        <!-- Modal de Confirmación de Borrado -->
+        @if (isset($genre))
+            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-dark ">¿Seguro que quiere borrar este género?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            <form action="{{ route('genres.destroy', ['id' => $genre->id]) }}" method="post">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Borrar</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endif
     </div>
+
+
+    <!-- Script para manejar el envío del formulario de borrado -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+        });
+    </script>
 @endsection

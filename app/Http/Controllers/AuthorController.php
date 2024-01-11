@@ -54,7 +54,7 @@ class AuthorController extends Controller
             ]);
 
             // Obtén el nombre del autor
-            $authorName = $validatedData['name'];
+            $authorName = $validatedData['nickname'];
 
             // Construye el nombre único para la imagen
             $imageName = strtolower(str_replace(' ', '_', $authorName));
@@ -115,10 +115,10 @@ class AuthorController extends Controller
             ]);
 
             // Obtén el nombre del autor
-            $authorName = $validatedData['name'];
+            $authorId = $author->id;
 
             // Construye el nombre único para la imagen
-            $imageName = strtolower(str_replace(' ', '_', $authorName));
+            $imageName = strtolower(str_replace(' ', '_', $authorId));
 
             // Subir la foto y obtener la ruta
             if ($request->hasFile('photo')) {

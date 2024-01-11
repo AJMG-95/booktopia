@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="container mt-4 border rounded">
-        <h2>Create Book</h2>
+        <h2>Crear Libro</h2>
 
         @if (session('success'))
             <div class="alert alert-success">

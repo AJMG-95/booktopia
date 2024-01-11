@@ -1,38 +1,33 @@
-<!-- resources/views/admin/management/books&editions/genres/genreCreate.blade.php -->
+<!-- resources/views/admin/management/genres/genreCreate.blade.php -->
 
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Create Genre</h2>
+    <div class="container mt-4">
+        <h2>Crear Nuevo Género</h2>
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+        <!-- Mostrar mensajes de éxito o error aquí -->
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <form action="{{ route('genres.store') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('genres.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
-            <div class="form-group">
-                <label for="genre">Name:</label>
-                <input type="text" class="form-control" id="genre" name="genre" required>
+
+            <div class="mb-3">
+                <label for="genre_name" class="form-label">Nombre del Género</label>
+                <input type="text" class="form-control" id="genre_name" name="genre_name" required>
             </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description"></textarea>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripción</label>
+                <textarea class="form-control" id="description" name="description" rows="3"></textarea>
             </div>
-            <div class="form-group">
-                <label for="img_url">Image:</label>
-                <input type="file" class="form-control" id="img_url" name="img_url" accept="image/*" required>
+
+            <div class="mb-3">
+                <label for="img_url" class="form-label">Imagen del Género</label>
+                <input type="file" class="form-control" id="img_url" name="img_url">
             </div>
-            <button type="submit" class="btn btn-primary">Create Genre</button>
+
+            <button type="submit" class="btn btn-primary">Guardar Género</button>
+            <a href="{{ route('genres.list') }}" class="btn btn-secondary">Cancelar</a>
         </form>
     </div>
 @endsection

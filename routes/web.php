@@ -95,13 +95,14 @@ Route::middleware(['auth'])->group(function () {
 
             // CRUD DE Generos
             Route::prefix('/genres')->group(function () {
-                Route::get('/list', [GenreController::class, 'index'])->name('genres.list');
+                Route::get('/list', [GenreController::class, 'list'])->name('genres.list');
                 Route::get('/create', [GenreController::class, 'create'])->name('genres.create');
                 Route::post('/store', [GenreController::class, 'store'])->name('genres.store');
                 Route::get('/edit/{id}', [GenreController::class, 'edit'])->name('genres.edit');
-                Route::put('/update/{id}', [GenreController::class, 'update'])->name('genres.update');
+                Route::patch('/update/{id}', [GenreController::class, 'update'])->name('genres.update');
                 Route::get('/delete/{id}', [GenreController::class, 'delete'])->name('genres.delete');
                 Route::delete('/destroy/{id}', [GenreController::class, 'destroy'])->name('genres.destroy');
+
             });
 
 

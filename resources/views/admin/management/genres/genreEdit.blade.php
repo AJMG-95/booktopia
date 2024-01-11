@@ -1,43 +1,41 @@
-<!-- resources/views/admin/management/books&editions/genres/genreEdit.blade.php -->
+<!-- resources/views/admin/management/genres/genreEdit.blade.php -->
 
 @extends('layouts.app')
 
 @section('content')
-    <div class="container">
-        <h2>Edit Genre</h2>
+    <div class="container mt-4">
+        <h2>Editar Género</h2>
 
-        @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
-            </div>
-        @endif
+        <!-- Mostrar mensajes de éxito o error aquí -->
 
-        @if(session('error'))
-            <div class="alert alert-danger">
-                {{ session('error') }}
-            </div>
-        @endif
-
-        <form action="{{ route('genres.update', $genre->id) }}" method="post" enctype="multipart/form-data">
+        <form method="post" action="{{ route('genres.update', $genre->id) }}" enctype="multipart/form-data">
             @csrf
-            @method('PUT')
-            <div class="form-group">
-                <label for="genre">Name:</label>
-                <input type="text" class="form-control" id="genre" name="genre" value="{{ $genre->genre }}" required>
+            @method('patch')
+
+            <div class="mb-3">
+                <label for="genre_name" class="form-label">Nombre del Género</label>
+                <input type="text" class="form-control" id="genre_name" name="genre_name" value="{{ old('genre_name', $genre->genre_name) }}" required>
             </div>
-            <div class="form-group">
-                <label for="description">Description:</label>
-                <textarea class="form-control" id="description" name="description">{{ $genre->description }}</textarea>
+
+            <div class="mb-3">
+                <label for="description" class="form-label">Descripción</label>
+                <textarea class="form-control" id="description" name="description">{{ old('description', $genre->description) }}</textarea>
             </div>
-            <div class="form-group">
-                <label for="img_url">Imagen Actual:</label>
-                <img src="{{ asset('assets/images/genres/' . $genre->img_url) }}" alt="{{ $genre->genre }}" class="img-thumbnail" style="max-height: 7vh">
+
+            <div class="mb-3">
+                <p class="form-label">Imagen actual</p>
+                @if($genre->img_url)
+                    <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen actual del Género" >
+                @endif
             </div>
-            <div class="form-group">
-                <label for="new_img_url">New Image (optional):</label>
-                <input type="file" class="form-control" id="new_img_url" name="new_img_url" accept="image/*">
+
+            <div class="mb-3">
+                <label for="img_url" class="form-label">Cambiar Imagen</label>
+                <input type="file" class="form-control" id="img_url" name="img_url">
             </div>
-            <button type="submit" class="btn btn-primary">Update Genre</button>
+
+            <button type="submit" class="btn btn-primary">Actualizar Género</button>
         </form>
     </div>
 @endsection
+
