@@ -21,24 +21,11 @@ Route::middleware(['auth'])->group(function () {
     //* Rutas para las funcionalidades del administrador
     Route::prefix('admin/subadmins')->group(function () {
         Route::get('/list', [UserController::class, 'subadminList'])->name('subadmins.list');
-        // Puedes agregar más rutas según sea necesario
-
-        // Por ejemplo, si deseas mostrar el formulario de creación:
         Route::get('/create', [UserController::class, 'create'])->name('subadmins.create');
-
-        // Para almacenar un nuevo subadmin:
         Route::post('/', [UserController::class, 'store'])->name('subadmins.store');
-
-        // Para mostrar los detalles de un subadmin específico:
         Route::get('/{id}', [UserController::class, 'show'])->name('subadmins.show');
-
-        // Para mostrar el formulario de edición de un subadmin:
         Route::get('/{id}/edit', [UserController::class, 'edit'])->name('subadmins.edit');
-
-        // Para actualizar un subadmin específico:
         Route::put('/{id}', [UserController::class, 'update'])->name('subadmins.update');
-
-        // Para eliminar un subadmin específico:
         Route::delete('/{id}', [UserController::class, 'destroy'])->name('subadmins.destroy');
     });
 
@@ -46,36 +33,17 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware(['auth', 'role:admin,subadmin'])->group(function () {
 
         Route::prefix('management')->group(function () {
-            // CRUD DE Usuarios
+
             Route::prefix('/users')->name('user.')->group(function () {
-                // Lista de usuarios
                 Route::get('/list', [UserController::class, 'List'])->name('list');
-
-                // Formulario de creación de usuario
                 Route::get('/create', [UserController::class, 'create'])->name('create');
-
-                // Almacenar nuevo usuario
                 Route::post('/store', [UserController::class, 'store'])->name('store');
-
-                // Formulario de edición de usuario
                 Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
-
-                // Actualizar usuario
                 Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
-
-                // Formulario de eliminación de usuario
                 Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
-
-                // Eliminar usuario
                 Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
-
-                // Ascender a subadministrador
                 Route::put('/promote-to-subadmin/{id}', [UserController::class, 'promoteToSubadmin'])->name('promoteToSubadmin');
-
-                // Bloquear/desbloquear usuario
                 Route::put('/toggle-block/{id}', [UserController::class, 'toggleBlock'])->name('toggleBlock');
-
-                // Otros métodos para el CRUD de usuarios según sea necesario
             });
 
             Route::get('/books/management', function () {
@@ -108,25 +76,12 @@ Route::middleware(['auth'])->group(function () {
 
             // CRUD DE Libros/Ediciones
             Route::prefix('books')->name('books.')->group(function () {
-                // Lista de libros
-                Route::get('/.list', [EditionBookController::class, 'list'])->name('list');
-
-                // Formulario de creación de libro
+                Route::get('/list', [EditionBookController::class, 'list'])->name('list');
                 Route::get('/create', [EditionBookController::class, 'create'])->name('create');
-
-                // Almacenar nuevo libro
                 Route::post('/store', [EditionBookController::class, 'store'])->name('store');
-
-                // Ver detalles de un libro
                 Route::get('/show/{editionBook}', [EditionBookController::class, 'show'])->name('show');
-
-                // Formulario de edición de libro
                 Route::get('/edit/{editionBook}', [EditionBookController::class, 'edit'])->name('edit');
-
-                // Actualizar libro
                 Route::put('/update/{editionBook}', [EditionBookController::class, 'update'])->name('update');
-
-                // Eliminar libro
                 Route::delete('/destroy/{editionBook}', [EditionBookController::class, 'destroy'])->name('destroy');
             });
         });
@@ -207,7 +162,7 @@ Route::prefix('/books')->name('books.')->group(function () {
 });
 
 Route::prefix('/shop')->name('books.')->group(function () {
-    Route::get('/shop', [EditionBookController::class, 'index'])->name('shop');
+    Route::get('/', [EditionBookController::class, 'shopList'])->name('shop');
 });
 
 

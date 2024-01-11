@@ -141,9 +141,8 @@ class AuthorController extends Controller
      */
     public function destroy($id)
     {
-
+        $author = Author::findOrFail($id);
         try {
-            $author = Author::findOrFail($id);
 
             // Verificar si el autor tiene libros asociados
             if ($author->books()->exists()) {
@@ -156,6 +155,7 @@ class AuthorController extends Controller
             return redirect()->route('authors.list')->with('success', 'Autor eliminado exitosamente.');
         } catch (\Exception $e) {
             // Manejar la excepción
+            dd($e);
             return redirect()->back()->with('error', 'Error al eliminar el autor: ' . $e->getMessage());
         }
     }

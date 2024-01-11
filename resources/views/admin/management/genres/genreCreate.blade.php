@@ -27,7 +27,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Guardar Género</button>
-            <a href="{{ route('genres.list') }}" class="btn btn-secondary">Cancelar</a>
+            <a href="{{ route('genres.list') }}" class="btn btn-danger ">Cancelar</a>
         </form>
     </div>
 @endsection

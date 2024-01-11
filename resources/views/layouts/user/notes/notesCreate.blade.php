@@ -29,7 +29,7 @@
                 <button type="submit">Guardar Nota</button>
             </form>
 
-            <a href="{{ route('notes.index') }}" class="cancel-link">
+            <a href="{{ route('notes.index') }}" class=" btn btn-danger ">
                 <svg xmlns="http://www.w3.org/2000/svg" id="Layer_1" data-name="Layer 1" viewBox="0 0 24 24"
                     width="2vw" height="4vh">
                     <path

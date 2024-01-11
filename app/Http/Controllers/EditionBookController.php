@@ -25,7 +25,24 @@ class EditionBookController extends Controller
             $books = EditionBook::all();
             return view('admin.management.books.bookList', compact('books'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.bookList')->with('error', 'Error al obtener la lista de libros.');
+            return redirect()->route('books.list')->with('error', 'Error al obtener la lista de libros.');
+        }
+    }
+
+
+        /**
+     * Display a listing of the resource.
+     */
+    public function shopList()
+    {
+        try {
+            $authors = Author::all();
+            $genres = Genre::all();
+            $books = EditionBook::all();
+            $languages = Language::all();
+            return view('layouts/shop/editionsShop', compact('books','genres','authors', 'languages'));
+        } catch (\Exception $e) {
+            return redirect()->route('welcome')->with('error', 'Error al obtener la lista de libros.');
         }
     }
 
@@ -41,7 +58,7 @@ class EditionBookController extends Controller
 
             return view('admin.management.books.bookCreate', compact('languages', 'authors', 'genres'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.bookList')->with('error', 'Error al cargar el formulario de creación.');
+            return redirect()->route('books.list')->with('error', 'Error al cargar el formulario de creación.');
         }
     }
 
@@ -61,7 +78,7 @@ class EditionBookController extends Controller
                 'visible' => 'boolean',
                 'editorial' => 'nullable|string',
                 'price' => 'nullable|numeric',
-                'document' => 'nullable|string',
+                'required' => 'nullable|file|mimes:pdf|max:2048',
                 'language_id' => 'nullable|exists:languages,id',
                 'for_adults' => 'boolean',
                 'authors' => 'array',
@@ -71,21 +88,31 @@ class EditionBookController extends Controller
 
             $data = $request->all();
 
-            if ($request->hasFile('cover')) {
-                $coverFile = $request->file('cover');
-                $isbn = $request->input('isbn');
-
-                // Genera el nombre del archivo usando el campo isbn y el timestamp para evitar duplicados
-                $coverFileName = $isbn . '_' . time() . '.' . $coverFile->getClientOriginalExtension();
-
-                // Almacena la imagen en el directorio correspondiente
-                $coverPath = $coverFile->storeAs('covers', $coverFileName, 'public');
-
-                $data['cover'] = $coverPath;
-            }
 
             $editionBook = new EditionBook($data);
             $editionBook->save();
+
+            // Verifica si se proporcionó un archivo PDF
+            if ($request->hasFile('document')) {
+                $documentFile = $request->file('document');
+
+                // Guarda el archivo PDF en el directorio correspondiente
+                $documentFileName = $editionBook->id . '.pdf';  // Nombre basado en el ID del libro
+                $documentPath = $documentFile->storeAs('documents', $documentFileName, 'public');
+
+                // Asigna la ruta del documento al modelo del libro
+                $editionBook->document = $documentPath;
+            }
+
+            if ($request->hasFile('cover')) {
+                $coverFile = $request->file('cover');
+                $coverFileName = $editionBook->id . '.' . $coverFile->getClientOriginalExtension();
+                $coverPath = $coverFile->storeAs('covers', $coverFileName, 'public');
+
+                // Actualiza la ruta de la portada en el modelo del libro
+                $editionBook->cover = $coverPath;
+                $editionBook->save();  // Guarda el modelo actualizado con la ruta de la portada
+            }
 
             // Asocia los autores
             if ($request->has('authors')) {
@@ -97,11 +124,12 @@ class EditionBookController extends Controller
                 $editionBook->genres()->attach($request->input('genres'));
             }
 
-            return redirect()->route('admin.management.books.index')->with('success', 'Libro creado exitosamente.');
+            return redirect()->route('books.list')->with('success', 'Libro creado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.index')->with('error', 'Error al crear el libro.');
+            return redirect()->route('books.list')->with('error', 'Error al crear el libro.');
         }
     }
+
     /**
      * Display the specified resource.
      */
@@ -110,7 +138,7 @@ class EditionBookController extends Controller
         try {
             return view('admin.edition-books.show', compact('editionBook'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.bookList')->with('error', 'Error al mostrar el libro.');
+            return redirect()->route('books.list')->with('error', 'Error al mostrar el libro.');
         }
     }
 
@@ -126,7 +154,7 @@ class EditionBookController extends Controller
 
             return view('admin.management.books.bookEdit', compact('editionBook', 'languages', 'authors', 'genres'));
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.bookList')->with('error', 'Error al cargar el formulario de edición.');
+            return redirect()->route('books.list')->with('error', 'Error al cargar el formulario de edición.');
         }
     }
 
@@ -194,28 +222,40 @@ class EditionBookController extends Controller
                 $editionBook->genres()->detach();
             }
 
-            return redirect()->route('admin.management.books.index')->with('success', 'Libro actualizado exitosamente.');
+            return redirect()->route('books.list')->with('success', 'Libro actualizado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.index')->with('error', 'Error al actualizar el libro.');
+            return redirect()->route('books.list')->with('error', 'Error al actualizar el libro.');
         }
     }
-
-
-
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EditionBook $editionBook)
+    public function destroy($id)
     {
         try {
-            $associatedPayment = Payment::where('book_id', $editionBook->id)->firstOrFail();
-            return redirect()->route('admin.management.books.bookList')->with('error', 'No se puede eliminar el libro, está asociado a un pago.');
-        } catch (ModelNotFoundException $e) {
+         /*    dd('ID recibido:', $id); */
+            $editionBook = EditionBook::findOrFail($id);
+
+          /*   dd('Llegó hasta aquí', $editionBook); */
+            // Verificar si hay referencias en la tabla payments
+            $associatedPayment = Payment::where('book_id', $editionBook->id)->first();
+
+            if ($associatedPayment) {
+                return redirect()->route('books.list')->with('error', 'No se puede eliminar el libro, está asociado a un pago.');
+            }
+
+            // Eliminar relaciones en la tabla book_authors
+            $editionBook->authors()->detach();
+            $editionBook->genres()->detach();
+
+            // Continuar con la eliminación del libro
             $editionBook->delete();
-            return redirect()->route('admin.management.books.bookList')->with('success', 'Libro eliminado exitosamente.');
+
+            return redirect()->route('books.list')->with('success', 'Libro eliminado exitosamente.');
         } catch (\Exception $e) {
-            return redirect()->route('admin.management.books.bookList')->with('error', 'Error al eliminar el libro.');
+            dd('Error:', $e->getMessage());
+            return redirect()->route('books.list')->with('error', 'Error al eliminar el libro.');
         }
     }
 

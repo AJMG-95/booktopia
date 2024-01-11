@@ -67,7 +67,7 @@
                     <div class="card-footer">
                         <div class="p-4 sm:p-8 shadow sm:rounded-lg">
                             <div class="max-w-xl">
-                                <a href="{{ route('profile.index') }}">Cancelar Edición</a>
+                                <a href="{{ route('profile.index') }}" class="btn btn-danger ">Cancelar Edición</a>
                             </div>
                         </div>
                     </div>

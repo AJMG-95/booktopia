@@ -45,7 +45,7 @@ class EditionBook extends Model
      */
     public function genres()
     {
-        return $this->belongsToMany(Genre::class, 'book_genres');
+        return $this->belongsToMany(Genre::class, 'book_genres', 'book_id', 'genre_id');
     }
 
     public function comments()
@@ -78,6 +78,4 @@ class EditionBook extends Model
         return $this->hasMany(Payment::class);
     }
 
-
-    // Agrega cualquier otra relación según sea necesario
 }

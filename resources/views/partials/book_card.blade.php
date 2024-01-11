@@ -7,6 +7,6 @@
         <p class="card-text">Precio: ${{ $book->price }}</p>
         <p class="card-text">Descripción: {{ $book->short_description }}</p>
         <!-- Puedes agregar más detalles según sea necesario -->
-        <a href="{{ route('book.show', $book->id) }}" class="btn btn-primary">Ver Detalles</a>
+       {{--  <a href="{{ route('book.show', $book->id) }}" class="btn btn-primary">Ver Detalles</a> --}}
     </div>
 </div>

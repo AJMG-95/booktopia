@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
@@ -23,8 +24,9 @@ class UserController extends Controller
 
     public function create()
     {
+        $countries = Country::all();
         $roles = Role::all();
-        return view('admin.management.users.userCreate', compact('roles'));
+        return view('admin.management.users.userCreate', compact('roles', 'countries'));
     }
 
     public function store(Request $request)

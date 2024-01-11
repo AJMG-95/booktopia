@@ -4,38 +4,62 @@
     <div class="container mt-4">
 
         <div class="mb-3">
-            <a href="{{ route('genres.create') }}" class="btn btn-primary">Añadir Genero</a>
+            <a href="{{ route('genres.create') }}" class="btn btn-primary">Añadir Género</a>
+            <a href="{{ route('books.management') }}" class="btn btn-primary">Volver</a>
         </div>
 
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Imagen</th>
-                    <th scope="col">Acciones</th>
+                    <th ></th>
+                    <th >Nombre</th>
+                    <th >Descripción</th>
+                    <th >Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 @forelse($genres as $genre)
                     <tr>
-                        <td>{{ $genre->genre_name }}</td>
-                        <td>{{ $genre->description }}</td>
                         <td>
                             @if (isset($genre) && $genre->img_url)
-                                <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género">
+                                <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género" class="rounded" style="max-height: 40px; margin-left: 5vw">
                             @else
                                 No imagen
                             @endif
                         </td>
+                        <td>{{ $genre->genre_name }}</td>
+                        <td>{{ $genre->description }}</td>
                         <td>
                             <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-primary">Editar</a>
 
                             <!-- Botón de Borrar con Modal de Confirmación -->
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal" data-genre-id="{{ $genre->id }}">
+                            <button type="button" class="btn btn-danger delete-genre-btn" data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal{{ $genre->id }}">
                                 Borrar
                             </button>
+
+                            <!-- Modal de Confirmación de Borrado -->
+                            <div class="modal fade" id="confirmDeleteModal{{ $genre->id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ $genre->id }}" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmDeleteModalLabel{{ $genre->id }}">Confirmar Borrado</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p class="text-dark">¿Seguro que quiere borrar este género?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                            <form action="{{ route('genres.destroy', ['id' => $genre->id]) }}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Borrar</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @empty
@@ -45,39 +69,26 @@
                 @endforelse
             </tbody>
         </table>
-
-        <!-- Modal de Confirmación de Borrado -->
-        @if (isset($genre))
-            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <p class="text-dark ">¿Seguro que quiere borrar este género?</p>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                            <form action="{{ route('genres.destroy', ['id' => $genre->id]) }}" method="post">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Borrar</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        @endif
     </div>
-
 
     <!-- Script para manejar el envío del formulario de borrado -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            var confirmDeleteModal = new bootstrap.Modal(document.getElementById('confirmDeleteModal'));
+            var deleteGenreModal = new bootstrap.Modal(document.querySelector('.delete-genre-btn'));
+
+            // Evento para abrir el modal de confirmación y configurar el formulario antes de enviar
+            $('.delete-genre-btn').on('click', function() {
+                var genreId = $(this).data('genre-id');
+                var deleteForm = $('#confirmDeleteForm' + genreId);
+
+                deleteForm.attr('action', '/genres/' + genreId);
+                deleteGenreModal.show();
+            });
+
+            // Evento para cerrar el modal después de enviar el formulario de borrado
+            $('.confirm-delete-form').submit(function() {
+                deleteGenreModal.hide();
+            });
         });
     </script>
 @endsection

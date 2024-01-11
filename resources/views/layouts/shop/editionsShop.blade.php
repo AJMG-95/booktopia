@@ -2,89 +2,25 @@
 @extends('layouts.app')
 
 @section('content')
-    <style>
-
-
-        /* Barra de navegación */
-        .navbar {
-            background-color: #00274e;
-            /* Azul oscuro */
-        }
-
-        /* Botones y enlaces principales */
-        .btn-primary,
-        .btn-primary:hover,
-        .btn-primary:active,
-        .btn-primary:focus,
-        .btn-secondary,
-        .btn-secondary:hover,
-        .btn-secondary:active,
-        .btn-secondary:focus {
-            background-color: #ffc107;
-            /* Amarillo */
-            border-color: #ffc107;
-            /* Amarillo */
-            color: #000000;
-            /* Texto negro sobre fondo amarillo */
-        }
-
-        /* Botones de resaltado (eliminar, añadir, etc.) */
-        .btn-danger,
-        .btn-danger:hover,
-        .btn-danger:active,
-        .btn-danger:focus,
-        .btn-dark,
-        .btn-dark:hover,
-        .btn-dark:active,
-        .btn-dark:focus {
-            background-color: #ff0000;
-            /* Rojo */
-            border-color: #ff0000;
-            /* Rojo */
-            color: #ffffff;
-            /* Texto blanco sobre fondo rojo */
-        }
-
-        /* Detalles resaltados en negro */
-        .text-black {
-            color: #000000;
-        }
-
-        /* Detalles resaltados en rojo */
-        .text-red {
-            color: #ff0000;
-        }
-
-        /* Detalles resaltados en amarillo */
-        .text-yellow {
-            color: #ffc107;
-        }
-
-        /* Detalles resaltados en verde */
-        .text-green {
-            color: #3fb88c;
-        }
-    </style>
-    <div class="container-fluid mb-4">
-        <div class="row">
-            {{-- Menú lateral de filtros --}}
-            <aside class="col-lg-3 col-md-4 pt-4">
+    <div class="container-fluid p-2 mt-4" style="width: 100%">
+        <div class="row" style="width: 100%">
+            <aside class="col-lg-3 col-md-4 col-sm-5 pt-4">
                 <h2>Buscar...</h2>
-                <form action="{{ route('shop') }}" method="GET" class="p-3">
+                <form action="{{ route('books.shop') }}" method="GET" class="p-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                         <input type="text" name="title" class="form-control" placeholder="Buscar por Título"
-                            value="{{ old('title', $request->get('title')) }}" />
+                          {{--   value="{{ old('title', $request->get('title')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
                         <input type="text" name="author" class="form-control" placeholder="Buscar por Autor"
-                            value="{{ old('author', $request->get('author')) }}" />
+                           {{--  value="{{ old('author', $request->get('author')) }}"  --}}/>
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-list"></i></span>
                         <input list="genres" name="genre" class="form-control" placeholder="Buscar por Género"
-                            value="{{ old('genre', $request->get('genre')) }}" />
+                            {{-- value="{{ old('genre', $request->get('genre')) }}" --}} />
                         <datalist id="genres">
                             @foreach ($genres as $genre)
                                 <option value="{{ $genre->genre }}">
@@ -94,22 +30,22 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">(max.) €</span>
                         <input type="number" name="max_price" class="form-control"
-                            value="{{ old('max_price', $request->get('max_price')) }}" />
+                           {{--  value="{{ old('max_price', $request->get('max_price')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(min.) €</span>
                         <input type="number" name="min_price" class="form-control"
-                            value="{{ old('min_price', $request->get('min_price')) }}" />
+                           {{--  value="{{ old('min_price', $request->get('min_price')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-upc-scan"></i></span>
                         <input type="text" name="isbn" class="form-control" placeholder="ISBN"
-                            value="{{ old('isbn', $request->get('isbn')) }}" />
+                            {{-- value="{{ old('isbn', $request->get('isbn')) }}" --}} />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-globe"></i></span>
                         <input list="languages" name="language" class="form-control" placeholder="Seleccionar Idioma"
-                            value="{{ old('language', $request->get('language')) }}">
+                         {{--    value="{{ old('language', $request->get('language')) }}" --}}>
                         <datalist id="languages">
                             @foreach ($languages as $language)
                                 <option value="{{ $language->iso_code }}">{{ $language->language }}</option>
@@ -118,21 +54,21 @@
                     </div>
                     <div class="mb-3 form-check">
                         <input type="checkbox" name="autopublicado" value="0" class="form-check-input"
-                            {{ old('autopublicado', $request->get('autopublicado')) == '0' ? 'checked' : '' }}>
+                           {{--  {{ old('autopublicado', $request->get('autopublicado')) == '0' ? 'checked' : '' }} --}}>
                         <label for="autopublicado">Mostrar solo libros autopublicados</label>
                     </div>
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-block">Aplicar Filtros</button>
                     </div>
                     <div class="d-grid gap-2 mt-3">
-                        <a href="{{ route('shop') }}" class="btn btn-secondary btn-block">Borrar Filtros</a>
+                        <a href="{{ route('books.shop') }}" class="btn btn-secondary btn-block">Borrar Filtros</a>
                     </div>
                 </form>
             </aside>
 
             {{-- Área principal para mostrar los libros --}}
-            <main class="col-lg-9 col-md-8 pt-4">
-                <form action="{{ route('shop') }}" method="GET" class="me-2">
+            <main class="col-lg-9 col-md-8 col-ms-7 pt-4">
+                <form action="{{ route('books.shop') }}" method="GET" >
                     <div class="d-flex justify-content-left align-items-center mb-4">
                         <select name="sortBy" class="form-select w-auto">
                             <option value="asc_price" @if (request('sortBy') == 'asc_price') selected @endif>Menor a mayor €
@@ -144,46 +80,46 @@
                             <option value="publication_date" @if (request('sortBy') == 'publication_date') selected @endif>Más reciente
                             </option>
                         </select>
-                        <button type="submit" class="btn btn-primary">Ordenar</button>
+                        <button type="submit" class="btn btn-primary ms-2">Ordenar</button>
                     </div>
                 </form>
                 <div class="row row-cols-1 row-cols-md-3 pe-4">
-                    @foreach ($editions as $edition)
+                    @foreach ($books as $book)
                         <div class="col">
                             <div class="card h-100">
-                                <img src="{{ $edition->cover ? asset('assets/images/editionCovers/' . $edition->cover) : 'No Image' }}"
-                                    class="card-img-top" alt="{{ $edition->title }}">
+                                <img src="{{ $book->cover ? asset('assets/images/editionCovers/' . $book->cover) : 'No Image' }}"
+                                    class="card-img-top" alt="{{ $book->title }}">
                                 <div class="card-body">
-                                    <h5>{{ $edition->title }}</h5>
+                                    <h5>{{ $book->title }}</h5>
                                     <p class="card-text">
                                         <strong>Autor:</strong>
-                                        @if ($edition->book->authors->isNotEmpty())
-                                            {{ $edition->book->authors->first()->name }}
+                                     {{--    @if ($book->book->authors->isNotEmpty())
+                                            {{ $book->book->authors->first()->name }}
                                         @else
                                             Sin autor
-                                        @endif
+                                        @endif --}}
                                     </p>
                                     <p class="card-text">
                                         <strong>Género:</strong>
-                                        @if ($edition->book->genres->isNotEmpty())
-                                            {{ $edition->book->genres->first()->genre }}
+                                        {{-- @if ($book->book->genres->isNotEmpty())
+                                            {{ $book->book->genres->first()->genre }}
                                         @else
                                             Sin género
-                                        @endif
+                                        @endif --}}
                                     </p>
-                                    <p class="card-text">{{ $edition->short_description }} </p>
+                                    <p class="card-text">{{ $book->short_description }} </p>
                                 </div>
                                 <div class="card-footer row">
                                     @auth
                                         @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
                                             @php
                                                 // Verificar si la edición está en la lista de deseos del usuario actual
-                                                $isInWishlist = Auth::user()->wishes->contains('edition_id', $edition->id);
+                                                $isInWishlist = Auth::user()->wishes->contains('edition_id', $book->id);
                                             @endphp
 
                                             @if ($isInWishlist)
                                                 <!-- Si está en la lista de deseos, mostrar botón para eliminar -->
-                                                <form action="{{ route('wishes.remove', ['id' => $edition->id]) }}"
+                                                <form action="{{ route('wishes.remove', ['id' => $book->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -210,7 +146,7 @@
                                                 </form>
                                             @else
                                                 <!-- Si no está en la lista de deseos, mostrar botón para añadir -->
-                                                <form action="{{ route('wishes.add', ['id' => $edition->id]) }}"
+                                                <form action="{{ route('wishes.add', ['id' => $book->id]) }}"
                                                     method="POST" class="col">
                                                     @csrf
                                                     <button type="submit" class="btn ">
@@ -231,7 +167,7 @@
                                             @endif
                                         @endif
                                     @endauth
-                                    <form action="{{ route('edition.show', ['id' => $edition->id]) }}" method="GET"
+                                    <form action="{{-- {{ route('book.show', ['id' => $book->id]) }} --}}" method="GET"
                                         class="col">
                                         @csrf
                                         <button type="submit" class="btn ">

@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Navigation</title>
-    @vite(['resources/css/partials/navigation.css'])
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm app-navbar">
         <div class="container-fluid ms-5">
             <a class="navbar-brand" href="{{ route('welcome') }}">
                 {{ config('app.name', 'Laravel') }}

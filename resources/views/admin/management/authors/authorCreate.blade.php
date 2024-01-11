@@ -49,7 +49,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary mb-3">Crear autor</button>
-            <a href="{{ route('authors.list') }}" class="btn btn-primary  mb-3">Cancelar</a>
+            <a href="{{ route('authors.list') }}" class="btn btn-danger  mb-3">Cancelar</a>
 
         </form>
     </div>

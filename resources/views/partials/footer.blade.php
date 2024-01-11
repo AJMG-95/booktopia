@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    @vite(['resources/css/partials/footer.css'])
     <title>Footer</title>
 </head>
 
@@ -16,7 +15,7 @@
     <div class="row text-center mb-2 align-items-center">
         <div class="col-md-6 text-center">
             <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo"
-                style="max-height: 6vh; background-color: white; border-radius: 50%;">
+                style="">
         </div>
         <div class="col-md-6 text-center">
             @guest
@@ -45,9 +44,9 @@
             @endguest
         </div>
     </div>
-    <div class="text-white" style="background: purple; padding: 10px;">
+    <div class="text-black">
         © {{ date('Y') }} Copyright:
-        <a href="#" class="text-white">Booktopia</a>
+        <a href="#" class="text-black">Booktopia</a>
     </div>
 </footer>
 

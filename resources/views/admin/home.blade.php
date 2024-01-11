@@ -1,20 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <title>Administration home</title>
-    @vite(['resources/css/partials/adminsHome.css'])
-</head>
-
-<body>
-
-</body>
-
-</html>
 @extends('layouts.app')
 
 @section('content')
@@ -37,7 +20,7 @@
                             </li>
                             <li class="list-group-item admin-list-group-item">
                                 <a class="admin-a "
-                                    href="{{ route('books.management') }}">{{ __('Gestión de Libros/Ediciones') }}</a>
+                                    href="{{ route('books.management') }}">{{ __('Gestión de Libros, autores y generos') }}</a>
                             </li>
                             @if (Auth::user()->isAdmin())
                                 <li class="list-group-item admin-list-group-item">
