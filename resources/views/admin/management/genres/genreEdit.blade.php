@@ -35,6 +35,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Actualizar Género</button>
+            <a href="{{ route('genres.list') }}" class="btn btn-danger ">Cancelar</a>
         </form>
     </div>
 @endsection

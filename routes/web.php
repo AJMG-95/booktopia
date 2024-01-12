@@ -81,8 +81,10 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/store', [EditionBookController::class, 'store'])->name('store');
                 Route::get('/show/{editionBook}', [EditionBookController::class, 'show'])->name('show');
                 Route::get('/edit/{editionBook}', [EditionBookController::class, 'edit'])->name('edit');
-                Route::put('/update/{editionBook}', [EditionBookController::class, 'update'])->name('update');
+                Route::patch('/update/{editionBook}', [EditionBookController::class, 'update'])->name('update');
                 Route::delete('/destroy/{editionBook}', [EditionBookController::class, 'destroy'])->name('destroy');
+                Route::post('/visibility/{editionBook}', [EditionBookController::class, 'toggleVisibility'])->name('toggleVisibility');
+
             });
         });
     });
@@ -158,7 +160,7 @@ Route::prefix('/genre')->name('genre.')->group(function () {
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/of_genre/{genre}', [GenreController::class, 'booksForGenre'])->name('forGenre');
-    Route::get('/{id}', [EditionBookController::class, "show"])->name('books.show');
+    Route::get('/book/{id}', [EditionBookController::class, "show"])->name('show');
 });
 
 Route::prefix('/shop')->name('books.')->group(function () {

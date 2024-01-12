@@ -14,7 +14,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th></th>
                     <th>Nombre</th>
                     <th>Apellidos</th>
                     <th>Acciones</th>
@@ -23,7 +23,13 @@
             <tbody>
                 @forelse ($authors as $author)
                     <tr>
-                        <td>{{ $author->id }}</td>
+                        <td>
+                            @if (isset($author) && $author->photo)
+                                <img src="{{ asset('storage/' . $author->photo) }}" alt="Imagen del Género" class="rounded" style="max-height: 40px; margin-left: 5vw">
+                            @else
+                                No imagen
+                            @endif
+                        </td>
                         <td>{{ $author->name }}</td>
                         <td>{{ $author->surnames }}</td>
                         <td>

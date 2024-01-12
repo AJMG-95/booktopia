@@ -3,80 +3,107 @@
 @extends('layouts.app') {{-- Ajusta según la estructura de tu layout --}}
 
 @section('content')
-    <div class="container-fluid mt-4 ms-4 p-4 book-detail">
-        <div class="book-detail mt-4 ms-4">
-            <h1>{{ $book->original_title }}</h1>
+    <div class="container  mt-5 ">
+
+        <div class="text-center rounded-top-1 border border-black bg-white">
+            <h1>{{ $editionBook->title }}</h1>
         </div>
-        <div class="book-detail row">
-            <div class="book-detail col-md-4 m-auto p-auto">
-                <img src="{{ asset('assets/images/bookCovers/' . $book->cover) }}" alt="Portada del libro">
-            </div>
-            <div class="book-detail col-md-8 row">
-                <div class="book-detail col-md-6">
-                    <dl class="book-detail mt-1">
-                        <dt>
+        <div class="text-center border border-black bg-white">
+            <div class=" row mt-4">
+                <div class=" col-md-2 ">
+                    @if (isset($editionBook) && $editionBook->cover)
+                        <img src="{{ asset('storage/' . $editionBook->cover) }}" alt="Imagen del Género" class="rounded "
+                            style="max-height: 25vh">
+                    @else
+                        No imagen
+                    @endif
+                </div>
+
+                <div class=" col-md-4 row">
+
+                    <div class="col-12 row">
+                        <div class="col-6">
                             <h4>Géneros</h4>
-                        </dt>
-                        <dd class="book-detail ms-4">
-                            @forelse ($book->genres as $genre)
-                                <p>{{ $genre->genre }}</p>
+                        </div>
+                        <div class="col-12">
+                            @forelse ($editionBook->genres as $genre)
+                                <p>{{ $genre->genre_name }}</p>
                             @empty
                                 <p><em>Este libro no tiene géneros asignados.</em></p>
                             @endforelse
-                        </dd>
-
-                        <dt>
+                        </div>
+                    </div>
+                    <div class="col-12 row">
+                        <div class="col-6">
                             <h4>Autores</h4>
-                        </dt>
-                        <dd class="book-detail ms-4">
-                            @forelse ($book->authors as $author)
-                                <p>{{ $author->name }}</p>
+                        </div>
+                        <div class="col-12">
+                            @forelse ($editionBook->authors as $author)
+                                <p class="me-4">{{ $author->name }}</p>
                             @empty
-                                <p><em>Este libro no tiene autores asignados.</em></p>
+                                <p>Anonimo</p>
                             @endforelse
-                        </dd>
-
-                        <dt>Autopublicado</dt>
-                        <dd class="book-detail ms-4">{{ $book->self_published ? 'Sí' : 'No' }}</dd>
-                        <dt>Número de ediciones
-                            <a href="{{ route('editions.forBook', ['book' => $book->id]) }}">
-                                <div class="related-editions">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="212529" class="bi bi-search" viewBox="0 0 16 16">
-                                        <path
-                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                    </svg>
-
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="7" height="7"
-                                        fill="212529" class="bi bi-book book-icon " viewBox="0 0 16 16">
-                                        <path
-                                            d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811V2.828zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492V2.687zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
-                                    </svg>
-                                </div>
-                            </a>
-                        </dt>
-                        <dd class="book-detail ms-4">{{ $book->editions->count() }}</dd>
-                        <dt>Valoración media</dt>
-                        <dd class="book-detail ms-4">
-                            @if ($book->editions->count() > 0 && $book->averageRating() > 0)
-                                {{ number_format($book->averageRating(), 2) }}
-                            @else
-                                Este libro aún no ha sido valorado
+                        </div>
+                    </div>
+                    <div class="col-12 row mt-4 mb-3 items-center">
+                        <div class="col-6">
+                            <p name="self_publish" id="self_publish" class=" ms-4">
+                                {{ $editionBook->self_published ? 'Auto-publicado' : '' }}</p>
+                        </div>
+                        <div class="col-6">
+                            @if ($editionBook->for_adults)
+                                <svg width="2vw" height="2vw" viewBox="-2.4 -2.4 28.80 28.80" id="Layer_1"
+                                    data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0">
+                                        <rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#ffffff"
+                                            strokewidth="0"></rect>
+                                    </g>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
+                                    <g id="SVGRepo_iconCarrier">
+                                        <defs>
+                                            <style>
+                                                .cls-1 {
+                                                    fill: none;
+                                                    stroke: #ff0000;
+                                                    stroke-miterlimit: 10;
+                                                    stroke-width: 1.91px;
+                                                }
+                                            </style>
+                                        </defs>
+                                        <path class="cls-1" d="M19.45,19.42a10.5,10.5,0,1,1,0-14.84"></path>
+                                        <rect class="cls-1" x="11.07" y="8.18" width="4.77" height="3.82"
+                                            rx="1.91"></rect>
+                                        <rect class="cls-1" x="11.07" y="12" width="4.77" height="3.82" rx="1.91">
+                                        </rect>
+                                        <line class="cls-1" x1="7.25" y1="7.23" x2="7.25" y2="15.82">
+                                        </line>
+                                        <line class="cls-1" x1="5.34" y1="15.82" x2="9.16" y2="15.82">
+                                        </line>
+                                        <line class="cls-1" x1="5.34" y1="9.14" x2="8.2" y2="9.14">
+                                        </line>
+                                        <line class="cls-1" x1="17.75" y1="12" x2="23.48" y2="12">
+                                        </line>
+                                        <line class="cls-1" x1="20.61" y1="9.14" x2="20.61" y2="14.86">
+                                        </line>
+                                    </g>
+                                </svg>
                             @endif
-                        </dd>
-                    </dl>
+                        </div>
+
+                    </div>
                 </div>
-                <div class="book-detail col-md-6 p-4 text-center">
-                    <p class="book-detail pe-4 text-center">
-                        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vero voluptate exercitationem at aliquid
-                        eum dolorem nihil asperiores veritatis corrupti. Dolore quia veritatis itaque temporibus sed
-                        placeat? Pariatur eum possimus magnam.
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, illo nisi non eligendi iste quia
-                        eius hic blanditiis sunt laudantium, soluta velit fuga maiores ipsa ullam necessitatibus, minus
-                        magnam minima.
+                <div class=" col-md-6 p-4 text-center">
+                    <p class=" pe-4 text-center">
+                        {{ $editionBook->description ? $editionBook->description : 'Descripción' }}
                     </p>
                 </div>
+
             </div>
+        </div>
+        <div class="text-center  rounded-bottom-1 border border-black bg-white">
+            <a href="#" id="btnFavorito" class="mx-2">Favorito</a>
+            <a href="#" id="btnFavorito" class="mx-2">Deseos</a>
+            <a href="#" id="btnFavorito" class="mx-2">Comprar</a>
         </div>
     </div>
 @endsection

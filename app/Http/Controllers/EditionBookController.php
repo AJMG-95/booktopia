@@ -133,10 +133,12 @@ class EditionBookController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EditionBook $editionBook)
+    public function show($id)
     {
+        dd($id);
         try {
-            return view('admin.edition-books.show', compact('editionBook'));
+            $editionBook = EditionBook::findOrFail($id);
+            return view('components/book/bookDetail', compact('editionBook'));
         } catch (\Exception $e) {
             return redirect()->route('books.list')->with('error', 'Error al mostrar el libro.');
         }
@@ -145,9 +147,10 @@ class EditionBookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EditionBook $editionBook)
+    public function edit( $id)
     {
         try {
+            $editionBook = EditionBook::findOrFail($id);
             $languages = Language::all();
             $authors = Author::all();
             $genres = Genre::all();
@@ -276,4 +279,16 @@ class EditionBookController extends Controller
             return collect();
         }
     }
+
+    public function toggleVisibility($id)
+{
+    try {
+        $editionBook = EditionBook::findOrFail($id);
+        $editionBook->update(['visible' => !$editionBook->visible]);
+
+        return redirect()->route('books.list')->with('success', 'Visibilidad del libro actualizada exitosamente.');
+    } catch (\Exception $e) {
+        return redirect()->route('books.list')->with('error', 'Error al actualizar la visibilidad del libro.');
+    }
+}
 }

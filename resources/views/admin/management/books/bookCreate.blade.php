@@ -112,6 +112,7 @@
 
 
             <button type="submit" class="btn btn-primary mb-3">Crear Libro</button>
+            <a href="{{ route('books.list') }}" class="btn btn-danger mb-3">Cancelar</a>
         </form>
     </div>
 @endsection
