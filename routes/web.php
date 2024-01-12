@@ -109,9 +109,9 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::prefix('/wishes')->name('wishes.')->group(function () {
-            Route::post('/add/{id}', [WishController::class, 'add'])->name('add');
-            Route::delete('/remove/{id}', [WishController::class, 'remove'])->name('remove');
-            Route::get('/list', [WishController::class, 'showWishlist'])->name('list');
+            Route::post('/add', [WishController::class, 'store'])->name('add');
+            Route::delete('/remove/{id}', [WishController::class ,'destroy'])->name('remove');
+            Route::get('/list', [WishController::class, 'show'])->name('list');
         });
 
 

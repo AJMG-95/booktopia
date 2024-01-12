@@ -78,4 +78,10 @@ class EditionBook extends Model
         return $this->hasMany(Payment::class);
     }
 
+
+    public function editionsInPayments()
+    {
+        return $this->hasMany(Payment::class, 'edition_id');
+    }
+
 }

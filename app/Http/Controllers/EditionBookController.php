@@ -135,7 +135,6 @@ class EditionBookController extends Controller
      */
     public function show($id)
     {
-        dd($id);
         try {
             $editionBook = EditionBook::findOrFail($id);
             return view('components/book/bookDetail', compact('editionBook'));

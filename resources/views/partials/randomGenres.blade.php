@@ -7,11 +7,10 @@
                         {{ $genre->genre_name }}
                     </div>
                     <div class="card-body">
-                        <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género" class="rounded" style="max-height: 25vh">
+                        <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género" class="rounded" style="max-width: 15vw">
                     </div>
                     <div class="card-footer">
                         <a href="{{-- {{ route('genres.show', $genre->id) }} --}}" class="btn btn-primary">Ver Detalle</a>
-                        <!-- Agrega aquí cualquier otra acción que desees para los géneros -->
                     </div>
                 </div>
             </div>

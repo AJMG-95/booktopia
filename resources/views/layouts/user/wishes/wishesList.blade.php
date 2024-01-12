@@ -1,43 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layouts.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-
-</head>
-
-<body>
-
-    @extends('layouts.app')
-
-    @section('content')
-        <div class="container mt-5">
-            <div class="row justify-content-center">
-                <div class="col-md-8">
-                    <div class="card">
-                        <div class="card-header">Lista de Deseos</div>
-
-                        <div class="card-body">
-                            @if ($wishlist->isEmpty())
-                                <p>No hay ediciones en tu lista de deseos.</p>
-                            @else
-                                <ul>
-                                    @foreach ($wishlist as $wish)
-                                        <li>{{ $wish->edition->title }}</li>
-                                    @endforeach
-                                </ul>
-                            @endif
+@section('content')
+    <div class="container mt-4">
+        <h1>Lista de Deseos</h1>
+        @foreach ($wishes as $wish)
+            <div>
+                <div class="card mx-auto text-center" style="max-width: 20vw">
+                    <div class="card-header">
+                        {{ $wish->book->title }}
+                    </div>
+                    <div class="card-body">
+                        <img src="{{ asset('storage/' . $wish->book->cover) }}" alt="Imagen del Género" class="rounded"
+                            style="max-height: 25vh">
+                    </div>
+                    <div class="  ms-1   mb-2 row">
+                        <div class="col-7">
+                            <a href="{{ route('books.show', $wish->book->id) }}" class="btn btn-primary">Ver Detalle</a>
+                        </div>
+                        <div class="col-5">
+                            <form action="{{ route('wishes.remove', $wish->book_id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger"><i class="bi bi-bookmark-fill"></i></button>
+                            </form>
                         </div>
                     </div>
                 </div>
+
             </div>
-        </div>
-    @endsection
-
-
-</body>
-
-</html>
+            <hr>
+        @endforeach
+    </div>
+@endsection
