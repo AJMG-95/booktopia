@@ -101,9 +101,25 @@
             </div>
         </div>
         <div class="text-center  rounded-bottom-1 border border-black bg-white">
-            <a href="#" id="btnFavorito" class="mx-2">Favorito</a>
-            <a href="#" id="btnFavorito" class="mx-2">Deseos</a>
-            <a href="#" id="btnFavorito" class="mx-2">Comprar</a>
+            <br>
+            @auth
+                @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+                    <a href="#" id="btnFavorito" class="mx-2">Favorito</a>
+                    <a href="#" id="btnFavorito" class="mx-2">Deseos</a>
+                    <a href="#" id="btnFavorito" class="mx-2">Comprar</a>
+                @endif
+            @endauth
+            @guest
+                <div class="alert alert-warning text-center">
+                    <strong>Debes estar registrado/logueado para realizar acciones en la web.</strong>
+                </div>
+                <div class="text-center mt-3 mb-3">
+                    <a class="btn btn-outline-primary mx-2" href="{{ route('login') }}">Iniciar Sesión</a>
+                    <a class="btn btn-outline-success mx-2" href="{{ route('register') }}">Registrarse</a>
+                </div>
+            @endguest
+
+
         </div>
     </div>
 @endsection

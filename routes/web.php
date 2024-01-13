@@ -70,7 +70,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::patch('/update/{id}', [GenreController::class, 'update'])->name('genres.update');
                 Route::get('/delete/{id}', [GenreController::class, 'delete'])->name('genres.delete');
                 Route::delete('/destroy/{id}', [GenreController::class, 'destroy'])->name('genres.destroy');
-
             });
 
 
@@ -84,7 +83,6 @@ Route::middleware(['auth'])->group(function () {
                 Route::patch('/update/{editionBook}', [EditionBookController::class, 'update'])->name('update');
                 Route::delete('/destroy/{editionBook}', [EditionBookController::class, 'destroy'])->name('destroy');
                 Route::post('/visibility/{editionBook}', [EditionBookController::class, 'toggleVisibility'])->name('toggleVisibility');
-
             });
         });
     });
@@ -104,13 +102,12 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::prefix('/auto_publication')->name('publications.')->group(function () {
-
         });
 
 
         Route::prefix('/wishes')->name('wishes.')->group(function () {
             Route::post('/add', [WishController::class, 'store'])->name('add');
-            Route::delete('/remove/{id}', [WishController::class ,'destroy'])->name('remove');
+            Route::delete('/remove/{id}', [WishController::class, 'destroy'])->name('remove');
             Route::get('/list', [WishController::class, 'show'])->name('list');
         });
 
@@ -123,12 +120,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/edit/{stickyNote}', [UserStickyNoteController::class, 'edit'])->name('edit');
             Route::put('/update/{stickyNote}', [UserStickyNoteController::class, 'update'])->name('update');
             Route::delete('/destroy/{stickyNote}', [UserStickyNoteController::class, 'destroy'])->name('destroy');
-
         });
 
         //* Rutas para las funcionalidades de Usuarios
         /* Ruta para listar ediciones compradas */
-
     });
 
     Route::prefix('/shop')->name('shop.')->group(function () {
@@ -137,10 +132,10 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/success', [PaymentController::class, 'success'])->name('success');
             Route::get('/cancel', [PaymentController::class, 'cancel'])->name('cancel');
         });
-
+        Route::prefix('/books')->name('books.')->group(function () {
+            Route::get('/search', [EditionBookController::class, 'search'])->name('search');
+        });
     });
-
-
 });
 
 

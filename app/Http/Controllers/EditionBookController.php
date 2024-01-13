@@ -11,7 +11,11 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use App\Http\Controllers\Controller;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Database\QueryException;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 
 class EditionBookController extends Controller
@@ -30,7 +34,7 @@ class EditionBookController extends Controller
     }
 
 
-        /**
+    /**
      * Display a listing of the resource.
      */
     public function shopList()
@@ -40,7 +44,7 @@ class EditionBookController extends Controller
             $genres = Genre::all();
             $books = EditionBook::all();
             $languages = Language::all();
-            return view('layouts/shop/editionsShop', compact('books','genres','authors', 'languages'));
+            return view('layouts/shop/editionsShop', compact('books', 'genres', 'authors', 'languages'));
         } catch (\Exception $e) {
             return redirect()->route('welcome')->with('error', 'Error al obtener la lista de libros.');
         }
@@ -146,7 +150,7 @@ class EditionBookController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit( $id)
+    public function edit($id)
     {
         try {
             $editionBook = EditionBook::findOrFail($id);
@@ -236,10 +240,10 @@ class EditionBookController extends Controller
     public function destroy($id)
     {
         try {
-         /*    dd('ID recibido:', $id); */
+            /*    dd('ID recibido:', $id); */
             $editionBook = EditionBook::findOrFail($id);
 
-          /*   dd('Llegó hasta aquí', $editionBook); */
+            /*   dd('Llegó hasta aquí', $editionBook); */
             // Verificar si hay referencias en la tabla payments
             $associatedPayment = Payment::where('book_id', $editionBook->id)->first();
 
@@ -279,15 +283,277 @@ class EditionBookController extends Controller
         }
     }
 
-    public function toggleVisibility($id)
-{
-    try {
-        $editionBook = EditionBook::findOrFail($id);
-        $editionBook->update(['visible' => !$editionBook->visible]);
 
-        return redirect()->route('books.list')->with('success', 'Visibilidad del libro actualizada exitosamente.');
-    } catch (\Exception $e) {
-        return redirect()->route('books.list')->with('error', 'Error al actualizar la visibilidad del libro.');
+    public function toggleVisibility($id)
+    {
+        try {
+            $editionBook = EditionBook::findOrFail($id);
+            $editionBook->update(['visible' => !$editionBook->visible]);
+
+            return redirect()->route('books.list')->with('success', 'Visibilidad del libro actualizada exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('books.list')->with('error', 'Error al actualizar la visibilidad del libro.');
+        }
     }
-}
+
+
+
+    public function search(Request $request)
+    {
+        try {
+            // Validación de entrada
+            $request->validate([
+                'title' => 'nullable|string|max:255',
+                'author' => 'nullable|string|max:255',
+                'genre' => 'nullable|string|max:255',
+                'min_price' => [
+                    'nullable',
+                    'regex:/^\d+(\,\d{1,2})?$/',
+                ],
+                'max_price' => [
+                    'nullable',
+                    'regex:/^\d+(\,\d{1,2})?$/',
+                ],
+                'language' => 'nullable|string|max:255',
+                'sortBy' => 'nullable|in:asc_price,desc_price,asc_title,desc_title,publication_date',
+            ]);
+
+            // Construir la consulta principal para las ediciones
+            $query = EditionBook::query();
+
+            // Incluir relaciones necesarias para evitar consultas N+1
+            $query->with(['authors', 'genres', 'language']);
+
+            // Aplicar filtros según los parámetros de la URL
+
+            if ($request->has('autopublicado')) {
+                $query->where('self_published', true);
+            }
+
+            // Este filtro usa eloquent
+            if ($request->filled('title')) {
+                $query->where('title', 'ilike', '%' . strtolower($request->input('title')) . '%');
+            }
+
+            if ($request->filled('author')) {
+                $query->whereHas('authors', function ($q) use ($request) {
+                    $q->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->input('author')) . '%']);
+                });
+            }
+
+            if ($request->filled('genre')) {
+                $query->whereHas('genres', function ($q) use ($request) {
+                    $q->whereRaw('LOWER(genre_name) like ?', ['%' . strtolower($request->input('genre')) . '%']);
+                });
+            }
+
+            if ($request->filled('max_price') && $request->filled('min_price')) {
+                $maxPrice = str_replace(',', '.', $request->input('max_price'));
+                $minPrice = str_replace(',', '.', $request->input('min_price'));
+
+                if ($maxPrice < $minPrice) {
+                    return redirect()->back()->with('error', 'El valor para el precio máximo debe ser superior o igual al valor para el precio mínimo');
+                } else {
+                    $query->whereBetween('price', [$minPrice, $maxPrice]);
+                }
+            }
+
+            if ($request->filled('min_price')) {
+                $query->where('price', '>=', str_replace(',', '.', $request->input('min_price')));
+            }
+
+            if ($request->filled('max_price')) {
+                $query->where('price', '<=', str_replace(',', '.', $request->input('max_price')));
+            }
+
+
+            if ($request->filled('language')) {
+                $query->whereHas('language', function ($q) use ($request) {
+                    $q->whereRaw('LOWER(language) like ?', ['%' . strtolower($request->input('language')) . '%']);
+                });
+            }
+
+            // Ordenar resultados según la condición seleccionada
+            $orderBy = $request->input('sortBy', 'asc_price');
+
+            switch ($orderBy) {
+                case 'asc_price':
+                    $query->orderBy('price', 'asc');
+                    break;
+                case 'desc_price':
+                    $query->orderBy('price', 'desc');
+                    break;
+                case 'asc_title':
+                    $query->orderBy('title', 'asc');
+                    break;
+                case 'desc_title':
+                    $query->orderBy('title', 'desc');
+                    break;
+                case 'publication_date':
+                    $query->orderBy('publication_date', 'desc');
+                    break;
+                default:
+                    $query->orderBy('publication_date', 'desc');
+                    break;
+            }
+
+            // Obtener las ediciones resultantes con paginación
+            $books = $query->paginate(10); // O el número de elementos por página que prefieras
+
+            // También puedes cargar información adicional si es necesario
+            $authors = Author::all();
+            $genres = Genre::all();
+            $languages = Language::all();
+
+            // Pasar los datos a la vista
+            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request'));
+        } catch (ValidationException $validationException) {
+            // Manejar errores de validación
+            dd($validationException);
+            return redirect()->back()->withErrors($validationException->errors());
+        } catch (QueryException $queryException) {
+            // Manejar errores de consulta de base de datos
+            dd($queryException);
+            Log::error('Error de consulta: ' . $queryException->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al procesar la solicitud. Por favor, intenta de nuevo.');
+        } catch (\Exception $exception) {
+            dd($exception);
+            // Manejar otras excepciones no capturadas
+            Log::error('Error inesperado: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
+        }
+    }
+
+
+
+    /*
+
+        public function search(Request $request)
+    {
+        try {
+            $this->validateSearchRequest($request);
+
+            $query = $this->buildEditionsQuery($request);
+
+            $books = $query->paginate(10);
+
+            $authors = Author::all();
+            $genres = Genre::all();
+            $languages = Language::all();
+
+            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request'));
+        } catch (ValidationException $validationException) {
+            return redirect()->back()->withErrors($validationException->errors());
+        } catch (QueryException $queryException) {
+            Log::error('Error de consulta: ' . $queryException->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error al procesar la solicitud. Por favor, intenta de nuevo.');
+        } catch (\Exception $exception) {
+            Log::error('Error inesperado: ' . $exception->getMessage());
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
+        }
+    }
+
+
+    private function validateSearchRequest(Request $request)
+    {
+        $request->validate([
+            'title' => 'nullable|string|max:255',
+            'author' => 'nullable|string|max:255',
+            'genre' => 'nullable|string|max:255',
+            'min_price' => [
+                'nullable',
+                'regex:/^\d+(\,\d{1,2})?$/',
+            ],
+            'max_price' => [
+                'nullable',
+                'regex:/^\d+(\,\d{1,2})?$/',
+            ],
+            'language' => 'nullable|string|max:255',
+            'sortBy' => 'nullable|in:asc_price,desc_price,asc_title,desc_title,publication_date',
+        ]);
+    }
+
+    private function buildEditionsQuery(Request $request)
+    {
+
+        $query = EditionBook::with(['authors', 'genres', 'language']);
+
+        // Incluir relaciones necesarias para evitar consultas N+1
+        $query->with(['authors', 'genres', 'language']);
+
+        // Aplicar filtros según los parámetros de la URL
+
+        if ($request->filled('autopublicado')) {
+            $query->where('self_published', true);
+        }
+
+
+        // Este filtro usa eloquent
+        if ($request->filled('title')) {
+            $query->where('title', 'ilike', '%' . strtolower($request->input('title')) . '%');
+        }
+
+        if ($request->filled('author')) {
+            $query->whereHas('authors', function ($q) use ($request) {
+                $q->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->input('author')) . '%']);
+            });
+        }
+
+        if ($request->filled('genre')) {
+            $query->whereHas('genres', function ($q) use ($request) {
+                $q->whereRaw('LOWER(genre_name) like ?', ['%' . strtolower($request->input('genre')) . '%']);
+            });
+        }
+
+        if ($request->filled('max_price') && $request->filled('min_price')) {
+            $maxPrice = str_replace(',', '.', $request->input('max_price'));
+            $minPrice = str_replace(',', '.', $request->input('min_price'));
+
+            if ($maxPrice < $minPrice) {
+                return redirect()->back()->with('error', 'El valor para el precio máximo debe ser superior o igual al valor para el precio mínimo');
+            }
+        }
+
+        if ($request->filled('min_price')) {
+            $query->where('price', '>=', str_replace(',', '.', $request->input('min_price')));
+        }
+
+        if ($request->filled('max_price')) {
+            $query->where('price', '<=', str_replace(',', '.', $request->input('max_price')));
+        }
+
+
+        if ($request->filled('language')) {
+            $query->whereHas('language', function ($q) use ($request) {
+                $q->whereRaw('LOWER(language) like ?', ['%' . strtolower($request->input('language')) . '%']);
+            });
+        }
+
+        // Ordenar resultados según la condición seleccionada
+        $orderBy = $request->input('sortBy', 'publication_date');
+        $orderDirection = $request->input('orderDirection', 'desc');
+
+        switch ($orderBy) {
+            case 'asc_price':
+                $query->orderBy('price', $orderDirection);
+                break;
+            case 'desc_price':
+                $query->orderBy('price', $orderDirection);
+                break;
+            case 'asc_title':
+                $query->orderBy('title', $orderDirection);
+                break;
+            case 'desc_title':
+                $query->orderBy('title', $orderDirection);
+                break;
+            case 'publication_date':
+                $query->orderBy('publication_date', $orderDirection);
+                break;
+            default:
+                $query->orderBy('publication_date', 'desc');
+                break;
+        }
+        return $query;
+    }
+    */
 }

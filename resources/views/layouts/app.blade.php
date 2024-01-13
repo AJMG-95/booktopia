@@ -19,7 +19,7 @@
 
 
     <!-- Scripts -->
-    @vite(['resources/css/app.css', 'resources/css/partials/editionsListCrud.css', 'resources/css/components/bookDetail.css', 'resources/js/app.js'])
+    @vite(['resources/css/app.css', 'resources/css/components/bookDetail.css', 'resources/js/app.js'])
 </head>
 
 <body class="container-fluid appBody">
