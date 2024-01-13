@@ -16,6 +16,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Auth;
 
 
 class EditionBookController extends Controller
@@ -301,147 +302,20 @@ class EditionBookController extends Controller
     public function search(Request $request)
     {
         try {
-            // Validación de entrada
-            $request->validate([
-                'title' => 'nullable|string|max:255',
-                'author' => 'nullable|string|max:255',
-                'genre' => 'nullable|string|max:255',
-                'min_price' => [
-                    'nullable',
-                    'regex:/^\d+(\,\d{1,2})?$/',
-                ],
-                'max_price' => [
-                    'nullable',
-                    'regex:/^\d+(\,\d{1,2})?$/',
-                ],
-                'language' => 'nullable|string|max:255',
-                'sortBy' => 'nullable|in:asc_price,desc_price,asc_title,desc_title,publication_date',
-            ]);
-
-            // Construir la consulta principal para las ediciones
-            $query = EditionBook::query();
-
-            // Incluir relaciones necesarias para evitar consultas N+1
-            $query->with(['authors', 'genres', 'language']);
-
-            // Aplicar filtros según los parámetros de la URL
-
-            if ($request->has('autopublicado')) {
-                $query->where('self_published', true);
-            }
-
-            // Este filtro usa eloquent
-            if ($request->filled('title')) {
-                $query->where('title', 'ilike', '%' . strtolower($request->input('title')) . '%');
-            }
-
-            if ($request->filled('author')) {
-                $query->whereHas('authors', function ($q) use ($request) {
-                    $q->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->input('author')) . '%']);
-                });
-            }
-
-            if ($request->filled('genre')) {
-                $query->whereHas('genres', function ($q) use ($request) {
-                    $q->whereRaw('LOWER(genre_name) like ?', ['%' . strtolower($request->input('genre')) . '%']);
-                });
-            }
-
-            if ($request->filled('max_price') && $request->filled('min_price')) {
-                $maxPrice = str_replace(',', '.', $request->input('max_price'));
-                $minPrice = str_replace(',', '.', $request->input('min_price'));
-
-                if ($maxPrice < $minPrice) {
-                    return redirect()->back()->with('error', 'El valor para el precio máximo debe ser superior o igual al valor para el precio mínimo');
-                } else {
-                    $query->whereBetween('price', [$minPrice, $maxPrice]);
-                }
-            }
-
-            if ($request->filled('min_price')) {
-                $query->where('price', '>=', str_replace(',', '.', $request->input('min_price')));
-            }
-
-            if ($request->filled('max_price')) {
-                $query->where('price', '<=', str_replace(',', '.', $request->input('max_price')));
-            }
-
-
-            if ($request->filled('language')) {
-                $query->whereHas('language', function ($q) use ($request) {
-                    $q->whereRaw('LOWER(language) like ?', ['%' . strtolower($request->input('language')) . '%']);
-                });
-            }
-
-            // Ordenar resultados según la condición seleccionada
-            $orderBy = $request->input('sortBy', 'asc_price');
-
-            switch ($orderBy) {
-                case 'asc_price':
-                    $query->orderBy('price', 'asc');
-                    break;
-                case 'desc_price':
-                    $query->orderBy('price', 'desc');
-                    break;
-                case 'asc_title':
-                    $query->orderBy('title', 'asc');
-                    break;
-                case 'desc_title':
-                    $query->orderBy('title', 'desc');
-                    break;
-                case 'publication_date':
-                    $query->orderBy('publication_date', 'desc');
-                    break;
-                default:
-                    $query->orderBy('publication_date', 'desc');
-                    break;
-            }
-
-            // Obtener las ediciones resultantes con paginación
-            $books = $query->paginate(10); // O el número de elementos por página que prefieras
-
-            // También puedes cargar información adicional si es necesario
-            $authors = Author::all();
-            $genres = Genre::all();
-            $languages = Language::all();
-
-            // Pasar los datos a la vista
-            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request'));
-        } catch (ValidationException $validationException) {
-            // Manejar errores de validación
-            dd($validationException);
-            return redirect()->back()->withErrors($validationException->errors());
-        } catch (QueryException $queryException) {
-            // Manejar errores de consulta de base de datos
-            dd($queryException);
-            Log::error('Error de consulta: ' . $queryException->getMessage());
-            return redirect()->back()->with('error', 'Ocurrió un error al procesar la solicitud. Por favor, intenta de nuevo.');
-        } catch (\Exception $exception) {
-            dd($exception);
-            // Manejar otras excepciones no capturadas
-            Log::error('Error inesperado: ' . $exception->getMessage());
-            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
-        }
-    }
-
-
-
-    /*
-
-        public function search(Request $request)
-    {
-        try {
             $this->validateSearchRequest($request);
 
             $query = $this->buildEditionsQuery($request);
 
-            $books = $query->paginate(10);
+            $books = $this->paginateBooks($query);
 
             $authors = Author::all();
             $genres = Genre::all();
             $languages = Language::all();
 
-            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request'));
+            $userAge = Auth::user()->birth_date->age;
+            $showForAdults = $userAge >= 18;
+
+            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request', 'showForAdults'));
         } catch (ValidationException $validationException) {
             return redirect()->back()->withErrors($validationException->errors());
         } catch (QueryException $queryException) {
@@ -452,7 +326,6 @@ class EditionBookController extends Controller
             return redirect()->back()->with('error', 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
         }
     }
-
 
     private function validateSearchRequest(Request $request)
     {
@@ -469,26 +342,23 @@ class EditionBookController extends Controller
                 'regex:/^\d+(\,\d{1,2})?$/',
             ],
             'language' => 'nullable|string|max:255',
+            'autopublicado' => 'nullable|boolean',
+            'for_adults' => 'nullable|boolean',
             'sortBy' => 'nullable|in:asc_price,desc_price,asc_title,desc_title,publication_date',
         ]);
     }
 
     private function buildEditionsQuery(Request $request)
     {
-
-        $query = EditionBook::with(['authors', 'genres', 'language']);
-
-        // Incluir relaciones necesarias para evitar consultas N+1
+        $query = EditionBook::query();
         $query->with(['authors', 'genres', 'language']);
 
         // Aplicar filtros según los parámetros de la URL
 
-        if ($request->filled('autopublicado')) {
+        if ($request->has('autopublicado')) {
             $query->where('self_published', true);
         }
 
-
-        // Este filtro usa eloquent
         if ($request->filled('title')) {
             $query->where('title', 'ilike', '%' . strtolower($request->input('title')) . '%');
         }
@@ -511,6 +381,8 @@ class EditionBookController extends Controller
 
             if ($maxPrice < $minPrice) {
                 return redirect()->back()->with('error', 'El valor para el precio máximo debe ser superior o igual al valor para el precio mínimo');
+            } else {
+                $query->whereBetween('price', [$minPrice, $maxPrice]);
             }
         }
 
@@ -522,38 +394,48 @@ class EditionBookController extends Controller
             $query->where('price', '<=', str_replace(',', '.', $request->input('max_price')));
         }
 
-
         if ($request->filled('language')) {
             $query->whereHas('language', function ($q) use ($request) {
                 $q->whereRaw('LOWER(language) like ?', ['%' . strtolower($request->input('language')) . '%']);
             });
         }
 
+        if ($request->filled('language')) {
+            $query->where('language_id', $request->input('language'));
+        }
+
+        if ($request->filled('for_adults')) {
+            $query->where('for_adults', (bool) $request->input('for_adults'));
+        }
+
         // Ordenar resultados según la condición seleccionada
-        $orderBy = $request->input('sortBy', 'publication_date');
+        $sortBy = $request->input('sortBy', 'asc_price');
         $orderDirection = $request->input('orderDirection', 'desc');
 
-        switch ($orderBy) {
+        switch ($sortBy) {
             case 'asc_price':
                 $query->orderBy('price', $orderDirection);
                 break;
             case 'desc_price':
-                $query->orderBy('price', $orderDirection);
+                $query->orderBy('price', $orderDirection === 'asc' ? 'desc' : 'asc');
                 break;
             case 'asc_title':
                 $query->orderBy('title', $orderDirection);
                 break;
             case 'desc_title':
-                $query->orderBy('title', $orderDirection);
-                break;
-            case 'publication_date':
-                $query->orderBy('publication_date', $orderDirection);
+                $query->orderBy('title', $orderDirection === 'asc' ? 'desc' : 'asc');
                 break;
             default:
-                $query->orderBy('publication_date', 'desc');
+                $query->orderBy('publication_date', $orderDirection);
                 break;
         }
+
         return $query;
     }
-    */
+
+
+    private function paginateBooks($query)
+    {
+        return $query->paginate(10);
+    }
 }

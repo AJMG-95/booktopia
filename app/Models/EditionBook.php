@@ -24,6 +24,7 @@ class EditionBook extends Model
         'document',
         'language_id',
         'deleted',
+        'for_adults',
     ];
 
     public function language()

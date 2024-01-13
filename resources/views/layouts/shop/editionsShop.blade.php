@@ -11,37 +11,64 @@
                 <form action="{{ route('shop.books.search') }}" method="GET" class="p-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
-                        <input type="text" name="title" class="form-control" placeholder="Buscar por Título" />
+                        <input type="text" name="title" class="form-control" placeholder="Buscar por Título"
+                            value="{{ old('title', request('title')) }}" />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-person"></i></span>
-                        <input type="text" name="author" class="form-control" placeholder="Buscar por Autor">
+                        <input type="text" name="author" class="form-control" placeholder="Buscar por Autor"
+                            value="{{ old('author', request('author')) }}" />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-bookmark"></i></span>
-                        <input type="text" name="genre" class="form-control" placeholder="Buscar por Genero">
+                        <input type="text" name="genre" class="form-control" placeholder="Buscar por Género"
+                            value="{{ old('genre', request('genre')) }}" />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(max.) €</span>
                         <input type="text" name="max_price" class="form-control" step="0.01"
-                            placeholder="Precio máximo">
+                            placeholder="Precio máximo" value="{{ old('max_price', request('max_price')) }}" />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(min.) €</span>
                         <input type="text" name="min_price" class="form-control" step="0.01"
-                            placeholder="Precio mínimo">
+                            placeholder="Precio mínimo" value="{{ old('min_price', request('min_price')) }}" />
+                    </div>
+                    <div class="mb-3">
+                        <label for="language" class="form-label">Idioma</label>
+                        <select name="language" class="form-select">
+                            <option value="" selected>Todos los idiomas</option>
+                            @foreach ($languages as $language)
+                                <option value="{{ $language->id }}" @if (old('language', request('language')) == $language->id) selected @endif>
+                                    {{ $language->language }}</option>
+                            @endforeach
+                        </select>
                     </div>
                     <div class="mb-3 form-check">
-                        <input type="checkbox" name="autopublicado" value="1" class="form-check-input" @if(request('autopublicado')) checked @endif>
-                        <label for="autopublicado">Mostrar solo libros autopublicados</label>
+                        <input type="checkbox" name="autopublicado" value="1" class="form-check-input"
+                            @if (old('autopublicado', request('autopublicado'))) checked @endif>
+                        <label for="autopublicado">Solo libros autopublicados</label>
                     </div>
+                    @if (isset($showForAdults) && $showForAdults)
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" name="for_adults" value="1" class="form-check-input"
+                                @if (old('for_adults', request('for_adults'))) checked @endif>
+                            <label for="for_adults" class="form-check-label">Solo libros para adultos</label>
+                        </div>
+                    @else
+                        <input type="hidden" name="for_adults" value="0">
+                    @endif
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-block" id="searchBtn">
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             Aplicar Filtros
                         </button>
+                        <a href="{{ route('shop.books.search') }}" class="btn btn-primary btn-block mt-2">
+                            Borrar Filtros
+                        </a>
                     </div>
                 </form>
+
             </aside>
 
             {{-- Área principal para mostrar los libros --}}
