@@ -31,13 +31,13 @@ class PaymentController extends Controller
                 ],
             ],
             'mode' => 'payment',
-            'success_url' => route('success') . '?session_id={CHECKOUT_SESSION_ID}',
-            'cancel_url' => route('cancel'),
+            'success_url' => route('shop.payment.success') . '?session_id={CHECKOUT_SESSION_ID}',
+            'cancel_url' => route('shop.payment.cancel'),
         ]);
 
         if (isset($response->id) && $response->id != "") {
             session()->put('product_name', $request->title);
-            session()->put('product_id', $request->edition_id);
+            session()->put('product_id', $request->editionBook_id);
             session()->put('quantity', $request->quantity);
             session()->put('price', $request->price);
 
@@ -57,7 +57,7 @@ class PaymentController extends Controller
             $payment = new Payment();
             $payment->payment_id = $response->id;
             $payment->edition_name = session()->get('product_name');
-            $payment->edition_id = session()->get('product_id');
+            $payment->book_id = session()->get('product_id');
             $payment->quantity = session()->get('quantity');
             $payment->amount = session()->get('price');
             $payment->user_id = auth()->id();
@@ -69,7 +69,7 @@ class PaymentController extends Controller
             $payment->save();
 
 
-            return redirect()->route('shop')->with('success', 'Compra realizada con éxito.');
+            return redirect()->route('books.shop')->with('success', 'Compra realizada con éxito.');
 
             session()->forget('product_name');
             session()->forget('product_id');
@@ -85,6 +85,7 @@ class PaymentController extends Controller
 
     public function cancel()
     {
-        return redirect()->route('shop')->with('error', 'La compra ha sido cancelada.');
+        return redirect()->route('books.shop')->with('error', 'La compra ha sido cancelada.');
     }
+
 }

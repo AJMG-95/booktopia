@@ -142,4 +142,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Wish::class, 'user_id', 'id');
     }
+
+    public function hasPurchasedBook($bookId)
+    {
+        return $this->payments()->where('book_id', $bookId)->exists();
+    }
+
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }
 }

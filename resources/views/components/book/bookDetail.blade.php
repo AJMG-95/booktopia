@@ -6,7 +6,9 @@
     <div class="container  mt-5 ">
 
         <div class="text-center rounded-top-1 border border-black bg-white">
+
             <h1>{{ $editionBook->title }}</h1>
+            <h3>{{ $editionBook->price }} €</h3>
         </div>
         <div class="text-center border border-black bg-white">
             <div class=" row mt-4">
@@ -26,25 +28,31 @@
                             <h4>Géneros</h4>
                         </div>
                         <div class="col-12">
-                            @forelse ($editionBook->genres as $genre)
-                                <p>{{ $genre->genre_name }}</p>
-                            @empty
-                                <p><em>Este libro no tiene géneros asignados.</em></p>
-                            @endforelse
+                            <div class="d-flex flex-row">
+                                @forelse ($editionBook->genres as $key => $genre)
+                                    <p class="me-1">{{ $genre->genre_name }}{{ !$loop->last ? ',' : '.' }}</p>
+                                @empty
+                                    <p><em>Este libro no tiene géneros asignados.</em></p>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-12 row">
                         <div class="col-6">
                             <h4>Autores</h4>
                         </div>
                         <div class="col-12">
-                            @forelse ($editionBook->authors as $author)
-                                <p class="me-4">{{ $author->name }}</p>
-                            @empty
-                                <p>Anonimo</p>
-                            @endforelse
+                            <div class="d-flex flex-row">
+                                @forelse ($editionBook->authors as $key => $author)
+                                    <p class="me-4">{{ $author->name }}{{ !$loop->last ? ',' : '.' }}</p>
+                                @empty
+                                    <p>Anonimo</p>
+                                @endforelse
+                            </div>
                         </div>
                     </div>
+
                     <div class="col-12 row mt-4 mb-3 items-center">
                         <div class="col-6">
                             <p name="self_publish" id="self_publish" class=" ms-4">
@@ -101,12 +109,35 @@
             </div>
         </div>
         <div class="text-center  rounded-bottom-1 border border-black bg-white">
-            <br>
             @auth
                 @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-                    <a href="#" id="btnFavorito" class="mx-2">Favorito</a>
-                    <a href="#" id="btnFavorito" class="mx-2">Deseos</a>
-                    <a href="#" id="btnFavorito" class="mx-2">Comprar</a>
+                    <div class="row mt-3 mb-3">
+                        <div class="col-6">
+                            @include('partials/add_remove_wishs')
+                        </div>
+                        @if (!Auth::user()->hasPurchasedBook($editionBook->id))
+                            <div class="col-6">
+                                <form action="{{ route('shop.payment.stripe') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="price" value="{{ $editionBook->price }}">
+                                    <input type="hidden" name="title" value="{{ $editionBook->title }}">
+                                    <input type="hidden" name="quantity" value="1">
+                                    <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
+
+                                    <!-- Include customer details if available -->
+                                    @if (auth()->check())
+                                        <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
+                                    @endif
+
+                                    <button type="submit">Comprar</button>
+                                </form>
+                            </div>
+                        @else
+                            <div class="col-6">
+                                <a href="#" id="btnFavorito" class="mx-2">Añadir a favoritos</a>
+                            </div>
+                        @endif
+                    </div>
                 @endif
             @endauth
             @guest
@@ -118,8 +149,6 @@
                     <a class="btn btn-outline-success mx-2" href="{{ route('register') }}">Registrarse</a>
                 </div>
             @endguest
-
-
         </div>
     </div>
 @endsection
