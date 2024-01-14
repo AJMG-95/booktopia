@@ -26,12 +26,12 @@
             <p>Creada por: {{ $stickyNote->user->name }}</p>
 
             <button class="edit-link">
-                <a href="{{ route('notes.edit', $stickyNote) }}">
+                <a href="{{ route('sticky_note.edit', $stickyNote) }}">
                     <i class="bi bi-pencil-square" style="color: #fff"></i>
                 </a>
             </button>
 
-            <form action="{{ route('notes.destroy', $stickyNote) }}" method="POST" style="display: inline;">
+            <form action="{{ route('sticky_note.destroy', $stickyNote) }}" method="POST" style="display: inline;">
                 @csrf
                 @method('DELETE')
                 <button type="submit" onclick="return confirm('¿Estás seguro de eliminar esta nota?')" class="del"><i
@@ -39,7 +39,7 @@
             </form>
 
             <button class="back-link">
-                <a href="{{ route('notes.index') }}" class="cancel-link">
+                <a href="{{ route('sticky_note.index') }}" class="cancel-link">
                     <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                         xmlns:xlink="http://www.w3.org/1999/xlink" width="25px" height="25px" viewBox="0 0 300 300"
                         xml:space="preserve" stroke="#000000" stroke-width="0.0029902100000000005">

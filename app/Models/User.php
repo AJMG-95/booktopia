@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
+
 
 class User extends Authenticatable
 {
@@ -67,7 +67,7 @@ class User extends Authenticatable
         return $this->role && $this->role->rol_name === $role;
     }
 
-   /**
+    /**
      * Verificar si el usuario tiene el rol de administrador.
      *
      * @return bool
@@ -77,7 +77,7 @@ class User extends Authenticatable
         return $this->hasRole('admin');
     }
 
-      /**
+    /**
      * Verificar si el usuario tiene el rol de subadministrador.
      *
      * @return bool
@@ -133,10 +133,6 @@ class User extends Authenticatable
         return $this->hasMany(BookRating::class, 'user_id');
     }
 
-    public function favorites()
-    {
-        return $this->hasMany(Favorite::class, 'user_id');
-    }
 
     public function wishes()
     {
@@ -151,5 +147,24 @@ class User extends Authenticatable
     public function payments()
     {
         return $this->hasMany(Payment::class);
+    }
+
+    public function toggleFavorite(EditionBook $book)
+    {
+        if ($this->isBookInFavorites($book->id)) {
+            $this->favorites()->detach($book->id);
+        } else {
+            $this->favorites()->attach($book->id);
+        }
+    }
+
+    public function isBookInFavorites($bookId)
+    {
+        return $this->favorites()->where('book_id', $bookId)->exists();
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(EditionBook::class, 'favorites', 'user_id', 'book_id');
     }
 }

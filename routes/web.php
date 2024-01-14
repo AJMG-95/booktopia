@@ -7,11 +7,11 @@ use App\Http\Controllers\EditionBookController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AuthorController;
 use App\Http\Controllers\GenreController;
-use App\Http\Controllers\EditionsShopController;
+use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\WishController;
 use App\Http\Controllers\PaymentController;
-use App\Http\Controllers\UserStickyNoteController;
-use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\StickyNoteController;
+/* use App\Http\Controllers\ProfileController; */
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -90,14 +90,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/user')->group(function () {
         Route::prefix('/profile')->group(function () {
-            Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
+/*             Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
             Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
-            Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+            Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy'); */
         });
 
         Route::prefix('/as_author')->group(function () {
-            Route::get('/register', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form');
+/*             Route::get('/register', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form'); */
             Route::post('/store', [AuthorController::class, 'registerAsAuthor'])->name('author.register');
         });
 
@@ -113,13 +113,13 @@ Route::middleware(['auth'])->group(function () {
 
 
         Route::prefix('/sticky_notes')->name('sticky_note.')->group(function () {
-            Route::get('/list', [UserStickyNoteController::class, 'index'])->name('index');
-            Route::get('/create', [UserStickyNoteController::class, 'create'])->name('create');
-            Route::post('/store', [UserStickyNoteController::class, 'store'])->name('store');
-            Route::get('/show/{stickyNote}', [UserStickyNoteController::class, 'show'])->name('show');
-            Route::get('/edit/{stickyNote}', [UserStickyNoteController::class, 'edit'])->name('edit');
-            Route::put('/update/{stickyNote}', [UserStickyNoteController::class, 'update'])->name('update');
-            Route::delete('/destroy/{stickyNote}', [UserStickyNoteController::class, 'destroy'])->name('destroy');
+            Route::get('/list', [StickyNoteController::class, 'index'])->name('index');
+            Route::get('/create', [StickyNoteController::class, 'create'])->name('create');
+            Route::post('/store', [StickyNoteController::class, 'store'])->name('store');
+            Route::get('/show/{stickyNote}', [StickyNoteController::class, 'show'])->name('show');
+            Route::get('/edit/{stickyNote}', [StickyNoteController::class, 'edit'])->name('edit');
+            Route::put('/update/{stickyNote}', [StickyNoteController::class, 'update'])->name('update');
+            Route::delete('/destroy/{stickyNote}', [StickyNoteController::class, 'destroy'])->name('destroy');
         });
 
         //* Rutas para las funcionalidades de Usuarios
@@ -136,6 +136,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/search', [EditionBookController::class, 'search'])->name('search');
         });
     });
+
+    Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addToFavorites'])->name('favorites.add');
+    Route::post('/favorites/remove/{editionBookId}', [FavoriteController::class, 'removeFromFavorites'])->name('favorites.remove');
 });
 
 

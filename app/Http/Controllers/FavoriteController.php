@@ -4,62 +4,45 @@ namespace App\Http\Controllers;
 
 use App\Models\Favorite;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class FavoriteController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
     public function index()
     {
-        //
+        $favorites = Auth::user()->favorites;
+        return view('favorites.index', compact('favorites'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Añadir un libro a la lista de favoritos del usuario conectado.
      */
-    public function create()
+/*     public function addToFavorites(Request $request, $editionBookId)
     {
-        //
-    }
+        $user = Auth::user();
+
+        if ($user) {
+            $user->favorites()->attach($editionBookId);
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false]);
+    } */
 
     /**
-     * Store a newly created resource in storage.
+     * Quitar un libro de la lista de favoritos del usuario conectado.
      */
-    public function store(Request $request)
+/*     public function removeFromFavorites(Request $request, $editionBookId)
     {
-        //
-    }
+        $user = Auth::user();
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Favorite $favorite)
-    {
-        //
-    }
+        if ($user) {
+            $user->favorites()->detach($editionBookId);
+            return response()->json(['success' => true]);
+        }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Favorite $favorite)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Favorite $favorite)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Favorite $favorite)
-    {
-        //
-    }
+        return response()->json(['success' => false]);
+    } */
 }

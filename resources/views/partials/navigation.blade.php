@@ -74,7 +74,7 @@
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
                                 <li>
-                                    <a class="dropdown-item" href="{{ route('profile.index') }}">Perfil</a>
+                                    <a class="dropdown-item" href="{{-- {{ route('profile.index') }} --}}">Perfil</a>
                                 </li>
                                 @if (Auth::user()->isAdmin() || Auth::user()->isSubadmin())
                                     <li>
@@ -85,7 +85,7 @@
                                         <a class="dropdown-item" href="{{-- {{ route('user.buyed.editions') }} --}}">Mi Libreria</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{-- {{ route('notes.index') }} --}}">Mis Notas</a>
+                                        <a class="dropdown-item" href="{{ route('sticky_note.index') }} ">Mis Notas</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href=" {{ route('wishes.list') }} ">Mi Lista de Deseos</a>

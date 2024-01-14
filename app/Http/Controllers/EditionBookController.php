@@ -438,4 +438,5 @@ class EditionBookController extends Controller
     {
         return $query->paginate(10);
     }
+
 }

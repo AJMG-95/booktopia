@@ -18,7 +18,7 @@
     <div class="container mt-5">
         <h1>Mis Notas</h1>
 
-        <a href="{{ route('notes.create') }}" class="btn btn-success">Crear Nueva Nota</a>
+        <a href="{{ route('sticky_note.create') }}" class="btn btn-success">Crear Nueva Nota</a>
     </div>
 
     @if (count($userNotes) > 0)
@@ -28,8 +28,8 @@
             <div class="note-content">
                 <h2>{{ $note->title }}</h2>
                 <div class="note-actions row mt-5">
-                    <a href="{{ route('notes.show', $note) }}" class="showBtn col-1">Ver</a>
-                    <form action="{{ route('notes.destroy', $note) }}" method="POST" class="col-1">
+                    <a href="{{ route('sticky_note.show', $note) }}" class="showBtn col-1">Ver</a>
+                    <form action="{{ route('sticky_note.destroy', $note) }}" method="POST" class="col-1">
                         @csrf
                         @method('DELETE')
                         <button type="submit" class="deleteBtn" onclick="return confirm('¿Estás seguro de eliminar esta nota?')">Eliminar</button>

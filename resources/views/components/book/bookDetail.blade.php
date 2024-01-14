@@ -133,9 +133,13 @@
                                 </form>
                             </div>
                         @else
-                            <div class="col-6">
-                                <a href="#" id="btnFavorito" class="mx-2">Añadir a favoritos</a>
-                            </div>
+                        <div class="col-6">
+                            <a href="#" x-data="{ addedToFavorites: {{ json_encode($editionBook->isBookInFavorites(Auth::id())) }} }"
+                               x-on:click.prevent="addedToFavorites ? removeFromFavorites() : addToFavorites()">
+                                <span x-text="addedToFavorites ? 'Quitar de favoritos' : 'Añadir a favoritos'"></span>
+                            </a>
+                        </div>
+
                         @endif
                     </div>
                 @endif
@@ -151,4 +155,23 @@
             @endguest
         </div>
     </div>
+    <script>
+        function addToFavorites() {
+            axios.post(`/favorites/add/{{ $editionBook->id }}`)
+                .then(response => {
+                    if (response.data.success) {
+                        Alpine.data('addedToFavorites', true);
+                    }
+                });
+        }
+
+        function removeFromFavorites() {
+            axios.post(`/favorites/remove/{{ $editionBook->id }}`)
+                .then(response => {
+                    if (response.data.success) {
+                        Alpine.data('addedToFavorites', false);
+                    }
+                });
+        }
+    </script>
 @endsection
