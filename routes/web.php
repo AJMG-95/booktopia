@@ -118,7 +118,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/store', [StickyNoteController::class, 'store'])->name('store');
             Route::get('/show/{stickyNote}', [StickyNoteController::class, 'show'])->name('show');
             Route::get('/edit/{stickyNote}', [StickyNoteController::class, 'edit'])->name('edit');
-            Route::put('/update/{stickyNote}', [StickyNoteController::class, 'update'])->name('update');
+            Route::patch('/update/{stickyNote}', [StickyNoteController::class, 'update'])->name('update');
             Route::delete('/destroy/{stickyNote}', [StickyNoteController::class, 'destroy'])->name('destroy');
         });
 

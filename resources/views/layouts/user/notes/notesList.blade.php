@@ -40,7 +40,10 @@
         @endforeach
     </ul>
     @else
-    <p>No tienes ninguna nota.</p>
+    <div class=" text-center m-auto p-auto">
+        <p class="">No tienes ninguna nota.</p>
+
+    </div>
     @endif
 
     @endsection

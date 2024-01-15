@@ -19,7 +19,7 @@
 
             <form action="{{ route('sticky_note.update', $stickyNote) }}" method="POST">
                 @csrf
-
+                @method('PATCH')
                 <label for="title">Título:</label>
                 <input type="text" name="title" value="{{ old('title', $stickyNote->title) }}" required>
 
