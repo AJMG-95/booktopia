@@ -1,5 +1,6 @@
-<div id="carouselGenres" class="carousel slide mt-4 text-center" data-bs-ride="carousel">
-    <div class="carousel-inner">
+<div id="carouselGenres" class="carousel slide mt-4 text-center " data-bs-ride="carousel">
+    <h2 class="mb-3">Géneros Sugeridos</h2>
+    <div class="carousel-inner border border-1 border-black rounded p-4" style="min-height: 500; max-height: 500px; ">
         @foreach ($randomGenres as $index => $genre)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                 <div class="card mx-auto" style="max-width: 20vw">

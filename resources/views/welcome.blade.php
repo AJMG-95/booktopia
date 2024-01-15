@@ -12,8 +12,18 @@
     @extends('layouts.app')
 
     @section('content')
-        @include('partials.randomBook')
-        @include('partials.randomGenres')
+        <div class="row justify-content-center mt-4 mb-3 me-0">
+            <div class="col-4">
+                @include('partials.randomBook')
+            </div>
+            <div class="col-4">
+                @include('partials.randomGenres')
+            </div>
+        </div>
+
+        <div class="mt-4">
+            @include('partials.cotact_us')
+        </div>
     @endsection
 </body>
 
