@@ -215,7 +215,7 @@
                 .then(response => {
                     if (response.data.success) {
                         Alpine.data('addedToFavorites', true);
-                        window.location.reload(); // Recargar la página después de agregar a favoritos
+                        window.location.reload();
                     }
                 });
         }
@@ -225,7 +225,7 @@
                 .then(response => {
                     if (response.data.success) {
                         Alpine.data('addedToFavorites', false);
-                        window.location.reload(); // Recargar la página después de quitar de favoritos
+                        window.location.reload();
                     }
                 });
         }

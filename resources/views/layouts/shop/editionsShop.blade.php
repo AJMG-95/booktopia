@@ -140,7 +140,12 @@
                                         @else
                                             Sin género
                                         @endif
-                                        {{ $book->price }}
+                                    </p>
+                                    <p class="card-text">
+                                        <strong>Precio:</strong>
+                                        {{ $book->price }} €
+                                    </p>
+
                                 </div>
                                 <div class="card-footer row text-center">
                                     <div class="col-auto">

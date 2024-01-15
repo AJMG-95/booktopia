@@ -14,6 +14,7 @@ use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\File;
 
 
 
@@ -159,4 +160,22 @@ class UserLibraryController extends Controller
     {
         return $query->paginate(10);
     }
+
+    public function read($id)
+    {
+        try {
+            $edition = EditionBook::findOrFail($id);
+            $filename = $edition->document;
+            $path = storage_path('app/public/' . $filename);
+
+            if (!File::exists($path)) {
+                abort(404, 'Archivo no encontrado');
+            }
+
+            return view('layouts/user/editions/pdf', ['filename' => $filename]);
+        } catch (\Exception $e) {
+            abort(404, 'Edición no encontrada');
+        }
+    }
+
 }

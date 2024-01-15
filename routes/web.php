@@ -129,6 +129,7 @@ Route::middleware(['auth'])->group(function () {
         Route::prefix('/library')->group(function () {
             Route::get('/', [UserLibraryController::class, 'index'])->name('user.library');
             Route::get('/search', [UserLibraryController::class, 'search'])->name('user.library.search');
+            Route::get('/book/{id}', [UserLibraryController::class, 'read'])->name('user.library.read');
         });
     });
 
