@@ -61,28 +61,31 @@ class EditionBook extends Model
 
     public function favorites()
     {
-        return $this->hasMany(Favorite::class);
+        return $this->hasMany(Favorite::class, 'book_id');
     }
-
-    public function userLibraries()
+/*     public function userLibraries()
     {
         return $this->hasMany(UserLibrary::class);
-    }
+    } */
 
     public function wishes()
     {
         return $this->belongsToMany(User::class, 'wishes')->withTimestamps()->withPivot('id')->withTimestamps();
     }
 
-    public function payments(): HasMany
+    public function payments()
     {
-        return $this->hasMany(Payment::class);
+        return $this->hasMany(Payment::class, 'book_id');
     }
-
 
     public function editionsInPayments()
     {
         return $this->hasMany(Payment::class, 'edition_id');
     }
 
+
+    public function isBookInFavorites($id)
+    {
+        return $this->favorites()->where('book_id', $id)->exists();
+    }
 }

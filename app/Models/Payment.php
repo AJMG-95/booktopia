@@ -31,6 +31,6 @@ class Payment extends Model
 
     public function book()
     {
-        return $this->belongsTo(EditionBook::class, 'edition_id');
+        return $this->belongsTo(EditionBook::class, 'book_id');
     }
 }

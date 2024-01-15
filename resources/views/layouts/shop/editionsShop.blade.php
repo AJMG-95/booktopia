@@ -49,15 +49,18 @@
                             @if (old('autopublicado', request('autopublicado'))) checked @endif>
                         <label for="autopublicado">Solo libros autopublicados</label>
                     </div>
-                    @if (isset($showForAdults) && $showForAdults)
-                        <div class="mb-3 form-check">
-                            <input type="checkbox" name="for_adults" value="1" class="form-check-input"
-                                @if (old('for_adults', request('for_adults'))) checked @endif>
-                            <label for="for_adults" class="form-check-label">Solo libros para adultos</label>
-                        </div>
-                    @else
-                        <input type="hidden" name="for_adults" value="0">
-                    @endif
+                    @auth
+                        @if (Auth::user()->isAdult())
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" name="for_adults" value="1" class="form-check-input"
+                                    @if (old('for_adults', request('for_adults'))) checked @endif>
+                                <label for="for_adults" class="form-check-label">Solo libros para adultos</label>
+                            </div>
+                        @else
+                            <input type="hidden" name="for_adults" value="0">
+                        @endif
+                    @endauth
+
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-block" id="searchBtn">
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>

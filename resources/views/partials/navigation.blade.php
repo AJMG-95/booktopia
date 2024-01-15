@@ -82,7 +82,7 @@
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{-- {{ route('user.buyed.editions') }} --}}">Mi Libreria</a>
+                                        <a class="dropdown-item" href="{{ route('user.library') }}">Mi Libreria</a>
                                     </li>
                                     <li>
                                         <a class="dropdown-item" href="{{ route('sticky_note.index') }} ">Mis Notas</a>

@@ -108,59 +108,114 @@
 
             </div>
         </div>
-        <div class="text-center  rounded-bottom-1 border border-black bg-white">
-            @auth
-                @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-                    <div class="row mt-3 mb-3">
-                        <div class="col-6">
-                            @include('partials/add_remove_wishs')
-                        </div>
-                        @if (!Auth::user()->hasPurchasedBook($editionBook->id))
-                            <div class="col-6">
-                                <form action="{{ route('shop.payment.stripe') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="price" value="{{ $editionBook->price }}">
-                                    <input type="hidden" name="title" value="{{ $editionBook->title }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
+        <div x-data="{ addedToFavorites: {{ json_encode($editionBook->isBookInFavorites($editionBook->id)) }} }">
+            <div class="text-center  rounded-bottom-1 border border-black bg-white">
+                @auth
+                    @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+                        <div class="row mt-3 mb-3">
+                            @if ($editionBook->for_adults)
+                                @if (Auth::user()->isAdult())
+                                    <div class="col-6">
+                                        @include('partials/add_remove_wishs')
+                                    </div>
+                                    @if (!Auth::user()->hasPurchasedBook($editionBook->id))
+                                        <div class="col-6">
+                                            <form action="{{ route('shop.payment.stripe') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="price" value="{{ $editionBook->price }}">
+                                                <input type="hidden" name="title" value="{{ $editionBook->title }}">
+                                                <input type="hidden" name="quantity" value="1">
+                                                <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
 
-                                    <!-- Include customer details if available -->
-                                    @if (auth()->check())
-                                        <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
+                                                <!-- Include customer details if available -->
+                                                @if (auth()->check())
+                                                    <input type="hidden" name="customer_name"
+                                                        value="{{ auth()->user()->name }}">
+                                                @endif
+
+                                                <button type="submit" class="btn btn-primary">Comprar</button>
+
+                                            </form>
+                                        </div>
+                                    @else
+                                        <div class="col-6" x-show="!addedToFavorites">
+                                            <a href="#" x-on:click.prevent="addToFavorites()"
+                                                x-bind:aria-label="`Añadir ${editionBook.title} a favoritos`" class="btn btn-primary">
+                                                Añadir a favoritos
+                                            </a>
+                                        </div>
+                                        <div class="col-6" x-show="addedToFavorites">
+                                            <a href="#" x-on:click.prevent="removeFromFavorites()"
+                                                x-bind:aria-label="`Quitar ${editionBook.title} de favoritos`" class="btn btn-danger">
+                                                Quitar de favoritos
+                                            </a>
+                                        </div>
                                     @endif
+                                @else
+                                    <p class="text-danger">Este libro no está reomendado para tu edad.</p>
+                                @endif
+                            @else
+                                <div class="col-6">
+                                    @include('partials/add_remove_wishs')
+                                </div>
+                                @if (!Auth::user()->hasPurchasedBook($editionBook->id))
+                                    <div class="col-6">
+                                        <form action="{{ route('shop.payment.stripe') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="price" value="{{ $editionBook->price }}">
+                                            <input type="hidden" name="title" value="{{ $editionBook->title }}">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
 
-                                    <button type="submit">Comprar</button>
-                                </form>
-                            </div>
-                        @else
-                        <div class="col-6">
-                            <a href="#" x-data="{ addedToFavorites: {{ json_encode($editionBook->isBookInFavorites(Auth::id())) }} }"
-                               x-on:click.prevent="addedToFavorites ? removeFromFavorites() : addToFavorites()">
-                                <span x-text="addedToFavorites ? 'Quitar de favoritos' : 'Añadir a favoritos'"></span>
-                            </a>
+                                            <!-- Include customer details if available -->
+                                            @if (auth()->check())
+                                                <input type="hidden" name="customer_name"
+                                                    value="{{ auth()->user()->name }}">
+                                            @endif
+
+                                            <button type="submit" class="btn btn-primary">Comprar</button>
+
+                                        </form>
+                                    </div>
+                                @else
+                                    <div class="col-6" x-show="!addedToFavorites">
+                                        <a href="#" x-on:click.prevent="addToFavorites()"
+                                            x-bind:aria-label="`Añadir ${editionBook.title} a favoritos`" class="btn btn-primary">
+                                            Añadir a favoritos
+                                        </a>
+                                    </div>
+                                    <div class="col-6" x-show="addedToFavorites">
+                                        <a href="#" x-on:click.prevent="removeFromFavorites()"
+                                            x-bind:aria-label="`Quitar ${editionBook.title} de favoritos`" class="btn btn-danger">
+                                            Quitar de favoritos
+                                        </a>
+                                    </div>
+                                @endif
+                            @endif
+
                         </div>
-
-                        @endif
+                    @endif
+                @endauth
+                @guest
+                    <div class="alert alert-warning text-center">
+                        <strong>Debes estar registrado/logueado para realizar acciones en la web.</strong>
                     </div>
-                @endif
-            @endauth
-            @guest
-                <div class="alert alert-warning text-center">
-                    <strong>Debes estar registrado/logueado para realizar acciones en la web.</strong>
-                </div>
-                <div class="text-center mt-3 mb-3">
-                    <a class="btn btn-outline-primary mx-2" href="{{ route('login') }}">Iniciar Sesión</a>
-                    <a class="btn btn-outline-success mx-2" href="{{ route('register') }}">Registrarse</a>
-                </div>
-            @endguest
+                    <div class="text-center mt-3 mb-3">
+                        <a class="btn btn-outline-primary mx-2" href="{{ route('login') }}">Iniciar Sesión</a>
+                        <a class="btn btn-outline-success mx-2" href="{{ route('register') }}">Registrarse</a>
+                    </div>
+                @endguest
+            </div>
         </div>
     </div>
+    <script src="http://unpkg.com/alpinejs@3.4.2/dist/sdn.min.js"></script>
     <script>
         function addToFavorites() {
             axios.post(`/favorites/add/{{ $editionBook->id }}`)
                 .then(response => {
                     if (response.data.success) {
                         Alpine.data('addedToFavorites', true);
+                        window.location.reload(); // Recargar la página después de agregar a favoritos
                     }
                 });
         }
@@ -170,8 +225,10 @@
                 .then(response => {
                     if (response.data.success) {
                         Alpine.data('addedToFavorites', false);
+                        window.location.reload(); // Recargar la página después de quitar de favoritos
                     }
                 });
         }
     </script>
+
 @endsection

@@ -31,4 +31,10 @@ class Favorite extends Model
     {
         return $this->belongsTo(EditionBook::class);
     }
+
+    public function editionBook()
+    {
+        return $this->belongsTo(EditionBook::class, 'book_id');
+    }
+
 }

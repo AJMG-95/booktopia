@@ -88,6 +88,16 @@ class User extends Authenticatable
     }
 
 
+    /**
+     * Verificar si el usuario tiene 18 o más años
+     * @return bool
+     */
+    public function isAdult()
+    {
+        return $this->birth_date->age >= 18;
+    }
+
+
     public function userAsAuthor()
     {
         return $this->belongsTo(Author::class, 'user_as_author_id');
@@ -118,10 +128,10 @@ class User extends Authenticatable
         return $this->subscribers()->where('is_active', true)->exists();
     }
 
-    public function libraries()
+    /*     public function libraries()
     {
         return $this->hasMany(UserLibrary::class, 'user_id');
-    }
+    } */
 
     public function comments()
     {

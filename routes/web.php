@@ -11,6 +11,7 @@ use App\Http\Controllers\FavoriteController;
 use App\Http\Controllers\WishController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StickyNoteController;
+use App\Http\Controllers\UserLibraryController;
 /* use App\Http\Controllers\ProfileController; */
 
 //!Rutas del grupo de middleware que requieren autenticación
@@ -90,14 +91,14 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/user')->group(function () {
         Route::prefix('/profile')->group(function () {
-/*             Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
+            /*             Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
             Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
             Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy'); */
         });
 
         Route::prefix('/as_author')->group(function () {
-/*             Route::get('/register', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form'); */
+            /*             Route::get('/register', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form'); */
             Route::post('/store', [AuthorController::class, 'registerAsAuthor'])->name('author.register');
         });
 
@@ -124,6 +125,11 @@ Route::middleware(['auth'])->group(function () {
 
         //* Rutas para las funcionalidades de Usuarios
         /* Ruta para listar ediciones compradas */
+
+        Route::prefix('/library')->group(function () {
+            Route::get('/', [UserLibraryController::class, 'index'])->name('user.library');
+            Route::get('/search', [UserLibraryController::class, 'search'])->name('user.library.search');
+        });
     });
 
     Route::prefix('/shop')->name('shop.')->group(function () {
