@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Illuminate\Support\Carbon;
 
 class User extends Authenticatable
 {
@@ -118,14 +118,16 @@ class User extends Authenticatable
         return $this->hasMany(UserStickyNote::class, 'user_id');
     }
 
-    public function subscribers()
-    {
-        return $this->hasMany(UserSubscriber::class, 'user_id');
-    }
-
     public function isSubscriber()
     {
-        return $this->subscribers()->where('is_active', true)->exists();
+        // Verificar si el usuario está en la tabla user_subscribers y si la suscripción está activa y no ha caducado
+        return $this->subscriber()->exists() && $this->subscriber->is_active && $this->subscriber->end_at >= Carbon::now();
+    }
+
+    // Relación con la tabla user_subscribers
+    public function subscriber()
+    {
+        return $this->hasOne(UserSubscriber::class, 'user_id');
     }
 
     /*     public function libraries()

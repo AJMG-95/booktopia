@@ -11,7 +11,7 @@
 <body>
 
 </body>
-<footer class="container-fluid text-center">
+<footer class="container text-center">
     <div class="row text-center mb-2 align-items-center">
         <div class="col-md-6 text-center">
             <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo"

@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="mt-4">
+        <div class="mt-4 mb-5">
             @include('partials.cotact_us')
         </div>
     @endsection

@@ -12,7 +12,8 @@ use App\Http\Controllers\WishController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\StickyNoteController;
 use App\Http\Controllers\UserLibraryController;
-/* use App\Http\Controllers\ProfileController; */
+use App\Http\Controllers\UserSubscriberController;
+use App\Http\Controllers\ProfileController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -91,15 +92,15 @@ Route::middleware(['auth'])->group(function () {
 
     Route::prefix('/user')->group(function () {
         Route::prefix('/profile')->group(function () {
-            /*             Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
+            Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
             Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
-            Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy'); */
+            Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
         });
 
         Route::prefix('/as_author')->group(function () {
-            /*             Route::get('/register', [ProfileController::class, 'showAuthorRegistrationForm'])->name('author.register.form'); */
-            Route::post('/store', [AuthorController::class, 'registerAsAuthor'])->name('author.register');
+            Route::post('/register-as-author', [ProfileController::class, 'registerAsAuthor'])
+                ->name('author.register');
         });
 
         Route::prefix('/auto_publication')->name('publications.')->group(function () {
@@ -148,10 +149,10 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/favorites/remove/{editionBookId}', [FavoriteController::class, 'removeFromFavorites'])->name('favorites.remove');
 
 
-    Route::get('/subscribe', [PaymentController::class, 'subscribeView'])->name('subscribe.view');
-    Route::post('/subscribe/confirm', [PaymentController::class, 'subscribeConfirm'])->name('subscribe.confirm');
-    Route::get('/subscribe/cancel', [PaymentController::class, 'subscribeCancel'])->name('subscribe.cancel');
-    Route::get('/subscribe/success', [PaymentController::class, 'subscribeSuccess'])->name('subscribe.success');
+    Route::get('/subscribe', [UserSubscriberController::class, 'subscribeView'])->name('subscribe.view');
+    Route::post('/subscribe/confirm', [UserSubscriberController::class, 'subscribeConfirm'])->name('subscribe.confirm');
+    Route::get('/subscribe/cancel', [UserSubscriberController::class, 'subscribeCancel'])->name('subscribe.cancel');
+    Route::get('/subscribe/success', [UserSubscriberController::class, 'subscribeSuccess'])->name('subscribe.success');
 });
 
 

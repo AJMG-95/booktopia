@@ -26,7 +26,6 @@ class UsersTableSeeder extends Seeder
                 'email' => 'admin@admin.com',
                 'birth_date' => '1990-01-01',
                 'country_id' => 1, // Reemplaza con el ID correcto de un país en tu aplicación
-                'profile_img' => 'admin_profile.jpg',
                 'rol_id' => 1, // ID del rol 'admin'
                 'strikes' => 0,
                 'blocked' => false,
@@ -46,7 +45,6 @@ class UsersTableSeeder extends Seeder
                 'email' => 'subadmin@subadmin.com',
                 'birth_date' => '1990-02-01',
                 'country_id' => 2, // Reemplaza con el ID correcto de otro país en tu aplicación
-                'profile_img' => 'subadmin_profile.jpg',
                 'rol_id' => 2, // ID del rol 'subadmin'
                 'strikes' => 0,
                 'blocked' => false,
@@ -66,7 +64,6 @@ class UsersTableSeeder extends Seeder
                 'email' => 'user@user.com',
                 'birth_date' => '1990-03-01',
                 'country_id' => 3, // Reemplaza con el ID correcto de otro país en tu aplicación
-                'profile_img' => 'user_profile.jpg',
                 'rol_id' => 3, // ID del rol 'user'
                 'strikes' => 0,
                 'blocked' => false,
