@@ -32,7 +32,7 @@
             @else
                 @if (!auth()->user()->subscribed)
                     <div class="col-12 text-center">
-                        <span class="me-3">Suscribete Ahora <b><a href="{{-- {{ route('subscribe') }} --}}"
+                        <span class="me-3">Suscribete Ahora <b><a href="{{ route('subscribe.view') }}"
                                     class="">Suscribirse</a></b></span>
 
                     </div>

@@ -146,6 +146,12 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addToFavorites'])->name('favorites.add');
     Route::post('/favorites/remove/{editionBookId}', [FavoriteController::class, 'removeFromFavorites'])->name('favorites.remove');
+
+
+    Route::get('/subscribe', [PaymentController::class, 'subscribeView'])->name('subscribe.view');
+    Route::post('/subscribe/confirm', [PaymentController::class, 'subscribeConfirm'])->name('subscribe.confirm');
+    Route::get('/subscribe/cancel', [PaymentController::class, 'subscribeCancel'])->name('subscribe.cancel');
+    Route::get('/subscribe/success', [PaymentController::class, 'subscribeSuccess'])->name('subscribe.success');
 });
 
 
