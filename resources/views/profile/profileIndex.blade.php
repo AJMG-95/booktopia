@@ -7,65 +7,92 @@
             <div class="col-3 me-2 row ">
                 <div class="col-auto  ">
                     <div id="sidebar" class="collapse collapse-horizontal show border-end pb-5 bg-white">
-                        <div id="sidebar-nav"
-                            class="list-group border-0 rounded-0 text-sm-start d-flex flex-column">
-                            <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-film"></i> <span>Mi lista de deseos</span>
-                            </a>
-                            <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-heart"></i> <span>Mi lista de favoritos</span>
-                            </a>
-                            <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-bricks"></i> <span>Mis comentarios</span>
-                            </a>
-                            <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-clock"></i> <span>Mis post</span>
-                            </a>
-                            <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-envelope"></i> <span>Mis Notificaciones</span>
-                            </a>
-                            @if (!Auth::user()->isAuthor)
-                                <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
-                                    data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
-                                    <i class="bi bi-envelope"></i> <span>Registrarse como Autor</span>
-                                </button>
-                                {{-- Modal: --}}
-                                <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
-                                    aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="authorRegistrationModalLabel">Registrarse como
-                                                    Autor</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body w-100">
-                                                @include('layouts/user/asAuthor/register')
+                        <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start d-flex flex-column">
+                            @if (!(Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
+                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
+                                    <i class="bi bi-bookmark-fill"></i> <span>Mi lista de deseos</span>
+                                </a>
+                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                    <i class="bi bi-heart"></i> <span>Mi lista de favoritos</span>
+                                </a>
+                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                    <i class="bi bi-chat-square-text"></i> <span>Mis comentarios</span>
+                                </a>
+                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                    <i class="bi bi-signpost"></i> <span>Mis post</span>
+                                </a>
+                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                    <i class="bi bi-mailbox2"></i> <span>Mis Notificaciones</span>
+                                </a>
+                               {{--  <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                    <i class="bi bi-mailbox2-flag"></i> <span>Mis Notificaciones para cuando hay</span>
+                                </a> --}}
+                                @if (!Auth::user()->isAuthor)
+                                    <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
+                                        data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
+                                        <i class="bi bi-feather"></i></i> <span>Registrarse como Autor</span>
+                                    </button>
+                                    {{-- Modal: --}}
+                                    <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
+                                        aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="authorRegistrationModalLabel">
+                                                        Registrarse
+                                                        como
+                                                        Autor <i class="bi bi-feather"></i>
+                                                    </h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                        aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body w-100">
+                                                    @include('layouts/user/asAuthor/register')
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
                                 @else
-                                <a href="{{-- {{ route('publications.index') }} --}}"
-                                class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-bootstrap"></i> <span>Mis publicaciones</span>
-                            </a>
-                            @endif
-                            <div class="mt-5 w-100">
-                                <a href="{{ route('logout') }}"
-                                    class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2">
-                                    <i class="bi bi-box-arrow-right"></i> <span>Cerrar Sesión</span>
-                                </a>
-
-                                @if (Auth::check())
-                                    <button type="button"
-                                        class="w-16 btn btn-danger ms-3 me-3 list-group-item border-end-0 text-truncate rounded"
-                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                                        Borrar Cuenta
-                                    </button>
+                                    <a href="{{-- {{ route('publications.index') }} --}}"
+                                        class="list-group-item border-end-0 d-inline-block text-truncate">
+                                        <i class="bi bi-bootstrap"></i> <span>Mis publicaciones</span>
+                                    </a>
                                 @endif
-                            </div>
+                                <div class="mt-5 w-100">
+                                    <a class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2"
+                                        href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+
+                                    @if (Auth::check())
+                                        <button type="button"
+                                            class="w-16 btn btn-danger ms-3 me-3 list-group-item border-end-0 text-truncate rounded"
+                                            data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                            Borrar Cuenta
+                                        </button>
+                                    @endif
+                                </div>
+                            @else
+                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
+                                    <i class="bi bi-envelope"></i> <span>Mis Notificaciones</span>
+                                </a>
+                                <div class="mt-5 w-100">
+                                    <a class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2"
+                                        href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                    document.getElementById('logout-form').submit();">
+                                        {{ __('Logout') }}
+                                    </a>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                        @csrf
+                                    </form>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -107,8 +134,8 @@
                                     alt="{{ Auth::user()->name }} Profile" class="img-fluid rounded-circle"
                                     style="width: 4vw; height: 4vw; min-width:50px; min-height:50px;">
                             @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto" fill="currentColor"
-                                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
+                                    fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path fill-rule="evenodd"
                                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
@@ -216,6 +243,108 @@
 
 
                 </section>
+
+                @if (isset($author))
+                    <section class="card mb-5  mx-auto" style="width: 42vw">
+                        <div class="card-header row m-0 align-items-center justify-content-between">
+                            <div class="col-auto ms-1">
+                                @if ($author->photo)
+                                    <img src="{{ asset('storage/' . $author->photo) }}"
+                                        alt="{{ $author->nickname }} Profile" class="img-fluid rounded-circle"
+                                        style="width: 4vw; height: 4vw; min-width:50px; min-height:50px;">
+                                @else
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
+                                        fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                        <path fill-rule="evenodd"
+                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                    </svg>
+                                @endif
+                            </div>
+                            <div class="col-6 text-left pe-4">
+                                <h3 id="user_nick" class="pe-4">
+                                    {{ Auth::user()->nickname }}
+                                </h3>
+                            </div>
+                            <div class="col-2 ps-3">
+                            </div>
+                        </div>
+
+
+                        <div class="card-body rounded-bottom">
+                            <div class="row mb-2">
+                                <div class="col-3 fw-bold">Nombre:</div>
+                                <div class="col">{{ $author->surnames }}, {{ $author->name }}</div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <div class="col-3 fw-bold">Fecha de Nacimiento:</div>
+                                <div class="col">
+                                    {{ $author->birth_at ? $author->birth_at : '...' }}</div>
+                            </div>
+                            <div class="row mb-2">
+                                <div class="col-3 fw-bold">País:</div>
+                                <div class="col">
+                                    {{ $author->country_id ? $author->country->country_name : '...' }}</div>
+                            </div>
+
+                            <div class="mb-2" style="position: relative;">
+                                <div class="fw-bold">Biografía:</div>
+                                <form action="{{ route('profile.author.update.biography') }}" method="POST"
+                                    class="w-100">
+                                    @csrf
+                                    @method('PATCH')
+                                    <div style="position: relative;">
+                                        <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
+                                            style="max-height: 15vh; resize: none;">{{ $author->biography ?? '' }}</textarea>
+                                        <button type="submit" class="btn btn-primary"
+                                            style="position: absolute; top: 0; right: 0; margin: 5px;"><i
+                                                class="bi bi-save"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+
+                        <!-- Modal de Confirmación de Borrado -->
+                        <div class="modal fade mt-5" id="confirmDeleteModal" tabindex="-1"
+                            aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado de Cuenta
+                                        </h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form id="deleteAccountForm" action="{{ route('profile.deleteAccount') }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PUT') <!-- Cambiado de DELETE a PUT -->
+
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label">Contraseña:</label>
+                                                <input type="password" class="form-control" id="password"
+                                                    name="password" required>
+                                            </div>
+                                            <button type="submit" class="btn btn-danger">Confirmar Borrado</button>
+                                        </form>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </section>
+                @endif
+
+
 
                 <section class="row ">
                     <div class="col-6">

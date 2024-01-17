@@ -178,4 +178,16 @@ class UserLibraryController extends Controller
         }
     }
 
+
+    public function show($id)
+    {
+        try {
+
+            $editionBook = EditionBook::findOrFail($id);
+            return view('components/book/bookDetail', compact('editionBook'));
+        } catch (\Exception $e) {
+
+            return redirect()->route('welcome')->with('error', 'Error al mostrar el libro.');
+        }
+    }
 }

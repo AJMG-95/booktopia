@@ -97,6 +97,7 @@ Route::middleware(['auth'])->group(function () {
             Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
             Route::put('/delete-account', [ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
             Route::patch('/update-biography', [ProfileController::class, 'updateBiography'])->name('profile.update.biography');
+            Route::patch('/update-as_author-biography', [ProfileController::class, 'updateAsAuthorBiography'])->name('profile.author.update.biography');
         });
 
         Route::prefix('/as_author')->group(function () {
@@ -132,6 +133,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [UserLibraryController::class, 'index'])->name('user.library');
             Route::get('/search', [UserLibraryController::class, 'search'])->name('user.library.search');
             Route::get('/book/{id}', [UserLibraryController::class, 'read'])->name('user.library.read');
+            Route::get('/book/detail/{id}', [UserLibraryController::class, "show"])->name('user.library.book.details');
         });
     });
 
@@ -173,7 +175,8 @@ Route::prefix('/genre')->name('genre.')->group(function () {
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/of_genre/{genre}', [GenreController::class, 'booksForGenre'])->name('forGenre');
-    Route::get('/book/{id}', [EditionBookController::class, "show"])->name('show');
+
+    Route::get('/book/{id}', [UserLibraryController::class, "show"])->name('details');
 });
 
 Route::prefix('/shop')->name('books.')->group(function () {

@@ -86,12 +86,12 @@
                                         @endif
                                     </div> --}}
                                     <div class="col-md-6 mt-2">
+                                        <a class="btn btn-secondary" href="{{ route('register') }}">Registrarse</a>
+                                    </div>
+                                    <div class="col-md-6 mt-2">
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Login') }}
                                         </button>
-                                    </div>
-                                    <div class="col-md-6 mt-2">
-                                        <a class="btn btn-secondary" href="{{ route('register') }}">Registrarse</a>
                                     </div>
                                 </div>
                             </form>

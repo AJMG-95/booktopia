@@ -13,7 +13,7 @@
                             style="max-height: 25vh">
                     </div>
                     <div class="card-footer">
-                        <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">Ver Detalle</a>
+                        <a href="{{ route('books.details', $book->id) }}" class="btn btn-primary">Ver Detalle</a>
                         @auth
                             @php
                                 $user = Auth::user();

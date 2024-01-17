@@ -15,6 +15,9 @@ use Illuminate\View\View;
 use App\Models\Wish;
 use App\Models\Author;
 use App\Models\User;
+use App\Models\Country;
+use Illuminate\Validation\Rule;
+
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\JsonResponse;
 
@@ -31,7 +34,13 @@ class ProfileController extends Controller
         $wishlistBooks = Wish::with('book')->where('user_id', $user->id)->get();
         $favoritesBooks = Favorite::with('book')->where('user_id', $user->id)->get();
 
-        return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks'));
+        if ($user->isAuthor) {
+            $authorForUserId = $user->user_as_author_id;
+            $author = Author::findOrFail($authorForUserId);
+            return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks', 'author'));
+        } else {
+            return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks'));
+        }
     }
 
     /**
@@ -147,7 +156,7 @@ class ProfileController extends Controller
             'name' => $request->input('name'),
             'surnames' => $request->input('surnames'),
             'birth_at' => $request->input('birth_at'),
-            'country_id' => $request->input('country_id'),
+            'country_id' => Auth::user()->country_id,
             'biography' => $request->input('biography'),
             'photo' => $photoPath,  // Guardar la ruta de la foto en la base de datos
         ]);
@@ -237,6 +246,54 @@ class ProfileController extends Controller
             return redirect()->route('profile.index')->with('error', 'User not found.');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->route('profile.index')->with('error', 'Failed to update biography. ' . $e->getMessage());
+        }
+    }
+
+    public function updateAsAuthorBiography(Request $request)
+    {
+        try {
+
+            $userAuthorId = Auth::user()->user_as_author_id;
+            $author = Author::findOrFail($userAuthorId);
+
+            if ($author instanceof \App\Models\Author) {
+                $author->update([
+                    'biography' => $request->input('biography'),
+                ]);
+
+                return redirect()->route('profile.index')->with('success', 'Biography updated successfully');
+            } else {
+                return redirect()->route('profile.index')->with('error', 'User variable is not an instance of Author model.');
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('profile.index')->with('error', 'User not found.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('profile.index')->with('error', 'Failed to update biography. ' . $e->getMessage());
+        }
+    }
+
+    public function updateAsAuthornicknme(Request $request, $id)
+    {
+        try {
+
+            $author = Author::findOrFail($id);
+
+            $request->validate([
+                'nickname' => [
+                    'required',
+                    'string'
+                ],
+            ]);
+
+            $author->update([
+                'nickname' => $request->input('nickname'),
+            ]);
+
+            return redirect()->route('profile.index')->with('success', 'Nickname updated successfully');
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('profile.index')->with('error', 'User not found.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('profile.index')->with('error', 'Failed to update nickname. ' . $e->getMessage());
         }
     }
 }

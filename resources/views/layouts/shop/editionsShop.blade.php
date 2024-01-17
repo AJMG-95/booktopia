@@ -149,7 +149,7 @@
                                 </div>
                                 <div class="card-footer row text-center">
                                     <div class="col-auto">
-                                        <a href="{{ route('books.show', $book->id) }}" class="btn btn-primary">
+                                        <a href="{{ route('books.details', $book->id) }}" class="btn btn-primary">
                                             <i class="bi bi-eye"></i>
                                         </a>
                                     </div>

@@ -43,7 +43,9 @@
 
         <label for="country_id" class="col-md-4 col-form-label text-md-right">{{ __('Pais') }}  <i class="bi bi-slash-square"></i></label>
         <div class="col-md-6">
-            <input id="country_id" type="text" readonly value="{{ Auth::user()->country->country_name ?? '  ' }}"
+            <input id="" type="text" readonly value="{{ Auth::user()->country->country_name ?? '  ' }}"
+                class="form-control">
+                <input id="country_id" hidden type="text" readonly value="{{ Auth::user()->country_id ?? '  ' }}"
                 class="form-control">
             </div>
     </div>

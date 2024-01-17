@@ -28,7 +28,7 @@
                             <h4>Ver libros de este género</h4>
                         </dt>
                         <dd class="genre-detail ms-4">
-                            <a href="{{ route('books.forGenre', ['genre' => $genre->id]) }}">
+                            <a href="{{ route('book.forGenre', ['genre' => $genre->id]) }}">
                                 Ver todos los libros de este género
                             </a>
 
