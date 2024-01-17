@@ -28,7 +28,7 @@
                         </ul>
                     </div>
                     <div class="btn books-editions-btn ">
-                        <a href="{{ route('home') }}" class="">{{ __('Administración General') }}</a>
+                        <a href="{{ route('home') }}" class="btn btn-primary">{{ __('Administración General') }}</a>
                     </div>
                 </div>
             </div>

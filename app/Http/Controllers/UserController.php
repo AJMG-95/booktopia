@@ -38,8 +38,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users',
             'password' => 'required|string|min:8',
             'birth_date' => 'nullable|date',
-            'country_id' => 'nullable|exists:countries,id|unsigned',
-            'profile_img' => 'nullable|string',
+            'country_id' => 'nullable|exists:countries,id',
             'biography' => 'nullable|string',
         ]);
 
@@ -52,7 +51,6 @@ class UserController extends Controller
             'rol_id' => 3,
             'birth_date' => $validatedData['birth_date'],
             'country_id' => $validatedData['country_id'],
-            'profile_img' => $validatedData['profile_img'],
             'biography' => $validatedData['biography'],
         ]);
 
@@ -61,12 +59,12 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
+
         $request->validate([
             'nickname' => 'required|string',
             'name' => 'required|string',
-            'role_id' => 'required|exists:roles,id',
             'birth_date' => 'nullable|date',
-            'country_id' => 'nullable|exists:countries,id|unsigned',
+            'country_id' => 'nullable|exists:countries,id',
             'profile_img' => 'nullable|string',
             'biography' => 'nullable|string',
         ]);
@@ -74,7 +72,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->nickname = $request->input('nickname');
         $user->name = $request->input('name');
-        $user->rol_id = $request->input('role_id');
         $user->birth_date = $request->input('birth_date');
         $user->country_id = $request->input('country_id');
         $user->profile_img = $request->input('profile_img');
@@ -86,15 +83,16 @@ class UserController extends Controller
 
     public function edit($id)
     {
+        $countries = Country::all();
         $user = User::findOrFail($id);
         $roles = Role::all();
-        return view('admin.management.users.userEdit', compact('user', 'roles'));
+        return view('admin.management.users.userEdit', compact('user', 'roles', 'countries'));
     }
 
-    public function delete($id)
+/*     public function delete($id)
     {
-        return view('admin.management.users.userDelete', compact('id'));
-    }
+        return view('user.delete', compact('id'));
+    } */
 
     public function destroy($id)
     {

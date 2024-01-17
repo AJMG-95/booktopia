@@ -15,6 +15,9 @@ use Illuminate\View\View;
 use App\Models\Wish;
 use App\Models\Author;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\JsonResponse;
+
 
 use Illuminate\Support\Facades\Storage;
 
@@ -25,8 +28,8 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         // Obtener deseos del usuario con las ediciones asociadas
-        $wishlistBooks = Wish::with('edition')->where('user_id', $user->id)->get();
-        $favoritesBooks = Favorite::with('edition')->where('user_id', $user->id)->get();
+        $wishlistBooks = Wish::with('book')->where('user_id', $user->id)->get();
+        $favoritesBooks = Favorite::with('book')->where('user_id', $user->id)->get();
 
         return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks'));
     }
@@ -157,5 +160,83 @@ class ProfileController extends Controller
         ]);
 
         return redirect()->route('profile.index')->with('success', 'Te has registrado con éxito como autor.');
+    }
+
+    /**
+     * Eliminar la cuenta de usuario.
+     */
+    public function deleteAccount(Request $request)
+    {
+        $request->validate([
+            'password' => 'required|string',
+        ]);
+
+        $user = $request->user();
+        $id = $user->id;
+
+        // Verificar si la contraseña proporcionada es correcta
+        if (Hash::check($request->password, $user->password)) {
+            DB::beginTransaction();
+
+            try {
+                // Cerrar la sesión y redirigir a la página de inicio
+                Auth::logout();
+
+                // Actualizar los datos del usuario
+                $user = User::findOrFail($id);
+                $user->update([
+                    'nickname' => null,
+                    'email' => null,
+                    'password' => null,
+                    'birth_date' => null,
+                    'country_id' => null,
+                    'profile_img' => null,
+                    'rol_id' => null,
+                    'strikes' => null,
+                    'blocked' => true,
+                    'deleted' => true,
+                ]);
+
+                // Confirmar la transacción
+                DB::commit();
+
+                return redirect()->route('welcome')->with('success', 'Usuario eliminado exitosamente.');
+            } catch (\Exception $e) {
+                // Manejar el error según tus necesidades (por ejemplo, mostrar un mensaje de error)
+                DB::rollBack();
+                return back()->with('error', 'Error al eliminar la cuenta. Por favor, inténtalo de nuevo.');
+            }
+        } else {
+            return back()->withErrors(['password' => 'La contraseña proporcionada es incorrecta.'])->withInput();
+        }
+    }
+
+
+    /**
+     * Update the user's biography.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateBiography(Request $request)
+    {
+        try {
+
+            $user = Auth::user();
+
+            if ($user instanceof \App\Models\User) {
+                $user->update([
+                    'biography' => $request->input('biography'),
+                ]);
+
+                return redirect()->route('profile.index')->with('success', 'Biography updated successfully');
+            } else {
+                return redirect()->route('profile.index')->with('error', 'User variable is not an instance of User model.');
+            }
+        } catch (\Illuminate\Database\Eloquent\ModelNotFoundException $e) {
+            return redirect()->route('profile.index')->with('error', 'User not found.');
+        } catch (\Illuminate\Database\QueryException $e) {
+            return redirect()->route('profile.index')->with('error', 'Failed to update biography. ' . $e->getMessage());
+        }
     }
 }

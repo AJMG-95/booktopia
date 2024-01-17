@@ -25,17 +25,20 @@
                                 <i class="bi bi-envelope"></i> <span>Mis Notificaciones</span>
                             </a>
                             @if (!Auth::user()->isAuthor)
-                                <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate" data-bs-toggle="modal"
-                                    data-bs-target="#authorRegistrationModal">
+                                <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
+                                    data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
                                     <i class="bi bi-envelope"></i> <span>Registrarse como Autor</span>
                                 </button>
                                 {{-- Modal: --}}
-                                <div class="modal fade" id="authorRegistrationModal" tabindex="-1" aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
+                                    aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="authorRegistrationModalLabel">Registrarse como Autor</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <h5 class="modal-title" id="authorRegistrationModalLabel">Registrarse como
+                                                    Autor</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body w-100">
                                                 @include('layouts/user/asAuthor/register')
@@ -50,14 +53,17 @@
                                 </a>
                             @endif
                             <a href="{{ route('logout') }}"
-                                class="list-group-item border-end-0 d-inline-block text-truncate mt-auto">
+                                class=" btn btn-primary ms-3 me-3 list-group-item border-end-0 d-inline-block text-truncate mt-auto rounded mb-2">
                                 <i class="bi bi-box-arrow-right"></i> <span>Cerrar Sesión</span>
                             </a>
-                            <!-- Enlace para Eliminar Cuenta -->
-                            <a href="{{-- {{ route('delete-account') }} --}}"
-                                class="list-group-item border-end-0 d-inline-block text-truncate">
-                                <i class="bi bi-trash"></i> <span>Eliminar Cuenta</span>
-                            </a>
+
+                            @if (Auth::check())
+                                <button type="button"
+                                    class="btn btn-danger ms-3 me-3 list-group-item border-end-0 d-inline-block text-truncate rounded"
+                                    data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                    Borrar Cuenta
+                                </button>
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -139,21 +145,27 @@
                         </div>
                         <div class="row mb-2">
                             <div class="col-3 fw-bold">Fecha de Nacimiento:</div>
-                            <div class="col">{{ Auth::user()->birth_date->format('Y-m-d') }}</div>
+                            <div class="col">
+                                {{ Auth::user()->birth_date ? Auth::user()->birth_date->format('Y-m-d') : '...' }}</div>
                         </div>
                         <div class="row mb-2">
                             <div class="col-3 fw-bold">País:</div>
-                            <div class="col">{{ Auth::user()->country ? Auth::user()->country->name : 'N/A' }}</div>
+                            <div class="col">
+                                {{ Auth::user()->country_id ? Auth::user()->country->country_name : '...' }}</div>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-3 fw-bold">Rol:</div>
-                            <div class="col">{{ Auth::user()->role ? Auth::user()->role->rol_name : 'N/A' }}</div>
+
+                        <div class="mb-2">
+                            <div class="fw-bold">Biografía:</div>
+                            <form action=" {{ route('profile.update.biography') }} " method="POST" class="w-100">
+                                @csrf
+                                @method('PATCH')
+                                <textarea name="biography" id="biography" class="w-100" cols="30" rows="10" placeholder="" style="max-height: 15vh ; resize: none;">{{ Auth::user()->biography ?? '' }}</textarea>
+                                <button type="submit" class="btn btn-primary mt-2">Update Biography</button>
+                            </form>
                         </div>
-                        <div class="row mb-2">
-                            <div class="col-3 fw-bold">Biografía:</div>
-                            <div class="col">{{ Auth::user()->biography ? Auth::user()->biography : 'N/A' }}</div>
-                        </div>
-                        <!-- Add more user details as needed -->
+
+
+
                     </div>
 
                     <div class="card-footer row justify-content-between m-0 p-3">
@@ -162,33 +174,45 @@
                         @endif
                         @if (Auth::check())
                             <button type="button" class="btn btn-danger col-4" data-bs-toggle="modal"
-                                data-bs-target="#deleteUserModal">
-                                Borrar usuario
+                                data-bs-target="#confirmDeleteModal">
+                                Borrar Cuenta
                             </button>
                         @endif
                     </div>
 
-                    <!-- Modal para confirmar la eliminación de usuario -->
-                    <div class="modal fade mt-5" id="deleteUserModal" tabindex="-1"
-                        aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+                    <!-- Modal de Confirmación de Borrado -->
+                    <div class="modal fade mt-5" id="confirmDeleteModal" tabindex="-1"
+                        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="deleteUserModalLabel">Confirmar eliminación</h5>
+                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado de Cuenta</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    ¿Estás seguro de que deseas eliminar tu cuenta? Esta acción no se puede deshacer.
+                                    <form id="deleteAccountForm" action="{{ route('profile.deleteAccount') }}"
+                                        method="POST">
+                                        @csrf
+                                        @method('PUT') <!-- Cambiado de DELETE a PUT -->
+
+                                        <div class="mb-3">
+                                            <label for="password" class="form-label">Contraseña:</label>
+                                            <input type="password" class="form-control" id="password" name="password"
+                                                required>
+                                        </div>
+                                        <button type="submit" class="btn btn-danger">Confirmar Borrado</button>
+                                    </form>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary"
                                         data-bs-dismiss="modal">Cancelar</button>
-                                    <a href="{{-- {{ route('delete.user') }} --}}" class="btn btn-danger">Eliminar cuenta</a>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+
                 </section>
 
                 <section class="row ">
@@ -326,4 +350,7 @@
         </div>
 
     </div>
+
+
+
 @endsection

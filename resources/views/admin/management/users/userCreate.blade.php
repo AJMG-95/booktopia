@@ -94,6 +94,21 @@
             </div>
 
             <div class="form-group admin-form mb-3">
+                <label for="biography" class=" col-form-label text-md-right">{{ __('Biografía') }}</label>
+
+
+                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror" name="biography"
+                    autocomplete="biography"></textarea>
+
+                @error('biography')
+                    <span class="invalid-feedback" role="alert">
+                        <strong>{{ $message }}</strong>
+                    </span>
+                @enderror
+
+            </div>
+
+            <div class="form-group admin-form mb-3">
                 <label for="password" class="col-form-label text-md-right">{{ __('Contraseña') }}</label>
 
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"

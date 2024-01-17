@@ -39,8 +39,7 @@ body {
 }
 
 /* Botones y enlaces principales */
-.btn-primary,
-.btn-secondary {
+.btn-primary{
     background-color: #ffbf00; /* Amarillo */
     border-color: #ffbf00; /* Amarillo */
     border-width: 4px;
@@ -49,23 +48,48 @@ body {
     transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
-.btn-primary:hover,
-.btn-secondary:hover {
+.btn-primary:hover {
     background-color: #ffbf00; /* Amarillo brillante al pasar el mouse */
     color: #000000; /* Texto negro sobre fondo amarillo brillante */
 }
 
-.btn-primary:active,
-.btn-secondary:active {
+.btn-primary:active {
     background-color: #ffd700; /* Amarillo oscuro al hacer clic */
     border-color: #ffd700; /* Amarillo oscuro */
 }
 
-.btn-primary:focus,
-.btn-secondary:focus {
+.btn-primary:focus {
     outline: none;
     box-shadow: 0 0 0 3px #ffbf00, 0 0 0 4px #ffd700; /* Efecto de enfoque con borde */
 }
+
+.btn-secondary {
+    background-color: #2361c5; /* Azul, por ejemplo */
+    border-color: #2361c5; /* Azul, por ejemplo */
+    border-width: 4px;
+    border-style: solid;
+    color: #ffffff; /* Texto blanco sobre fondo azul */
+    transition: background-color 0.3s, border-color 0.3s, color 0.3s;
+}
+
+
+.btn-secondary:hover {
+    background-color: #2361c566; /* Amarillo brillante al pasar el mouse */
+    color: #000000; /* Texto negro sobre fondo amarillo brillante */
+}
+
+
+.btn-secondary:active {
+    background-color: #2361c5; /* Amarillo oscuro al hacer clic */
+    border-color: #2361c5; /* Amarillo oscuro */
+}
+
+
+.btn-secondary:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px #2361c5, 0 0 0 4px #2361c5; /* Efecto de enfoque con borde */
+}
+
 
 /* Estilo para botones y enlaces peligrosos y oscuros */
 .btn-danger,

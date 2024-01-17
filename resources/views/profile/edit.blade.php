@@ -14,17 +14,17 @@
                             @csrf
                             @method('PATCH')
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="nickname">{{ __('Nickname') }}</label>
                                 <input id="nickname" type="text" class="form-control" name="nickname" value="{{ old('nickname', Auth::user()->nickname) }}" required>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="profile_img">{{ __('Foto de Perfil') }}</label>
                                 <input id="profile_img" type="file" class="form-control" name="profile_img">
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="email">{{ __('Correo Electrónico') }}</label>
                                 <input id="email" type="email" class="form-control" name="email" value="{{ old('email', Auth::user()->email) }}" required>
                             </div>
@@ -43,17 +43,17 @@
 
                             <input type="hidden" name="update_type" value="password"> {{-- Campo oculto para identificar la acción --}}
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="current_password">{{ __('Contraseña Actual') }}</label>
                                 <input id="current_password" type="password" class="form-control" name="current_password" required>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="password">{{ __('Nueva Contraseña') }}</label>
                                 <input id="password" type="password" class="form-control" name="password" required>
                             </div>
 
-                            <div class="form-group">
+                            <div class="form-group mb-3">
                                 <label for="password_confirmation">{{ __('Confirmar Nueva Contraseña') }}</label>
                                 <input id="password_confirmation" type="password" class="form-control" name="password_confirmation" required>
                             </div>

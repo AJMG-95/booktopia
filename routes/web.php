@@ -41,7 +41,7 @@ Route::middleware(['auth'])->group(function () {
                 Route::get('/create', [UserController::class, 'create'])->name('create');
                 Route::post('/store', [UserController::class, 'store'])->name('store');
                 Route::get('/edit/{id}', [UserController::class, 'edit'])->name('edit');
-                Route::put('/update/{id}', [UserController::class, 'update'])->name('update');
+                Route::patch('/update/{id}', [UserController::class, 'update'])->name('update');
                 Route::get('/delete/{id}', [UserController::class, 'delete'])->name('delete');
                 Route::delete('/destroy/{id}', [UserController::class, 'destroy'])->name('destroy');
                 Route::put('/promote-to-subadmin/{id}', [UserController::class, 'promoteToSubadmin'])->name('promoteToSubadmin');
@@ -95,7 +95,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/index', [ProfileController::class, 'index'])->name('profile.index');
             Route::get('/edit', [ProfileController::class, 'edit'])->name('profile.edit');
             Route::patch('/update', [ProfileController::class, 'update'])->name('profile.update');
-            Route::delete('/destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+            Route::put('/delete-account', [ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
+            Route::patch('/update-biography', [ProfileController::class, 'updateBiography'])->name('profile.update.biography');
         });
 
         Route::prefix('/as_author')->group(function () {

@@ -28,7 +28,7 @@
 
                                 <div class="row mb-3">
                                     <label for="email"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                                        class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="email" type="email"
@@ -45,7 +45,7 @@
 
                                 <div class="row mb-3">
                                     <label for="password"
-                                        class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                        class="col-md-4 col-form-label text-md-end">{{ __('Contraseña') }}</label>
 
                                     <div class="col-md-6">
                                         <input id="password" type="password"
@@ -67,14 +67,14 @@
                                                 {{ old('remember') ? 'checked' : '' }}>
 
                                             <label class="form-check-label" for="remember">
-                                                {{ __('Remember Me') }}
+                                                {{ __('Recuerdame') }}
                                             </label>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="row mb-0">
-                                    <div class="col-md-8 offset-md-4">
+                                <div class="row mb-0 d-flex justify-content-center align-items-center text-center">
+                                    {{--  <div class="col-md-8 offset-md-4">
                                         <button type="submit" class="btn btn-primary">
                                             {{ __('Login') }}
                                         </button>
@@ -84,6 +84,14 @@
                                                 {{ __('Forgot Your Password?') }}
                                             </a>
                                         @endif
+                                    </div> --}}
+                                    <div class="col-md-6 mt-2">
+                                        <button type="submit" class="btn btn-primary">
+                                            {{ __('Login') }}
+                                        </button>
+                                    </div>
+                                    <div class="col-md-6 mt-2">
+                                        <a class="btn btn-secondary" href="{{ route('register') }}">Registrarse</a>
                                     </div>
                                 </div>
                             </form>
