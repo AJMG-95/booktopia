@@ -4,11 +4,11 @@
 @section('content')
     <div class="container-fluid">
         <div class="row m-0">
-            <div class="col-3 me-2 row  h-100">
-                <div class="col-auto h-100 ">
-                    <div id="sidebar" class="collapse collapse-horizontal show border-end h-100 bg-white">
+            <div class="col-3 me-2 row ">
+                <div class="col-auto  ">
+                    <div id="sidebar" class="collapse collapse-horizontal show border-end pb-5 bg-white">
                         <div id="sidebar-nav"
-                            class="list-group border-0 rounded-0 text-sm-start min-vh-100 d-flex flex-column">
+                            class="list-group border-0 rounded-0 text-sm-start d-flex flex-column">
                             <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
                                 <i class="bi bi-film"></i> <span>Mi lista de deseos</span>
                             </a>
@@ -46,24 +46,26 @@
                                         </div>
                                     </div>
                                 </div>
-                            @else
+                                @else
                                 <a href="{{-- {{ route('publications.index') }} --}}"
-                                    class="list-group-item border-end-0 d-inline-block text-truncate">
-                                    <i class="bi bi-bootstrap"></i> <span>Mis publicaciones</span>
-                                </a>
-                            @endif
-                            <a href="{{ route('logout') }}"
-                                class=" btn btn-primary ms-3 me-3 list-group-item border-end-0 d-inline-block text-truncate mt-auto rounded mb-2">
-                                <i class="bi bi-box-arrow-right"></i> <span>Cerrar Sesión</span>
+                                class="list-group-item border-end-0 d-inline-block text-truncate">
+                                <i class="bi bi-bootstrap"></i> <span>Mis publicaciones</span>
                             </a>
-
-                            @if (Auth::check())
-                                <button type="button"
-                                    class="btn btn-danger ms-3 me-3 list-group-item border-end-0 d-inline-block text-truncate rounded"
-                                    data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                                    Borrar Cuenta
-                                </button>
                             @endif
+                            <div class="mt-5 w-100">
+                                <a href="{{ route('logout') }}"
+                                    class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2">
+                                    <i class="bi bi-box-arrow-right"></i> <span>Cerrar Sesión</span>
+                                </a>
+
+                                @if (Auth::check())
+                                    <button type="button"
+                                        class="w-16 btn btn-danger ms-3 me-3 list-group-item border-end-0 text-truncate rounded"
+                                        data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                        Borrar Cuenta
+                                    </button>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -154,13 +156,18 @@
                                 {{ Auth::user()->country_id ? Auth::user()->country->country_name : '...' }}</div>
                         </div>
 
-                        <div class="mb-2">
+                        <div class="mb-2" style="position: relative;">
                             <div class="fw-bold">Biografía:</div>
-                            <form action=" {{ route('profile.update.biography') }} " method="POST" class="w-100">
+                            <form action="{{ route('profile.update.biography') }}" method="POST" class="w-100">
                                 @csrf
                                 @method('PATCH')
-                                <textarea name="biography" id="biography" class="w-100" cols="30" rows="10" placeholder="" style="max-height: 15vh ; resize: none;">{{ Auth::user()->biography ?? '' }}</textarea>
-                                <button type="submit" class="btn btn-primary mt-2">Update Biography</button>
+                                <div style="position: relative;">
+                                    <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
+                                        style="max-height: 15vh; resize: none;">{{ Auth::user()->biography ?? '' }}</textarea>
+                                    <button type="submit" class="btn btn-primary"
+                                        style="position: absolute; top: 0; right: 0; margin: 5px;"><i
+                                            class="bi bi-save"></i></button>
+                                </div>
                             </form>
                         </div>
 
@@ -168,16 +175,11 @@
 
                     </div>
 
-                    <div class="card-footer row justify-content-between m-0 p-3">
+                    <div class="card-footer row justify-content-end m-0 p-3">
                         @if (Auth::check())
-                            <a href="{{ route('profile.edit') }}" class="btn btn-primary col-4">Editar perfil</a>
+                            <a href="{{ route('profile.edit') }}" class="btn btn-secondary col-4">Editar perfil</a>
                         @endif
-                        @if (Auth::check())
-                            <button type="button" class="btn btn-danger col-4" data-bs-toggle="modal"
-                                data-bs-target="#confirmDeleteModal">
-                                Borrar Cuenta
-                            </button>
-                        @endif
+
                     </div>
 
                     <!-- Modal de Confirmación de Borrado -->
@@ -222,8 +224,11 @@
                             <div class="carousel-inner border border-1 border-black rounded p-4 "
                                 style="min-height: 500;max-height: 500px;">
 
-                                @if (empty($wishlistBooks))
-                                    @foreach ($wishlistBooks as $index => $book)
+                                @if (!empty($wishlistBooks))
+                                    @foreach ($wishlistBooks as $index => $wish)
+                                        @php
+                                            $book = $wish->book; // Accede a la relación "book" desde el deseo
+                                        @endphp
                                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                             <div class="card mx-auto" style="max-width: 20vw">
                                                 <div class="card-header">
@@ -231,7 +236,8 @@
                                                 </div>
                                                 <div class="card-body">
                                                     <img src="{{ asset('storage/' . $book->cover) }}"
-                                                        alt="Imagen del Género" class="rounded" style="max-height: 25vh">
+                                                        alt=" {{ $book->title }}" class="rounded"
+                                                        style="max-height: 25vh">
                                                 </div>
                                                 <div class="card-footer">
                                                     <a href="{{ route('books.show', $book->id) }}"
