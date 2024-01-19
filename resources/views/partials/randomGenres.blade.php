@@ -3,7 +3,7 @@
     <div class="carousel-inner border border-1 border-black rounded p-4" style="min-height: 500; max-height: 500px; ">
         @foreach ($randomGenres as $index => $genre)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                <div class="card mx-auto" style="max-width: 20vw">
+                <div class="card mx-auto" style="max-width: 20vw;  min-height: 42vh;  max-height: 42vh">
                     <div class="card-header">
                         {{ $genre->genre_name }}
                     </div>

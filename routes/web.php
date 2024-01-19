@@ -98,7 +98,14 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/delete-account', [ProfileController::class, 'deleteAccount'])->name('profile.deleteAccount');
             Route::patch('/update-biography', [ProfileController::class, 'updateBiography'])->name('profile.update.biography');
             Route::patch('/update-as_author-biography', [ProfileController::class, 'updateAsAuthorBiography'])->name('profile.author.update.biography');
+
+            Route::prefix('/publication')->group(function () {
+               /*  Route::post('/list', [ProfileController::class, 'publicationList'])->name('profile.publication.list'); */
+                Route::post('/create', [ProfileController::class, 'storeAutoPublicatedBook'])->name('profile.publication.create');
+
+            });
         });
+
 
         Route::prefix('/as_author')->group(function () {
             Route::post('/register-as-author', [ProfileController::class, 'registerAsAuthor'])

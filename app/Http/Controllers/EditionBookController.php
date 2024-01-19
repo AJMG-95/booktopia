@@ -43,7 +43,7 @@ class EditionBookController extends Controller
         try {
             $authors = Author::all();
             $genres = Genre::all();
-            $books = EditionBook::all();
+            $books = EditionBook::where('visible', true)->get();
             $languages = Language::all();
             return view('layouts/shop/editionsShop', compact('books', 'genres', 'authors', 'languages'));
         } catch (\Exception $e) {
@@ -83,7 +83,7 @@ class EditionBookController extends Controller
                 'visible' => 'boolean',
                 'editorial' => 'nullable|string',
                 'price' => 'nullable|numeric',
-                'required' => 'nullable|file|mimes:pdf|max:2048',
+                'document' => 'file|mimes:pdf|max:2048',
                 'language_id' => 'nullable|exists:languages,id',
                 'for_adults' => 'boolean',
                 'authors' => 'array',

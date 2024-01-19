@@ -4,13 +4,13 @@
     <div class="carousel-inner border border-1 border-black rounded p-4 " style="min-height: 500;max-height: 500px;">
         @foreach ($randomBooks as $index => $book)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
-                <div class="card mx-auto" style="max-width: 20vw">
+                <div class="card mx-auto" style="max-width: 20vw; min-height: 42vh;  max-height: 42vh">
                     <div class="card-header">
                         {{ $book->title }}
                     </div>
                     <div class="card-body">
                         <img src="{{ asset('storage/' . $book->cover) }}" alt="Imagen del Género" class="rounded"
-                            style="max-height: 25vh">
+                            style="max-height: 25vh; min-height: 25vh">
                     </div>
                     <div class="card-footer">
                         <a href="{{ route('books.details', $book->id) }}" class="btn btn-primary">Ver Detalle</a>

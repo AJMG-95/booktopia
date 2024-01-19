@@ -24,40 +24,34 @@
                                 <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-mailbox2"></i> <span>Mis Notificaciones</span>
                                 </a>
-                               {{--  <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                {{--  <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-mailbox2-flag"></i> <span>Mis Notificaciones para cuando hay</span>
                                 </a> --}}
-                                @if (!Auth::user()->isAuthor)
-                                    <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
-                                        data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
-                                        <i class="bi bi-feather"></i></i> <span>Registrarse como Autor</span>
-                                    </button>
-                                    {{-- Modal: --}}
-                                    <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
-                                        aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="authorRegistrationModalLabel">
-                                                        Registrarse
-                                                        como
-                                                        Autor <i class="bi bi-feather"></i>
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
-                                                </div>
-                                                <div class="modal-body w-100">
-                                                    @include('layouts/user/asAuthor/register')
-                                                </div>
+
+                                <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
+                                    data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
+                                    <i class="bi bi-feather"></i></i> <span>Registrarse como Autor</span>
+                                </button>
+                                {{-- Modal: --}}
+                                <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
+                                    aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="authorRegistrationModalLabel">
+                                                    Registrarse
+                                                    como
+                                                    Autor <i class="bi bi-feather"></i>
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body w-100">
+                                                @include('layouts/user/asAuthor/register')
                                             </div>
                                         </div>
                                     </div>
-                                @else
-                                    <a href="{{-- {{ route('publications.index') }} --}}"
-                                        class="list-group-item border-end-0 d-inline-block text-truncate">
-                                        <i class="bi bi-bootstrap"></i> <span>Mis publicaciones</span>
-                                    </a>
-                                @endif
+                                </div>
                                 <div class="mt-5 w-100">
                                     <a class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2"
                                         href="{{ route('logout') }}"
@@ -241,7 +235,6 @@
                         </div>
                     </div>
 
-
                 </section>
 
                 @if (isset($author))
@@ -271,7 +264,7 @@
                         </div>
 
 
-                        <div class="card-body rounded-bottom">
+                        <div class="card-body ">
                             <div class="row mb-2">
                                 <div class="col-3 fw-bold">Nombre:</div>
                                 <div class="col">{{ $author->surnames }}, {{ $author->name }}</div>
@@ -304,41 +297,16 @@
                                 </form>
                             </div>
                         </div>
+                        <div class="card-footer row justify-content-around m-0 p-3">
+                            <a href="{{-- {{ route('profile.author.posts') }} --}}" class="btn btn-secondary col-4">Ver mis publicaciones</a>
 
-
-
-                        <!-- Modal de Confirmación de Borrado -->
-                        <div class="modal fade mt-5" id="confirmDeleteModal" tabindex="-1"
-                            aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado de Cuenta
-                                        </h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form id="deleteAccountForm" action="{{ route('profile.deleteAccount') }}"
-                                            method="POST">
-                                            @csrf
-                                            @method('PUT') <!-- Cambiado de DELETE a PUT -->
-
-                                            <div class="mb-3">
-                                                <label for="password" class="form-label">Contraseña:</label>
-                                                <input type="password" class="form-control" id="password"
-                                                    name="password" required>
-                                            </div>
-                                            <button type="submit" class="btn btn-danger">Confirmar Borrado</button>
-                                        </form>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">Cancelar</button>
-                                    </div>
-                                </div>
-                            </div>
+                            <button type="button" class="btn btn-secondary col-4" data-bs-toggle="modal"
+                                data-bs-target="#uploadModal">
+                                Publicar
+                            </button>
+                            @include("partials/dropzone_books")
                         </div>
+
 
 
                     </section>
@@ -369,7 +337,7 @@
                                                         style="max-height: 25vh">
                                                 </div>
                                                 <div class="card-footer">
-                                                    <a href="{{ route('books.show', $book->id) }}"
+                                                    <a href="{{ route('books.details', $book->id) }}"
                                                         class="btn btn-primary">Ver
                                                         Detalle</a>
                                                     @auth
@@ -485,7 +453,6 @@
         </div>
 
     </div>
-
 
 
 @endsection

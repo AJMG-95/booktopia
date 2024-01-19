@@ -15,7 +15,10 @@ use Illuminate\View\View;
 use App\Models\Wish;
 use App\Models\Author;
 use App\Models\User;
-use App\Models\Country;
+use App\Models\Language;
+use App\Models\Genre;
+use App\Models\EditionBook;
+
 use Illuminate\Validation\Rule;
 
 use Illuminate\Support\Facades\DB;
@@ -29,6 +32,8 @@ class ProfileController extends Controller
     public function index()
     {
         $user = auth()->user();
+        $languages = Language::all();
+        $genres = Genre::all();
 
         // Obtener deseos del usuario con las ediciones asociadas
         $wishlistBooks = Wish::with('book')->where('user_id', $user->id)->get();
@@ -37,7 +42,7 @@ class ProfileController extends Controller
         if ($user->isAuthor) {
             $authorForUserId = $user->user_as_author_id;
             $author = Author::findOrFail($authorForUserId);
-            return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks', 'author'));
+            return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks', 'author', 'languages', 'genres'));
         } else {
             return view('profile.profileIndex', compact('wishlistBooks', 'favoritesBooks'));
         }
@@ -294,6 +299,72 @@ class ProfileController extends Controller
             return redirect()->route('profile.index')->with('error', 'User not found.');
         } catch (\Illuminate\Database\QueryException $e) {
             return redirect()->route('profile.index')->with('error', 'Failed to update nickname. ' . $e->getMessage());
+        }
+    }
+
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function storeAutoPublicatedBook(Request $request)
+    {
+        try {
+            $request->validate([
+                'for_adults' => 'boolean',
+                'visible' => 'boolean',
+                'title' => 'nullable|string|max:255',
+                'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+                'document' => 'file|mimes:pdf|max:2048',
+                'language_id' => 'nullable|exists:languages,id',
+                'short_description' => 'nullable|string',
+                'description' => 'nullable|string',
+                'authors' => 'string',
+                'genres' => 'array',
+                // Agrega cualquier otra regla de validación según tus necesidades
+            ]);
+
+            $data = $request->all();
+
+            // Verifica si el checkbox "Visible" está marcado y establece el valor correspondiente
+            $data['visible'] = $request->has('visible') ? true : false;
+
+            // Verifica si el libro es visible al público y establece el precio en 0.00 euros
+            if ($request->input('visible')) {
+                $data['price'] = 0.00;
+            }
+            $editionBook = new EditionBook($data);
+            $editionBook->save();
+
+            // Verifica si se proporcionó un archivo PDF
+            if ($request->hasFile('document')) {
+                $documentFile = $request->file('document');
+                $documentFileName = $editionBook->id . '.pdf';  // Nombre basado en el ID del libro
+                $documentPath = $documentFile->storeAs('documents', $documentFileName, 'public');
+                $editionBook->document = $documentPath;
+            }
+
+            // Verifica si se proporcionó una portada
+            if ($request->hasFile('cover')) {
+                $coverFile = $request->file('cover');
+                $coverFileName = $editionBook->id . '.' . $coverFile->getClientOriginalExtension();
+                $coverPath = $coverFile->storeAs('covers', $coverFileName, 'public');
+                $editionBook->cover = $coverPath;
+                $editionBook->save();  // Guarda el modelo actualizado con la ruta de la portada
+            }
+
+            // Asocia los autores
+            if ($request->has('authors')) {
+                $editionBook->authors()->attach($request->input('authors'));
+            }
+
+            // Asocia los géneros
+            if ($request->has('genres')) {
+                $editionBook->genres()->attach($request->input('genres'));
+            }
+
+            return redirect()->route('profile.index')->with('success', 'Libro creado exitosamente.');
+        } catch (\Exception $e) {
+            return redirect()->route('profile.index')->with('error', 'Error al crear el libro.');
         }
     }
 }

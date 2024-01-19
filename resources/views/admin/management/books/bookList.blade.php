@@ -50,7 +50,7 @@
                                         data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $book->id }}">
                                         Borrar
                                     </button>
-                                    <a href="{{ route('book.show', $book->id) }}" class="btn btn-info">Ver</a>
+                                    <a href="{{ route('books.show', $book->id) }}" class="btn btn-info">Ver</a>
                                 </div>
                             </td>
 
