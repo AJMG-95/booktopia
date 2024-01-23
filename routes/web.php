@@ -14,6 +14,9 @@ use App\Http\Controllers\StickyNoteController;
 use App\Http\Controllers\UserLibraryController;
 use App\Http\Controllers\UserSubscriberController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\BookRatingController;
+use App\Http\Controllers\BookCommentController;
+
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
@@ -140,10 +143,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/search', [UserLibraryController::class, 'search'])->name('user.library.search');
             Route::get('/book/{id}', [UserLibraryController::class, 'read'])->name('user.library.read');
             Route::get('/book/detail/{id}', [UserLibraryController::class, "show"])->name('user.library.book.details');
-            Route::post('/rate/book/{id}', [UserLibraryController::class, 'rateBook'])->name('user.library.rate-book');
-
+            Route::post('/rate/book/{id}', [BookRatingController::class, 'rateBook'])->name('user.library.rate-book');
+            Route::post('/comment/book/add/{id}', [BookCommentController::class, 'addComment'])->name('user.library.add-comment');
         });
     });
+
+
+    Route::post('/comments/{commentId}/like', [BookCommentController::class, 'likeComment'])->name('comments.like');
+    Route::post('/comments/{commentId}/dislike', [BookCommentController::class, 'dislikeComment'])->name('comments.dislike');
+    Route::post('/comments/{commentId}/report', [BookCommentController::class, 'reportComment'])->name('comments.report');
+    Route::delete('/comments/{commentId}', [BookCommentController::class, 'deleteComment'])->name('comments.delete');
+    Route::post('/comment/add/{id}', [BookCommentController::class, 'addComment'])->name('comments.add');
 
     Route::prefix('/shop')->name('shop.')->group(function () {
         Route::prefix('/payment')->name('payment.')->group(function () {

@@ -28,4 +28,7 @@ class BookComment extends Model
     {
         return $this->belongsTo(EditionBook::class, 'book_id');
     }
+
+
+
 }

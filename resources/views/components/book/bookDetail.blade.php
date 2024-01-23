@@ -3,211 +3,173 @@
 @extends('layouts.app') {{-- Ajusta según la estructura de tu layout --}}
 
 @section('content')
-    <div class="container  mt-5 ">
 
-        <div class="text-center rounded-top-1 border border-black bg-white">
-
-            <h1>{{ $editionBook->title }}</h1>
-            <h3>{{ $editionBook->price }} €</h3>
-        </div>
-        <div class="text-center border border-black bg-white">
-            <div class=" row mt-4">
-                <div class=" col-md-2 ">
-                    @if (isset($editionBook) && $editionBook->cover)
-                        <img src="{{ asset('storage/' . $editionBook->cover) }}" alt="Imagen del Género" class="rounded "
-                            style="max-height: 25vh">
-                    @else
-                        No imagen
-                    @endif
-                </div>
-
-                <div class=" col-md-4 row">
-
-                    <div class="col-12 row">
-                        <div class="col-6">
-                            <h4>Géneros</h4>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex flex-row">
-                                @forelse ($editionBook->genres as $key => $genre)
-                                    <p class="me-1">{{ $genre->genre_name }}{{ !$loop->last ? ',' : '.' }}</p>
-                                @empty
-                                    <p><em>Este libro no tiene géneros asignados.</em></p>
-                                @endforelse
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 row">
-                        <div class="col-6">
-                            <h4>Autores</h4>
-                        </div>
-                        <div class="col-12">
-                            <div class="d-flex flex-row">
-                                @forelse ($editionBook->authors as $key => $author)
-                                    <p class="me-4">{{ $author->name }}{{ !$loop->last ? ',' : '.' }}</p>
-                                @empty
-                                    <p>Anonimo</p>
-                                @endforelse
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-12 row mt-4 mb-3 items-center">
-                        <div class="col-6">
-                            <p name="self_publish" id="self_publish" class=" ms-4">
-                                {{ $editionBook->self_published ? 'Auto-publicado' : '' }}</p>
-                        </div>
-                        <div class="col-6">
-                            @if ($editionBook->for_adults)
-                                <svg width="2vw" height="2vw" viewBox="-2.4 -2.4 28.80 28.80" id="Layer_1"
-                                    data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" fill="#000000" stroke="#000000">
-                                    <g id="SVGRepo_bgCarrier" stroke-width="0">
-                                        <rect x="-2.4" y="-2.4" width="28.80" height="28.80" rx="14.4" fill="#ffffff"
-                                            strokewidth="0"></rect>
-                                    </g>
-                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                                    <g id="SVGRepo_iconCarrier">
-                                        <defs>
-                                            <style>
-                                                .cls-1 {
-                                                    fill: none;
-                                                    stroke: #ff0000;
-                                                    stroke-miterlimit: 10;
-                                                    stroke-width: 1.91px;
-                                                }
-                                            </style>
-                                        </defs>
-                                        <path class="cls-1" d="M19.45,19.42a10.5,10.5,0,1,1,0-14.84"></path>
-                                        <rect class="cls-1" x="11.07" y="8.18" width="4.77" height="3.82"
-                                            rx="1.91"></rect>
-                                        <rect class="cls-1" x="11.07" y="12" width="4.77" height="3.82" rx="1.91">
-                                        </rect>
-                                        <line class="cls-1" x1="7.25" y1="7.23" x2="7.25" y2="15.82">
-                                        </line>
-                                        <line class="cls-1" x1="5.34" y1="15.82" x2="9.16" y2="15.82">
-                                        </line>
-                                        <line class="cls-1" x1="5.34" y1="9.14" x2="8.2" y2="9.14">
-                                        </line>
-                                        <line class="cls-1" x1="17.75" y1="12" x2="23.48" y2="12">
-                                        </line>
-                                        <line class="cls-1" x1="20.61" y1="9.14" x2="20.61" y2="14.86">
-                                        </line>
-                                    </g>
-                                </svg>
-                            @endif
-                        </div>
-
-                    </div>
-                </div>
-                <div class=" col-md-6 p-4 text-center">
-                    <p class=" pe-4 text-center">
-                        {{ $editionBook->description ? $editionBook->description : 'Descripción' }}
-                    </p>
-                </div>
-
+    <div class="container mt-5">
+        <div class="text-center border border-dark bg-white p-4">
+            <div class="mb-4">
+                <h1 class="display-3 fw-bold text-primary">{{ $editionBook->title }}</h1>
+                <h3 class="text-muted">{{ $editionBook->price > 0 ? $editionBook->price : "0,00" }} €</h3>
+            </div>
+            <div class="border-bottom border-primary mb-4"></div>
+            <p class="lead text-dark">Descubre una nueva aventura literaria con {{ $editionBook->title }}.</p>
+            <div class="d-flex justify-content-center">
+                <div class="border-top border-dark w-25"></div>
             </div>
         </div>
+
+        <div class="container mt-4">
+            <div class="card border border-dark rounded">
+                <div class="row g-0">
+                    <div class="col-md-2 bg-light text-center py-3">
+                        @if ($editionBook->for_adults)
+                            <div class="badge bg-danger text-white mb-2">+18</div>
+                        @endif
+                        @if ($editionBook->self_published)
+                            <div class="badge bg-primary text-white">Auto-publicado</div>
+                        @endif
+                        @if ($editionBook->cover)
+                            <img src="{{ asset('storage/' . $editionBook->cover) }}" alt="Portada del Libro"
+                                class="img-fluid rounded mt-1" style="max-width: 10vw">
+                        @else
+                            <div class="text-muted">No hay imagen disponible</div>
+                        @endif
+                    </div>
+                    <div class="col-md-4 bg-white">
+                        <div class="p-3">
+                            <h4 class="mb-4">Géneros</h4>
+                            <div class="d-flex flex-wrap">
+                                @forelse ($editionBook->genres as $genre)
+                                    <span class="badge bg-secondary me-2 mb-2">{{ $genre->genre_name }}</span>
+                                @empty
+                                    <p class="text-muted"><em>Este libro no tiene géneros asignados.</em></p>
+                                @endforelse
+                            </div>
+                        </div>
+                        <div class="p-3">
+                            <h4 class="mb-4">Autores</h4>
+                            <div class="d-flex flex-wrap">
+                                @forelse ($editionBook->authors as $author)
+                                    <span class="badge bg-dark me-2 mb-2">
+                                        {{ $author->nickname ? $author->nickname : $author->surnames . ', ' . $author->name }}</span>
+                                @empty
+                                    <p class="text-muted">Anónimo</p>
+                                @endforelse
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 bg-light text-center py-4">
+                        <p class="pe-4 text-justify">{{ $editionBook->description ?: 'Descripción no disponible' }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
         <div x-data="{ addedToFavorites: {{ json_encode($editionBook->isBookInFavorites($editionBook->id)) }} }">
-            <div class="text-center  rounded-bottom-1 border border-black bg-white">
+            <div class="text-center rounded-bottom-1 border border-dark bg-white mt-3 mb-3 p-4">
                 @auth
                     @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
                         <div class="row mt-3 mb-3">
                             @if ($editionBook->for_adults)
                                 @if (Auth::user()->isAdult())
-                                    <div class="col-6">
-                                        @include('partials/add_remove_wishs')
+                                    <div class="col-md-6 mb-3">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            @include('partials/add_remove_wishs')
+                                        </div>
                                     </div>
                                     @if (!Auth::user()->hasPurchasedBook($editionBook->id))
-                                        <div class="col-6">
+                                        <div class="col-md-6">
                                             <form action="{{ route('shop.payment.stripe') }}" method="POST">
                                                 @csrf
                                                 <input type="hidden" name="price" value="{{ $editionBook->price }}">
                                                 <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                                 <input type="hidden" name="quantity" value="1">
                                                 <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
-
-                                                <!-- Include customer details if available -->
                                                 @if (auth()->check())
-                                                    <input type="hidden" name="customer_name"
-                                                        value="{{ auth()->user()->name }}">
+                                                    <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
                                                 @endif
-
-                                                <button type="submit" class="btn btn-primary">Comprar</button>
-
+                                                <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
                                             </form>
                                         </div>
                                     @else
-                                        <div class="col-6" x-show="!addedToFavorites">
-                                            <a href="#" x-on:click.prevent="addToFavorites()"
-                                                x-bind:aria-label="`Añadir ${editionBook.title} a favoritos`" class="btn btn-primary">
-                                                Añadir a favoritos
-                                            </a>
-                                        </div>
-                                        <div class="col-6" x-show="addedToFavorites">
-                                            <a href="#" x-on:click.prevent="removeFromFavorites()"
-                                                x-bind:aria-label="`Quitar ${editionBook.title} de favoritos`" class="btn btn-danger">
-                                                Quitar de favoritos
-                                            </a>
+                                        <div class="col-md-6">
+                                            <div class="d-flex align-items-center justify-content-center">
+                                                <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
+                                                        class="btn btn-primary btn-lg">
+                                                    Añadir a favoritos
+                                                </button>
+                                                <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
+                                                        class="btn btn-danger btn-lg">
+                                                    Quitar de favoritos
+                                                </button>
+                                            </div>
                                         </div>
                                     @endif
                                 @else
-                                    <p class="text-danger">Este libro no está reomendado para tu edad.</p>
+                                    <div class="col-12">
+                                        <p class="text-danger mb-3">Este libro no está recomendado para tu edad.</p>
+                                        <p class="badge bg-danger text-white">+18</p>
+                                    </div>
                                 @endif
                             @else
-                                <div class="col-6">
-                                    @include('partials/add_remove_wishs')
+                                <div class="col-md-6 mb-3">
+                                    <div class="d-flex align-items-center justify-content-center">
+                                        @include('partials/add_remove_wishs')
+                                    </div>
                                 </div>
                                 @if (!Auth::user()->hasPurchasedBook($editionBook->id))
-                                    <div class="col-6">
+                                    <div class="col-md-6">
                                         <form action="{{ route('shop.payment.stripe') }}" method="POST">
                                             @csrf
                                             <input type="hidden" name="price" value="{{ $editionBook->price }}">
                                             <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                             <input type="hidden" name="quantity" value="1">
                                             <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
-
-                                            <!-- Include customer details if available -->
                                             @if (auth()->check())
-                                                <input type="hidden" name="customer_name"
-                                                    value="{{ auth()->user()->name }}">
+                                                <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
                                             @endif
-
-                                            <button type="submit" class="btn btn-primary">Comprar</button>
-
+                                            <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
                                         </form>
                                     </div>
                                 @else
-                                    <div class="col-6" x-show="!addedToFavorites">
-                                        <a href="#" x-on:click.prevent="addToFavorites()"
-                                            x-bind:aria-label="`Añadir ${editionBook.title} a favoritos`" class="btn btn-primary">
-                                            Añadir a favoritos
-                                        </a>
-                                    </div>
-                                    <div class="col-6" x-show="addedToFavorites">
-                                        <a href="#" x-on:click.prevent="removeFromFavorites()"
-                                            x-bind:aria-label="`Quitar ${editionBook.title} de favoritos`" class="btn btn-danger">
-                                            Quitar de favoritos
-                                        </a>
+                                    <div class="col-md-6">
+                                        <div class="d-flex align-items-center justify-content-center">
+                                            <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
+                                                    class="btn btn-primary btn-lg">
+                                                Añadir a favoritos
+                                            </button>
+                                            <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
+                                                    class="btn btn-danger btn-lg">
+                                                Quitar de favoritos
+                                            </button>
+                                        </div>
                                     </div>
                                 @endif
                             @endif
-
                         </div>
                     @endif
                 @endauth
                 @guest
-                    <div class="alert alert-warning text-center">
+                    <div class="alert alert-warning text-center mb-4">
                         <strong>Debes estar registrado/logueado para realizar acciones en la web.</strong>
                     </div>
                     <div class="text-center mt-3 mb-3">
-                        <a class="btn btn-outline-primary mx-2" href="{{ route('login') }}">Iniciar Sesión</a>
-                        <a class="btn btn-outline-success mx-2" href="{{ route('register') }}">Registrarse</a>
+                        <a class="btn btn-outline-primary mx-2 btn-lg" href="{{ route('login') }}">Iniciar Sesión</a>
+                        <a class="btn btn-outline-success mx-2 btn-lg" href="{{ route('register') }}">Registrarse</a>
                     </div>
                 @endguest
             </div>
         </div>
+
+
+
+        <div>
+            @include('partials/book_comments', ['comments' => $comments, 'book' => $editionBook])
+        </div>
     </div>
+
+
     <script src="http://unpkg.com/alpinejs@3.4.2/dist/sdn.min.js"></script>
     <script>
         function addToFavorites() {

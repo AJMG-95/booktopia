@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use App\Models\BookRating;
+use App\Models\BookComment;
 
 
 class UserLibraryController extends Controller
@@ -214,7 +215,8 @@ class UserLibraryController extends Controller
         try {
 
             $editionBook = EditionBook::findOrFail($id);
-            return view('components/book/bookDetail', compact('editionBook'));
+            $comments = BookComment::where('book_id', $editionBook->id)->get();
+            return view('components/book/bookDetail', compact('editionBook', 'comments'));
         } catch (\Exception $e) {
 
             return redirect()->route('welcome')->with('error', 'Error al mostrar el libro.');
@@ -222,43 +224,5 @@ class UserLibraryController extends Controller
     }
 
 
-    /**
-     * Store a user's rating for a book.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $bookId
-     * @return \Illuminate\Http\Response
-     */
-    public function rateBook(Request $request, $id)
-    {
 
-        try {
-            $request->validate([
-                'rating' => 'required|integer|between:1,5',
-            ]);
-
-            $book = EditionBook::findOrFail($id);
-
-
-
-            $existingRating = BookRating::where('user_id', Auth::id())
-                ->where('book_id', $book->id)
-                ->first();
-
-            if ($existingRating) {
-                $existingRating->update(['rating' => $request->input('rating')]);
-            } else {
-                BookRating::create([
-                    'user_id' => Auth::id(),
-                    'book_id' => $book->id,
-                    'rating' => $request->input('rating'),
-                ]);
-            }
-
-            return redirect()->back()->with('success', '¡Libro valorado con éxito!');
-        } catch (\Exception $e) {
-            dd($e);
-            return redirect()->back()->with('error', 'Ocurrió un error al valorar el libro.');
-        }
-    }
 }

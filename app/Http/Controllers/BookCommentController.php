@@ -4,62 +4,110 @@ namespace App\Http\Controllers;
 
 use App\Models\BookComment;
 use Illuminate\Http\Request;
+use App\Models\EditionBook;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Response;
 
 class BookCommentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Almacena un nuevo comentario para un libro.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function addComment(Request $request, $id)
     {
-        //
+        try {
+            $request->validate([
+                'comment' => 'required|string|max:255',
+            ]);
+
+            // Obtén el libro
+            $book = EditionBook::findOrFail($id);
+
+            // Crea un nuevo comentario
+            $comment = new BookComment([
+                'user_id' => Auth::id(), // Ajusta esto según cómo manejas la autenticación
+                'book_id' => $book->id,
+                'body' => $request->input('comment'),
+            ]);
+
+            $comment->save();
+
+            return redirect()->back()->with('success', '¡Comentario agregado con éxito!');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al agregar el comentario.');
+        }
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Dar like a un comentario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $commentId
+     * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function likeComment (Request $request, $commentId)
     {
-        //
+        $comment = BookComment::findOrFail($commentId);
+        $comment->increment('likes');
+
+        return redirect()->back();
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Dar dislike a un comentario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $commentId
+     * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function dislikeComment (Request $request, $commentId)
     {
-        //
+        $comment = BookComment::findOrFail($commentId);
+        $comment->increment('dislikes');
+
+        return redirect()->back();
     }
 
     /**
-     * Display the specified resource.
+     * Reportar un comentario.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $commentId
+     * @return \Illuminate\Http\Response
      */
-    public function show(BookComment $bookComment)
+    public function reportComment (Request $request, $commentId)
     {
-        //
+        $comment = BookComment::findOrFail($commentId);
+        $comment->increment('reports');
+
+        return redirect()->back();
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Elimina un comentario.
+     *
+     * @param  int  $commentId
+     * @return \Illuminate\Http\Response
      */
-    public function edit(BookComment $bookComment)
+    public function deleteComment($commentId)
     {
-        //
-    }
+        try {
+            $comment = BookComment::findOrFail($commentId);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, BookComment $bookComment)
-    {
-        //
-    }
+            // Verifica si el usuario tiene permisos para eliminar el comentario
+            if (Auth::check() && (Auth::id() == $comment->user_id || Auth::user()->is_admin)) {
+                $comment->delete();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(BookComment $bookComment)
-    {
-        //
+                return redirect()->back()->with('success', '¡Comentario eliminado con éxito!');
+            }
+
+            return redirect()->back()->with('error', 'No tienes permisos para eliminar este comentario.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Ocurrió un error al eliminar el comentario. Detalles: ' . $e->getMessage());
+        }
     }
 }

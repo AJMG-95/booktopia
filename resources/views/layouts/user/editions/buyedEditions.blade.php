@@ -85,7 +85,7 @@
                                                     <div class="modal-body">
                                                         <!-- Formulario para comentarios -->
                                                         <form method="post"
-                                                            action="{{-- {{ route('user.library.add-comment', ['id' => $book->book_id]) }} --}}">
+                                                            action="{{ route('user.library.add-comment', ['id' => $book->book_id]) }}">
                                                             @csrf
                                                             <div class="mb-3">
                                                                 <label for="comment">Tu comentario:</label>

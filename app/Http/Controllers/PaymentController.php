@@ -40,7 +40,7 @@ class PaymentController extends Controller
             session()->put('product_name', $request->title);
             session()->put('product_id', $request->editionBook_id);
             session()->put('quantity', $request->quantity);
-            session()->put('price', $request->price);
+            session()->put('price', $request->price ? $request->price : 0);
 
             return redirect($response->url);
         } else {
@@ -87,5 +87,4 @@ class PaymentController extends Controller
     {
         return redirect()->route('books.shop')->with('error', 'La compra ha sido cancelada.');
     }
-
 }

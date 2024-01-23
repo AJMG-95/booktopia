@@ -4,62 +4,48 @@ namespace App\Http\Controllers;
 
 use App\Models\BookRating;
 use Illuminate\Http\Request;
+use App\Models\EditionBook;
+use Illuminate\Support\Facades\Auth;
 
 class BookRatingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
+  /**
+     * Store a user's rating for a book.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $bookId
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function rateBook(Request $request, $id)
     {
-        //
-    }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        try {
+            $request->validate([
+                'rating' => 'required|integer|between:1,5',
+            ]);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+            $book = EditionBook::findOrFail($id);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(BookRating $bookRating)
-    {
-        //
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(BookRating $bookRating)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, BookRating $bookRating)
-    {
-        //
-    }
+            $existingRating = BookRating::where('user_id', Auth::id())
+                ->where('book_id', $book->id)
+                ->first();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(BookRating $bookRating)
-    {
-        //
+            if ($existingRating) {
+                $existingRating->update(['rating' => $request->input('rating')]);
+            } else {
+                BookRating::create([
+                    'user_id' => Auth::id(),
+                    'book_id' => $book->id,
+                    'rating' => $request->input('rating'),
+                ]);
+            }
+
+            return redirect()->back()->with('success', '¡Libro valorado con éxito!');
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with('error', 'Ocurrió un error al valorar el libro.');
+        }
     }
 }

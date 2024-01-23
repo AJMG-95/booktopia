@@ -17,7 +17,7 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\BookComment;
 
 class EditionBookController extends Controller
 {
@@ -142,7 +142,9 @@ class EditionBookController extends Controller
     {
         try {
             $editionBook = EditionBook::findOrFail($id);
-            return view('components/book/bookDetail', compact('editionBook'));
+            $comments = BookComment::where('book_id', $editionBook->id)->get();
+
+            return view('components/book/bookDetail', compact('editionBook', 'comments'));
         } catch (\Exception $e) {
             return redirect()->route('books.list')->with('error', 'Error al mostrar el libro.');
         }
