@@ -100,9 +100,8 @@ Route::middleware(['auth'])->group(function () {
             Route::patch('/update-as_author-biography', [ProfileController::class, 'updateAsAuthorBiography'])->name('profile.author.update.biography');
 
             Route::prefix('/publication')->group(function () {
-               /*  Route::post('/list', [ProfileController::class, 'publicationList'])->name('profile.publication.list'); */
+                Route::get('/list', [ProfileController::class, 'autoPublicationList'])->name('profile.publication.list');
                 Route::post('/create', [ProfileController::class, 'storeAutoPublicatedBook'])->name('profile.publication.create');
-
             });
         });
 
@@ -141,6 +140,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/search', [UserLibraryController::class, 'search'])->name('user.library.search');
             Route::get('/book/{id}', [UserLibraryController::class, 'read'])->name('user.library.read');
             Route::get('/book/detail/{id}', [UserLibraryController::class, "show"])->name('user.library.book.details');
+            Route::post('/rate/book/{id}', [UserLibraryController::class, 'rateBook'])->name('user.library.rate-book');
+
         });
     });
 

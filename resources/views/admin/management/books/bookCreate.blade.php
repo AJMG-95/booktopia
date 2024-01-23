@@ -107,7 +107,7 @@
 
             <div class="mb-3">
                 <label for="price" class="form-label">Precio</label>
-                <input type="text" class="form-control" id="price" name="price" value="{{ old('price') }}">
+                <input type="text" class="form-control" id="price" name="price" min="0" value="{{ old('price') }}">
             </div>
 
 

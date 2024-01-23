@@ -27,12 +27,12 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">(max.) €</span>
                         <input type="text" name="max_price" class="form-control" step="0.01"
-                            placeholder="Precio máximo" value="{{ old('max_price', request('max_price')) }}" />
+                            placeholder="Precio máximo" min="0" value="{{ old('max_price', request('max_price')) }}" />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(min.) €</span>
                         <input type="text" name="min_price" class="form-control" step="0.01"
-                            placeholder="Precio mínimo" value="{{ old('min_price', request('min_price')) }}" />
+                            placeholder="Precio mínimo" min="0" value="{{ old('min_price', request('min_price')) }}" />
                     </div>
                     <div class="mb-3">
                         <label for="language" class="form-label">Idioma</label>

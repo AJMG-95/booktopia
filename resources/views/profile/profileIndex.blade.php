@@ -298,13 +298,14 @@
                             </div>
                         </div>
                         <div class="card-footer row justify-content-around m-0 p-3">
-                            <a href="{{-- {{ route('profile.author.posts') }} --}}" class="btn btn-secondary col-4">Ver mis publicaciones</a>
+                            <a href=" {{ route('profile.publication.list') }} " class="btn btn-secondary col-4">Ver mis
+                                publicaciones</a>
 
                             <button type="button" class="btn btn-secondary col-4" data-bs-toggle="modal"
                                 data-bs-target="#uploadModal">
                                 Publicar
                             </button>
-                            @include("partials/dropzone_books")
+                            @include('partials/dropzone_books')
                         </div>
 
 
@@ -316,12 +317,12 @@
 
                 <section class="row ">
                     <div class="col-6">
-                        <div id="booksCarousel" class="carousel slide mt-4 text-center " data-bs-ride="carousel">
-                            <h2 class="mb-4">Lista de deseos</h2>
-                            <div class="carousel-inner border border-1 border-black rounded p-4 "
-                                style="min-height: 500;max-height: 500px;">
+                        @if (!empty($wishlistBooks))
+                            <div id="booksCarousel" class="carousel slide mt-4 text-center " data-bs-ride="carousel">
+                                <h2 class="mb-4">Lista de deseos</h2>
+                                <div class="carousel-inner border border-1 border-black rounded p-4 "
+                                    style="min-height: 500;max-height: 500px;">
 
-                                @if (!empty($wishlistBooks))
                                     @foreach ($wishlistBooks as $index => $wish)
                                         @php
                                             $book = $wish->book; // Accede a la relación "book" desde el deseo
@@ -367,28 +368,29 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                @else
-                                    <p>No hay libros en tu lista de deseos.</p>
-                                @endif
+
+                                </div>
+                                <button class="carousel-control-prev  mt-5" type="button"
+                                    data-bs-target="#booksCarousel" data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon  mt-3" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                <button class="carousel-control-next  mt-5" type="button"
+                                    data-bs-target="#booksCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon  mt-3" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
                             </div>
-                            <button class="carousel-control-prev  mt-5" type="button" data-bs-target="#booksCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon  mt-3" aria-hidden="true"></span>
-                                <span class="visually-hidden">Anterior</span>
-                            </button>
-                            <button class="carousel-control-next  mt-5" type="button" data-bs-target="#booksCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon  mt-3" aria-hidden="true"></span>
-                                <span class="visually-hidden">Siguiente</span>
-                            </button>
-                        </div>
+                        @else
+                            <p>Aún no has añadido ningun libro a tu lista de deseos</p>
+                        @endif
                     </div>
                     <div class="col-6 text-center">
-                        <div id="booksCarousel" class="carousel slide mt-4 text-center " data-bs-ride="carousel">
-                            <h2 class="mb-4">Lista de favoritos</h2>
-                            <div class="carousel-inner border border-1 border-black rounded p-4 "
-                                style="min-height: 500;max-height: 500px;">
-                                @if (empty($favoritesBooks))
+                        @if (!empty($favoritesBooks))
+                            <div id="booksCarousel" class="carousel slide mt-4 text-center " data-bs-ride="carousel">
+                                <h2 class="mb-4">Lista de favoritos</h2>
+                                <div class="carousel-inner border border-1 border-black rounded p-4 "
+                                    style="min-height: 500;max-height: 500px;">
                                     @foreach ($favoritesBooks as $index => $book)
                                         <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                                             <div class="card mx-auto" style="max-width: 20vw">
@@ -430,21 +432,24 @@
                                             </div>
                                         </div>
                                     @endforeach
-                                @else
-                                    <p>No hay libros en tu lista de favoritos.</p>
-                                @endif
+
+
+
+                                </div>
+                                <button class="carousel-control-prev mt-5" type="button" data-bs-target="#booksCarousel"
+                                    data-bs-slide="prev">
+                                    <span class="carousel-control-prev-icon mt-3" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Anterior</span>
+                                </button>
+                                <button class="carousel-control-next  mt-5" type="button"
+                                    data-bs-target="#booksCarousel" data-bs-slide="next">
+                                    <span class="carousel-control-next-icon  mt-3" aria-hidden="true"></span>
+                                    <span class="visually-hidden">Siguiente</span>
+                                </button>
                             </div>
-                            <button class="carousel-control-prev mt-5" type="button" data-bs-target="#booksCarousel"
-                                data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon mt-3" aria-hidden="true"></span>
-                                <span class="visually-hidden">Anterior</span>
-                            </button>
-                            <button class="carousel-control-next  mt-5" type="button" data-bs-target="#booksCarousel"
-                                data-bs-slide="next">
-                                <span class="carousel-control-next-icon  mt-3" aria-hidden="true"></span>
-                                <span class="visually-hidden">Siguiente</span>
-                            </button>
-                        </div>
+                        @else
+                            <p>Aún no has añadido ningun libro a tu lista de favoritos</p>
+                        @endif
                     </div>
                 </section>
 

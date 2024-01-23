@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Auth;
 
 class EditionBook extends Model
 {
@@ -41,6 +42,7 @@ class EditionBook extends Model
     }
 
 
+
     /**
      * Toma los generos asociados al libor
      */
@@ -54,16 +56,27 @@ class EditionBook extends Model
         return $this->hasMany(BookComment::class);
     }
 
-    public function ratings()
+
+
+    public function bookRatings()
     {
-        return $this->hasMany(BookRating::class);
+        return $this->hasMany(BookRating::class, 'book_id')
+            ->where('user_id', Auth::id());
     }
+
+    // Atributo calculado para la valoración media
+    public function getAverageRatingAttribute()
+    {
+        return $this->bookRatings->avg('rating');
+    }
+
+
 
     public function favorites()
     {
         return $this->hasMany(Favorite::class, 'book_id');
     }
-/*     public function userLibraries()
+    /*     public function userLibraries()
     {
         return $this->hasMany(UserLibrary::class);
     } */

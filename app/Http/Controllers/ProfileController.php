@@ -148,12 +148,28 @@ class ProfileController extends Controller
     public function registerAsAuthor(Request $request)
     {
         // Validar los datos del formulario según tus necesidades
-        $request->validate([
-            // Agregar reglas de validación según los campos del formulario
+        $validatedData = $request->validate([
+            'nickname' => 'nullable|string|max:255',
+            'name' => 'required|string|max:255',
+            'surnames' => 'nullable|string|max:255',
+            'birth_at' => 'nullable|date',
+            'country_id' => 'nullable|exists:countries,id',
+            'biography' => 'nullable|string|max:1000',
+            'photo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+
+          // Obtén el nombre del autor
+          $authorName = $validatedData['nickname'];
+
+          // Construye el nombre único para la imagen
+          $imageName = strtolower(str_replace(' ', '_', $authorName));
+
         // Subir la foto y obtener la ruta del archivo
-        $photoPath = $request->file('photo')->store('author_photos', 'public');
+        if ($request->hasFile('photo')) {
+            $photoPath = $request->file('photo')->storeAs('authors_photos', $imageName, 'public');
+            $validatedData['photo'] = $photoPath;
+        }
 
         // Crear un nuevo autor con la información proporcionada
         $author = Author::create([
@@ -163,7 +179,6 @@ class ProfileController extends Controller
             'birth_at' => $request->input('birth_at'),
             'country_id' => Auth::user()->country_id,
             'biography' => $request->input('biography'),
-            'photo' => $photoPath,  // Guardar la ruta de la foto en la base de datos
         ]);
 
         $userId = Auth::user()->id;
@@ -366,5 +381,23 @@ class ProfileController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('profile.index')->with('error', 'Error al crear el libro.');
         }
+    }
+
+    public function autoPublicationList()
+    {
+        // Obtener el ID del autor del usuario conectado
+        $authorId = Auth::user()->user_as_author_id;
+        $author = Author::findOrFail($authorId);
+        $languages = Language::all();
+        $genres = Genre::all();
+
+
+        // Obtener todos los libros asociados al ID del autor
+        $books = EditionBook::whereHas('authors', function ($query) use ($authorId) {
+            $query->where('author_id', $authorId);
+        })->get();
+
+        // Puedes ajustar el nombre de la vista según tu estructura de carpetas
+        return view('layouts/user/asAuthor/publications/index', compact('books', 'author', 'genres', 'languages'));
     }
 }

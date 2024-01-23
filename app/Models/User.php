@@ -141,11 +141,10 @@ class User extends Authenticatable
         return $this->hasMany(BookComment::class, 'user_id');
     }
 
-    public function ratings()
+    public function bookRatings()
     {
-        return $this->hasMany(BookRating::class, 'user_id');
+        return $this->hasMany(BookRating::class);
     }
-
 
     public function wishes()
     {

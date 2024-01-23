@@ -365,7 +365,8 @@ class EditionBookController extends Controller
 
         if ($request->filled('author')) {
             $query->whereHas('authors', function ($q) use ($request) {
-                $q->whereRaw('LOWER(name) like ?', ['%' . strtolower($request->input('author')) . '%']);
+                $searchTerm = '%' . strtolower($request->input('author')) . '%';
+                $q->whereRaw('LOWER(name) like ? OR LOWER(nickname) like ? OR LOWER(surnames) like ?', [$searchTerm, $searchTerm, $searchTerm]);
             });
         }
 
@@ -384,29 +385,25 @@ class EditionBookController extends Controller
             } else {
                 $query->whereBetween('price', [$minPrice, $maxPrice]);
             }
-        }
-
-        if ($request->filled('min_price')) {
+        } elseif ($request->filled('min_price')) {
             $query->where('price', '>=', str_replace(',', '.', $request->input('min_price')));
-        }
-
-        if ($request->filled('max_price')) {
+        } elseif ($request->filled('max_price')) {
             $query->where('price', '<=', str_replace(',', '.', $request->input('max_price')));
         }
 
         if ($request->filled('language')) {
+            // Puedes combinar estas dos condiciones
             $query->whereHas('language', function ($q) use ($request) {
                 $q->whereRaw('LOWER(language) like ?', ['%' . strtolower($request->input('language')) . '%']);
-            });
-        }
-
-        if ($request->filled('language')) {
-            $query->where('language_id', $request->input('language'));
+            })->orWhere('language_id', $request->input('language'));
         }
 
         if ($request->filled('for_adults')) {
             $query->where('for_adults', (bool) $request->input('for_adults'));
         }
+
+        // Agregar condición para mostrar solo los libros visibles
+        $query->where('visible', true);
 
         // Ordenar resultados según la condición seleccionada
         $sortBy = $request->input('sortBy', 'asc_price');
@@ -432,6 +429,7 @@ class EditionBookController extends Controller
 
         return $query;
     }
+
 
 
     private function paginateBooks($query)

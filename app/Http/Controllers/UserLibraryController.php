@@ -15,18 +15,24 @@ use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
-
+use App\Models\BookRating;
 
 
 class UserLibraryController extends Controller
 {
 
+    // UserLibraryController.php
+
     private function getBooksForUser()
     {
-        return EditionBook::join('payments', 'payments.book_id', '=', 'edition_books.id')
+        return EditionBook::with(['bookRatings' => function ($query) {
+            $query->where('user_id', Auth::id());
+        }])
+            ->join('payments', 'payments.book_id', '=', 'edition_books.id')
             ->where('payments.user_id', Auth::id())
             ->get();
     }
+
 
     /**
      * Display a listing of the resource.
@@ -36,16 +42,40 @@ class UserLibraryController extends Controller
         try {
             $books = $this->getBooksForUser();
 
+            // Obtener las valoraciones de los libros para el usuario actual
+            $userRatings = $this->getUserRatings($books);
+
             $authors = Author::all();
             $genres = Genre::all();
             $languages = Language::all();
 
-            return view('layouts/user/editions/buyedEditions', compact('books', 'genres', 'authors', 'languages'));
+            return view('layouts/user/editions/buyedEditions', compact('books', 'genres', 'authors', 'languages', 'userRatings'));
         } catch (\Exception $e) {
             return redirect()->route('welcome')->with('error', 'Error al obtener la lista de libros.');
         }
     }
 
+
+    /**
+     * Obtener las valoraciones del usuario para los libros proporcionados.
+     *
+     * @param  \Illuminate\Database\Eloquent\Collection  $books
+     * @return \Illuminate\Support\Collection
+     */
+    private function getUserRatings($books)
+    {
+        $userRatings = collect();
+
+        foreach ($books as $book) {
+            $rating = BookRating::where('user_id', Auth::id())
+                ->where('book_id', $book->book_id)
+                ->value('rating');
+
+            $userRatings->put($book->book_id, $rating);
+        }
+
+        return $userRatings;
+    }
 
     public function search(Request $request)
     {
@@ -188,6 +218,47 @@ class UserLibraryController extends Controller
         } catch (\Exception $e) {
 
             return redirect()->route('welcome')->with('error', 'Error al mostrar el libro.');
+        }
+    }
+
+
+    /**
+     * Store a user's rating for a book.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $bookId
+     * @return \Illuminate\Http\Response
+     */
+    public function rateBook(Request $request, $id)
+    {
+
+        try {
+            $request->validate([
+                'rating' => 'required|integer|between:1,5',
+            ]);
+
+            $book = EditionBook::findOrFail($id);
+
+
+
+            $existingRating = BookRating::where('user_id', Auth::id())
+                ->where('book_id', $book->id)
+                ->first();
+
+            if ($existingRating) {
+                $existingRating->update(['rating' => $request->input('rating')]);
+            } else {
+                BookRating::create([
+                    'user_id' => Auth::id(),
+                    'book_id' => $book->id,
+                    'rating' => $request->input('rating'),
+                ]);
+            }
+
+            return redirect()->back()->with('success', '¡Libro valorado con éxito!');
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->back()->with('error', 'Ocurrió un error al valorar el libro.');
         }
     }
 }

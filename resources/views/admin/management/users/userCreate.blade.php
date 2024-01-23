@@ -53,7 +53,7 @@
             <div class="form-group admin-form mb-3">
                 <label for="email" class="col-form-label text-md-right">{{ __('Email') }}</label>
 
-                <input id="email" type="text" class="form-control @error('email') is-invalid @enderror"
+                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                     name="email" value="{{ old('email') }}" required autocomplete="email">
 
                 @error('email')

@@ -15,15 +15,17 @@ class BookRating extends Model
         'rating',
     ];
 
+
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function book()
+    public function editionBook()
     {
-        return $this->belongsTo(EditionBook::class);
+        return $this->belongsTo(EditionBook::class, 'book_id');
     }
+
 
     /**
      * Calcula la valoración media para el libro asociado.
