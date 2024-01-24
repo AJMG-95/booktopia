@@ -60,7 +60,7 @@
                             <a class="nav-link" href="{{ route('books.shop') }}">Tienda</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="{{-- {{ route('posts') }} --}}">Foro</a>
+                            <a class="nav-link" href="{{ route('user_posts.index') }}">Foro</a>
                         </li>
                     </ul>
                     <ul class="navbar-nav ms-auto mb-2 mb-lg-0 me-5">

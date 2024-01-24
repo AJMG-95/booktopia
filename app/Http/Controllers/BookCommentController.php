@@ -44,19 +44,33 @@ class BookCommentController extends Controller
     }
 
     /**
-     * Marcar un comentario como "like".
+     * Marcar un comentario como "like" a través de Ajax.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $commentId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function likeComment($commentId)
+    public function likeCommentAjax(Request $request, $commentId)
     {
         // Validar si el comentario existe
         $comment = BookComment::find($commentId);
 
         if (!$comment) {
-            return redirect()->back()->with('error', 'El comentario no existe.');
+            return response()->json(['error' => 'El comentario no existe.'], 404);
         }
+
+        $existingLike = $comment->likes()->where('user_id', Auth::id())->first();
+
+        if ($existingLike) {
+            // Si ya le dio "like", eliminar el registro existente
+            $existingLike->delete();
+
+            // Obtener el nuevo recuento de "Me gusta"
+            $newLikesCount = $comment->likes()->count();
+
+            return response()->json(['message' => 'Has retirado tu "Me gusta" al comentario.', 'likes' => $newLikesCount]);
+        }
+
 
         // Verificar si el usuario ya le dio "dislike" al comentario
         $existingDislike = $comment->dislikes()->where('user_id', Auth::id())->first();
@@ -64,39 +78,42 @@ class BookCommentController extends Controller
         if ($existingDislike) {
             // Si ya le dio "dislike", actualiza el registro existente a "like"
             $existingDislike->update(['dislikes' => false, 'likes' => true]);
-        } else {
-            // Verificar si el usuario ya le dio "like" al comentario
-            $existingLike = $comment->likes()->where('user_id', Auth::id())->first();
 
-            if ($existingLike) {
-                // Si ya le dio "like", eliminar el registro existente
-                $existingLike->delete();
-                return redirect()->back()->with('success', 'Has retirado tu "Me gusta" al comentario.');
-            }
+             // Obtener el nuevo recuento de "Me gusta"
+             $newLikesCount = $comment->likes()->count();
+             $newDislikesCount = $comment->dislikes()->count();
 
-            // Agregar "like" al comentario
-            $comment->likes()->create([
-                'user_id' => Auth::id(),
-                'likes' => true,
-            ]);
+            return response()->json(['message' => 'Comentario marcado como "Me gusta".', 'likes' => $newLikesCount, 'dislikes' => $newDislikesCount]);
         }
 
-        return redirect()->back()->with('success', 'Comentario marcado como "Me gusta".');
+
+
+        // Agregar "like" al comentario
+        $comment->likes()->create([
+            'user_id' => Auth::id(),
+            'likes' => true,
+        ]);
+
+        // Obtener el nuevo recuento de "Me gusta"
+        $newLikesCount = $comment->likes()->count();
+
+        return response()->json(['message' => 'Comentario marcado como "Me gusta".', 'likes' => $newLikesCount]);
     }
 
     /**
-     * Marcar un comentario como "dislike".
+     * Marcar un comentario como "dislike" a través de Ajax.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $commentId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function dislikeComment($commentId)
+    public function dislikeCommentAjax(Request $request, $commentId)
     {
         // Validar si el comentario existe
         $comment = BookComment::find($commentId);
 
         if (!$comment) {
-            return redirect()->back()->with('error', 'El comentario no existe.');
+            return response()->json(['error' => 'El comentario no existe.'], 404);
         }
 
         // Verificar si el usuario ya le dio "like" al comentario
@@ -105,39 +122,54 @@ class BookCommentController extends Controller
         if ($existingLike) {
             // Si ya le dio "like", actualiza el registro existente a "dislike"
             $existingLike->update(['likes' => false, 'dislikes' => true]);
-        } else {
-            // Verificar si el usuario ya le dio "dislike" al comentario
-            $existingDislike = $comment->dislikes()->where('user_id', Auth::id())->first();
 
-            if ($existingDislike) {
-                // Si ya le dio "dislike", eliminar el registro existente
-                $existingDislike->delete();
-                return redirect()->back()->with('success', 'Has retirado tu "No me gusta" al comentario.');
-            }
+            // Obtener el nuevo recuento de "No me gusta"
+            $newDislikesCount = $comment->dislikes()->count();
+            $newLikesCount = $comment->likes()->count();
 
-            // Agregar "dislike" al comentario
-            $comment->dislikes()->create([
-                'user_id' => Auth::id(),
-                'dislikes' => true,
-            ]);
+            return response()->json(['message' => 'Has cambiado tu "Me gusta" a "No me gusta".', 'dislikes' => $newDislikesCount, 'likes' => $newLikesCount]);
         }
 
-        return redirect()->back()->with('success', 'Comentario marcado como "No me gusta".');
+        // Verificar si el usuario ya le dio "dislike" al comentario
+        $existingDislike = $comment->dislikes()->where('user_id', Auth::id())->first();
+
+        if ($existingDislike) {
+            // Si ya le dio "dislike", eliminar el registro existente
+            $existingDislike->delete();
+
+            // Obtener el nuevo recuento de "No me gusta"
+            $newDislikesCount = $comment->dislikes()->count();
+
+            return response()->json(['message' => 'Has retirado tu "No me gusta" al comentario.', 'dislikes' => $newDislikesCount]);
+        }
+
+        // Agregar "dislike" al comentario
+        $comment->dislikes()->create([
+            'user_id' => Auth::id(),
+            'dislikes' => true,
+        ]);
+
+        // Obtener el nuevo recuento de "No me gusta"
+        $newDislikesCount = $comment->dislikes()->count();
+
+        return response()->json(['message' => 'Comentario marcado como "No me gusta".', 'dislikes' => $newDislikesCount]);
     }
 
+
     /**
-     * Reportar un comentario.
+     * Reportar un comentario a través de Ajax.
      *
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $commentId
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function reportComment($commentId)
+    public function reportCommentAjax(Request $request, $commentId)
     {
         // Validar si el comentario existe
         $comment = BookComment::find($commentId);
 
         if (!$comment) {
-            return redirect()->back()->with('error', 'El comentario no existe.');
+            return response()->json(['error' => 'El comentario no existe.'], 404);
         }
 
         // Verificar si el usuario ya reportó el comentario
@@ -146,7 +178,8 @@ class BookCommentController extends Controller
         if ($existingReport) {
             // Si ya reportó, eliminar el registro existente
             $existingReport->delete();
-            return redirect()->back()->with('success', 'Has retirado tu reporte al comentario.');
+            $newReportsCount = $comment->reports()->count();
+            return response()->json(['message' => 'Has retirado tu reporte al comentario.', 'reports' => $newReportsCount]);
         }
 
         // Agregar report al comentario
@@ -155,7 +188,10 @@ class BookCommentController extends Controller
             'reports' => true,
         ]);
 
-        return redirect()->back()->with('success', 'Comentario reportado.');
+        // Obtener el nuevo recuento de "Reportes"
+        $newReportsCount = $comment->reports()->count();
+
+        return response()->json(['message' => 'Comentario reportado.', 'reports' => $newReportsCount]);
     }
 
     /**

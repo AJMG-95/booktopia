@@ -22,36 +22,65 @@
                     <div class="interaction mt-3 d-flex justify-content-between align-items-center">
                         @auth
                             @if (Auth::check() && (Auth::id() == $comment->user_id || Auth::user()->is_admin))
-                                <form method="POST" action="{{ route('comments.delete', ['commentId' => $comment->id]) }}">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Eliminar">
-                                        <i class="bi bi-trash"></i> Eliminar
-                                    </button>
-                                </form>
+                                <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
+                                    data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $comment->id }}">
+                                    <i class="bi bi-trash"></i> Eliminar
+                                </button>
+
+                                <!-- Modal de Confirmación -->
+                                <div class="modal fade" id="confirmDeleteModal{{ $comment->id }}" tabindex="-1"
+                                    aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar eliminación
+                                                </h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <p>¿Estás seguro de que deseas eliminar este comentario?</p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Cancelar</button>
+                                                <form method="POST"
+                                                    action="{{ route('comments.delete', ['commentId' => $comment->id]) }}">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             @endif
                             <div class="d-flex align-items-center">
-                                <form method="POST" action="{{ route('comments.like', ['commentId' => $comment->id]) }}">
+                                <form id="likeForm{{ $comment->id }}" method="POST"
+                                    action="{{ route('comments.like.ajax', ['commentId' => $comment->id]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Me gusta">
+                                    <button type="button" class="btn btn-sm btn-outline-success like-btn" title="Me gusta"
+                                        onclick="likeComment({{ $comment->id }})">
                                         <i class="bi bi-hand-thumbs-up"></i> Me gusta
                                         <span class="badge bg-success"
                                             id="likes-count-{{ $comment->id }}">{{ $comment->getLikes() }}</span>
                                     </button>
                                 </form>
-                                <form method="POST"
-                                    action="{{ route('comments.dislike', ['commentId' => $comment->id]) }}">
+                                <form id="dislikeForm{{ $comment->id }}" method="POST"
+                                    action="{{ route('comments.dislike.ajax', ['commentId' => $comment->id]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="No me gusta">
+                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn"
+                                        title="No me gusta" onclick="dislikeComment({{ $comment->id }})">
                                         <i class="bi bi-hand-thumbs-down"></i> No me gusta
                                         <span class="badge bg-danger"
                                             id="dislikes-count-{{ $comment->id }}">{{ $comment->getDislikes() }}</span>
                                     </button>
                                 </form>
-                                <form method="POST"
-                                    action="{{ route('comments.report', ['commentId' => $comment->id]) }}">
+                                <form id="reportForm{{ $comment->id }}" method="POST"
+                                    action="{{ route('comments.report.ajax', ['commentId' => $comment->id]) }}">
                                     @csrf
-                                    <button type="submit" class="btn btn-sm btn-outline-info ms-2" title="Reportar">
+                                    <button type="button" class="btn btn-sm btn-outline-info ms-2" title="Reportar"
+                                        onclick="reportComment({{ $comment->id }})">
                                         Reportar
                                         <span class="badge bg-info"
                                             id="reports-count-{{ $comment->id }}">{{ $comment->getReports() }}</span>
@@ -62,10 +91,10 @@
 
                         @guest
                             <div class="d-flex align-items-center">
-                                <span class="badge bg-success me-2" title="Likes">{{ $comment->likes }} Likes</span>
-                                <span class="badge bg-danger me-2" title="Dislikes">{{ $comment->dislikes }}
+                                <span class="badge bg-success me-2" title="Likes">{{ $comment->getLikes() }} Likes</span>
+                                <span class="badge bg-danger me-2" title="Dislikes">{{ $comment->getDislikes() }}
                                     Dislikes</span>
-                                <span class="badge bg-info" title="Reports">{{ $comment->reports }} Reports</span>
+                                <span class="badge bg-info" title="Reports">{{ $comment->getReports() }} Reports</span>
                             </div>
                         @endguest
                     </div>
@@ -126,63 +155,74 @@
     </div>
 </div>
 
-
-
-
-{{-- <!-- Agrega esto en el encabezado de tu archivo Blade -->
-<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
-    function deleteComment(commentId) {
-        if (confirm('¿Estás seguro de que quieres eliminar este comentario?')) {
-            // Realizar la llamada AJAX para eliminar el comentario
-            axios.delete(`/comments/${commentId}`)
-                .then(response => {
-                    // Después de eliminar, puedes recargar la página o actualizar los comentarios con AJAX
-                })
-                .catch(error => {
-                    console.error('Error al eliminar el comentario', error);
-                });
-        }
+    function likeComment(commentId) {
+        var form = $('#likeForm' + commentId);
+
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                // Actualizar el recuento de "Me gusta" en el DOM
+                $('#dislikes-count-' + commentId).text(response.dislikes);
+                $('#likes-count-' + commentId).text(response.likes);
+                // Actualizar el recuento de "No me gusta" en el DOM (puede que sea necesario si cambió de dislike a like)
+            },
+            error: function(error) {
+                var errorMessage = (error.responseJSON && error.responseJSON.error) ? error.responseJSON
+                    .error : 'Error desconocido';
+                alert('Error: ' + errorMessage);
+            }
+        });
     }
 
-    axios.defaults.headers.common['X-CSRF-TOKEN'] = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+    function dislikeComment(commentId) {
+        var form = $('#dislikeForm' + commentId);
 
-function likeComment(commentId) {
-    axios.post(`/comments/${commentId}/like`)
-        .then(response => {
-            // Actualizar la cantidad de likes y refrescar la interfaz
-            const likesCountElement = document.getElementById(`likes-count-${commentId}`);
-            likesCountElement.innerText = response.data.likes;
-        })
-        .catch(error => {
-            console.error('Error al dar like al comentario', error);
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+                // Actualizar el recuento de "No me gusta" en el DOM
+                $('#dislikes-count-' + commentId).text(response.dislikes);
+                // Actualizar el recuento de "Me gusta" en el DOM (puede que sea necesario si cambió de like a dislike)
+                $('#likes-count-' + commentId).text(response.likes);
+            },
+            error: function(error) {
+                var errorMessage = (error.responseJSON && error.responseJSON.error) ? error.responseJSON
+                    .error : 'Error desconocido';
+                alert('Error: ' + errorMessage);
+            }
         });
-}
+    }
 
-function dislikeComment(commentId) {
-    axios.post(`/comments/${commentId}/dislike`)
-        .then(response => {
-            // Actualizar la cantidad de dislikes y refrescar la interfaz
-            const dislikesCountElement = document.getElementById(`dislikes-count-${commentId}`);
-            dislikesCountElement.innerText = response.data.dislikes;
-        })
-        .catch(error => {
-            console.error('Error al dar dislike al comentario', error);
-        });
-}
 
-function reportComment(commentId) {
-    axios.post(`/comments/${commentId}/report`)
-        .then(response => {
-            // Actualizar la cantidad de reports y refrescar la interfaz
-            const reportsCountElement = document.getElementById(`reports-count-${commentId}`);
-            reportsCountElement.innerText = response.data.reports;
-        })
-        .catch(error => {
-            console.error('Error al reportar el comentario', error);
+    function reportComment(commentId) {
+        var form = $('#reportForm' + commentId);
+
+        $.ajax({
+            type: form.attr('method'),
+            url: form.attr('action'),
+            data: form.serialize(),
+            dataType: 'json',
+            success: function(response) {
+
+
+                // Actualizar el recuento de "Reportes" en el DOM
+                $('#reports-count-' + commentId).text(response.reports);
+
+            },
+            error: function(error) {
+                var errorMessage = (error.responseJSON && error.responseJSON.error) ? error.responseJSON
+                    .error : 'Error desconocido';
+                alert('Error: ' + errorMessage);
+            }
         });
-}
+    }
 </script>
- --}}

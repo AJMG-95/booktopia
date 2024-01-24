@@ -16,6 +16,7 @@ use App\Http\Controllers\UserSubscriberController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookRatingController;
 use App\Http\Controllers\BookCommentController;
+use App\Http\Controllers\UserPostController;
 
 
 //!Rutas del grupo de middleware que requieren autenticación
@@ -149,11 +150,24 @@ Route::middleware(['auth'])->group(function () {
     });
 
 
-    Route::post('/comments/{commentId}/like', [BookCommentController::class, 'likeComment'])->name('comments.like');
-    Route::post('/comments/{commentId}/dislike', [BookCommentController::class, 'dislikeComment'])->name('comments.dislike');
-    Route::post('/comments/{commentId}/report', [BookCommentController::class, 'reportComment'])->name('comments.report');
+    Route::post('/comments/like/{commentId}', [BookCommentController::class, 'likeCommentAjax'])->name('comments.like.ajax');
+    Route::post('/comments/dislike/{commentId}', [BookCommentController::class, 'dislikeCommentAjax'])->name('comments.dislike.ajax');
+    Route::post('/comments/report/{commentId}', [BookCommentController::class, 'reportCommentAjax'])->name('comments.report.ajax');
     Route::delete('/comments/{commentId}', [BookCommentController::class, 'deleteComment'])->name('comments.delete');
     Route::post('/comment/add/{id}', [BookCommentController::class, 'addComment'])->name('comments.add');
+
+
+
+
+    Route::get('/user_posts', [UserPostController::class, 'index'])->name('user_posts.index');
+    Route::post('/user_posts/create', [UserPostController::class, 'addPost'])->name('user_posts.add');
+    Route::post('/post/like/{postId}', [UserPostController::class, 'likePostAjax'])->name('post.like.ajax');
+    Route::post('/post/dislike/{postId}', [UserPostController::class, 'dislikePostAjax'])->name('post.dislike.ajax');
+    Route::post('/post/report/{postId}', [UserPostController::class, 'reportPostAjax'])->name('post.report.ajax');
+    Route::delete('/user_posts/{postId}', [UserPostController::class, 'deletePost'])->name('user_post.delete');
+
+
+
 
     Route::prefix('/shop')->name('shop.')->group(function () {
         Route::prefix('/payment')->name('payment.')->group(function () {

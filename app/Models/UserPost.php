@@ -31,13 +31,29 @@ class UserPost extends Model
         return $this->hasMany(UserPostLdr::class, 'post_id')->where('likes', true);
     }
 
+    public function getLikes()
+    {
+        return $this->likes()->count();
+    }
+
+
     public function dislikes()
     {
         return $this->hasMany(UserPostLdr::class, 'post_id')->where('dislikes', true);
     }
 
+    public function getDislikes()
+    {
+        return $this->dislikes()->count();
+    }
+
     public function reports()
     {
         return $this->hasMany(UserPostLdr::class, 'post_id')->where('reports', true);
+    }
+
+    public function getReports()
+    {
+        return $this->reports()->count();
     }
 }
