@@ -32,7 +32,7 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">(min.) €</span>
                         <input type="text" name="min_price" class="form-control" step="0.01"
-                            placeholder="Precio mínimo" min="0" value="{{ old('min_price', request('min_price')) }}" />
+                            placeholder="Precio mínimo" min="0" max="9999" value="{{ old('min_price', request('min_price')) }}" />
                     </div>
                     <div class="mb-3">
                         <label for="language" class="form-label">Idioma</label>
@@ -143,7 +143,7 @@
                                     </p>
                                     <p class="card-text">
                                         <strong>Precio:</strong>
-                                        {{ $book->price }} €
+                                        {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2) : number_format($book->price, 2) }} €
                                     </p>
 
                                 </div>

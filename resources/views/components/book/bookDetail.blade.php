@@ -8,7 +8,11 @@
         <div class="text-center border border-dark bg-white p-4">
             <div class="mb-4">
                 <h1 class="display-3 fw-bold text-primary">{{ $editionBook->title }}</h1>
-                <h3 class="text-muted">{{ $editionBook->price > 0 ? $editionBook->price : "0,00" }} €</h3>
+                <h3 class="text-muted">
+                    {{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2) : ($editionBook->price > 0 ? number_format($editionBook->price, 2) : '0,00') }}
+                    €
+                </h3>
+
             </div>
             <div class="border-bottom border-primary mb-4"></div>
             <p class="lead text-dark">Descubre una nueva aventura literaria con {{ $editionBook->title }}.</p>
@@ -82,12 +86,13 @@
                                         <div class="col-md-6">
                                             <form action="{{ route('shop.payment.stripe') }}" method="POST">
                                                 @csrf
-                                                <input type="hidden" name="price" value="{{ $editionBook->price }}">
+                                                <input type="hidden" name="price" value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2) : number_format($editionBook->price, 2) }}">
                                                 <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                                 <input type="hidden" name="quantity" value="1">
                                                 <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
                                                 @if (auth()->check())
-                                                    <input type="hidden" name="customer_name" value="{{ auth()->user()->name }}">
+                                                    <input type="hidden" name="customer_name"
+                                                        value="{{ auth()->user()->name }}">
                                                 @endif
                                                 <button type="submit" class="btn btn-primary btn-lg">Comprar</button>
                                             </form>
@@ -96,11 +101,11 @@
                                         <div class="col-md-6">
                                             <div class="d-flex align-items-center justify-content-center">
                                                 <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
-                                                        class="btn btn-primary btn-lg">
+                                                    class="btn btn-primary btn-lg">
                                                     Añadir a favoritos
                                                 </button>
                                                 <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
-                                                        class="btn btn-danger btn-lg">
+                                                    class="btn btn-danger btn-lg">
                                                     Quitar de favoritos
                                                 </button>
                                             </div>
@@ -122,7 +127,7 @@
                                     <div class="col-md-6">
                                         <form action="{{ route('shop.payment.stripe') }}" method="POST">
                                             @csrf
-                                            <input type="hidden" name="price" value="{{ $editionBook->price }}">
+                                            <input type="hidden" name="price" value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2) : number_format($editionBook->price, 2) }}">
                                             <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                             <input type="hidden" name="quantity" value="1">
                                             <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
@@ -136,11 +141,11 @@
                                     <div class="col-md-6">
                                         <div class="d-flex align-items-center justify-content-center">
                                             <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
-                                                    class="btn btn-primary btn-lg">
+                                                class="btn btn-primary btn-lg">
                                                 Añadir a favoritos
                                             </button>
                                             <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
-                                                    class="btn btn-danger btn-lg">
+                                                class="btn btn-danger btn-lg">
                                                 Quitar de favoritos
                                             </button>
                                         </div>

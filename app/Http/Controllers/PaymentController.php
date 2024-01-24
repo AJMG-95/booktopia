@@ -54,7 +54,7 @@ class PaymentController extends Controller
             $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
             $response = $stripe->checkout->sessions->retrieve($request->session_id);
             /* dd($response); */
-
+            $response->customer_details->name = $response->customer_details->name ? $response->customer_details->name : Auth::user()->name;
             $payment = new Payment();
             $payment->payment_id = $response->id;
             $payment->edition_name = session()->get('product_name');
