@@ -6,6 +6,7 @@ use App\Models\Favorite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\EditionBook;
 
 class FavoriteController extends Controller
 {
@@ -16,23 +17,57 @@ class FavoriteController extends Controller
         return view('favorites.index', compact('favorites'));
     }
 
-    public function addToFavorites(Request $request, $editionBookId)
+       /**
+     * Añadir un libro a la lista de favoritos.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function addFavorite(Request $request, $id)
     {
-        $user = User::find(auth()->user()->id);
+        // Encuentra el libro por su ID
+        $editionBook = EditionBook::findOrFail($id);
 
-        // Verifica si ya existe el favorito para evitar duplicados
-        if (!$user->isBookInFavorites($editionBookId)) {
-            $user->favorites()->attach($editionBookId);
+        // Verifica si el libro ya está en favoritos para evitar duplicados
+        if (!$editionBook->isInFavorites()) {
+            // Crea una nueva fila en la tabla 'favorites' asociando el libro con el usuario autenticado
+            $favorite = new Favorite([
+                'user_id' => auth()->id(),
+            ]);
+
+            // Asocia el libro con el favorito
+            $editionBook->favorites()->save($favorite);
         }
 
-        return response()->json(['success' => true]);
+        // Redirecciona a la página anterior o a donde desees
+        return back();
     }
 
-    public function removeFromFavorites(Request $request, $editionBookId)
-    {
-        $user = User::find(auth()->user()->id);
-        $user->favorites()->detach($editionBookId);
 
-        return response()->json(['success' => true]);
+/**
+     * Quitar un libro de la lista de favoritos.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function removeFavorite($id)
+    {
+        // Encuentra el libro por su ID
+        $editionBook = EditionBook::findOrFail($id);
+
+        // Obtén el favorito asociado al usuario autenticado y al libro
+        $favorite = $editionBook->favorites()
+            ->where('user_id', auth()->id())
+            ->first();
+
+        // Verifica si el libro está en favoritos antes de intentar eliminarlo
+        if ($favorite) {
+            // Elimina la fila de la tabla 'favorites'
+            $favorite->delete();
+        }
+
+        // Redirecciona a la página anterior o a donde desees
+        return back();
     }
 }

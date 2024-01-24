@@ -28,11 +28,13 @@
                                     <i class="bi bi-mailbox2-flag"></i> <span>Mis Notificaciones para cuando hay</span>
                                 </a> --}}
 
-                                <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
-                                    data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
-                                    <i class="bi bi-feather"></i></i> <span>Registrarse como Autor</span>
-                                </button>
-                                {{-- Modal: --}}
+                                @if (!Auth::user()->isAuthor)
+                                    <button type="button" class="list-group-item border-end-0 d-inline-block text-truncate"
+                                        data-bs-toggle="modal" data-bs-target="#authorRegistrationModal">
+                                        <i class="bi bi-feather"></i></i> <span>Registrarse como Autor</span>
+                                    </button>
+                                @endif
+                                {{-- Modal para registrarse como autor --}}
                                 <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
                                     aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -186,13 +188,13 @@
                                     <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
                                         style="max-height: 15vh; resize: none;">{{ Auth::user()->biography ?? '' }}</textarea>
                                     <button type="submit" class="btn btn-primary"
-                                        style="position: absolute; top: 0; right: 0; margin: 5px;"><i
-                                            class="bi bi-save"></i></button>
+                                        style="position: absolute; top: 0; right: 0; margin: 5px;"
+                                        data-bs-toggle="tooltip" data-bs-placement="left" title="Guardar">
+                                        <i class="bi bi-save"></i>
+                                    </button>
                                 </div>
                             </form>
                         </div>
-
-
 
                     </div>
 
@@ -291,8 +293,10 @@
                                         <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
                                             style="max-height: 15vh; resize: none;">{{ $author->biography ?? '' }}</textarea>
                                         <button type="submit" class="btn btn-primary"
-                                            style="position: absolute; top: 0; right: 0; margin: 5px;"><i
-                                                class="bi bi-save"></i></button>
+                                            style="position: absolute; top: 0; right: 0; margin: 5px;"
+                                            data-bs-toggle="tooltip" data-bs-placement="left" title="Guardar">
+                                            <i class="bi bi-save"></i>
+                                        </button>
                                     </div>
                                 </form>
                             </div>
@@ -307,9 +311,6 @@
                             </button>
                             @include('partials/dropzone_books')
                         </div>
-
-
-
                     </section>
                 @endif
 

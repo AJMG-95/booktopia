@@ -24,10 +24,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 @guest
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item {{ request()->routeIs('welcome') ? 'border border-black' : '' }}">
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ request()->routeIs('books.shop') ? 'border border-black rounded bg-blue ' : '' }}">
                             <a class="nav-link" href="{{ route('books.shop') }}">Tienda</a>
                         </li>
                     </ul>
@@ -53,13 +53,13 @@
                     </ul>
                 @else
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
+                        <li class="nav-item {{ request()->routeIs('welcome') ? 'border border-black rounded bg-blue' : '' }}">
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ request()->routeIs('books.shop') ? 'border border-black rounded bg-blue ' : '' }}">
                             <a class="nav-link" href="{{ route('books.shop') }}">Tienda</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item {{ request()->routeIs('user_posts.index') ? 'border border-black rounded bg-blue   ' : '' }}">
                             <a class="nav-link" href="{{ route('user_posts.index') }}">Foro</a>
                         </li>
                     </ul>

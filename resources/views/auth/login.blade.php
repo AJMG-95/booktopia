@@ -73,27 +73,28 @@
                                     </div>
                                 </div>
 
-                                <div class="row mb-0 d-flex justify-content-center align-items-center text-center">
-                                    {{--  <div class="col-md-8 offset-md-4">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Login') }}
-                                        </button>
-
-                                        @if (Route::has('password.request'))
-                                            <a class="btn btn-link" href="{{ route('password.request') }}">
-                                                {{ __('Forgot Your Password?') }}
+                                <div class=" mb-0 text-center">
+                                    <div class="d-flex justify-content-center align-items-center text-center">
+                                        <div class="me-1 mb-2 ">
+                                            <button type="submit" class="btn btn-primary btn-block" style="width: 5.3vw">
+                                                {{ __('Login') }}
+                                            </button>
+                                        </div>
+                                        <div class="ms-1 mb-2 ">
+                                            <a class="btn btn-danger btn-block" href="{{ route('welcome') }}" style="width: 5.3vw">
+                                                {{ __('Cancelar') }}
                                             </a>
-                                        @endif
-                                    </div> --}}
-                                    <div class="col-md-6 mt-2">
-                                        <a class="btn btn-secondary" href="{{ route('register') }}">Registrarse</a>
+                                        </div>
                                     </div>
-                                    <div class="col-md-6 mt-2">
-                                        <button type="submit" class="btn btn-primary">
-                                            {{ __('Login') }}
-                                        </button>
+                                    <div class=" mt-2">
+                                        <a class="btn btn-secondary btn-block" href="{{ route('register') }}">
+                                            {{ __('Registrarse') }}
+                                        </a>
                                     </div>
                                 </div>
+
+
+
                             </form>
                         </div>
                     </div>

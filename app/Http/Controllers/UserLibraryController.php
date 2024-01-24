@@ -91,6 +91,7 @@ class UserLibraryController extends Controller
 
             $books = $this->paginateBooks($query);
 
+            $userRatings = $this->getUserRatings($books);
             $authors = Author::all();
             $genres = Genre::all();
             $languages = Language::all();
@@ -99,7 +100,7 @@ class UserLibraryController extends Controller
             $showForAdults = $userAge >= 18;
 
 
-            return view('layouts/user/editions/buyedEditions', compact('books', 'authors', 'genres', 'languages', 'request', 'showForAdults'));
+            return view('layouts/user/editions/buyedEditions', compact('books', 'authors', 'genres', 'languages', 'request', 'showForAdults', 'userRatings'));
         } catch (ValidationException $validationException) {
             return redirect()->back()->withErrors($validationException->errors());
         } catch (QueryException $queryException) {

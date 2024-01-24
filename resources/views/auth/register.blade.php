@@ -125,11 +125,24 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Register') }}
-                                </button>
+                        <div class=" mb-0 text-center">
+                            <div class="d-flex justify-content-center align-items-center text-center">
+                                <div class="me-1 mb-2 ">
+                                    <button type="submit" class="btn btn-primary btn-block" style="width: 6.2vw">
+                                        {{ __('Registrarse') }}
+                                    </button>
+                                </div>
+                                <div class="ms-1 mb-2 ">
+                                    <a class="btn btn-danger btn-block" href="{{ route('welcome') }}" style="width: 6.2vw">
+                                        {{ __('Cancelar') }}
+                                    </a>
+                                </div>
+                            </div>
+                            <div class=" mt-2">
+                                <a class="btn btn-secondary btn-block" href="{{ route('login') }}" style="width: 5.3vw">
+                                    {{ __('Login') }}
+                                </a>
+
                             </div>
                         </div>
                     </form>

@@ -3,6 +3,8 @@
 @section('content')
     <div class="container-fluid p-4">
 
+        <h1 class="mb-3">Mi Librería</h1>
+
         <aside class="bg-white ms-4 rounded-2" style="max-width: 600px">
             <form action="{{ route('user.library.search') }}" method="GET" class="w-auto p-2">
                 <div class="d-flex justify-content-around align-items-center">

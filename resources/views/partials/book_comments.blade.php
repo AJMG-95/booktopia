@@ -13,7 +13,7 @@
             @foreach ($comments as $comment)
                 <div class="comment mb-4 p-3 border border-dark rounded bg-white">
                     <div class="user-info mb-2 d-flex justify-content-between">
-                        <div class="fw-bold text-primary">{{ $comment->user->nickname }}</div>
+                        <div class="fw-bold text-primary">{{ $comment->user->nickname ? $comment->user->nickname : "Usuario Eliminado"}}</div>
                         <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="comment-body">

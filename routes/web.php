@@ -180,8 +180,8 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
-    Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addToFavorites'])->name('favorites.add');
-    Route::post('/favorites/remove/{editionBookId}', [FavoriteController::class, 'removeFromFavorites'])->name('favorites.remove');
+    Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addFavorite'])->name('favorites.add');
+    Route::post('/favorites/remove/{editionBookId}', [FavoriteController::class, 'removeFavorite'])->name('favorites.remove');
 
 
     Route::get('/subscribe', [UserSubscriberController::class, 'subscribeView'])->name('subscribe.view');

@@ -30,7 +30,7 @@
                     </div>
                 </div>
             @else
-                @if (auth()->user()->subscribed)
+                @if (!Auth::user()->isSubscriber())
                     <div class="col-12 text-center">
                         <span class="me-3">Suscribete Ahora <b><a href="{{ route('subscribe.view') }}"
                                     class="">Suscribirse</a></b></span>

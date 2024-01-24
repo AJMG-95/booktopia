@@ -46,7 +46,7 @@
                     <div class="mb-3">
                         <label class="form-label">Autor</label>
                         <div style="max-height: 100px; overflow-y: auto;" class="bg-white rounded ps-1">
-                            <input type="text" class="form-control" name=""
+                            <input type="text" class="form-control" name="" readonly
                                 value="{{ $author->name . ', ' . $author->surnames }}" id="">
                         </div>
                     </div>

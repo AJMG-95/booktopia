@@ -76,10 +76,7 @@ class EditionBook extends Model
     {
         return $this->hasMany(Favorite::class, 'book_id');
     }
-    /*     public function userLibraries()
-    {
-        return $this->hasMany(UserLibrary::class);
-    } */
+
 
     public function wishes()
     {
@@ -96,9 +93,16 @@ class EditionBook extends Model
         return $this->hasMany(Payment::class, 'edition_id');
     }
 
-
-    public function isBookInFavorites($id)
+    /**
+     * Verifica si el libro está en favoritos para el usuario autenticado.
+     *
+     * @return bool
+     */
+    public function isInFavorites(): bool
     {
-        return $this->favorites()->where('book_id', $id)->exists();
+        // Verifica si existe una fila en la tabla 'favorites' con el user_id y book_id correspondientes
+        return $this->favorites()
+            ->where('user_id', Auth::id())
+            ->exists();
     }
 }

@@ -143,7 +143,13 @@
                                     </p>
                                     <p class="card-text">
                                         <strong>Precio:</strong>
+                                        @auth
                                         {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2) : number_format($book->price, 2) }} €
+                                        @endauth
+                                        @guest()
+                                        {{ number_format($book->price, 2) }} €
+
+                                        @endguest
                                     </p>
 
                                 </div>
