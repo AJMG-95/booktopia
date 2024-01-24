@@ -12,7 +12,9 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm app-navbar">
         <div class="container-fluid ms-5 p-2">
             <a class="navbar-brand" href="{{ route('welcome') }}">
-                {{ config('app.name', 'Laravel') }}
+                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo"
+                style="max-height: 6vh">
+                {{ config('app.name', 'Booktopia') }}
             </a>
             <button class="navbar-toggler me-5" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"

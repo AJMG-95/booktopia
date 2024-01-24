@@ -36,7 +36,7 @@
                                     <button type="submit" class="btn btn-sm btn-outline-success" title="Me gusta">
                                         <i class="bi bi-hand-thumbs-up"></i> Me gusta
                                         <span class="badge bg-success"
-                                            id="likes-count-{{ $comment->id }}">{{ $comment->likes }}</span>
+                                            id="likes-count-{{ $comment->id }}">{{ $comment->getLikes() }}</span>
                                     </button>
                                 </form>
                                 <form method="POST"
@@ -45,7 +45,7 @@
                                     <button type="submit" class="btn btn-sm btn-outline-danger ms-2" title="No me gusta">
                                         <i class="bi bi-hand-thumbs-down"></i> No me gusta
                                         <span class="badge bg-danger"
-                                            id="dislikes-count-{{ $comment->id }}">{{ $comment->dislikes }}</span>
+                                            id="dislikes-count-{{ $comment->id }}">{{ $comment->getDislikes() }}</span>
                                     </button>
                                 </form>
                                 <form method="POST"
@@ -54,7 +54,7 @@
                                     <button type="submit" class="btn btn-sm btn-outline-info ms-2" title="Reportar">
                                         Reportar
                                         <span class="badge bg-info"
-                                            id="reports-count-{{ $comment->id }}">{{ $comment->reports }}</span>
+                                            id="reports-count-{{ $comment->id }}">{{ $comment->getReports() }}</span>
                                     </button>
                                 </form>
                             </div>
@@ -72,12 +72,14 @@
                 </div>
             @endforeach
         </div>
-        <div class=" text-center mb-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#commentModal{{ $editionBook->id }}">
-                <i class="bi bi-chat-square-text"></i> Comentar
-            </button>
-        </div>
+        @auth
+            <div class=" text-center mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#commentModal{{ $editionBook->id }}">
+                    <i class="bi bi-chat-square-text"></i> Comentar
+                </button>
+            </div>
+        @endauth
     </div>
 @else
     <!-- No hay comentarios -->
@@ -86,12 +88,14 @@
         <div class="comments-section w-100 mt-5 border border-dark rounded p-4 bg-light mb-5">
             <p class="mt-3 text-center">No hay comentarios para este libro.</p>
         </div>
-        <div class=" text-center mb-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                data-bs-target="#commentModal{{ $editionBook->id }}">
-                <i class="bi bi-chat-square-text"></i> Comentar
-            </button>
-        </div>
+        @auth
+            <div class=" text-center mb-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                    data-bs-target="#commentModal{{ $editionBook->id }}">
+                    <i class="bi bi-chat-square-text"></i> Comentar
+                </button>
+            </div>
+        @endauth
     </div>
 @endif
 <!-- Botón para abrir el modal de comentarios siempre visible -->

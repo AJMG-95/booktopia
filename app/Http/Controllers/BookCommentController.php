@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\BookComment;
+use App\Models\CommentLdr;
 use Illuminate\Http\Request;
 use App\Models\EditionBook;
 use Illuminate\Support\Facades\Auth;
@@ -43,71 +44,149 @@ class BookCommentController extends Controller
     }
 
     /**
-     * Dar like a un comentario.
+     * Marcar un comentario como "like".
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $commentId
      * @return \Illuminate\Http\Response
      */
-    public function likeComment (Request $request, $commentId)
+    public function likeComment($commentId)
     {
-        $comment = BookComment::findOrFail($commentId);
-        $comment->increment('likes');
+        // Validar si el comentario existe
+        $comment = BookComment::find($commentId);
 
-        return redirect()->back();
+        if (!$comment) {
+            return redirect()->back()->with('error', 'El comentario no existe.');
+        }
+
+        // Verificar si el usuario ya le dio "dislike" al comentario
+        $existingDislike = $comment->dislikes()->where('user_id', Auth::id())->first();
+
+        if ($existingDislike) {
+            // Si ya le dio "dislike", actualiza el registro existente a "like"
+            $existingDislike->update(['dislikes' => false, 'likes' => true]);
+        } else {
+            // Verificar si el usuario ya le dio "like" al comentario
+            $existingLike = $comment->likes()->where('user_id', Auth::id())->first();
+
+            if ($existingLike) {
+                // Si ya le dio "like", eliminar el registro existente
+                $existingLike->delete();
+                return redirect()->back()->with('success', 'Has retirado tu "Me gusta" al comentario.');
+            }
+
+            // Agregar "like" al comentario
+            $comment->likes()->create([
+                'user_id' => Auth::id(),
+                'likes' => true,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Comentario marcado como "Me gusta".');
     }
 
     /**
-     * Dar dislike a un comentario.
+     * Marcar un comentario como "dislike".
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $commentId
      * @return \Illuminate\Http\Response
      */
-    public function dislikeComment (Request $request, $commentId)
+    public function dislikeComment($commentId)
     {
-        $comment = BookComment::findOrFail($commentId);
-        $comment->increment('dislikes');
+        // Validar si el comentario existe
+        $comment = BookComment::find($commentId);
 
-        return redirect()->back();
+        if (!$comment) {
+            return redirect()->back()->with('error', 'El comentario no existe.');
+        }
+
+        // Verificar si el usuario ya le dio "like" al comentario
+        $existingLike = $comment->likes()->where('user_id', Auth::id())->first();
+
+        if ($existingLike) {
+            // Si ya le dio "like", actualiza el registro existente a "dislike"
+            $existingLike->update(['likes' => false, 'dislikes' => true]);
+        } else {
+            // Verificar si el usuario ya le dio "dislike" al comentario
+            $existingDislike = $comment->dislikes()->where('user_id', Auth::id())->first();
+
+            if ($existingDislike) {
+                // Si ya le dio "dislike", eliminar el registro existente
+                $existingDislike->delete();
+                return redirect()->back()->with('success', 'Has retirado tu "No me gusta" al comentario.');
+            }
+
+            // Agregar "dislike" al comentario
+            $comment->dislikes()->create([
+                'user_id' => Auth::id(),
+                'dislikes' => true,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Comentario marcado como "No me gusta".');
     }
 
     /**
      * Reportar un comentario.
      *
-     * @param  \Illuminate\Http\Request  $request
      * @param  int  $commentId
      * @return \Illuminate\Http\Response
      */
-    public function reportComment (Request $request, $commentId)
+    public function reportComment($commentId)
     {
-        $comment = BookComment::findOrFail($commentId);
-        $comment->increment('reports');
+        // Validar si el comentario existe
+        $comment = BookComment::find($commentId);
 
-        return redirect()->back();
+        if (!$comment) {
+            return redirect()->back()->with('error', 'El comentario no existe.');
+        }
+
+        // Verificar si el usuario ya reportó el comentario
+        $existingReport = $comment->reports()->where('user_id', Auth::id())->first();
+
+        if ($existingReport) {
+            // Si ya reportó, eliminar el registro existente
+            $existingReport->delete();
+            return redirect()->back()->with('success', 'Has retirado tu reporte al comentario.');
+        }
+
+        // Agregar report al comentario
+        $comment->reports()->create([
+            'user_id' => Auth::id(),
+            'reports' => true,
+        ]);
+
+        return redirect()->back()->with('success', 'Comentario reportado.');
     }
 
     /**
-     * Elimina un comentario.
+     * Eliminar un comentario y sus referencias.
      *
      * @param  int  $commentId
      * @return \Illuminate\Http\Response
      */
     public function deleteComment($commentId)
     {
-        try {
-            $comment = BookComment::findOrFail($commentId);
+        // Buscar el comentario por ID
+        $comment = BookComment::find($commentId);
 
-            // Verifica si el usuario tiene permisos para eliminar el comentario
-            if (Auth::check() && (Auth::id() == $comment->user_id || Auth::user()->is_admin)) {
-                $comment->delete();
-
-                return redirect()->back()->with('success', '¡Comentario eliminado con éxito!');
-            }
-
-            return redirect()->back()->with('error', 'No tienes permisos para eliminar este comentario.');
-        } catch (\Exception $e) {
-            return redirect()->back()->with('error', 'Ocurrió un error al eliminar el comentario. Detalles: ' . $e->getMessage());
+        // Verificar si el comentario existe
+        if (!$comment) {
+            return redirect()->back()->with('error', 'El comentario no existe.');
         }
+
+        // Verificar si el usuario tiene permisos para eliminar el comentario
+        if ($comment->user_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'No tienes permisos para eliminar este comentario.');
+        }
+
+        // Eliminar referencias desde comment_ldrs
+        $comment->likes()->delete();
+        $comment->dislikes()->delete();
+        $comment->reports()->delete();
+
+        // Eliminar el comentario
+        $comment->delete();
+
+        return redirect()->back()->with('success', 'Comentario y referencias eliminados correctamente.');
     }
 }

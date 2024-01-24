@@ -15,65 +15,29 @@ class UserPost extends Model
         'user_id',
     ];
 
-    protected $attributes = [
-        'likes' => 0,
-        'dislikes' => 0,
-        'reports' => 0,
-    ];
-
-    /**
-     * Obtener el usuario que creó la publicación.
-     */
+    // Relaciones
     public function user()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
-    /**
-     * Obtener los usuarios que dieron like a la publicación.
-     */
-    public function likedBy()
+    public function postLdr()
     {
-        return $this->belongsToMany(User::class, 'post_likes', 'post_id', 'user_id');
+        return $this->hasOne(UserPostLdr::class, 'post_id');
     }
 
-    /**
-     * Obtener los usuarios que dieron dislike a la publicación.
-     */
-    public function dislikedBy()
+    public function likes()
     {
-        return $this->belongsToMany(User::class, 'post_dislikes', 'post_id', 'user_id');
+        return $this->hasMany(UserPostLdr::class, 'post_id')->where('likes', true);
     }
 
-    /**
-     * Obtener los usuarios que reportaron la publicación.
-     */
-    public function reportedBy()
+    public function dislikes()
     {
-        return $this->belongsToMany(User::class, 'post_reports', 'post_id', 'user_id');
+        return $this->hasMany(UserPostLdr::class, 'post_id')->where('dislikes', true);
     }
 
-     /**
-     * Obtener el total de likes para la publicación.
-     */
-    public function totalLikes()
+    public function reports()
     {
-        return $this->likedBy()->count();
-    }
-
-    /**
-     * Obtener el total de dislikes para la publicación.
-     */
-    public function totalDislikes()
-    {
-        return $this->dislikedBy()->count();
-    }
-
-    /**
-     * Obtener el total de reports para la publicación.
-     */
-    public function totalReports()
-    {
-        return $this->reportedBy()->count();
+        return $this->hasMany(UserPostLdr::class, 'post_id')->where('reports', true);
     }
 }

@@ -11,14 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_posts', function (Blueprint $table) {
+        Schema::create('comment_ldrs', function (Blueprint $table) {
             $table->id();
-            $table->string('post_title', 50)->nullable();
-            $table->text('post_content', 255);
+            $table->boolean('likes')->default(false);
+            $table->boolean('dislikes')->default(false);
+            $table->boolean('reports')->default(false);
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('comment_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('comment_id')->references('id')->on('book_comments');
+
         });
     }
 
@@ -27,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_posts');
+        Schema::dropIfExists('comments_ldr');
     }
 };

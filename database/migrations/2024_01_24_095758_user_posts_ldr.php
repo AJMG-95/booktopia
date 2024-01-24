@@ -11,14 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_posts', function (Blueprint $table) {
+        Schema::create('user_post_ldrs', function (Blueprint $table) {
             $table->id();
-            $table->string('post_title', 50)->nullable();
-            $table->text('post_content', 255);
+            $table->boolean('likes')->default(false);
+            $table->boolean('dislikes')->default(false);
+            $table->boolean('reports')->default(false);
             $table->bigInteger('user_id')->unsigned();
+            $table->bigInteger('post_id')->unsigned();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('post_id')->references('id')->on('user_posts');
         });
     }
 
@@ -27,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_posts');
+        Schema::dropIfExists('user_posts_ldr');
     }
 };
