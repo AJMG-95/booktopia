@@ -28,7 +28,7 @@
     </header>
 
     <div class="container-fluid appMain" id="app">
-        <div class="container-fluid">
+        <div class="container-fluid web-messages">
             @if (isset($errors) && $errors->any())
                 <div class="alert alert-danger mt-2">
                     <ul>

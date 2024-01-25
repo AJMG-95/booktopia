@@ -39,15 +39,14 @@ body {
 }
 
 /* Botones y enlaces principales */
-.btn-primary{
-    background-color: #ffbf00; /* Amarillo */
+.btn-primary {
+    background-color: #f3d16ade; /* Amarillo claro */
     border-color: #ffbf00; /* Amarillo */
     border-width: 4px;
     border-style: solid;
     color: #000000; /* Texto negro sobre fondo amarillo */
     transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
-
 .btn-primary:hover {
     background-color: #ffbf00; /* Amarillo brillante al pasar el mouse */
     color: #000000; /* Texto negro sobre fondo amarillo brillante */
@@ -94,11 +93,11 @@ body {
 /* Estilo para botones y enlaces peligrosos y oscuros */
 .btn-danger,
 .btn-dark {
-    background-color: #ff0000; /* Rojo */
+    background-color: #f14545c2; /* Rojo */
     border-color: #ff0000; /* Rojo */
     border-width: 4px;
     border-style: solid;
-    color: #ffffff; /* Texto blanco sobre fondo rojo */
+    color: #000000; /* Texto blanco sobre fondo rojo */
     transition: background-color 0.3s, border-color 0.3s, color 0.3s;
 }
 
@@ -106,6 +105,7 @@ body {
 .btn-dark:hover {
     background-color: #ff3333; /* Rojo más claro al pasar el mouse */
     border: 4px solid #0000ff;
+    color: #000000; /* Texto blanco sobre fondo rojo */
 }
 
 .btn-danger:active,
@@ -192,6 +192,14 @@ body {
 
 
 
+
+.web-messages {
+    position: fixed;
+    top: 100px;
+    left: 0;
+    width: 100%;
+    z-index: 1000; /* Ajusta este valor según sea necesario para asegurarte de que esté encima de otros elementos */
+}
 
 
 

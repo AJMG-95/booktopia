@@ -12,17 +12,23 @@
     @extends('layouts.app')
 
     @section('content')
-        <div class="row justify-content-center mt-4 mb-3 me-0">
-            <div class="col-4">
-                @include('partials.randomBook')
+        <div class="container-fluid ms-0 me-0 px-3 py-3 mt-2">
+            <div class="ms-3 mb-4 text-center p-2" style="background-color:rgba(247, 247, 247, 0.651)">
+                <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                    <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
+                    <ins>
+                        BookTopia
+                    </ins>
+                </h1>
             </div>
-            <div class="col-4">
-                @include('partials.randomGenres')
-            </div>
-        </div>
+            <div class="row justify-content-center mt-4 mb-3 me-0">
 
-        <div class="mt-4 mb-5">
-            @include('partials.cotact_us')
+                <div class="col-12">
+                    @include('partials.randomBook')
+                </div>
+
+            </div>
+
         </div>
     @endsection
 </body>
