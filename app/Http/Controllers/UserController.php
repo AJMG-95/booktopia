@@ -16,11 +16,6 @@ class UserController extends Controller
         return view('admin.management.users.userList', compact('users'));
     }
 
-    public function subadminList()
-    {
-        $users = User::where('rol_id', 2)->where('deleted', false)->get();
-        return view('admin.management.users.userList', compact('users'));
-    }
 
     public function create()
     {
@@ -137,5 +132,72 @@ class UserController extends Controller
         return redirect()->route('user.list')->with('success', $message);
     }
 
-    // Otros métodos para el CRUD de usuarios según sea necesario
+    public function subadminList()
+    {
+        $subadmins = User::where('rol_id', 2)->where('deleted', false)->get();
+        return view('admin.management.subadmins.subadminList', compact('subadmins'));
+    }
+
+    public function subadminCreate()
+    {
+        $countries = Country::all();
+        $roles = Role::all();
+        return view('admin.management.subadmins.subadminCreate', compact('roles', 'countries'));
+    }
+
+    public function subadminStore(Request $request)
+    {
+        $validatedData = $request->validate([
+            'nickname' => 'required|unique:users,nickname|max:255',
+            'name' => 'required|string|max:255',
+            'surnames' => 'nullable|string|max:255',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|string|min:8',
+        ]);
+
+        $subadmin = User::create([
+            'nickname' => $validatedData['nickname'],
+            'name' => $validatedData['name'],
+            'surnames' => $validatedData['surnames'],
+            'email' => $validatedData['email'],
+            'password' => bcrypt($validatedData['password']),
+            'rol_id' => 2,
+        ]);
+
+        return redirect()->route('subadmins.list')->with('success', 'Usuario creado exitosamente.');
+    }
+
+    public function subadminUpdate(Request $request, $id)
+    {
+
+        $request->validate([
+            'nickname' => 'required|string',
+            'name' => 'required|string',
+            'profile_img' => 'nullable|string',
+        ]);
+
+        $subadmin = User::findOrFail($id);
+        $subadmin->nickname = $request->input('nickname');
+        $subadmin->name = $request->input('name');
+        $subadmin->profile_img = $request->input('profile_img');
+        $subadmin->save();
+
+        return redirect()->route('subadmins.list')->with('success', 'Usuario actualizado exitosamente.');
+    }
+
+    public function subadminEdit($id)
+    {
+        $countries = Country::all();
+        $subadmin = User::findOrFail($id);
+        $roles = Role::all();
+        return view('admin.management.subadmins.subadminEdit', compact('subadmin', 'roles', 'countries'));
+    }
+
+    public function subadminDestroy($id)
+    {
+        $subadmin = User::findOrFail($id);
+        $subadmin->delete();
+        return redirect()->route('subadmins.list')->with('success', 'Usuario eliminado exitosamente.');
+    }
+
 }

@@ -30,11 +30,10 @@
                     </div>
                 </div>
             @else
-                @if (!Auth::user()->isSubscriber())
+                @if (!Auth::user()->isSubscriber() && !Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
                     <div class="col-12 text-center">
-                        <span class="me-3">Suscribete Ahora <b><a href="{{ route('subscribe.view') }}"
+                        <span class="me-3">Suscríbete Ahora <b><a href="{{ route('subscribe.view') }}"
                                     class="">Suscribirse</a></b></span>
-
                     </div>
                 @else
                     <div class="col-12 text-center">

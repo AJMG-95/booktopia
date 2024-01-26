@@ -27,12 +27,13 @@ Route::middleware(['auth'])->group(function () {
     //* Rutas para las funcionalidades del administrador
     Route::prefix('admin/subadmins')->group(function () {
         Route::get('/list', [UserController::class, 'subadminList'])->name('subadmins.list');
-        Route::get('/create', [UserController::class, 'create'])->name('subadmins.create');
-        Route::post('/', [UserController::class, 'store'])->name('subadmins.store');
-        Route::get('/{id}', [UserController::class, 'show'])->name('subadmins.show');
-        Route::get('/{id}/edit', [UserController::class, 'edit'])->name('subadmins.edit');
-        Route::put('/{id}', [UserController::class, 'update'])->name('subadmins.update');
-        Route::delete('/{id}', [UserController::class, 'destroy'])->name('subadmins.destroy');
+        Route::get('/create', [UserController::class, 'subadminCreate'])->name('subadmins.create');
+        Route::post('/store', [UserController::class, 'subadminStore'])->name('subadmins.store');
+        Route::get('/show/{id}', [UserController::class, 'show'])->name('subadmins.show');
+        Route::get('/edit/{id}', [UserController::class, 'subadminEdit'])->name('subadmins.edit');
+        Route::patch('/update/{id}', [UserController::class, 'subadminUpdate'])->name('subadmins.update');
+        Route::delete('/destroy/{id}', [UserController::class, 'subadminDestroy'])->name('subadmins.destroy');
+
     });
 
     //* Rutas para las funcionalidades del administrador y Subadministradores

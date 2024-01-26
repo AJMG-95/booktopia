@@ -17,17 +17,17 @@
 
             <div class="mb-3">
                 <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $subadmin->name) }}" required readonly>
+                <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $subadmin->name) }}" required >
             </div>
 
             <div class="mb-3">
                 <label for="surnames" class="form-label">Apellidos</label>
-                <input type="text" class="form-control" id="surnames" name="surnames" value="{{ old('surnames', $subadmin->surnames) }}" required readonly>
+                <input type="text" class="form-control" id="surnames" name="surnames" value="{{ old('surnames', $subadmin->surnames) }}" required >
             </div>
 
             <!-- Agrega los demás campos del modelo User -->
 
-            <div class="mb-3">
+            <div class="mb-3" style="display: none;">
                 <label for="role_id" class="form-label">Rol</label>
                 <select name="role_id" id="role_id" class="form-control" required>
                     @foreach ($roles as $role)

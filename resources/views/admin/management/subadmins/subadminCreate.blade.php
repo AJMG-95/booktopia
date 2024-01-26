@@ -56,7 +56,7 @@
             </div>
 
             <!-- Campo Rol -->
-            <div class="mb-3">
+            <div class="mb-3 " style="display: none;">
                 <label for="role" class="form-label">Rol</label>
                 <select name="role" id="role" class="form-control" required disabled>
                     @foreach ($roles as $role)
