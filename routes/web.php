@@ -21,6 +21,11 @@ use App\Http\Controllers\UserPostController;
 
 //!Rutas del grupo de middleware que requieren autenticación
 Route::get('/home', [AuthController::class, "index"])->name('home');
+Route::prefix('/shop')->name('books.')->group(function () {
+    Route::get('/', [EditionBookController::class, 'shopList'])->name('shop');
+    Route::get('/search', [EditionBookController::class, 'search'])->name('search');
+});
+
 
 Route::middleware(['auth'])->group(function () {
 
@@ -176,9 +181,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/success', [PaymentController::class, 'success'])->name('success');
             Route::get('/cancel', [PaymentController::class, 'cancel'])->name('cancel');
         });
-        Route::prefix('/books')->name('books.')->group(function () {
-            Route::get('/search', [EditionBookController::class, 'search'])->name('search');
-        });
+
     });
 
     Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addFavorite'])->name('favorites.add');
@@ -190,6 +193,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/subscribe/cancel', [UserSubscriberController::class, 'subscribeCancel'])->name('subscribe.cancel');
     Route::get('/subscribe/success', [UserSubscriberController::class, 'subscribeSuccess'])->name('subscribe.success');
 });
+
 
 
 //! Otras rutas que no requieren autenticación
@@ -212,9 +216,7 @@ Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/book/{id}', [UserLibraryController::class, "show"])->name('details');
 });
 
-Route::prefix('/shop')->name('books.')->group(function () {
-    Route::get('/', [EditionBookController::class, 'shopList'])->name('shop');
-});
+
 
 
 Auth::routes();

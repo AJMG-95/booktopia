@@ -314,10 +314,14 @@ class EditionBookController extends Controller
             $genres = Genre::all();
             $languages = Language::all();
 
-            $userAge = Auth::user()->birth_date->age;
-            $showForAdults = $userAge >= 18;
 
-            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request', 'showForAdults'));
+            if (Auth::check()) {
+                $userAge = Auth::user()->birth_date->age;
+                $showForAdults = $userAge >= 18;
+                return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request', 'showForAdults'));
+            }
+
+            return view('layouts.shop.editionsShop', compact('books', 'authors', 'genres', 'languages', 'request'));
         } catch (ValidationException $validationException) {
             return redirect()->back()->withErrors($validationException->errors());
         } catch (QueryException $queryException) {
@@ -366,11 +370,30 @@ class EditionBookController extends Controller
         }
 
         if ($request->filled('author')) {
-            $query->whereHas('authors', function ($q) use ($request) {
-                $searchTerm = '%' . strtolower($request->input('author')) . '%';
-                $q->whereRaw('LOWER(name) like ? OR LOWER(nickname) like ? OR LOWER(surnames) like ?', [$searchTerm, $searchTerm, $searchTerm]);
+            $authorSearchTerm = strtolower($request->input('author'));
+
+            $query->whereHas('authors', function ($q) use ($authorSearchTerm) {
+                $q->whereRaw('LOWER(name) like ?', ['%' . $authorSearchTerm . '%'])
+                    ->orWhereRaw('LOWER(surnames) like ?', ['%' . $authorSearchTerm . '%'])
+                    ->orWhereRaw('LOWER(nickname) like ?', ['%' . $authorSearchTerm . '%'])
+                    ->orWhereRaw('CONCAT(LOWER(name), \' \', LOWER(surnames)) like ?', ['%' . $authorSearchTerm . '%']);
             });
+
+            if (!$query->exists()) {
+                // Si no hay resultados con el término completo, buscar por partes (nombre, apellido, apodo)
+                $query->whereHas('authors', function ($q) use ($authorSearchTerm) {
+                    $names = explode(' ', $authorSearchTerm);
+                    foreach ($names as $namePart) {
+                        $q->whereRaw('LOWER(name) like ? or LOWER(surnames) like ? or LOWER(nickname) like ?', [
+                            '%' . $namePart . '%',
+                            '%' . $namePart . '%',
+                            '%' . $namePart . '%',
+                        ]);
+                    }
+                });
+            }
         }
+
 
         if ($request->filled('genre')) {
             $query->whereHas('genres', function ($q) use ($request) {
@@ -438,5 +461,4 @@ class EditionBookController extends Controller
     {
         return $query->paginate(10);
     }
-
 }

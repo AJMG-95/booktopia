@@ -8,7 +8,7 @@
             {{-- Menú lateral de filtros --}}
             <aside class="col-lg-3 col-md-4 pt-4">
                 <h2>Buscar...</h2>
-                <form action="{{ route('shop.books.search') }}" method="GET" class="p-3">
+                <form action="{{ route('books.search') }}" method="GET" class="p-3">
                     <div class="input-group mb-3">
                         <span class="input-group-text"><i class="bi bi-search"></i></span>
                         <input type="text" name="title" class="form-control" placeholder="Buscar por Título"
@@ -27,12 +27,14 @@
                     <div class="input-group mb-3">
                         <span class="input-group-text">(max.) €</span>
                         <input type="text" name="max_price" class="form-control" step="0.01"
-                            placeholder="Precio máximo" min="0" value="{{ old('max_price', request('max_price')) }}" />
+                            placeholder="Precio máximo" min="0"
+                            value="{{ old('max_price', request('max_price')) }}" />
                     </div>
                     <div class="input-group mb-3">
                         <span class="input-group-text">(min.) €</span>
                         <input type="text" name="min_price" class="form-control" step="0.01"
-                            placeholder="Precio mínimo" min="0" max="9999" value="{{ old('min_price', request('min_price')) }}" />
+                            placeholder="Precio mínimo" min="0" max="9999"
+                            value="{{ old('min_price', request('min_price')) }}" />
                     </div>
                     <div class="mb-3">
                         <label for="language" class="form-label">Idioma</label>
@@ -61,12 +63,14 @@
                         @endif
                     @endauth
 
+
+
                     <div class="d-grid gap-2">
                         <button type="submit" class="btn btn-primary btn-block" id="searchBtn">
                             <span class="spinner-border spinner-border-sm d-none" role="status" aria-hidden="true"></span>
                             Aplicar Filtros
                         </button>
-                        <a href="{{ route('shop.books.search') }}" class="btn btn-primary btn-block mt-2">
+                        <a href="{{ route('books.search') }}" class="btn btn-primary btn-block mt-2">
                             Borrar Filtros
                         </a>
                     </div>
@@ -77,7 +81,7 @@
             {{-- Área principal para mostrar los libros --}}
             <main class="col-lg-9 col-md-8 col-ms-7 pt-4">
                 {{-- Ordenar por: --}}
-                <form action="{{ route('shop.books.search') }}" method="GET">
+                <form action="{{ route('books.search') }}" method="GET">
                     <!-- ... otros campos ... -->
                     <div class="d-flex justify-content-left align-items-center mb-4">
                         <select name="sortBy" class="form-select w-auto">
@@ -144,11 +148,11 @@
                                     <p class="card-text">
                                         <strong>Precio:</strong>
                                         @auth
-                                        {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2) : number_format($book->price, 2) }} €
+                                            {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2) : number_format($book->price, 2) }}
+                                            €
                                         @endauth
                                         @guest()
-                                        {{ number_format($book->price, 2) }} €
-
+                                            {{ number_format($book->price, 2) }} €
                                         @endguest
                                     </p>
 
