@@ -46,6 +46,8 @@
                                 <textarea class="form-control" id="post_content" name="post_content" rows="3" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary mt-3">Crear Post</button>
+                            <button id="draft_create" class="btn btn-secondary mt-3">Guardar como borrador</button>
+                            <button id="draft_see" class="btn btn-info mt-3">Ver borrador</button>
                         </form>
                     </div>
                 </div>
@@ -57,7 +59,8 @@
             @foreach ($posts as $post)
                 <div class="post mb-4 p-3 border border-dark rounded bg-white">
                     <div class="user-info mb-2 d-flex justify-content-between">
-                        <div class="fw-bold text-primary">{{ $post->user->nickname }}</div>
+                        <div class="fw-bold text-primary">{{ $post->user->nickname }} :  <h4 class="text-black"> <ins>{{$post->post_title}}</ins> </h4></div>
+
                         <div class="text-muted">{{ $post->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="post-body">
@@ -114,8 +117,8 @@
                                 <form id="dislikeForm{{ $post->id }}" method="POST"
                                     action="{{ route('post.dislike.ajax', ['postId' => $post->id]) }}">
                                     @csrf
-                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn" title="No me gusta"
-                                        onclick="dislikePost({{ $post->id }})">
+                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn"
+                                        title="No me gusta" onclick="dislikePost({{ $post->id }})">
                                         <i class="bi bi-hand-thumbs-down"></i> No me gusta
                                         <span class="badge bg-danger"
                                             id="dislikes-count-{{ $post->id }}">{{ $post->getDislikes() }}</span>
@@ -146,6 +149,25 @@
                     </div>
                 </div>
             @endforeach
+        </div>
+
+        <!-- Modal para mostrar el borrador -->
+        <div class="modal fade" id="draftModal" tabindex="-1" aria-labelledby="draftModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="draftModalLabel">Borrador Guardado</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p><strong>Título:</strong> <span id="draftTitle"></span></p>
+                        <p><strong>Contenido:</strong> <span id="draftContent"></span></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -220,5 +242,58 @@
                 }
             });
         }
+
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const draftCreateBtn = document.getElementById('draft_create');
+            const draftSeeBtn = document.getElementById('draft_see');
+            const postTitleInput = document.getElementById('post_title');
+            const postContentInput = document.getElementById('post_content');
+            const createPostForm = document.getElementById('createPostForm');
+
+            // Cargar el borrador al cargar la página
+            loadDraft();
+
+            // Guardar borrador al hacer clic en "Guardar como borrador"
+            draftCreateBtn.addEventListener('click', function() {
+                const draft = {
+                    title: postTitleInput.value,
+                    content: postContentInput.value
+                };
+                saveDraft(draft);
+            });
+
+            // Mostrar borrador al hacer clic en "Ver borrador"
+            draftSeeBtn.addEventListener('click', function() {
+                const draft = loadDraft();
+                if (draft) {
+                    // Mostrar el borrador en un modal o alert, como prefieras
+                    alert(`Borrador:\n\nTítulo: ${draft.title}\nContenido: ${draft.content}`);
+                } else {
+                    alert('No hay borrador guardado.');
+                }
+            });
+
+            // Guardar el borrador en el Local Storage
+            function saveDraft(draft) {
+                const userId = {{ Auth::check() ? Auth::user()->id : 'null' }};
+                if (userId) {
+                    const key = `booktopia_${userId}`;
+                    localStorage.setItem(key, JSON.stringify(draft));
+                    alert('Borrador guardado correctamente.');
+                }
+            }
+
+            // Cargar el borrador del Local Storage
+            function loadDraft() {
+                const userId = {{ Auth::check() ? Auth::user()->id : 'null' }};
+                if (userId) {
+                    const key = `booktopia_${userId}`;
+                    const draft = localStorage.getItem(key);
+                    return draft ? JSON.parse(draft) : null;
+                }
+                return null;
+            }
+        });
     </script>
 @endsection
