@@ -120,11 +120,18 @@ class User extends Authenticatable
         return $this->hasMany(UserStickyNote::class, 'user_id');
     }
 
-    public function isSubscriber()
+/*     public function isSubscriber()
     {
         // Verificar si el usuario está en la tabla user_subscribers y si la suscripción está activa y no ha caducado
         return $this->subscriber()->exists() && $this->subscriber->is_active && $this->subscriber->end_at >= Carbon::now();
+    } */
+
+    public function isSubscriber()
+    {
+        // Verificar si el usuario está en la tabla user_subscribers y si la suscripción está activa y no ha caducado
+        return $this->subscriber()->exists() &&  $this->subscriber->end_at >= Carbon::now();
     }
+
 
     // Relación con la tabla user_subscribers
     public function subscriber()

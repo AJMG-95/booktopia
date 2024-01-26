@@ -30,29 +30,33 @@
     <div class="container-fluid appMain" id="app">
         <div class="container-fluid web-messages">
             @if (isset($errors) && $errors->any())
-                <div class="alert alert-danger mt-2">
+                <div class="alert alert-danger mt-2 alert-dismissible fade show" role="alert">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
+
             @if (is_array(session()->get('success')))
-                <div class="alert alert-success  mt-2">
-                    <ul>
-                        @foreach (session()->get('success') as $message)
-                            <li>{{ $message }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @elseif (session()->get('success'))
-                <div class="alert alert-success  mt-2">
-                    <ul>
-                        <li>{{ session()->get('success') }}</li>
-                    </ul>
-                </div>
-            @endif
+        <div class="alert alert-success mt-2 alert-dismissible fade show">
+            <ul>
+                @foreach (session()->get('success') as $message)
+                    <li>{{ $message }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @elseif (session()->get('success'))
+        <div class="alert alert-success mt-2 alert-dismissible fade show">
+            <ul>
+                <li>{{ session()->get('success') }}</li>
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
         </div>
         @yield('content')
     </div>

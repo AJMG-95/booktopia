@@ -9,8 +9,15 @@
         }
     </style>
 
-    <div class="container-fluid ps-4 pe-4 mt-4">
-        <h1>Foro</h1>
+    <div class="container-fluid ms-0 me-0 px-3 py-3 mt-2">
+        <div class="ms-3 mb-4 text-center p-2" style="background-color:rgba(247, 247, 247, 0.651)">
+            <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
+                <ins>
+                    Bienvenido al foro
+                </ins>
+            </h1>
+        </div>
         <div class="ps-3 pe-3 mt-3">
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal">
                 Crear un nuevo post
@@ -18,7 +25,8 @@
         </div>
 
         <!-- Create Post Modal -->
-        <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel" aria-hidden="true">
+        <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel"
+            aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
@@ -93,7 +101,8 @@
                             @endif
 
                             <div class="d-flex align-items-center">
-                                <form id="likeForm{{ $post->id }}" method="POST" action=" {{ route('post.like.ajax', ['postId' => $post->id]) }}">
+                                <form id="likeForm{{ $post->id }}" method="POST"
+                                    action=" {{ route('post.like.ajax', ['postId' => $post->id]) }}">
                                     @csrf
                                     <button type="button" class="btn btn-sm btn-outline-success like-btn me-2" title="Me gusta"
                                         onclick="likePost({{ $post->id }})">
@@ -102,7 +111,8 @@
                                             id="likes-count-{{ $post->id }}">{{ $post->getLikes() }}</span>
                                     </button>
                                 </form>
-                                <form id="dislikeForm{{ $post->id }}" method="POST" action="{{ route('post.dislike.ajax', ['postId' => $post->id]) }}">
+                                <form id="dislikeForm{{ $post->id }}" method="POST"
+                                    action="{{ route('post.dislike.ajax', ['postId' => $post->id]) }}">
                                     @csrf
                                     <button type="button" class="btn btn-sm btn-outline-danger dislike-btn" title="No me gusta"
                                         onclick="dislikePost({{ $post->id }})">
@@ -111,7 +121,8 @@
                                             id="dislikes-count-{{ $post->id }}">{{ $post->getDislikes() }}</span>
                                     </button>
                                 </form>
-                                <form id="reportForm{{ $post->id }}" method="POST" action="{{ route('post.report.ajax', ['postId' => $post->id]) }}">
+                                <form id="reportForm{{ $post->id }}" method="POST"
+                                    action="{{ route('post.report.ajax', ['postId' => $post->id]) }}">
                                     @csrf
                                     <button type="button" class="btn btn-sm btn-outline-info ms-2" title="Reportar"
                                         onclick="reportPost({{ $post->id }})">

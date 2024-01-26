@@ -38,7 +38,6 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'subadminEdit'])->name('subadmins.edit');
         Route::patch('/update/{id}', [UserController::class, 'subadminUpdate'])->name('subadmins.update');
         Route::delete('/destroy/{id}', [UserController::class, 'subadminDestroy'])->name('subadmins.destroy');
-
     });
 
     //* Rutas para las funcionalidades del administrador y Subadministradores
@@ -181,7 +180,6 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/success', [PaymentController::class, 'success'])->name('success');
             Route::get('/cancel', [PaymentController::class, 'cancel'])->name('cancel');
         });
-
     });
 
     Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addFavorite'])->name('favorites.add');

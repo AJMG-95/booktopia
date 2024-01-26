@@ -2,8 +2,15 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container-fluid p-4">
-
+    <div class="container-fluid ms-0 me-0 px-3 py-3 mt-2">
+        <div class="ms-3 mb-4 text-center p-2" style="background-color:rgba(247, 247, 247, 0.651)">
+            <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
+                <ins>
+                    Bienvenido a la tienda
+                </ins>
+            </h1>
+        </div>
         <div class="row">
             {{-- Menú lateral de filtros --}}
             <aside class="col-lg-3 col-md-4 pt-4">
@@ -85,9 +92,9 @@
                     <!-- ... otros campos ... -->
                     <div class="d-flex justify-content-left align-items-center mb-4">
                         <select name="sortBy" class="form-select w-auto">
-                            <option value="asc_price" @if (request('sortBy') == 'asc_price') selected @endif>Menor a mayor €
+                            <option value="asc_price" @if (request('sortBy') == 'asc_price') selected @endif>Mayor a menor €
                             </option>
-                            <option value="desc_price" @if (request('sortBy') == 'desc_price') selected @endif>Mayor a menor €
+                            <option value="desc_price" @if (request('sortBy') == 'desc_price') selected @endif>Menor a mayor €
                             </option>
                             <option value="asc_title" @if (request('sortBy') == 'asc_title') selected @endif>A-Z</option>
                             <option value="desc_title" @if (request('sortBy') == 'desc_title') selected @endif>Z-A</option>

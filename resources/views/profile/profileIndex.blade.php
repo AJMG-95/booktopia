@@ -121,7 +121,6 @@
                 </div>
             </div>
             <div class="col-6  mt-5 mb-5 ">
-
                 <section class="card mb-5  mx-auto" style="width: 42vw">
                     <div class="card-header row m-0 align-items-center justify-content-between">
                         <div class="col-auto ms-1">

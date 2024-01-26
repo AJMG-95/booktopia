@@ -14,9 +14,10 @@
                             <p>
                                 Precio Normal: <del class="text-danger">{{ number_format($editionBook->price, 2) }} €</del>
                             </p>
-                            <p class="text-success">
-                                Precio para Suscriptores: <ins>{{ number_format($editionBook->price * 0.8, 2) }} €</ins>
-                            </p>
+                            <a href="{{ route('subscribe.view') }}">
+                                Precio para Suscriptores:
+                            </a>
+                            <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
                         @else
                             <p>
                                 Precio Normal: {{ number_format($editionBook->price, 2) }} €

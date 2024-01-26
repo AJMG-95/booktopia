@@ -81,7 +81,8 @@
                                             </button>
                                         </div>
                                         <div class="ms-1 mb-2 ">
-                                            <a class="btn btn-danger btn-block" href="{{ route('welcome') }}" style="width: 5.3vw">
+                                            <a class="btn btn-danger btn-block" href="{{ route('welcome') }}"
+                                                style="width: 5.3vw">
                                                 {{ __('Cancelar') }}
                                             </a>
                                         </div>
@@ -101,9 +102,38 @@
                 </div>
             </div>
         </div>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const loginForm = document.getElementById('loginForm');
+
+                loginForm.addEventListener('submit', function(event) {
+                    let valid = true;
+
+                    // Validar email
+                    const emailInput = document.getElementById('email');
+                    const emailValue = emailInput.value.trim();
+                    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    if (emailValue === '' || !emailRegex.test(emailValue)) {
+                        valid = false;
+                        alert('Ingrese un correo electrónico válido.');
+                        event.preventDefault(); // Evita que se envíe el formulario
+                    }
+
+                    // Validar contraseña
+                    const passwordInput = document.getElementById('password');
+                    const passwordValue = passwordInput.value.trim();
+
+                    if (passwordValue === '') {
+                        valid = false;
+                        alert('Ingrese una contraseña.');
+                        event.preventDefault(); // Evita que se envíe el formulario
+                    }
+                });
+            });
+        </script>
     @endsection
 </body>
 
-<script src="{{ asset('assets/js/loginValidation.js') }}"></script>
 
 </html>
