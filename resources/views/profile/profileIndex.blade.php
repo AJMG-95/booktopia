@@ -35,7 +35,7 @@
                                     </button>
                                 @endif
                                 {{-- Modal para registrarse como autor --}}
-                                <div class="modal fade" id="authorRegistrationModal" tabindex="-1"
+                                <div class="modal fade " id="authorRegistrationModal" tabindex="-1"
                                     aria-labelledby="authorRegistrationModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -54,6 +54,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mt-5 mb-5"></div>
                                 <div class="mt-5 w-100 px-4 d-flex flex-column align-items-center">
                                     <a class="btn btn-primary list-group-item text-truncate mt-auto rounded mb-2 w-100"
                                         href="{{ route('logout') }}"
@@ -120,6 +121,15 @@
                 </div>
             </div>
             <div class="col-6  mt-5 mb-5 ">
+
+                {{-- Mensaje de fin de suscripción --}}
+                <div x-data="{ daysLeft: {{ now()->diffInDays(Auth::user()->subscriber->end_at) }} }">
+                    <div x-show="daysLeft <= 10" class="alert alert-warning mt-4">
+                        Solo faltan <span x-text="daysLeft"></span> días para el fin de su suscripción.
+                        Recuerde renovarla pasada la fecha {{ Auth::user()->subscriber->end_at }}
+                    </div>
+                </div>
+
 
                 <section class="card mb-5  mx-auto" style="width: 42vw">
                     <div class="card-header row m-0 align-items-center justify-content-between">
@@ -317,5 +327,7 @@
         </div>
     </div>
 
+<!-- Agrega esto al encabezado de tu vista -->
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/alpine.min.js" defer></script>
 
 @endsection
