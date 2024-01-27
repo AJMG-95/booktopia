@@ -138,14 +138,17 @@
                                 @else
                                     <div class="col-md-6">
                                         <div class="d-flex align-items-center justify-content-center">
-                                            <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
-                                                class="btn btn-primary btn-lg">
-                                                Añadir a favoritos
-                                            </button>
-                                            <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
-                                                class="btn btn-danger btn-lg">
-                                                Quitar de favoritos
-                                            </button>
+                                            @if ($editionBook->isInFavorites())
+                                                <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
+                                                    class="btn btn-danger btn-lg">
+                                                    Quitar de favoritos
+                                                </button>
+                                            @else
+                                                <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
+                                                    class="btn btn-primary btn-lg">
+                                                    Añadir a favoritos
+                                                </button>
+                                            @endif
                                         </div>
                                     </div>
                                 @endif

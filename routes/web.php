@@ -183,6 +183,7 @@ Route::middleware(['auth'])->group(function () {
         });
     });
 
+    Route::get('favorites/list', [FavoriteController::class, 'index'])->name('favorite.list');
     Route::post('/favorites/add/{editionBookId}', [FavoriteController::class, 'addFavorite'])->name('favorites.add');
     Route::post('/favorites/remove/{editionBookId}', [FavoriteController::class, 'removeFavorite'])->name('favorites.remove');
 

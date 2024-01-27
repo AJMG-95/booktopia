@@ -187,4 +187,6 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(EditionBook::class, 'favorites', 'user_id', 'book_id');
     }
+
+
 }

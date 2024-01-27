@@ -13,11 +13,16 @@ class FavoriteController extends Controller
 
     public function index()
     {
-        $favorites = Auth::user()->favorites;
-        return view('favorites.index', compact('favorites'));
+        $favoriteBooks = Auth::user()->favorites;
+        return view('layouts.user.favorites.index', compact('favoriteBooks'));
+
+        // Obtén los libros favoritos del usuario conectado
+        /*          $favoriteBooks = auth()->user()->favorites()->with('editionBook')->get();
+
+         return view('user_favorite_books', compact('favoriteBooks')); */
     }
 
-       /**
+    /**
      * Añadir un libro a la lista de favoritos.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -45,7 +50,7 @@ class FavoriteController extends Controller
     }
 
 
-/**
+    /**
      * Quitar un libro de la lista de favoritos.
      *
      * @param  int  $id

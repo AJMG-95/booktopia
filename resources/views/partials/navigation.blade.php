@@ -93,8 +93,12 @@
                                         <a class="dropdown-item" href=" {{ route('wishes.list') }} ">Lista de Deseos</a>
                                     </li>
                                     <li>
+                                        <a class="dropdown-item" href=" {{ route('favorite.list') }} ">Lista de Favoritos</a>
+                                    </li>
+                                    <li>
                                         <a class="dropdown-item" href=" {{ route('user.comments.posts') }} ">Posts & Comentarios</a>
                                     </li>
+
                                 @endif
                                 <li>
                                     <hr class="dropdown-divider">
@@ -109,31 +113,6 @@
                                         @csrf
                                     </form>
                                 </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                    class="bi bi-envelope" viewBox="0 0 16 16">
-                                    <path
-                                        d="M0 4a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V4Zm2-1a1 1 0 0 0-1 1v.217l7 4.2 7-4.2V4a1 1 0 0 0-1-1H2Zm13 2.383-4.708 2.825L15 11.105V5.383Zm-.034 6.876-5.64-3.471L8 9.583l-1.326-.795-5.64 3.47A1 1 0 0 0 2 13h12a1 1 0 0 0 .966-.741ZM1 11.105l4.708-2.897L1 5.383v5.722Z" />
-                                </svg>
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="">
-                                @if (Auth::user()->isAdmin() || Auth::user()->isSubadmin())
-                                    <li>
-                                        <a class="dropdown-item" href="">Lista de consultas</a>
-                                    </li>
-                                @else
-                                    <li>
-                                        <a class="dropdown-item" href="{{ route('welcome') }}">Consultar</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="">Ver respuestas</a>
-                                    </li>
-                                @endif
-
                             </ul>
                         </li>
                     </ul>

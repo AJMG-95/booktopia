@@ -13,7 +13,7 @@
                                     class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
                                     <i class="bi bi-bookmark"></i> <span>Mi lista de deseos</span>
                                 </a>
-                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                <a href="{{ route('favorite.list') }}" class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-heart"></i> <span>Mi lista de favoritos</span>
                                 </a>
                                 <a href=" {{ route('user.comments.posts') }}"
@@ -123,12 +123,14 @@
             <div class="col-6  mt-5 mb-5 ">
 
                 {{-- Mensaje de fin de suscripción --}}
+                @if (Auth::user()->isSubscriber())
                 <div x-data="{ daysLeft: {{ now()->diffInDays(Auth::user()->subscriber->end_at) }} }">
                     <div x-show="daysLeft <= 10" class="alert alert-warning mt-4">
                         Solo faltan <span x-text="daysLeft"></span> días para el fin de su suscripción.
                         Recuerde renovarla pasada la fecha {{ Auth::user()->subscriber->end_at }}
                     </div>
                 </div>
+                @endif
 
 
                 <section class="card mb-5  mx-auto" style="width: 42vw">
