@@ -172,6 +172,7 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/user_posts/{postId}', [UserPostController::class, 'deletePost'])->name('user_post.delete');
 
 
+    Route::get('/user/comments_&_posts', [UserController::class, 'UserCommentsAndPosts'])->name('user.comments.posts');
 
 
     Route::prefix('/shop')->name('shop.')->group(function () {

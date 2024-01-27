@@ -41,22 +41,24 @@
             @endif
 
             @if (is_array(session()->get('success')))
-        <div class="alert alert-success mt-2 alert-dismissible fade show">
-            <ul>
-                @foreach (session()->get('success') as $message)
-                    <li>{{ $message }}</li>
-                @endforeach
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @elseif (session()->get('success'))
-        <div class="alert alert-success mt-2 alert-dismissible fade show">
-            <ul>
-                <li>{{ session()->get('success') }}</li>
-            </ul>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    @endif
+                <div class="alert alert-success mt-2 alert-dismissible fade show">
+                    <ul>
+                        @foreach (session()->get('success') as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
+                    <button type="button" class="btn btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            @elseif (session()->get('success'))
+                <div class="alert alert-success mt-2 alert-dismissible fade show">
+                    <ul>
+                        <li>{{ session()->get('success') }}</li>
+                    </ul>
+
+                    <button type="button" class="btn btn-close " data-bs-dismiss="alert" aria-label="Close"></button>
+
+                </div>
+            @endif
         </div>
         @yield('content')
     </div>

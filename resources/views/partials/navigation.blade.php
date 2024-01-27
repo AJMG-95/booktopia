@@ -84,19 +84,16 @@
                                     </li>
                                 @else
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('user.library') }}">Mi Libreria</a>
+                                        <a class="dropdown-item" href="{{ route('user.library') }}">Libreria</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{ route('sticky_note.index') }} ">Mis Notas</a>
+                                        <a class="dropdown-item" href="{{ route('sticky_note.index') }} ">Notas</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href=" {{ route('wishes.list') }} ">Mi Lista de Deseos</a>
+                                        <a class="dropdown-item" href=" {{ route('wishes.list') }} ">Lista de Deseos</a>
                                     </li>
                                     <li>
-                                        <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Posts & Comentarios</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item" href="{{-- {{ route('') }} --}}">Autopublicacines</a>
+                                        <a class="dropdown-item" href=" {{ route('user.comments.posts') }} ">Posts & Comentarios</a>
                                     </li>
                                 @endif
                                 <li>

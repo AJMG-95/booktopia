@@ -2,24 +2,24 @@
 
 
 @section('content')
-    <div class="container-fluid">
-        <div class="row m-0">
-            <div class="col-3 me-2 row ">
+    <div class="container-fluid ms-0 me-0 px-3  mt-2">
+        <div class="row">
+            <div class="col-3 me-2 row aside">
                 <div class="col-auto  ">
                     <div id="sidebar" class="collapse collapse-horizontal show border-end pb-5 bg-white">
                         <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start d-flex flex-column">
                             @if (!(Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
-                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
-                                    <i class="bi bi-bookmark-fill"></i> <span>Mi lista de deseos</span>
+                                <a href=" {{ route('wishes.list') }}"
+                                    class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
+                                    <i class="bi bi-bookmark"></i> <span>Mi lista de deseos</span>
                                 </a>
                                 <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-heart"></i> <span>Mi lista de favoritos</span>
                                 </a>
-                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                    <i class="bi bi-chat-square-text"></i> <span>Mis comentarios</span>
-                                </a>
-                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                    <i class="bi bi-signpost"></i> <span>Mis post</span>
+                                <a href=" {{ route('user.comments.posts') }}"
+                                    class="list-group-item border-end-0
+                                    d-inline-block text-truncate">
+                                    <i class="bi bi-signpost"></i> <span>Mis posts y comentarios</span>
                                 </a>
                                 <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-mailbox2"></i> <span>Mis Notificaciones</span>
@@ -54,11 +54,10 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mt-5 w-100">
-                                    <a class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2"
+                                <div class="mt-5 w-100 px-4 d-flex flex-column align-items-center">
+                                    <a class="btn btn-primary list-group-item text-truncate mt-auto rounded mb-2 w-100"
                                         href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -67,7 +66,7 @@
 
                                     @if (Auth::check())
                                         <button type="button"
-                                            class="w-16 btn btn-danger ms-3 me-3 list-group-item border-end-0 text-truncate rounded"
+                                            class="w-16 btn btn-danger list-group-item text-truncate rounded w-16"
                                             data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
                                             Borrar Cuenta
                                         </button>
@@ -121,6 +120,7 @@
                 </div>
             </div>
             <div class="col-6  mt-5 mb-5 ">
+
                 <section class="card mb-5  mx-auto" style="width: 42vw">
                     <div class="card-header row m-0 align-items-center justify-content-between">
                         <div class="col-auto ms-1">
@@ -129,8 +129,8 @@
                                     alt="{{ Auth::user()->name }} Profile" class="img-fluid rounded-circle"
                                     style="width: 4vw; height: 4vw; min-width:50px; min-height:50px;">
                             @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
-                                    fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto" fill="currentColor"
+                                    class="bi bi-person-circle" viewBox="0 0 16 16">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path fill-rule="evenodd"
                                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
@@ -314,9 +314,7 @@
                 @endif
 
             </div>
-
         </div>
-
     </div>
 
 

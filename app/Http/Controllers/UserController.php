@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use App\Models\BookComment;
+use App\Models\UserPost;
+
 
 class UserController extends Controller
 {
@@ -84,7 +88,7 @@ class UserController extends Controller
         return view('admin.management.users.userEdit', compact('user', 'roles', 'countries'));
     }
 
-/*     public function delete($id)
+    /*     public function delete($id)
     {
         return view('user.delete', compact('id'));
     } */
@@ -200,4 +204,22 @@ class UserController extends Controller
         return redirect()->route('subadmins.list')->with('success', 'Usuario eliminado exitosamente.');
     }
 
+    /**
+     * Mostrar la vista con todos los comentarios a libros realizados por el usuario conectado.
+     *
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function UserCommentsAndPosts()
+    {
+        // Obtén el ID del usuario conectado
+        $userId = Auth::id();
+
+        // Obtén todos los comentarios a libros del usuario
+        $userComments = BookComment::where('user_id', $userId)->get();
+          // Obtiene todos los posts del usuario autenticado
+        $userPosts = UserPost::where('user_id', $userId)->get();
+
+        // Puedes pasar los comentarios a la vista
+        return view('layouts.user.comments&posts.comments_posts', ['userPosts' => $userPosts, 'userComments' => $userComments]);
+    }
 }
