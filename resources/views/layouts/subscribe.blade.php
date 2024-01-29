@@ -12,27 +12,37 @@
             </h1>
         </div>
 
-        @if (!Auth::user()->isSubscriber())
-            <div class="text-center mt-5">
-                <h3 class="">¡Suscríbete ahora y recibe descuentos exclusivos en tus compras!</h3>
-                <h4><strong> Precio de la suscripción: <span class="text-success">20 €</span></strong> </h4>
+        @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+            @if (!Auth::user()->isSubscriber())
+                <div class="text-center mt-5">
+                    <h3 class="">¡Suscríbete ahora y recibe descuentos exclusivos en tus compras!</h3>
+                    <h4><strong> Precio de la suscripción: <span class="text-success">20 €</span></strong> </h4>
 
-                {{-- Mensaje sobre descuentos (puedes personalizar este mensaje) --}}
-                <h5>Al suscribirte, recibirás descuentos especiales en todas tus compras.</h5>
+                    {{-- Mensaje sobre descuentos (puedes personalizar este mensaje) --}}
+                    <h5>Al suscribirte, recibirás descuentos especiales en todas tus compras.</h5>
 
-                {{-- Botón para confirmar la suscripción --}}
-                <form action="{{ route('subscribe.confirm') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="btn btn-primary mt-3">Confirmar Suscripción</button>
-                </form>
-            </div>
+                    {{-- Botón para confirmar la suscripción --}}
+                    <form action="{{ route('subscribe.confirm') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn btn-primary mt-3">Confirmar Suscripción</button>
+                    </form>
+                </div>
+            @else
+                <div class="alert alert-primary mt-5 text-center">
+                    <h3 class="fw-bold">¡Usted ya está suscrito!</h3>
+                    <h4 class="fw-bold">Recuerde renovar su suscripción pasada la fecha de caducidad de su suscripción
+                        actual:
+                    </h4>
+                    <h5 class="text-danger fw-bold">{{ Auth::user()->subscriber->end_at }}</>
+                </div>
+            @endif
         @else
-            <div class="alert alert-primary mt-5 text-center">
-                <h3 class="fw-bold">¡Usted ya está suscrito!</h3>
-                <h4 class="fw-bold">Recuerde renovar su suscripción pasada la fecha de caducidad de su suscripción actual:
-                </h4>
-                <h5 class="text-danger fw-bold">{{  Auth::user()->subscriber->end_at }}</>
+            <div class="text-center mt-5">
+                <h3 class="">¡Los perfiles de administración de la web no pueden suscribirse!</h3>
             </div>
         @endif
+        <div class="text-center mt-3">
+            <a href="{{ url()->previous() }}" class="btn btn-danger">Volver</a>
+        </div>
     </div>
 @endsection

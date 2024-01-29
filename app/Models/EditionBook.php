@@ -64,12 +64,21 @@ class EditionBook extends Model
             ->where('user_id', Auth::id());
     }
 
-    // Atributo calculado para la valoración media
-    public function getAverageRatingAttribute()
+    // Relación con las calificaciones de los libros
+    public function rating()
     {
-        return $this->bookRatings->avg('rating');
+        return $this->hasMany(BookRating::class, 'book_id');
     }
 
+    // Atributo calculado para la valoración media
+    public function averageRating()
+    {
+        // Obtén la valoración media del libro
+        $averageRating = $this->rating()->avg('rating');
+
+        // Devuelve la valoración media o null si no hay calificaciones
+        return $averageRating !== null ? round($averageRating, 2) : null;
+    }
 
 
     public function favorites()

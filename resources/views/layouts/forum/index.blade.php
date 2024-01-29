@@ -18,48 +18,53 @@
                 </ins>
             </h1>
         </div>
-        <div class="ps-3 pe-3 mt-3">
-            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal">
-                Crear un nuevo post
-            </button>
-        </div>
+        @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+            <div class="ps-3 pe-3 mt-3">
+                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                    Crear un nuevo post
+                </button>
+            </div>
 
-        <!-- Create Post Modal -->
-        <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel"
-            aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="createPostModalLabel">Crear un nuevo post</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <!-- Post creation form -->
-                        <form method="POST" action="{{ route('user_posts.add') }}">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="post_title" class="form-label">Título</label>
-                                <input type="text" class="form-control" id="post_title" name="post_title" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="post_content" class="form-label">Contenido</label>
-                                <textarea class="form-control" id="post_content" name="post_content" rows="3" required></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary mt-3">Crear Post</button>
-                            <button id="draft_create" class="btn btn-secondary mt-3">Guardar como borrador</button>
-                            <button id="draft_see" class="btn btn-info mt-3">Ver borrador</button>
-                        </form>
+            <!-- Create Post Modal -->
+            <div class="modal fade" id="createPostModal" tabindex="-1" aria-labelledby="createPostModalLabel"
+                aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="createPostModalLabel">Crear un nuevo post</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Post creation form -->
+                            <form method="POST" action="{{ route('user_posts.add') }}">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="post_title" class="form-label">Título</label>
+                                    <input type="text" class="form-control" id="post_title" name="post_title" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="post_content" class="form-label">Contenido</label>
+                                    <textarea class="form-control" id="post_content" name="post_content" rows="3" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary mt-3">Crear Post</button>
+                                <button id="draft_create" class="btn btn-secondary mt-3">Guardar como borrador</button>
+                                <button id="draft_see" class="btn btn-info mt-3">Ver borrador</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+        @endif
+
 
         <!-- Display existing posts -->
         <div class="posts-section w-100 mt-5 border border-dark rounded p-4 bg-light mb-5">
             @foreach ($posts as $post)
                 <div class="post mb-4 p-3 border border-dark rounded bg-white">
                     <div class="user-info mb-2 d-flex justify-content-between">
-                        <div class="fw-bold text-primary">{{ $post->user->nickname }} :  <h4 class="text-black"> <ins>{{$post->post_title}}</ins> </h4></div>
+                        <div class="fw-bold text-primary">{{ $post->user->nickname }} : <h4 class="text-black">
+                                <ins>{{ $post->post_title }}</ins> </h4>
+                        </div>
 
                         <div class="text-muted">{{ $post->created_at->diffForHumans() }}</div>
                     </div>
@@ -68,7 +73,7 @@
                     </div>
                     <div class="interaction mt-3 d-flex justify-content-between align-items-center">
                         @auth
-                            @if (Auth::check() && (Auth::id() == $post->user_id || Auth::user()->is_admin))
+                            @if (Auth::check() && (Auth::id() == $post->user_id || Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
                                 <!-- Add your delete button and modal here -->
                                 <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
                                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $post->id }}">

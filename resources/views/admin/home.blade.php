@@ -27,16 +27,18 @@
                             </div>
                         @endif
 
-                        <div class="row">
-                            <div class="col-md-4 mb-4 d-flex align-items-center justify-content-center">
-                                <div class="card admin-list-card">
-                                    <div class="card-body text-center">
-                                        <h5 class="card-title">{{ __('Gestión de Usuarios') }}</h5>
-                                        <a href="{{ route('user.list') }}"
-                                            class="btn btn-primary">{{ __('Ir a la gestión') }}</a>
+                        <div class="row justify-content-center">
+                            @if (Auth::user()->isAdmin())
+                                <div class="col-md-4 mb-4 d-flex align-items-center justify-content-center">
+                                    <div class="card admin-list-card">
+                                        <div class="card-body text-center">
+                                            <h5 class="card-title">{{ __('Gestión de Usuarios') }}</h5>
+                                            <a href="{{ route('user.list') }}"
+                                                class="btn btn-primary">{{ __('Ir a la gestión') }}</a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
 
                             <div class="col-md-4 mb-4 d-flex align-items-center justify-content-center">
                                 <div class="card admin-list-card">

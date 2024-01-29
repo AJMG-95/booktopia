@@ -144,18 +144,15 @@ class AuthorController extends Controller
         $author = Author::findOrFail($id);
         try {
 
-            // Verificar si el autor tiene libros asociados
-            if ($author->books()->exists()) {
-                return redirect()->route('authors.list')->with('error', 'No se puede eliminar el autor, ya que tiene libros asociados.');
+            // Verificar si el autor tiene libros asociados y Si no hay libros asociados, lo elimina
+            if (!$author->books()->exists()) {
+                $author->delete();
+                return redirect()->route('authors.list')->with('success', 'Autor eliminado exitosamente.');
             }
 
-            // Si no hay libros asociados, lo elimina
-            $author->delete();
-
-            return redirect()->route('authors.list')->with('success', 'Autor eliminado exitosamente.');
+            return redirect()->route('authors.list')->with('error', 'No se puede eliminar el autor, ya que tiene libros asociados.');
         } catch (\Exception $e) {
             // Manejar la excepción
-            dd($e);
             return redirect()->back()->with('error', 'Error al eliminar el autor: ' . $e->getMessage());
         }
     }

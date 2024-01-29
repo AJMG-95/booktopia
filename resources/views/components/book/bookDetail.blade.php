@@ -87,11 +87,11 @@
                         <div class="p-3">
                             <h4 class="mb-4">Valoración Media</h4>
                             <div class="d-flex flex-wrap">
-                                @if ($editionBook->average_rating)
+                                @if ($editionBook->rating->count() > 0)
                                     <span class="badge bg-dark me-2 mb-2 p-2">
-                                        {{ $editionBook->average_rating }}</span>
+                                        {{ $editionBook->averageRating()}}</span>
                                 @else
-                                    <p class="text-muted">_ _</p>
+                                    <span class="badge bg-dark me-2 mb-2 p-2">- -</span>
                                 @endif
                             </div>
                         </div>

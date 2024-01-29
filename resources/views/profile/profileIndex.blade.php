@@ -13,7 +13,8 @@
                                     class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
                                     <i class="bi bi-bookmark"></i> <span>Mi lista de deseos</span>
                                 </a>
-                                <a href="{{ route('favorite.list') }}" class="list-group-item border-end-0 d-inline-block text-truncate">
+                                <a href="{{ route('favorite.list') }}"
+                                    class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-heart"></i> <span>Mi lista de favoritos</span>
                                 </a>
                                 <a href=" {{ route('user.comments.posts') }}"
@@ -77,11 +78,10 @@
                                 <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
                                     <i class="bi bi-envelope"></i> <span>Mis Notificaciones</span>
                                 </a>
-                                <div class="mt-5 w-100">
-                                    <a class="w-16 btn btn-primary ms-3 me-3 list-group-item border-end-0 text-truncate mt-auto rounded mb-2"
+                                <div class="mt-5 w-100 px-4 d-flex flex-column align-items-center">
+                                    <a class="btn btn-primary list-group-item text-truncate mt-auto rounded mb-2 w-100"
                                         href="{{ route('logout') }}"
-                                        onclick="event.preventDefault();
-                                    document.getElementById('logout-form').submit();">
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
@@ -124,12 +124,12 @@
 
                 {{-- Mensaje de fin de suscripción --}}
                 @if (Auth::user()->isSubscriber())
-                <div x-data="{ daysLeft: {{ now()->diffInDays(Auth::user()->subscriber->end_at) }} }">
-                    <div x-show="daysLeft <= 10" class="alert alert-warning mt-4">
-                        Solo faltan <span x-text="daysLeft"></span> días para el fin de su suscripción.
-                        Recuerde renovarla pasada la fecha {{ Auth::user()->subscriber->end_at }}
+                    <div x-data="{ daysLeft: {{ now()->diffInDays(Auth::user()->subscriber->end_at) }} }">
+                        <div x-show="daysLeft <= 10" class="alert alert-warning mt-4">
+                            Solo faltan <span x-text="daysLeft"></span> días para el fin de su suscripción.
+                            Recuerde renovarla pasada la fecha {{ Auth::user()->subscriber->end_at }}
+                        </div>
                     </div>
-                </div>
                 @endif
 
 
@@ -141,8 +141,8 @@
                                     alt="{{ Auth::user()->name }} Profile" class="img-fluid rounded-circle"
                                     style="width: 4vw; height: 4vw; min-width:50px; min-height:50px;">
                             @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto" fill="currentColor"
-                                    class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
+                                    fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path fill-rule="evenodd"
                                         d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
@@ -329,7 +329,7 @@
         </div>
     </div>
 
-<!-- Agrega esto al encabezado de tu vista -->
-<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/alpine.min.js" defer></script>
+    <!-- Agrega esto al encabezado de tu vista -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.13.3/dist/alpine.min.js" defer></script>
 
 @endsection

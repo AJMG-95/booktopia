@@ -21,7 +21,7 @@
                     </div>
                     <div class="interaction mt-3 d-flex justify-content-between align-items-center">
                         @auth
-                            @if (Auth::check() && (Auth::id() == $comment->user_id || Auth::user()->is_admin))
+                            @if (Auth::check() && (Auth::id() == $comment->user_id || Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
                                 <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
                                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $comment->id }}">
                                     <i class="bi bi-trash"></i> Eliminar
