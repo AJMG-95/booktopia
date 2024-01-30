@@ -3,130 +3,125 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="container mt-4 border rounded border-black">
+    <div class="container-fluid ms-0 me-0 px-4 py-3 mt-3">
 
-        <h2 class="mt-3 ms-3">Crear Nuevo Usuario</h2>
-        <form method="POST" action="{{ route('user.store') }}">
-            @csrf
+        <div class="ms-3 mb-4 text-center p-2" style="background-color:rgba(247, 247, 247, 0.651)">
+            <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
+                <ins>
+                    Crear Nuevo Usuario
+                </ins>
+            </h1>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-12 " style="min-width: 50vw; max-width:  80vw;">
+                <div class="card border border-black " style="min-width: 50vw; " >
+                    <div class="card-body ">
+                        <form method="POST" action="{{ route('user.store') }}">
+                            @csrf
 
-            <div class="form-group admin-form mb-3">
-                <label for="nickname" class="col-form-label text-md-right">{{ __('Nickname') }}</label>
+                            <div class="mb-3">
+                                <label for="nickname" class="form-label">{{ __('Nickname') }}</label>
+                                <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror"
+                                    name="nickname" value="{{ old('nickname') }}" required autocomplete="nickname" autofocus>
+                                @error('nickname')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
-                <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror"
-                    name="nickname" value="{{ old('nickname') }}" required autocomplete="nickname" autofocus>
+                            <div class="mb-3">
+                                <label for="name" class="form-label">{{ __('Nombre') }}</label>
+                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                                    name="name" value="{{ old('name') }}" required autocomplete="name">
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
-                @error('nickname')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
+                            <div class="mb-3">
+                                <label for="surnames" class="form-label">{{ __('Apellidos') }}</label>
+                                <input id="surnames" type="text" class="form-control @error('surnames') is-invalid @enderror"
+                                    name="surnames" value="{{ old('surnames') }}" required autocomplete="surnames">
+                                @error('surnames')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
+                            <div class="mb-3">
+                                <label for="email" class="form-label">{{ __('Email') }}</label>
+                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                    name="email" value="{{ old('email') }}" required autocomplete="email">
+                                @error('email')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="birth_date" class="form-label">{{ __('Fecha de nacimiento') }}</label>
+                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror"
+                                    name="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth_date">
+                                @error('birth_date')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="country_id" class="form-label">{{ __('País') }}</label>
+                                <select class="form-control" id="country_id" name="country_id">
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}">{{ $country->country_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="biography" class="form-label">{{ __('Biografía') }}</label>
+                                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror" name="biography"
+                                    autocomplete="biography"></textarea>
+                                @error('biography')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">{{ __('Contraseña') }}</label>
+                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                                    name="password" required autocomplete="new-password">
+                                @error('password')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            <div class="mb-3 d-flex flex-row justify-content-around flex-wrap">
+                                <button type="submit" class="btn btn-primary text-wrap mt-3">{{ __('Crear Usuario') }}</button>
+                                <a href="{{ route('user.list') }}" class="btn btn-danger  mt-3">{{ __('Cancelar') }}</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
-
-            <div class="form-group admin-form mb-3">
-                <label for="name" class="col-form-label text-md-right">{{ __('Nombre') }}</label>
-
-                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror" name="name"
-                    value="{{ old('name') }}" required autocomplete="name">
-
-                @error('name')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-
-            </div>
-
-            <div class="form-group admin-form mb-3">
-                <label for="surnames" class="col-form-label text-md-right">{{ __('Apellidos') }}</label>
-
-                <input id="surnames" type="text" class="form-control @error('surnames') is-invalid @enderror"
-                    name="surnames" value="{{ old('surnames') }}" required autocomplete="surnames">
-
-                @error('surnames')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <div class="form-group admin-form mb-3">
-                <label for="email" class="col-form-label text-md-right">{{ __('Email') }}</label>
-
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                    name="email" value="{{ old('email') }}" required autocomplete="email">
-
-                @error('email')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
+        </div>
 
 
-            <div class="form-group admin-form mb-3">
-                <label for="birth_date" class="col-form-label text-md-right">{{ __('Fecha de nacimiento') }}</label>
 
-                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror"
-                    name="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth_date">
-
-                @error('birth_date')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <div class="form-group admin-form mb-3">
-                <label for="country_id" class="col-form-label text-md-right">{{ __('Pais') }}</label>
-
-                <select class="form-control" id="country_id" name="country_id">
-                    <!-- Include options for countries -->
-                    @foreach ($countries as $country)
-                        <option value="{{ $country->id }}">{{ $country->country_name }}</option>
-                    @endforeach
-                </select>
-                @error('country_id')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-            </div>
-
-            <div class="form-group admin-form mb-3">
-                <label for="biography" class=" col-form-label text-md-right">{{ __('Biografía') }}</label>
-
-
-                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror" name="biography"
-                    autocomplete="biography"></textarea>
-
-                @error('biography')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-
-            </div>
-
-            <div class="form-group admin-form mb-3">
-                <label for="password" class="col-form-label text-md-right">{{ __('Contraseña') }}</label>
-
-                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
-                    name="password" value="{{ old('password') }}" required autocomplete="password">
-
-                @error('password')
-                    <span class="invalid-feedback" role="alert">
-                        <strong>{{ $message }}</strong>
-                    </span>
-                @enderror
-
-            </div>
-
-            <!-- Repeat similar blocks for other form fields -->
-            <button type="submit" class="btn btn-primary mb-3">
-                {{ __('Crear Usuario') }}
-            </button>
-
-        </form>
     </div>
 @endsection

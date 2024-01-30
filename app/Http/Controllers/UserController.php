@@ -62,20 +62,22 @@ class UserController extends Controller
         $request->validate([
             'nickname' => 'required|string',
             'name' => 'required|string',
+            'surnames' => 'required|string',
             'birth_date' => 'nullable|date',
             'country_id' => 'nullable|exists:countries,id',
-            'profile_img' => 'nullable|string',
             'biography' => 'nullable|string',
         ]);
 
         $user = User::findOrFail($id);
         $user->nickname = $request->input('nickname');
         $user->name = $request->input('name');
+        $user->name = $request->input('surnames');
         $user->birth_date = $request->input('birth_date');
         $user->country_id = $request->input('country_id');
-        $user->profile_img = $request->input('profile_img');
         $user->biography = $request->input('biography');
         $user->save();
+
+
 
         return redirect()->route('user.list')->with('success', 'Usuario actualizado exitosamente.');
     }

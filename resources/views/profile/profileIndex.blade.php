@@ -8,7 +8,7 @@
                 <div class="col-auto  ">
                     <div id="sidebar" class="collapse collapse-horizontal show border-end pb-5 bg-white">
                         <div id="sidebar-nav" class="list-group border-0 rounded-0 text-sm-start d-flex flex-column">
-                            @if (!(Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
+                            @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
                                 <a href=" {{ route('wishes.list') }}"
                                     class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
                                     <i class="bi bi-bookmark"></i> <span>Mi lista de deseos</span>
@@ -21,9 +21,6 @@
                                     class="list-group-item border-end-0
                                     d-inline-block text-truncate">
                                     <i class="bi bi-signpost"></i> <span>Mis posts y comentarios</span>
-                                </a>
-                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
-                                    <i class="bi bi-mailbox2"></i> <span>Mis Notificaciones</span>
                                 </a>
                                 {{--  <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate">
                                     <i class="bi bi-mailbox2-flag"></i> <span>Mis Notificaciones para cuando hay</span>
@@ -75,8 +72,8 @@
                                     @endif
                                 </div>
                             @else
-                                <a href="#" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
-                                    <i class="bi bi-envelope"></i> <span>Mis Notificaciones</span>
+                                <a href="{{ route('contact_us.admin_index') }}" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
+                                    <i class="bi bi-envelope"></i> <span>Notificaciones</span>
                                 </a>
                                 <div class="mt-5 w-100 px-4 d-flex flex-column align-items-center">
                                     <a class="btn btn-primary list-group-item text-truncate mt-auto rounded mb-2 w-100"

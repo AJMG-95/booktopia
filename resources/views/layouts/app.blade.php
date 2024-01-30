@@ -63,7 +63,7 @@
         @yield('content')
     </div>
 
-    <footer class="appFooter ">
+    <footer class="container-fluid  appFooter ">
         @include('partials.footer')
     </footer>
 

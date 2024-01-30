@@ -17,6 +17,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\BookRatingController;
 use App\Http\Controllers\BookCommentController;
 use App\Http\Controllers\UserPostController;
+use App\Http\Controllers\ContactUsController;
 
 
 //!Rutas del grupo de middleware que requieren autenticación
@@ -95,6 +96,11 @@ Route::middleware(['auth'])->group(function () {
                 Route::delete('/destroy/{editionBook}', [EditionBookController::class, 'destroy'])->name('destroy');
                 Route::post('/visibility/{editionBook}', [EditionBookController::class, 'toggleVisibility'])->name('toggleVisibility');
             });
+
+            Route::get('/admin/contact_us', [ContactUsController::class, 'index'])->name('contact_us.admin_index');
+            Route::get('/admin/contact_us/{id}', [ContactUsController::class, 'show'])->name('contact_us.admin_show');
+            Route::patch('/admin/contact_us/toggle_status/{id}', [ContactUsController::class, 'toggleStatus'])->name('contact_us.admin_toggle_status');
+
         });
     });
 
@@ -212,11 +218,11 @@ Route::prefix('/genre')->name('genre.')->group(function () {
 
 Route::prefix('/books')->name('books.')->group(function () {
     Route::get('/of_genre/{genre}', [GenreController::class, 'booksForGenre'])->name('forGenre');
-
     Route::get('/book/{id}', [UserLibraryController::class, "show"])->name('details');
 });
 
-
+Route::get('/contact-us', [ContactUsController::class, 'create'])->name('contact_us.form');
+Route::post('/contact-us', [ContactUsController::class, 'store'])->name('contact_us.store');
 
 
 Auth::routes();
