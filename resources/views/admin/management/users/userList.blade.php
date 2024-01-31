@@ -21,7 +21,7 @@
 
         <div class="table-responsive px-5">
             <table class="table table-bordered table-striped table-hover rounded">
-                <thead class="thead-dark">
+                <thead class="thead-dark" style="border-bottom: 2px solid #333;">
                     <tr>
                         <th></th>
                         <th>Nickname</th>
@@ -32,7 +32,7 @@
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
-                        <tr>
+                    <tr style="border-bottom: 1px solid #33333363;">
                             <td class="text-center">{{ $user->id }}</td>
                             <td>{{ $user->nickname }}</td>
                             <td>{{ $user->name }}</td>

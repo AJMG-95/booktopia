@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm app-navbar">
+    <nav class="navbar navbar-expand-lg navbar-light shadow-sm app-navbar">
         <div class="container-fluid ms-5 p-2">
             <a class="navbar-brand" href="{{ route('welcome') }}">
                 <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo"
@@ -24,7 +24,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 @guest
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item {{ request()->routeIs('welcome') ? 'border border-black' : '' }}">
+                        <li class="nav-item {{ request()->routeIs('welcome') ? 'border border-black rounded bg-blue' : '' }}">
                             <a class="nav-link" href="{{ route('welcome') }}">Inicio</a>
                         </li>
                         <li class="nav-item {{ request()->routeIs('books.shop') ? 'border border-black rounded bg-blue ' : '' }}">

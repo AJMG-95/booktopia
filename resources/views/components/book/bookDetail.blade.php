@@ -14,7 +14,7 @@
                             <p>
                                 Precio Normal: <del class="text-danger">{{ number_format($editionBook->price, 2) }} €</del>
                             </p>
-                            <a href="{{ route('subscribe.view') }}">
+                            <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">
                                 Precio para Suscriptores:
                             </a>
                             <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
@@ -23,7 +23,7 @@
                                 Precio Normal: {{ number_format($editionBook->price, 2) }} €
                             </p>
                             <p>
-                                <a href="{{ route('subscribe.view') }}">Precio para Suscriptores:</a>
+                                <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">Precio para Suscriptores:</a>
                                 <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
                             </p>
                         @endif
@@ -32,7 +32,7 @@
                             Precio Normal: {{ number_format($editionBook->price, 2) }} €
                         </p>
                         <p>
-                            <a href="{{ route('subscribe.view') }}">Precio para Suscriptores:</a>
+                            <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">Precio para Suscriptores:</a>
                             <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
                         </p>
                     @endauth

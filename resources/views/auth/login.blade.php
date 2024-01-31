@@ -14,7 +14,7 @@
     @extends('layouts.app')
 
     @section('content')
-        <div class="container mt-5 pt-5">
+    <div class="container-fluid ms-0 me-0 px-3 py-3 mt-2">
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <div class="card">
@@ -76,19 +76,19 @@
                                 <div class=" mb-0 text-center">
                                     <div class="d-flex justify-content-center align-items-center text-center">
                                         <div class="me-1 mb-2 ">
-                                            <button type="submit" class="btn btn-primary btn-block" style="width: 5.3vw">
+                                            <button type="submit" class="btn btn-primary btn-block" style="min-width: 5.3vw">
                                                 {{ __('Login') }}
                                             </button>
                                         </div>
                                         <div class="ms-1 mb-2 ">
                                             <a class="btn btn-danger btn-block" href="{{ route('welcome') }}"
-                                                style="width: 5.3vw">
+                                                style="min-width: 5.3vw">
                                                 {{ __('Cancelar') }}
                                             </a>
                                         </div>
                                     </div>
                                     <div class=" mt-2">
-                                        <a class="btn btn-secondary btn-block" href="{{ route('register') }}">
+                                        <a class="btn btn-info btn-block" href="{{ route('register') }}">
                                             {{ __('Registrarse') }}
                                         </a>
                                     </div>

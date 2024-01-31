@@ -21,11 +21,12 @@
                     </ins>
                 </h1>
             </div>
-            <div class="row justify-content-center mt-4 mb-3 me-0">
+            <div class=" justify-content-center mt-4 mb-3 me-0">
 
-                <div class="col-12">
+                <div class="">
                     @include('partials.randomBook')
                 </div>
+
 
             </div>
 

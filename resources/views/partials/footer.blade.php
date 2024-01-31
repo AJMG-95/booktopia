@@ -25,6 +25,10 @@
                 <div class="">
                     <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-width: 100px;">
                     <h4 class="mt-3">Booktopia</h4>
+                    <div class="text-black">
+                        © {{ date('Y') }} Copyright:
+                        <a href="{{ route('welcome') }}" class="text-black">Booktopia</a>
+                    </div>
                 </div>
                 @auth
                     @if (Auth::user()->isSubscriber() && !Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
@@ -65,20 +69,24 @@
                                     class="btn btn-outline-light btn-rounded border-dark text-dark" role="button"
                                     aria-label="Contacta con nosotros">Suscribirse</a>
                             </div>
-                        @endif
+                        @elseif (!Auth::user()->isSubscriber() && !Auth::user()->isAdmin())
+                            <div>
+                                <span class="text-uppercase mb-2">Contacta con nosotros</span>
+                                <a href="{{ route('contact_us.form') }}"
+                                    class="btn btn-outline-light btn-rounded border-dark text-dark" role="button"
+                                    aria-label="Contacta con nosotros">Contactar</a>
+                            </div>
+                        @else
                         <div>
                             <span class="text-uppercase mb-2">Contacta con nosotros</span>
-                            <a href="{{ route('contact_us.form') }}"
+                            <a href="{{route('contact_us.admin_index')   }}"
                                 class="btn btn-outline-light btn-rounded border-dark text-dark" role="button"
-                                aria-label="Contacta con nosotros">Contactar</a>
+                                aria-label="Contacta con nosotros">Notificacniones</a>
                         </div>
+                        @endif
                     </div>
                 @endguest
             </div>
-        </div>
-        <div class="text-black">
-            © {{ date('Y') }} Copyright:
-            <a href="#" class="text-black">Booktopia</a>
         </div>
     </footer>
 

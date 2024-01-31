@@ -1,6 +1,6 @@
 <!-- Partial: books_carousel.blade.php -->
-<div id="booksCarousel" class="carousel slide mt-4 text-center container d-flex  align-items-center">
-    <h2 class="mb-3">Libros Sugeridos</h2>
+<div id="booksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2" style="height: 70vh">
+    <h2 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);"> Libros Sugeridos</h2>
     <div class="carousel-inner rounded p-4 mx-auto" style="max-width: 50vw; max-height: 500px;">
         @foreach ($randomBooks as $index => $book)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
