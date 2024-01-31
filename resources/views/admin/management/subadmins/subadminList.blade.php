@@ -7,7 +7,7 @@
             <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
                 <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
                 <ins>
-                    Gestón de subadministradores
+                    Gestón de Subadministradores
                 </ins>
             </h1>
         </div>
@@ -20,23 +20,23 @@
         <div class="table-responsive px-5">
             <table class="table table-bordered table-striped table-hover rounded">
                 <thead class="thead-dark" style="border-bottom: 2px solid #333;">
-                    <tr class="">
-                        <th></th>
-                        <th>Nickname</th>
-                        <th>Nombre</th>
-                        <th>Email</th>
-                        <th>Acciones</th>
+                    <tr>
+                        <th class="text-center"></th>
+                        <th class="text-center">Nickname</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($subadmins as $subadmin)
                         <tr style="border-bottom: 1px solid #33333363;">
                             <td class="text-center">{{ $subadmin->id }}</td>
-                            <td>{{ $subadmin->nickname }}</td>
-                            <td>{{ $subadmin->name }}</td>
-                            <td>{{ $subadmin->email }}</td>
+                            <td class="text-center">{{ $subadmin->nickname }}</td>
+                            <td class="text-center">{{ $subadmin->name }}</td>
+                            <td class="text-center">{{ $subadmin->email }}</td>
                             <td class="text-center">
-                                <div class="btn-group" role="group" aria-label="User Actions">
+                                <div class="btn-group" role="group" aria-label="Subadmin Actions">
                                     <a href="{{ route('subadmins.edit', $subadmin->id) }}"
                                         class="btn btn-primary btn-sm me-2" title="Edit subadmin"> <i
                                             class="bi bi-pencil"></i> </a>

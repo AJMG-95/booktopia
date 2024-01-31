@@ -5,7 +5,7 @@
         @foreach ($randomBooks as $index => $book)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                 <div class="container p-3 border border-black rounded"
-                    style="max-width: 30vw; background-color:rgba(247, 247, 247, 0.651)">
+                    style="max-width: 40vw; background-color:rgba(247, 247, 247, 0.651)">
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <img src="{{ asset('storage/' . $book->cover) }}" alt="Imagen del Género"
@@ -16,13 +16,13 @@
                                 <h3>{{ $book->title }}</h3>
                                 <p>{{ $book->short_description }}</p>
                             </div>
-                            <div class="my-3 border border-black rounded "
+                            <div class="my-3 border border-black rounded p-2"
                                 style=" background-color:rgba(247, 247, 247, 0.795)">
                                 <p class="mt-2">
                                     Precio: <strong>{{ number_format($book->price, 2) }} €</strong>
                                 </p>
                                 <p class="text-success">
-                                    <strong><ins>Precio con suscripción</ins>:
+                                    <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline"><strong><ins>Precio con suscripción</ins></a>:
                                     {{ number_format($book->price * 0.8, 2) }} €</>
                                 </p>
                             </div>

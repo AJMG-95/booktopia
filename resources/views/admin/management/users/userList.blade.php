@@ -23,20 +23,20 @@
             <table class="table table-bordered table-striped table-hover rounded">
                 <thead class="thead-dark" style="border-bottom: 2px solid #333;">
                     <tr>
-                        <th></th>
-                        <th>Nickname</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th>Actions</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Nickname</th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Email</th>
+                        <th class="text-center">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($users as $user)
                     <tr style="border-bottom: 1px solid #33333363;">
                             <td class="text-center">{{ $user->id }}</td>
-                            <td>{{ $user->nickname }}</td>
-                            <td>{{ $user->name }}</td>
-                            <td>{{ $user->email }}</td>
+                            <td class="text-center">{{ $user->nickname }}</td>
+                            <td class="text-center">{{ $user->name }}</td>
+                            <td class="text-center">{{ $user->email }}</td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="User Actions">
                                     <a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary btn-sm me-2"

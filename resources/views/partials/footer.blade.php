@@ -69,7 +69,7 @@
                                     class="btn btn-outline-light btn-rounded border-dark text-dark" role="button"
                                     aria-label="Contacta con nosotros">Suscribirse</a>
                             </div>
-                        @elseif (!Auth::user()->isSubscriber() && !Auth::user()->isAdmin())
+                        @elseif (!Auth::user()->isSubadmin() && !Auth::user()->isAdmin())
                             <div>
                                 <span class="text-uppercase mb-2">Contacta con nosotros</span>
                                 <a href="{{ route('contact_us.form') }}"
@@ -77,12 +77,12 @@
                                     aria-label="Contacta con nosotros">Contactar</a>
                             </div>
                         @else
-                        <div>
-                            <span class="text-uppercase mb-2">Contacta con nosotros</span>
-                            <a href="{{route('contact_us.admin_index')   }}"
-                                class="btn btn-outline-light btn-rounded border-dark text-dark" role="button"
-                                aria-label="Contacta con nosotros">Notificacniones</a>
-                        </div>
+                            <div>
+                                <span class="text-uppercase mb-2">Contacta con nosotros</span>
+                                <a href="{{ route('contact_us.admin_index') }}"
+                                    class="btn btn-outline-light btn-rounded border-dark text-dark" role="button"
+                                    aria-label="Contacta con nosotros">Notificacniones</a>
+                            </div>
                         @endif
                     </div>
                 @endguest

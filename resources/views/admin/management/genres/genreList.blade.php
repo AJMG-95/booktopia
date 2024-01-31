@@ -7,7 +7,7 @@
             <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
                 <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
                 <ins>
-                    Gestón de subadministradores
+                    Gestón de Géneros
                 </ins>
             </h1>
         </div>
@@ -18,9 +18,9 @@
         </div>
 
         <div class="table-responsive px-5">
-            <table class="table">
-                <thead>
-                    <tr>
+            <table class="table table-bordered table-striped table-hover rounded">
+                <thead class="thead-dark" style="border-bottom: 2px solid #333;">
+                    <tr class="">
                         <th></th>
                         <th>Nombre</th>
                         <th>Descripción</th>
@@ -29,55 +29,58 @@
                 </thead>
                 <tbody>
                     @forelse($genres as $genre)
-                        <tr>
+                        <tr style="border-bottom: 1px solid #33333363;">
                             <td>
                                 @if (isset($genre) && $genre->img_url)
                                     <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género"
-                                        class="rounded" style="max-height: 40px; margin-left: 5vw">
+                                        class="rounded" style="max-width: 50px; max-height: 40px; margin-left: 5vw">
                                 @else
                                     No imagen
                                 @endif
                             </td>
                             <td>{{ $genre->genre_name }}</td>
                             <td>{{ $genre->description }}</td>
-                            <td>
-                                <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-primary">Editar</a>
+                            <td class="">
+                                <div class="btn-group" role="group" aria-label="Genre Actions">
+                                    <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-primary btn-sm me-2"><i
+                                            class="bi bi-pencil"></i></a>
 
-                                <!-- Botón de Borrar con Modal de Confirmación -->
-                                <button type="button" class="btn btn-danger delete-genre-btn" data-bs-toggle="modal"
-                                    data-bs-target="#confirmDeleteModal{{ $genre->id }}">
-                                    Borrar
-                                </button>
-
-                                <!-- Modal de Confirmación de Borrado -->
-                                <div class="modal fade" id="confirmDeleteModal{{ $genre->id }}" tabindex="-1"
-                                    aria-labelledby="confirmDeleteModalLabel{{ $genre->id }}" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ $genre->id }}">
-                                                    Confirmar Borrado</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                    aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <p class="text-dark">¿Seguro que quiere borrar este género?</p>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-bs-dismiss="modal">Cancelar</button>
-                                                <form action="{{ route('genres.destroy', ['id' => $genre->id]) }}"
-                                                    method="post">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger">Borrar</button>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    <!-- Botón de Borrar con Modal de Confirmación -->
+                                    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal"
+                                        data-bs-target="#confirmDeleteModal{{ $genre->id }}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
                                 </div>
+
+
                             </td>
                         </tr>
+                        <!-- Modal de Confirmación de Borrado -->
+                        <div class="modal fade" id="confirmDeleteModal{{ $genre->id }}" tabindex="-1"
+                            aria-labelledby="confirmDeleteModalLabel{{ $genre->id }}" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel{{ $genre->id }}">
+                                            Confirmar Borrado</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                            aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <p class="text-dark">¿Seguro que quiere borrar este género?</p>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Cancelar</button>
+                                        <form action="{{ route('genres.destroy', ['id' => $genre->id]) }}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Borrar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @empty
                         <tr>
                             <td colspan="5">No hay géneros disponibles.</td>

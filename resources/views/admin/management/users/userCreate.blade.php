@@ -22,7 +22,7 @@
 
                             <div class="mb-3">
                                 <label for="nickname" class="form-label">{{ __('Nickname') }}</label>
-                                <input id="nickname" type="text" class="form-control @error('nickname') is-invalid @enderror"
+                                <input id="nickname" type="text" class="border border-black  form-control @error('nickname') is-invalid @enderror"
                                     name="nickname" value="{{ old('nickname') }}" required autocomplete="nickname" autofocus>
                                 @error('nickname')
                                     <div class="invalid-feedback">
@@ -33,7 +33,7 @@
 
                             <div class="mb-3">
                                 <label for="name" class="form-label">{{ __('Nombre') }}</label>
-                                <input id="name" type="text" class="form-control @error('name') is-invalid @enderror"
+                                <input id="name" type="text" class="border border-black  form-control @error('name') is-invalid @enderror"
                                     name="name" value="{{ old('name') }}" required autocomplete="name">
                                 @error('name')
                                     <div class="invalid-feedback">
@@ -44,7 +44,7 @@
 
                             <div class="mb-3">
                                 <label for="surnames" class="form-label">{{ __('Apellidos') }}</label>
-                                <input id="surnames" type="text" class="form-control @error('surnames') is-invalid @enderror"
+                                <input id="surnames" type="text" class="border border-black  form-control @error('surnames') is-invalid @enderror"
                                     name="surnames" value="{{ old('surnames') }}" required autocomplete="surnames">
                                 @error('surnames')
                                     <div class="invalid-feedback">
@@ -55,7 +55,7 @@
 
                             <div class="mb-3">
                                 <label for="email" class="form-label">{{ __('Email') }}</label>
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
+                                <input id="email" type="email" class="border border-black  form-control @error('email') is-invalid @enderror"
                                     name="email" value="{{ old('email') }}" required autocomplete="email">
                                 @error('email')
                                     <div class="invalid-feedback">
@@ -66,7 +66,7 @@
 
                             <div class="mb-3">
                                 <label for="birth_date" class="form-label">{{ __('Fecha de nacimiento') }}</label>
-                                <input id="birth_date" type="date" class="form-control @error('birth_date') is-invalid @enderror"
+                                <input id="birth_date" type="date" class="border border-black  form-control @error('birth_date') is-invalid @enderror"
                                     name="birth_date" value="{{ old('birth_date') }}" required autocomplete="birth_date">
                                 @error('birth_date')
                                     <div class="invalid-feedback">
@@ -77,7 +77,7 @@
 
                             <div class="mb-3">
                                 <label for="country_id" class="form-label">{{ __('País') }}</label>
-                                <select class="form-control" id="country_id" name="country_id">
+                                <select class="border border-black  form-control" id="country_id" name="country_id">
                                     @foreach ($countries as $country)
                                         <option value="{{ $country->id }}">{{ $country->country_name }}</option>
                                     @endforeach
@@ -91,7 +91,7 @@
 
                             <div class="mb-3">
                                 <label for="biography" class="form-label">{{ __('Biografía') }}</label>
-                                <textarea id="biography" class="form-control @error('biography') is-invalid @enderror" name="biography"
+                                <textarea id="biography" class="border border-black  form-control @error('biography') is-invalid @enderror" name="biography"
                                     autocomplete="biography"></textarea>
                                 @error('biography')
                                     <div class="invalid-feedback">
@@ -102,7 +102,7 @@
 
                             <div class="mb-3">
                                 <label for="password" class="form-label">{{ __('Contraseña') }}</label>
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror"
+                                <input id="password" type="password" class="border border-black  form-control @error('password') is-invalid @enderror"
                                     name="password" required autocomplete="new-password">
                                 @error('password')
                                     <div class="invalid-feedback">
