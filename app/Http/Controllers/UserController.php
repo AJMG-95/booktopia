@@ -179,12 +179,14 @@ class UserController extends Controller
         $request->validate([
             'nickname' => 'required|string',
             'name' => 'required|string',
+            'surnames' => 'nullable|string',
             'profile_img' => 'nullable|string',
         ]);
 
         $subadmin = User::findOrFail($id);
         $subadmin->nickname = $request->input('nickname');
         $subadmin->name = $request->input('name');
+        $subadmin->surnames = $request->input('surnames');
         $subadmin->profile_img = $request->input('profile_img');
         $subadmin->save();
 

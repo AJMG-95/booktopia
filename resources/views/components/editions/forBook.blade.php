@@ -17,7 +17,6 @@
                         <div class="card-body rounded">
                             <h5 class="card-title">{{ $edition->title }}</h5>
                             <p class="card-text">{{ $edition->description }}</p>
-                            <p class="card-text">ISBN: {{ $edition->isbn }}</p>
                             <p class="card-text">Editorial: {{ $edition->editorial }}</p>
                             <p class="card-text">Fecha de publicación: {{ $edition->publication_date }}</p>
                             <p class="card-text">Precio: {{ $edition->price }}</p>

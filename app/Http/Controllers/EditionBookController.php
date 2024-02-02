@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Validation\Rule;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\BookComment;
 
@@ -98,9 +98,10 @@ class EditionBookController extends Controller
             // Verifica si se proporcionó un archivo PDF
             if ($request->hasFile('document')) {
                 $documentFile = $request->file('document');
+                $currentDate = Carbon::now();
 
                 // Guarda el archivo PDF en el directorio correspondiente
-                $documentFileName = $editionBook->id . '.pdf';  // Nombre basado en el ID del libro
+                $documentFileName = $currentDate->format('Ymd_His') . '_' . $editionBook->id . '.pdf';  // Nombre basado en el ID
                 $documentPath = $documentFile->storeAs('documents', $documentFileName, 'public');
 
                 // Asigna la ruta del documento al modelo del libro
@@ -181,7 +182,7 @@ class EditionBookController extends Controller
                 'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'visible' => 'boolean',
                 'price' => 'nullable|numeric',
-                'document' => 'nullable|string',
+                'document' => 'file|mimes:pdf|max:2048',
                 'language_id' => 'nullable|exists:languages,id',
                 'for_adults' => 'boolean',
                 'authors' => 'array',
@@ -209,6 +210,27 @@ class EditionBookController extends Controller
                 $data['cover'] = $coverPath;
             }
 
+
+            if ($request->hasFile('document')) {
+                $documentFile = $request->file('document');
+                $currentDate = now();
+
+                // Elimina el archivo PDF anterior si existe
+                if ($editionBook->document) {
+                    Storage::disk('public')->delete($editionBook->document);
+                }
+
+                // Genera el nombre del archivo usando el campo id y el timestamp para evitar duplicados
+                $documentFileName =  $currentDate->format('Ymd_His') . '_' . $editionBook->id . '.pdf';
+
+                // Almacena el nuevo archivo PDF en el directorio correspondiente
+                $documentPath = $documentFile->storeAs('documents', $documentFileName, 'public');
+
+                // Asigna la nueva ruta del documento al modelo del libro
+                $data['document'] = $documentPath;
+            }
+
+            // Update other fields
             $editionBook->update($data);
 
             // Actualiza la asociación de autores
@@ -229,6 +251,7 @@ class EditionBookController extends Controller
 
             return redirect()->route('books.list')->with('success', 'Libro actualizado exitosamente.');
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('books.list')->with('error', 'Error al actualizar el libro.');
         }
     }

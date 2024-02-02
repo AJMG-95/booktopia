@@ -19,24 +19,46 @@
                             @method('PATCH')
 
                             <div class="mb-3">
-                                <label for="nickname" class="form-label">Nickname</label>
-                                <input type="text" class="form-control" id="nickname" name="nickname"
-                                    value="{{ old('nickname', $subadmin->nickname) }}" required>
+                                <label for="nickname" class="form-label">{{ __('Nickname') }}</label>
+                                <input id="nickname" type="text"
+                                    class="border border-black border border-black form-control @error('nickname') is-invalid @enderror"
+                                    name="nickname" value="{{ old('nickname', $subadmin->nickname) }}" required
+                                    autocomplete="nickname" autofocus>
+                                @error('nickname')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nombre</label>
-                                <input type="text" class="form-control" id="name" name="name"
-                                    value="{{ old('name', $subadmin->name) }}" required>
+                                <label for="name" class="form-label">{{ __('Nombre') }}</label>
+                                <input id="name" type="text"
+                                    class="border border-black form-control @error('name') is-invalid @enderror"
+                                    name="name" value="{{ old('name', $subadmin->name) }}" required autocomplete="name">
+                                @error('name')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
+
 
                             <div class="mb-3">
-                                <label for="surnames" class="form-label">Apellidos</label>
-                                <input type="text" class="form-control" id="surnames" name="surnames"
-                                    value="{{ old('surnames', $subadmin->surnames) }}" required>
+                                <label for="surnames" class="form-label">{{ __('Apellidos') }}</label>
+                                <input id="surnames" type="text"
+                                    class="border border-black form-control @error('surnames') is-invalid @enderror"
+                                    name="surnames" value="{{ old('surnames', $subadmin->surnames) }}" required
+                                    autocomplete="surnames">
+                                @error('surnames')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
-                            <!-- Agrega los demás campos del modelo User -->
+
+
 
                             <div class="mb-3" style="display: none;">
                                 <label for="role_id" class="form-label">Rol</label>
@@ -50,13 +72,24 @@
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Guardar cambios</button>
+
+                            <div class="form-group row mb-3 ms-0 me-0 text-center">
+                                <div class="col-md-6 ">
+                                    <button type="submit" class="btn btn-primary">
+                                        {{ __('Actualizar') }}
+                                    </button>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <a href="{{ route('subadmins.list') }}" class="btn btn-danger">
+                                        {{ __('Cancelar') }}
+                                    </a>
+                                </div>
+                            </div>
+
                         </form>
                     </div>
                 </div>
             </div>
         </div>
-
-
     </div>
 @endsection

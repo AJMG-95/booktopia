@@ -200,13 +200,15 @@ class UserLibraryController extends Controller
             $filename = $edition->document;
             $path = storage_path('app/public/' . $filename);
 
+
             if (!File::exists($path)) {
-                abort(404, 'Archivo no encontrado');
+                return redirect()->back()->with('error', 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
             }
 
             return view('layouts/user/editions/pdf', ['filename' => $filename]);
         } catch (\Exception $e) {
-            abort(404, 'Edición no encontrada');
+            dd($e);
+            return redirect()->back()->with('error', 'Ocurrió un error inesperado. Por favor, intenta de nuevo.');
         }
     }
 
@@ -223,7 +225,4 @@ class UserLibraryController extends Controller
             return redirect()->route('welcome')->with('error', 'Error al mostrar el libro.');
         }
     }
-
-
-
 }
