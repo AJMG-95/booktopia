@@ -33,7 +33,7 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="description" class="form-label">{{ __('description') }}</label>
+                                <label for="description" class="form-label">{{ __('Description') }}</label>
                                 <textarea id="description" type="text" class="border border-black  form-control @error('description') is-invalid @enderror"
                                     name="description" value="{{ old('description') }}" required autocomplete="description" autofocus rows="3">
                                 </textarea>
@@ -45,8 +45,14 @@
                             </div>
 
                             <div class="mb-3">
-                                <label for="img_url" class="form-label">Imagen del Género</label>
-                                <input type="file" class="form-control" id="img_url" name="img_url">
+                                <label for="img_url" class="form-label">{{ __('Imagen del Género') }}</label>
+                                <input id="img_url" type="file" class="border border-black  form-control @error('img_url') is-invalid @enderror"
+                                name="img_url" value="{{ old('img_url') }}" required autocomplete="img_url" autofocus>
+                                @error('img_url')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             <div class="mb-3 d-flex flex-row justify-content-around flex-wrap">

@@ -21,10 +21,6 @@
                 <label for="visible" class="form-label">Visible</label>
             </div>
 
-            <div class="mb-3">
-                <label for="isbn" class="form-label">ISBN</label>
-                <input type="text" class="form-control" id="isbn" name="isbn" value="{{ $editionBook->isbn }}">
-            </div>
 
             <div class="mb-3">
                 <label for="title" class="form-label">Título</label>
@@ -104,13 +100,6 @@
             <div class="mb-3">
                 <label for="description" class="form-label">Descripción</label>
                 <textarea class="form-control" id="description" name="description">{{$editionBook->description}}</textarea>
-            </div>
-
-
-            <div class="mb-3">
-                <label for="editorial" class="form-label">Editorial</label>
-                <input type="text" class="form-control" id="editorial" name="editorial"
-                    value="{{ $editionBook->editorial }}">
             </div>
 
 

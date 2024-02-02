@@ -74,14 +74,12 @@ class EditionBookController extends Controller
     {
         try {
             $request->validate([
-                'isbn' => 'nullable|string',
                 'self_published' => 'boolean',
                 'title' => 'nullable|string|max:255',
                 'short_description' => 'nullable|string',
                 'description' => 'nullable|string',
                 'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'visible' => 'boolean',
-                'editorial' => 'nullable|string',
                 'price' => 'nullable|numeric',
                 'document' => 'file|mimes:pdf|max:2048',
                 'language_id' => 'nullable|exists:languages,id',
@@ -176,14 +174,12 @@ class EditionBookController extends Controller
     {
         try {
             $request->validate([
-                'isbn' => 'nullable|string',
                 'self_published' => 'boolean',
                 'title' => 'nullable|string|max:255',
                 'short_description' => 'nullable|string',
                 'description' => 'nullable|string',
                 'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'visible' => 'boolean',
-                'editorial' => 'nullable|string',
                 'price' => 'nullable|numeric',
                 'document' => 'nullable|string',
                 'language_id' => 'nullable|exists:languages,id',
@@ -197,15 +193,15 @@ class EditionBookController extends Controller
 
             if ($request->hasFile('cover')) {
                 $coverFile = $request->file('cover');
-                $isbn = $request->input('isbn');
+                $id = $editionBook->id;
 
                 // Elimina la portada anterior si existe
                 if ($editionBook->cover) {
                     Storage::disk('public')->delete($editionBook->cover);
                 }
 
-                // Genera el nombre del archivo usando el campo isbn y el timestamp para evitar duplicados
-                $coverFileName = $isbn . '_' . time() . '.' . $coverFile->getClientOriginalExtension();
+                // Genera el nombre del archivo usando el campo id y el timestamp para evitar duplicados
+                $coverFileName = $id . '_' . time() . '.' . $coverFile->getClientOriginalExtension();
 
                 // Almacena la nueva imagen en el directorio correspondiente
                 $coverPath = $coverFile->storeAs('covers', $coverFileName, 'public');

@@ -46,11 +46,10 @@
                             <div class="card-header text-center">
                                 <h5>{{ $book->title }}</h5>
                             </div>
-                            <div class="card-body">
-                                <div style="width: 150px; height:150px; margin: auto" class="mt-1 border rounded-1 mb-2 ">
-                                    <img src="{{ $book->cover ? asset('storage/' . $book->cover) : 'No Image' }}"
-                                        class="card-img-top rounded-1" alt="{{ $book->title }}"
-                                        style="object-fit: cover; width:100%; height: 100%">
+                            <div class="card-body text-center">
+                                <div style="max-width: 150px; max-height: 150px; margin: auto" class="mt-1 border rounded-1 mb-2 overflow-hidden">
+                                    <img src="{{ asset('storage/' . $book->cover)  }}" class="card-img-top rounded-1 img-fluid"
+                                        alt="{{ $book->title }}" style="object-fit: cover;">
                                 </div>
                             </div>
                             <div class="card-footer  text-center">
