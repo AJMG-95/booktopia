@@ -3,23 +3,27 @@
     /* Estilo para cambiar el color de los iconos a negro y hacerlos círculos */
     .carousel-control-prev,
     .carousel-control-next {
-        padding: 10px; /* Ajusta el espacio alrededor de los iconos */
+        padding: 10px;
+        /* Ajusta el espacio alrededor de los iconos */
     }
 
     .carousel-control-prev-icon,
     .carousel-control-next-icon {
         background-color: black;
-        border-radius: 50%; /* Hace que el fondo sea un círculo */
+        border-radius: 50%;
+        /* Hace que el fondo sea un círculo */
     }
 
     /* Estilo para cambiar el color de los iconos a blanco en modo hover */
     .carousel-control-prev:hover .carousel-control-prev-icon,
     .carousel-control-next:hover .carousel-control-next-icon {
         background-color: black;
-        border-radius: 50%; /* Hace que el fondo sea un círculo en modo hover */
+        border-radius: 50%;
+        /* Hace que el fondo sea un círculo en modo hover */
     }
 </style>
-<div id="booksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2" style="height: 70vh">
+<div id="booksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2"
+    style="height: 70vh">
     <h2 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Descubre Nuestros Libros</h2>
     <div class="carousel-inner rounded p-4 mx-auto" style="max-width: 50vw; max-height: 500px;">
         @foreach ($randomBooks as $index => $book)
@@ -34,16 +38,26 @@
                         <div class="col-md-6">
                             <div class="mb-3">
                                 <h3>{{ $book->title }}</h3>
-                                <p>{{ $book->short_description }}</p>
+                                <div>
+                                    @forelse ($book->authors as $author)
+                                        <p class="text-truncate text-muted ">
+                                            {{ $author->nickname ? $author->nickname : $author->surnames . ', ' . $author->name }}
+                                        </p>
+                                    @empty
+                                        <p class="text-muted">Anónimo</p>
+                                    @endforelse
+                                </div>
                             </div>
                             <div class="my-3 border border-black rounded p-2"
                                 style=" background-color:rgba(247, 247, 247, 0.795)">
                                 <p class="mt-2">
-                                    Precio: <strong>{{ number_format($book->price, 2) }} €</strong>
+                                    Precio: <strong>{{ number_format($book->price, 2, ',', '.') }} €</strong>
                                 </p>
                                 <p class="text-success">
-                                    <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline"><strong><ins>Precio con suscripción</ins></a>:
-                                    {{ number_format($book->price * 0.8, 2) }} €</>
+                                    <a class="text-success" href="{{ route('subscribe.view') }}"
+                                        style="text-decoration: underline"><strong><ins>Precio con
+                                                suscripción</ins></a>:
+                                    {{ number_format($book->price * 0.8, 2, ',', '.') }} €</>
                                 </p>
                             </div>
                             <div>

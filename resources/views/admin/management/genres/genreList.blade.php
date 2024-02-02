@@ -21,16 +21,16 @@
             <table class="table table-bordered table-striped table-hover rounded">
                 <thead class="thead-dark" style="border-bottom: 2px solid #333;">
                     <tr class="">
-                        <th></th>
-                        <th>Nombre</th>
-                        <th>Descripción</th>
-                        <th>Acciones</th>
+                        <th class="text-center"></th>
+                        <th class="text-center">Nombre</th>
+                        <th class="text-center">Descripción</th>
+                        <th class="text-center">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($genres as $genre)
                         <tr style="border-bottom: 1px solid #33333363;">
-                            <td>
+                            <td class="text-center">
                                 @if (isset($genre) && $genre->img_url)
                                     <img src="{{ asset('storage/' . $genre->img_url) }}" alt="Imagen del Género"
                                         class="rounded" style="max-width: 50px; max-height: 40px; margin-left: 5vw">
@@ -38,9 +38,9 @@
                                     No imagen
                                 @endif
                             </td>
-                            <td>{{ $genre->genre_name }}</td>
-                            <td>{{ $genre->description }}</td>
-                            <td class="">
+                            <td class="text-center">{{ $genre->genre_name }}</td>
+                            <td class="text-center">{{ $genre->description }}</td>
+                            <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="Genre Actions">
                                     <a href="{{ route('genres.edit', $genre->id) }}" class="btn btn-primary btn-sm me-2"><i
                                             class="bi bi-pencil"></i></a>

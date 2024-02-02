@@ -122,9 +122,11 @@
                                     <h5>{{ $book->title }}</h5>
                                 </div>
                                 <div class="card-body text-center">
-                                    <div style="max-width: 150px; max-height: 150px; margin: auto" class="mt-1 border rounded-1 mb-2 overflow-hidden">
-                                        <img src="{{ asset('storage/' . $book->cover)  }}" class="card-img-top rounded-1 img-fluid"
-                                            alt="{{ $book->title }}" style="object-fit: cover;">
+                                    <div style="max-width: 150px; max-height: 150px; margin: auto"
+                                        class="mt-1 border rounded-1 mb-2 overflow-hidden">
+                                        <img src="{{ asset('storage/' . $book->cover) }}"
+                                            class="card-img-top rounded-1 img-fluid" alt="{{ $book->title }}"
+                                            style="object-fit: cover;">
                                     </div>
                                     <div class="text-center">
                                         <p class="card-text">
@@ -158,11 +160,11 @@
                                         <p class="card-text">
                                             <strong>Precio:</strong>
                                             @auth
-                                                {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2) : number_format($book->price, 2) }}
+                                                {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2, ',', '.') : number_format($book->price, 2, ',', '.') }}
                                                 €
                                             @endauth
                                             @guest()
-                                                {{ number_format($book->price, 2) }} €
+                                                {{ number_format($book->price, 2, ',', '.') }} €
                                             @endguest
                                         </p>
                                     </div>
@@ -227,11 +229,11 @@
                                     <p class="card-text">
                                         <strong>Precio:</strong>
                                         @auth
-                                            {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2) : number_format($book->price, 2) }}
+                                            {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2, ',', '.') : number_format($book->price, 2, ',', '.') }}
                                             €
                                         @endauth
                                         @guest()
-                                            {{ number_format($book->price, 2) }} €
+                                            {{ number_format($book->price, 2, ',', '.') }} €
                                         @endguest
                                     </p>
 

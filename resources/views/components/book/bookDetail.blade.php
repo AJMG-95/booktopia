@@ -12,28 +12,28 @@
                     @auth
                         @if (Auth::user()->isSubscriber())
                             <p>
-                                Precio Normal: <del class="text-danger">{{ number_format($editionBook->price, 2) }} €</del>
+                                Precio Normal: <del class="text-danger">{{ number_format($editionBook->price, 2, ',', '.') }} €</del>
                             </p>
                             <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">
                                 Precio para Suscriptores:
                             </a>
-                            <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
+                            <strong class="text-success">{{number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
                         @else
                             <p>
-                                Precio Normal: {{ number_format($editionBook->price, 2) }} €
+                                Precio Normal: {{ number_format($editionBook->price, 2, ',', '.') }} €
                             </p>
                             <p>
                                 <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">Precio para Suscriptores:</a>
-                                <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
+                                <strong class="text-success">{{number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
                             </p>
                         @endif
                     @else
                         <p>
-                            Precio Normal: {{ number_format($editionBook->price, 2) }} €
+                            Precio Normal: {{ number_format($editionBook->price, 2, ',', '.') }} €
                         </p>
                         <p>
                             <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">Precio para Suscriptores:</a>
-                            <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2) }} €</strong>
+                            <strong class="text-success">{{number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
                         </p>
                     @endauth
                 </h3>
@@ -124,7 +124,7 @@
                                             @csrf
                                             @auth
                                                 <input type="hidden" name="price"
-                                                    value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2) : number_format($editionBook->price, 2) }}">
+                                                    value="{{ Auth::user()->isSubscriber() ?number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
                                             @endauth
                                             <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                             <input type="hidden" name="quantity" value="1">
@@ -169,7 +169,7 @@
                                     <form action="{{ route('shop.payment.stripe') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="price"
-                                            value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2) : number_format($editionBook->price, 2) }}">
+                                            value="{{ Auth::user()->isSubscriber() ?number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
                                         <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                         <input type="hidden" name="quantity" value="1">
                                         <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">

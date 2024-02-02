@@ -159,11 +159,11 @@ class ProfileController extends Controller
         ]);
 
 
-          // Obtén el nombre del autor
-          $authorName = $validatedData['nickname'];
+        // Obtén el nombre del autor
+        $authorName = $validatedData['nickname'];
 
-          // Construye el nombre único para la imagen
-          $imageName = strtolower(str_replace(' ', '_', $authorName));
+        // Construye el nombre único para la imagen
+        $imageName = strtolower(str_replace(' ', '_', $authorName));
 
         // Subir la foto y obtener la ruta del archivo
         if ($request->hasFile('photo')) {
@@ -376,6 +376,10 @@ class ProfileController extends Controller
             if ($request->has('genres')) {
                 $editionBook->genres()->attach($request->input('genres'));
             }
+
+            // Update self_published to true
+            $editionBook->self_published = true;
+            $editionBook->save();
 
             return redirect()->route('profile.index')->with('success', 'Libro creado exitosamente.');
         } catch (\Exception $e) {
