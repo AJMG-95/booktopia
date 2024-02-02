@@ -9,7 +9,7 @@ use App\Models\Genre;
 use App\Models\Payment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\QueryException;
@@ -80,7 +80,7 @@ class EditionBookController extends Controller
                 'description' => 'nullable|string',
                 'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'visible' => 'boolean',
-                'price' => 'nullable|numeric',
+                'price' => 'nullable|string',
                 'document' => 'file|mimes:pdf|max:2048',
                 'language_id' => 'nullable|exists:languages,id',
                 'for_adults' => 'boolean',
@@ -90,7 +90,9 @@ class EditionBookController extends Controller
             ]);
 
             $data = $request->all();
-
+            if ($request->has('price')) {
+                $data['price'] = $this->convertToNumericPrice($request->input('price'));
+            }
 
             $editionBook = new EditionBook($data);
             $editionBook->save();
@@ -181,7 +183,7 @@ class EditionBookController extends Controller
                 'description' => 'nullable|string',
                 'cover' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
                 'visible' => 'boolean',
-                'price' => 'nullable|numeric',
+                'price' => 'nullable|string',
                 'document' => 'file|mimes:pdf|max:2048',
                 'language_id' => 'nullable|exists:languages,id',
                 'for_adults' => 'boolean',
@@ -191,6 +193,10 @@ class EditionBookController extends Controller
             ]);
 
             $data = $request->all();
+
+            if ($request->has('price')) {
+                $data['price'] = $this->convertToNumericPrice($request->input('price'));
+            }
 
             if ($request->hasFile('cover')) {
                 $coverFile = $request->file('cover');
@@ -255,6 +261,29 @@ class EditionBookController extends Controller
             return redirect()->route('books.list')->with('error', 'Error al actualizar el libro.');
         }
     }
+
+    /**
+     * Convert a price string with commas to a numeric format.
+     *
+     * @param string $priceString
+     * @return float
+     */
+    private function convertToNumericPrice($priceString)
+    {
+        if (Str::contains($priceString, '.')) {
+            $cleanedPrice = str_replace('.', '', $priceString);
+        }
+
+        if (Str::contains($cleanedPrice, ',')) {
+            $cleanedPrice = str_replace(',', '.', $cleanedPrice);
+        }
+
+        // Ensure that the format is valid before converting to float
+        if (Str::contains($cleanedPrice, '.')) {
+            return (float) $cleanedPrice;
+        }
+    }
+
 
     /**
      * Remove the specified resource from storage.

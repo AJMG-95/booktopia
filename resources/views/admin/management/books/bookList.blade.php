@@ -1,6 +1,15 @@
 @extends('layouts.app')
 
 @section('content')
+    <style>
+        .text-truncate {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            /* Adjust the max-width as needed */
+        }
+    </style>
     <div class="container-fluid ms-0 me-0 px-4 py-3 mt-3">
 
         <div class="ms-3 mb-4 text-center p-2" style="background-color:rgba(247, 247, 247, 0.651)">
@@ -34,29 +43,32 @@
                             <td class="text-center">
                                 @if (isset($book) && $book->cover)
                                     <img src="{{ asset('storage/' . $book->cover) }}" alt="Imagen del Género"
-                                        class="rounded" style="max-height: 40px; margin-left: 5vw">
+                                        class="rounded" style="max-height: 40px; ">
                                 @else
                                     No imagen
                                 @endif
                             </td>
                             <td class="text-center">{{ $book->title }}</td>
-                            <td class="text-center">{{ $book->short_description }}</td>
-                            <td class="text-center">{{ $book->price ?  $book->price : '0.00' }}</td>
+                            <td class="text-center text-truncate">{{ $book->short_description }}</td>
+                            <td class="text-center">{{ $book->price ? $book->price : '0.00' }}</td>
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
-                                    <form action="{{ route('books.toggleVisibility', $book->id) }}" method="post" class="me-1">
+                                    <form action="{{ route('books.toggleVisibility', $book->id) }}" method="post"
+                                        class="me-1">
                                         @csrf
-                                        <button type="submit" class="btn btn-{{ $book->visible ? 'secondary' : 'success' }} btn-sm">
+                                        <button type="submit"
+                                            class="btn btn-{{ $book->visible ? 'secondary' : 'success' }} btn-sm">
                                             {{ $book->visible ? 'Ocultar' : 'Mostrar' }}
                                         </button>
                                     </form>
                                     <div class="btn-group" role="group" aria-label="Subadmin Actions">
-                                        <a href="{{ route('books.edit', $book->id) }}" class="btn btn-primary btn-sm me-1"><i
-                                            class="bi bi-pencil"></i></a>
-                                        <a href="{{ route('books.show', $book->id) }}" class="btn btn-info btn-sm me-1">   <i class="bi bi-eye"></i></a>
-                                        <button type="button" class="btn btn-danger btn-sm "
-                                            data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $book->id }}">
+                                        <a href="{{ route('books.edit', $book->id) }}"
+                                            class="btn btn-primary btn-sm me-1"><i class="bi bi-pencil"></i></a>
+                                        <a href="{{ route('books.show', $book->id) }}" class="btn btn-info btn-sm me-1"> <i
+                                                class="bi bi-eye"></i></a>
+                                        <button type="button" class="btn btn-danger btn-sm " data-bs-toggle="modal"
+                                            data-bs-target="#confirmDeleteModal{{ $book->id }}">
                                             <i class="bi bi-trash"></i>
                                         </button>
                                     </div>

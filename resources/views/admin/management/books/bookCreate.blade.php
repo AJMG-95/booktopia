@@ -152,7 +152,7 @@
                                 <input id="price" type="text"
                                     class="border border-black  form-control @error('price') is-invalid @enderror"
                                     name="price" value="{{ old('price') }}" required autocomplete="price" autofocus
-                                    min="0" max="9999">
+                                    min="0" max="9999" placeholder="formato: x.xxx,xx">
                                 @error('price')
                                     <div class="invalid-feedback">
                                         {{ $message }}

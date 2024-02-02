@@ -12,7 +12,7 @@
 
         <div class="row justify-content-center ">
             <div class="col-md-12 " style="min-width: 50vw; max-width:  80vw;">
-                <div class="card border border-black overflow-x-scroll" style="min-width: 50vw; ">
+                <div class="card border border-black" style="min-width: 50vw; ">
                     <div class="card-body ">
                         <form action="{{ route('books.update', $editionBook->id) }}" method="post"
                             enctype="multipart/form-data">
@@ -90,15 +90,17 @@
                             </div>
 
 
+
                             <div class="mb-3">
-                                <label class="form-label">Autores</label>
-                                <div style="max-height: 100px; overflow-y: auto;" class="bg-white rounded ps-1">
+                                <label class="form-label">{{ __('Autores') }}</label>
+                                <div style="max-height: 100px; overflow-y: auto;"
+                                    class="bg-white rounded border border-black px-2 py-1">
                                     @foreach ($authors as $author)
                                         <div class="form-check">
-                                            <input type="checkbox" name="authors[]" id="author_{{ $author->id }}"
-                                                value="{{ $author->id }}"
-                                                {{ $editionBook->authors->contains('id', $author->id) ? 'checked' : '' }}>
-                                            <label for="author_{{ $editionBook->id }}">
+                                            <input class="form-check-input text-black border-black  me-1" type="checkbox"
+                                                id="author_{{ $author->id }}" name="authors[]"
+                                                value="{{ $author->id }}" {{ $editionBook->authors->contains('id', $author->id) ? 'checked' : '' }}>
+                                            <label class="form-check-label text-black" for="author_{{ $author->id }}">
                                                 {{ $author->name }} {{ $author->surnames }}
                                             </label>
                                         </div>
@@ -106,15 +108,17 @@
                                 </div>
                             </div>
 
+
                             <div class="mb-3">
-                                <label class="form-label">Géneros</label>
-                                <div style="max-height: 100px; overflow-y: auto;" class="bg-white rounded ps-1">
+                                <label class="form-label">{{ __('Géneros') }}</label>
+                                <div style="max-height: 100px; overflow-y: auto;"
+                                    class="bg-white rounded border border-black px-2 py-1">
                                     @foreach ($genres as $genre)
                                         <div class="form-check">
-                                            <input type="checkbox" name="genres[]" id="genre_{{ $genre->id }}"
-                                                value="{{ $genre->id }}"
-                                                {{ $editionBook->genres->contains('id', $genre->id) ? 'checked' : '' }}>
-                                            <label for="genre_{{ $genre->id }}">
+                                            <input class="form-check-input text-black border-black me-1" type="checkbox"
+                                                id="genre_{{ $genre->id }}" name="genres[]"
+                                                value="{{ $genre->id }}" {{ $editionBook->genres->contains('id', $genre->id) ? 'checked' : '' }}>
+                                            <label class="form-check-label text-black" for="genre_{{ $genre->id }}">
                                                 {{ $genre->genre_name }}
                                             </label>
                                         </div>
@@ -122,9 +126,10 @@
                                 </div>
                             </div>
 
+
                             <div class="mb-3">
-                                <label class="form-label">Idioma</label>
-                                <select class="form-select" id="language_id" name="language_id">
+                                <label class="form-label">{{ __('Idioma') }}</label>
+                                <select class="form-select border border-black" id="language_id" name="language_id">
                                     @foreach ($languages as $language)
                                         <option value="{{ $language->id }}"
                                             {{ $language->id == $editionBook->language_id ? 'selected' : '' }}>
@@ -134,23 +139,46 @@
                                 </select>
                             </div>
 
-                            <div class="mb-3">
-                                <label for="short_description" class="form-label">Descripción Corta</label>
-                                <textarea class="form-control" id="short_description" name="short_description">{{ $editionBook->short_description }}</textarea>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="description" class="form-label">Descripción</label>
-                                <textarea class="form-control" id="description" name="description">{{ $editionBook->description }}</textarea>
-                            </div>
 
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">Precio</label>
-                                <input type="text" class="form-control" id="price" name="price" min="0"
-                                    value="{{ $editionBook->price }}">
+                                <label for="short_description" class="form-label">{{ __('Descripción Corta') }}</label>
+                                <textarea id="short_description"
+                                    class="border border-black  form-control @error('short_description') is-invalid @enderror"
+                                    name="short_description" autocomplete="short_description">{{ $editionBook->short_description }}</textarea>
+                                @error('short_description')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
+
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">{{ __('Descripción') }}</label>
+                                <textarea id="description" class="border border-black  form-control @error('description') is-invalid @enderror"
+                                    name="description" autocomplete="description">{{ $editionBook->description }}</textarea>
+                                @error('description')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
+                            <div class="mb-3">
+                                <label for="price" class="form-label">{{ __('Precio') }}</label>
+                                <input id="price" type="text"
+                                    class="border border-black  form-control @error('price') is-invalid @enderror"
+                                    name="price" value="{{ $editionBook->price }}" required autocomplete="price" autofocus
+                                    min="0" max="9999" placeholder="formato: x.xxx,xx">
+                                @error('price')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
 
                             <div class="form-group row mb-3 ms-0 me-0 text-center">
                                 <div class="col-md-6 ">
