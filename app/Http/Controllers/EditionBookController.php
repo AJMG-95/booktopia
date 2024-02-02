@@ -132,6 +132,7 @@ class EditionBookController extends Controller
 
             return redirect()->route('books.list')->with('success', 'Libro creado exitosamente.');
         } catch (\Exception $e) {
+            dd($e);
             return redirect()->route('books.list')->with('error', 'Error al crear el libro.');
         }
     }
@@ -270,17 +271,15 @@ class EditionBookController extends Controller
      */
     private function convertToNumericPrice($priceString)
     {
-        if (Str::contains($priceString, '.')) {
-            $cleanedPrice = str_replace('.', '', $priceString);
-        }
-
-        if (Str::contains($cleanedPrice, ',')) {
-            $cleanedPrice = str_replace(',', '.', $cleanedPrice);
-        }
+        // Remove dots and replace commas with dots
+        $cleanedPrice = str_replace(',', '.', str_replace('.', '', $priceString));
 
         // Ensure that the format is valid before converting to float
-        if (Str::contains($cleanedPrice, '.')) {
+        if (is_numeric($cleanedPrice)) {
             return (float) $cleanedPrice;
+        } else {
+            // If the format is not valid, return 0.00
+            return 0.00;
         }
     }
 

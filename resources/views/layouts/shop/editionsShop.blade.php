@@ -109,152 +109,96 @@
                     </div>
                 </form>
                 {{-- Área para mostrar los libros --}}
-                <div class="row row-cols-1 row-cols-md-3 pe-4">
+                <div class="row ">
                     @if ($books->isEmpty())
-                        <div class="alert alert-info">
-                            No se encontraron libros con los filtros aplicados.
+                        <div class="alert alert-info col-12 text-center">
+                            <h4>
+                                No se encontraron libros con los filtros aplicados.
+                            </h4>
                         </div>
                     @else
-                        @foreach ($books as $book)
-                            <div class="card ms-3 border border-black rounded p-1 mx-4"
-                                style="max-width: 15vw; background-color:rgba(247, 247, 247, 0.651)">
-                                <div class="card-header text-center">
-                                    <h5>{{ $book->title }}</h5>
-                                </div>
-                                <div class="card-body text-center">
-                                    <div style="max-width: 150px; max-height: 150px; margin: auto"
-                                        class="mt-1 border rounded-1 mb-2 overflow-hidden">
-                                        <img src="{{ asset('storage/' . $book->cover) }}"
-                                            class="card-img-top rounded-1 img-fluid" alt="{{ $book->title }}"
-                                            style="object-fit: cover;">
-                                    </div>
-                                    <div class="text-center">
-                                        <p class="card-text">
-                                            <strong>Autor:</strong>
-                                            @if ($book->authors->isNotEmpty())
-                                                {{ $book->authors->first()->name }}
-                                            @else
-                                                Sin autor
-                                            @endif
-                                        </p>
-                                        <p class="card-text">
-                                            <strong>Género:</strong>
-
-                                            @if ($book->genres->isNotEmpty())
-                                                @if ($book->genres->count() >= 2)
-                                                    @foreach ($book->genres->take(2) as $genre)
-                                                        {{ $genre->genre_name }}
-                                                        @if (!$loop->last)
-                                                            {{ ',' }}
-                                                        @else
-                                                            {{ ', ...' }}
-                                                        @endif
-                                                    @endforeach
-                                                @else
-                                                    {{ $book->genres->first()->genre_name }}
-                                                @endif
-                                            @else
-                                                Sin género
-                                            @endif
-                                        </p>
-                                        <p class="card-text">
-                                            <strong>Precio:</strong>
-                                            @auth
-                                                {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2, ',', '.') : number_format($book->price, 2, ',', '.') }}
-                                                €
-                                            @endauth
-                                            @guest()
-                                                {{ number_format($book->price, 2, ',', '.') }} €
-                                            @endguest
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="card-footer text-center">
-                                    <div class="row">
-                                        <div class="col-auto mx-auto">
-                                            <a href="{{ route('books.details', $book->id) }}" class="btn btn-primary">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
+                        <div class="col-12 row">
+                            @foreach ($books as $book)
+                                <div class="col-3 mb-4">
+                                    <div class="card border border-black rounded p-1 mx-4 mb-4"
+                                        style="max-width: 15vw; background-color:rgba(247, 247, 247, 0.651); min-height:52vh; max-height:52vh">
+                                        <div class="card-header text-center">
+                                            <h5>{{ $book->title }}</h5>
                                         </div>
-                                        <div class="col-6">
-                                            @auth
-                                                @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-                                                    <div class="col-5 mx-auto">
-                                                        @include('partials/add_remove_wishs')
-                                                    </div>
-                                                @endif
-                                            @endauth
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-                            {{--                             <div class="card ms-3" style="max-width: 15vw; background-color:bisque">
-                                <div style="width: 150px; height:150px; margin: auto" class="mt-1 border rounded-1 ">
-                                    <img src="{{ $book->cover ? asset('storage/' . $book->cover) : 'No Image' }}"
-                                        class="card-img-top rounded-1" alt="{{ $book->title }}"
-                                        style="object-fit: cover; width:100%; height: 100%">
-                                </div>
-                                <div class="card-body">
-                                    <h5>{{ $book->title }}</h5>
-                                    <p class="card-text">
-                                        <strong>Autor:</strong>
-                                        @if ($book->authors->isNotEmpty())
-                                            {{ $book->authors->first()->name }}
-                                        @else
-                                            Sin autor
-                                        @endif
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Género:</strong>
-
-                                        @if ($book->genres->isNotEmpty())
-                                            @if ($book->genres->count() >= 2)
-                                                @foreach ($book->genres->take(2) as $genre)
-                                                    {{ $genre->genre_name }}
-                                                    @if (!$loop->last)
-                                                        {{ ',' }}
-                                                    @else
-                                                        {{ ', ...' }}
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                {{ $book->genres->first()->genre_name }}
-                                            @endif
-                                        @else
-                                            Sin género
-                                        @endif
-                                    </p>
-                                    <p class="card-text">
-                                        <strong>Precio:</strong>
-                                        @auth
-                                            {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2, ',', '.') : number_format($book->price, 2, ',', '.') }}
-                                            €
-                                        @endauth
-                                        @guest()
-                                            {{ number_format($book->price, 2, ',', '.') }} €
-                                        @endguest
-                                    </p>
-
-                                </div>
-                                <div class="card-footer row text-center">
-                                    <div class="col-auto">
-                                        <a href="{{ route('books.details', $book->id) }}" class="btn btn-primary">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
-                                    </div>
-                                    @auth
-                                        @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-                                            <div class="col-5">
-                                                @include('partials/add_remove_wishs')
+                                        <div class="card-body text-center">
+                                            <div style="max-width: 150px; max-height: 22vh; margin: auto;"
+                                                class="mt-1 border rounded-1 mb-2 overflow-hidden">
+                                                <img src="{{ asset('storage/' . $book->cover) }}"
+                                                    class="card-img-top rounded-1 img-fluid" alt="{{ $book->title }}"
+                                                    style="object-fit: cover;">
                                             </div>
-                                        @endif
-                                    @endauth
+                                            <div style="max-width: 150px; max-height: 22vh; margin: auto;"
+                                                class="text-center justify-content-end">
 
+                                                <p class="card-text">
+                                                    <strong>Autor:</strong>
+                                                    @if ($book->authors->isNotEmpty())
+                                                        {{ $book->authors->first()->name }}
+                                                    @else
+                                                        Sin autor
+                                                    @endif
+                                                </p>
+                                                <p class="card-text">
+                                                    <strong>Género:</strong>
+
+                                                    @if ($book->genres->isNotEmpty())
+                                                        @if ($book->genres->count() >= 2)
+                                                            @foreach ($book->genres->take(2) as $genre)
+                                                                {{ $genre->genre_name }}
+                                                                @if (!$loop->last)
+                                                                    {{ ',' }}
+                                                                @else
+                                                                    {{ ', ...' }}
+                                                                @endif
+                                                            @endforeach
+                                                        @else
+                                                            {{ $book->genres->first()->genre_name }}
+                                                        @endif
+                                                    @else
+                                                        Sin género
+                                                    @endif
+                                                </p>
+                                                <p class="card-text">
+                                                    <strong>Precio:</strong>
+                                                    @auth
+                                                        {{ Auth::user()->isSubscriber() ? number_format($book->price * 0.8, 2, ',', '.') : number_format($book->price, 2, ',', '.') }}
+                                                        €
+                                                    @endauth
+                                                    @guest()
+                                                        {{ number_format($book->price, 2, ',', '.') }} €
+                                                    @endguest
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer text-center">
+                                            <div class="row">
+                                                <div class="col-auto mx-auto">
+                                                    <a href="{{ route('books.details', $book->id) }}"
+                                                        class="btn btn-primary">
+                                                        <i class="bi bi-eye"></i>
+                                                    </a>
+                                                </div>
+                                                <div class="col-6">
+                                                    @auth
+                                                        @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
+                                                            <div class="col-5 mx-auto">
+                                                                @include('partials/add_remove_wishs')
+                                                            </div>
+                                                        @endif
+                                                    @endauth
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
-                            </div> --}}
-                        @endforeach
+                            @endforeach
+                        </div>
                     @endif
                 </div>
             </main>

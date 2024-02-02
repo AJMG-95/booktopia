@@ -50,7 +50,7 @@
                             </td>
                             <td class="text-center">{{ $book->title }}</td>
                             <td class="text-center text-truncate">{{ $book->short_description }}</td>
-                            <td class="text-center">{{ $book->price ? $book->price : '0.00' }}</td>
+                            <td class="text-center">{{ $book->price ? number_format($book->price, 2, ',', '.') : '0,00' }}</td>
 
                             <td class="text-center">
                                 <div class="d-flex justify-content-center">
