@@ -205,9 +205,11 @@ Route::middleware(['auth'])->group(function () {
 //! Otras rutas que no requieren autenticación
 Route::get('/', function () {
     $randomBooks = app(EditionBookController::class)->randomBooks();
-    $randomGenres = app(GenreController::class)->randomGenres();
+    $bestSellingBooks = app(EditionBookController::class)->bestSellingBooks();
+    $leastSellingBooks = app(EditionBookController::class)->leastSellingBooks();
+/*     $randomGenres = app(GenreController::class)->randomGenres(); */
 
-    return view('welcome', compact('randomBooks', 'randomGenres'));
+    return view('welcome', compact('randomBooks', 'bestSellingBooks', 'leastSellingBooks'));
 })->name('welcome');
 
 

@@ -21,14 +21,22 @@
                     </ins>
                 </h1>
             </div>
-            <div class=" justify-content-center mt-4 mb-3 me-0">
+            <div class="text-center mt-4 mb-3">
+                <div class="d-flex justify-content-around flex-wrap">
+                    <div class="mx-2">
+                        @include('partials.topSelling')
+                    </div>
 
-                <div class="">
-                    @include('partials.randomBook')
+                    <div class="mx-2">
+                        @include('partials.leastSelling')
+                    </div>
                 </div>
 
-
+           {{--      <div class="mt-3">
+                    @include('partials.randomBook')
+                </div> --}}
             </div>
+
 
         </div>
     @endsection

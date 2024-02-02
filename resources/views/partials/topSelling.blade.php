@@ -19,10 +19,10 @@
         border-radius: 50%; /* Hace que el fondo sea un círculo en modo hover */
     }
 </style>
-<div id="booksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2" style="height: 70vh">
-    <h2 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">Descubre Nuestros Libros</h2>
-    <div class="carousel-inner rounded p-4 mx-auto" style="max-width: 50vw; max-height: 500px;">
-        @foreach ($randomBooks as $index => $book)
+<div id="bestSellingBooksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2" style="height: 70vh">
+    <h2 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);"> Top 3 en Ventas</h2>
+    <div class="carousel-inner rounded p-4 mx-auto" style="width:40vw; max-width: 40vw; max-height: 500px;">
+        @foreach ($bestSellingBooks as $index => $book)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                 <div class="container p-3 border border-black rounded"
                     style="max-width: 40vw; background-color:rgba(247, 247, 247, 0.651)">
@@ -80,13 +80,13 @@
                 </div>
             </div>
         @endforeach
-        <button class="carousel-control-prev" type="button" data-bs-target="#booksCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Anterior</span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#booksCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Siguiente</span>
-        </button>
+            <button class="carousel-control-prev" type="button" data-bs-target="#bestSellingBooksCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Anterior</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#bestSellingBooksCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Siguiente</span>
+            </button>
     </div>
 </div>

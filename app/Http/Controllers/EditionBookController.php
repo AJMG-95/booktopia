@@ -287,6 +287,51 @@ class EditionBookController extends Controller
     }
 
 
+    public function bestSellingBooks($limit = 3)
+    {
+        try {
+            $bestSellingBooksIds = Payment::groupBy('book_id')
+                ->selectRaw('book_id, COUNT(*) as totalSales')
+                ->orderByDesc(DB::raw('COUNT(*)'))
+                ->take($limit)
+                ->pluck('book_id');
+
+            // Obtener los libros más vendidos por sus IDs
+            $bestSellingBooks = EditionBook::whereIn('id', $bestSellingBooksIds)->get();
+
+            return $bestSellingBooks;
+        } catch (\Exception $e) {
+            dd($e);
+            return collect(); // Devuelve una colección vacía en caso de error
+        }
+    }
+
+
+    public function leastSellingBooks($limit = 3)
+    {
+        try {
+            $leastSellingBooksIds = Payment::groupBy('book_id')
+                ->selectRaw('book_id, COUNT(*) as totalSales')
+                ->orderBy(DB::raw('COUNT(*)'))
+                ->take($limit)
+                ->pluck('book_id');
+
+            // Obtener los libros menos vendidos por sus IDs
+            $leastSellingBooks = EditionBook::whereIn('id', $leastSellingBooksIds)->get();
+
+            return $leastSellingBooks;
+        } catch (\Exception $e) {
+            return collect(); // Devuelve una colección vacía en caso de error
+        }
+    }
+
+
+
+
+
+
+
+
     public function toggleVisibility($id)
     {
         try {
