@@ -41,7 +41,7 @@
                     </div>
                 @else
                     @foreach ($books as $book)
-                        <div class="card ms-3 border border-black rounded p-0"
+                        <div class="card ms-3 border border-black rounded p-1 mx-4"
                             style="max-width: 15vw; background-color:rgba(247, 247, 247, 0.651)">
                             <div class="card-header text-center">
                                 <h5>{{ $book->title }}</h5>

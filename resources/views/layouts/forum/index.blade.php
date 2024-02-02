@@ -7,6 +7,47 @@
             max-height: 1000px;
             overflow-y: auto;
         }
+
+        /* Estilo para el modal */
+        .custom-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .modal-header {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .modal-body,
+        .modal-footer {
+            padding: 10px;
+        }
+
+        .close {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .close:hover {
+            color: #f00;
+            cursor: pointer;
+        }
     </style>
 
     <div class="container-fluid ms-0 me-0 px-3 py-3 mt-2">
@@ -20,9 +61,10 @@
         </div>
         @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
             <div class="ps-3 pe-3 mt-3">
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createPostModal">
+                <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#createPostModal">
                     Crear un nuevo post
                 </button>
+                <button id="draft_see" type="button" class="btn btn-info">Ver borrador</button>
             </div>
 
             <!-- Create Post Modal -->
@@ -36,7 +78,7 @@
                         </div>
                         <div class="modal-body">
                             <!-- Post creation form -->
-                            <form method="POST" action="{{ route('user_posts.add') }}">
+                            <form id="createPostForm" method="POST" action="{{ route('user_posts.add') }}">
                                 @csrf
                                 <div class="mb-3">
                                     <label for="post_title" class="form-label">Título</label>
@@ -47,8 +89,8 @@
                                     <textarea class="form-control" id="post_content" name="post_content" rows="3" required></textarea>
                                 </div>
                                 <button type="submit" class="btn btn-primary mt-3">Crear Post</button>
-                                <button id="draft_create" class="btn btn-secondary mt-3">Guardar como borrador</button>
-                                <button id="draft_see" class="btn btn-info mt-3">Ver borrador</button>
+                                <button id="draft_create" type="button" class="btn btn-secondary mt-3">Guardar como
+                                    borrador</button>
                             </form>
                         </div>
                     </div>
@@ -63,7 +105,8 @@
                 <div class="post mb-4 p-3 border border-dark rounded bg-white">
                     <div class="user-info mb-2 d-flex justify-content-between">
                         <div class="fw-bold text-primary">{{ $post->user->nickname }} : <h4 class="text-black">
-                                <ins>{{ $post->post_title }}</ins> </h4>
+                                <ins>{{ $post->post_title }}</ins>
+                            </h4>
                         </div>
 
                         <div class="text-muted">{{ $post->created_at->diffForHumans() }}</div>
@@ -156,25 +199,29 @@
             @endforeach
         </div>
 
-        <!-- Modal para mostrar el borrador -->
-        <div class="modal fade" id="draftModal" tabindex="-1" aria-labelledby="draftModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="draftModalLabel">Borrador Guardado</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p><strong>Título:</strong> <span id="draftTitle"></span></p>
-                        <p><strong>Contenido:</strong> <span id="draftContent"></span></p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    </div>
+    </div>
+
+    <!-- Modal para mostrar el borrador -->
+    <div class="custom-modal" id="draftModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Borrador Guardado</h5>
+                <button type="button" class="btn btn-close" onclick="closeDraftModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="draftTitle" class="form-label">Título:</label>
+                    <input type="text" class="form-control" id="draftTitle" readonly>
+                </div>
+                <div class="mb-3">
+                    <label for="draftContent" class="form-label">Contenido:</label>
+                    <textarea class="form-control" id="draftContent" rows="3" readonly></textarea>
                 </div>
             </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" onclick="closeDraftModal()">Cerrar</button>
+            </div>
         </div>
-
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -272,12 +319,17 @@
             draftSeeBtn.addEventListener('click', function() {
                 const draft = loadDraft();
                 if (draft) {
-                    // Mostrar el borrador en un modal o alert, como prefieras
-                    alert(`Borrador:\n\nTítulo: ${draft.title}\nContenido: ${draft.content}`);
+                    // Actualizar el contenido del modal con los datos del borrador
+                    document.getElementById('draftTitle').value = draft.title;
+                    document.getElementById('draftContent').value = draft.content;
+
+                    // Mostrar el modal
+                    document.getElementById('draftModal').style.display = 'block';
                 } else {
                     alert('No hay borrador guardado.');
                 }
             });
+
 
             // Guardar el borrador en el Local Storage
             function saveDraft(draft) {
@@ -299,6 +351,12 @@
                 }
                 return null;
             }
+
         });
+
+        // Función para cerrar el modal
+        function closeDraftModal() {
+            document.getElementById('draftModal').style.display = 'none';
+        }
     </script>
 @endsection

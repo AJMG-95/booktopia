@@ -15,7 +15,7 @@
         <div class="row justify-content-center">
             @forelse ($favoriteBooks as $book)
                 <div class="col-auto mb-4">
-                    <div class="card ms-3 border border-black rounded p-0"
+                    <div class="card ms-3 border border-black rounded p-1 mx-4"
                         style="min-width: 15vw; max-width: 15vw; background-color: rgba(247, 247, 247, 0.651)">
                         <div class="card-header text-center">
                             <h5>
@@ -23,10 +23,9 @@
                             </h5>
                         </div>
                         <div class="card-body text-center">
-                            <div style="width: 150px; height: 150px; margin: auto"
-                                class="mt-1 border rounded-1 mb-2 overflow-hidden">
-                                <img src="{{ asset('storage/' . $book->cover) }}" class="card-img-top rounded-1"
-                                    alt="{{ $book->title }}" style="object-fit: cover; width: 100%; height: 100%">
+                            <div style="max-width: 150px; max-height: 150px; margin: auto" class="mt-1 border rounded-1 mb-2 overflow-hidden">
+                                <img src="{{ asset('storage/' . $book->cover)  }}" class="card-img-top rounded-1 img-fluid"
+                                    alt="{{ $book->title }}" style="object-fit: cover;">
                             </div>
                         </div>
 

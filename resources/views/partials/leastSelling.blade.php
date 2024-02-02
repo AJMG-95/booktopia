@@ -21,7 +21,7 @@
 </style>
 <div id="leastSellingBooksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2" style="height: 70vh">
     <h2 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);"> Recomendaciones</h2>
-    <div class="carousel-inner rounded p-4 mx-auto" style="width:40vw; max-width: 40vw; max-height: 500px;">
+    <div class="carousel-inner rounded p-4 mx-auto" style="width:30vw; min-width: 40vw; max-height: 500px;">
         @foreach ($leastSellingBooks as $index => $book)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                 <div class="container p-3 border border-black rounded"
@@ -33,7 +33,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <h3>{{ $book->title }}</h3>
+                                <h3 class="text-break text-nowrap">{{ $book->title }}</h3>
                                 <p>{{ $book->short_description }}</p>
                             </div>
                             <div class="my-3 border border-black rounded p-2"
