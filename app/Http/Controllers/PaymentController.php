@@ -17,7 +17,6 @@ class PaymentController extends Controller
         // Set your secret key. Remember to switch to your live secret key in production.
         // See your keys here: https://dashboard.stripe.com/apikeys
         $stripe = new \Stripe\StripeClient(config('stripe.stripe_sk'));
-
         $response = $stripe->checkout->sessions->create([
             'line_items' => [
                 [
@@ -26,7 +25,7 @@ class PaymentController extends Controller
                         'product_data' => [
                             'name' => $request->title,
                         ],
-                        'unit_amount' => $request->price * 100,
+                        'unit_amount' => floatval(str_replace(',', '.', str_replace('.', '',$request->price)) * 100)
                     ],
                     'quantity' => (int)$request->quantity,
                 ],

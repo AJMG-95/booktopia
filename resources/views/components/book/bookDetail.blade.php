@@ -128,7 +128,7 @@
                                             @csrf
                                             @auth
                                                 <input type="hidden" name="price"
-                                                    value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
+                                                    value="{{ Auth::user()->isSubscriber() ? $editionBook->price * 0.8 : $editionBook->price}}">
                                             @endauth
                                             <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                             <input type="hidden" name="quantity" value="1">
@@ -143,16 +143,24 @@
                                     <div class="col-md-6">
                                         <div class="d-flex align-items-center justify-content-center">
                                             @if ($editionBook->isInFavorites())
-                                                <button x-show="addedToFavorites" x-on:click.prevent="removeFromFavorites()"
-                                                    class="btn btn-danger btn-lg">
+                                            <form
+                                                action="{{ route('favorites.remove', ['editionBookId' => $editionBook->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-danger ">
                                                     Quitar de favoritos
                                                 </button>
-                                            @else
-                                                <button x-show="!addedToFavorites" x-on:click.prevent="addToFavorites()"
-                                                    class="btn btn-primary btn-lg">
+                                            </form>
+                                        @else
+                                            <form
+                                                action=" {{ route('favorites.add', ['editionBookId' => $editionBook->id]) }}"
+                                                method="POST">
+                                                @csrf
+                                                <button type="submit" class="btn btn-primary">
                                                     Añadir a favoritos
                                                 </button>
-                                            @endif
+                                            </form>
+                                        @endif
                                         </div>
                                     </div>
                                 @endif
@@ -187,15 +195,14 @@
                                 <div class="col-md-6">
                                     <div class="d-flex align-items-center justify-content-center">
                                         @if ($editionBook->isInFavorites())
-                                            pĺnew`jfòpepe
-                                            {{-- <form
+                                            <form
                                                 action="{{ route('favorites.remove', ['editionBookId' => $editionBook->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger ">
                                                     Quitar de favoritos
                                                 </button>
-                                            </form> --}}
+                                            </form>
                                         @else
                                             <form
                                                 action=" {{ route('favorites.add', ['editionBookId' => $editionBook->id]) }}"
