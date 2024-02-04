@@ -72,7 +72,8 @@
                                     @endif
                                 </div>
                             @else
-                                <a href="{{ route('contact_us.admin_index') }}" class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
+                                <a href="{{ route('contact_us.admin_index') }}"
+                                    class="list-group-item border-end-0 d-inline-block text-truncate mt-2">
                                     <i class="bi bi-envelope"></i> <span>Notificaciones</span>
                                 </a>
                                 <div class="mt-5 w-100 px-4 d-flex flex-column align-items-center">
@@ -136,9 +137,9 @@
                             @if (Auth::user()->profile_img)
                                 <img src="{{ asset('assets/images/profile/' . Auth::user()->profile_img) }}"
                                     alt="{{ Auth::user()->name }} Profile" class="img-fluid rounded-circle"
-                                    style="width: 4vw; height: 4vw; min-width:50px; min-height:50px;">
+                                    style="width: 50px; height: 50px; min-width: 50px; min-height: 50px;">
                             @else
-                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50"
                                     fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path fill-rule="evenodd"
@@ -156,7 +157,7 @@
                                 <div class="card text-start">
                                     <div class="card-header d-flex align-items-center justify-content-center">
                                         <img src="/assets/images/icons/yellow-card.png" alt="strikes"
-                                            style="height: auto; max-width: 3vw;">
+                                            style="height: auto; max-width: 50px;">
                                     </div>
                                     <div class="card-body rounded-bottom d-flex align-items-center justify-content-center">
                                         <h5 class="card-text">{{ Auth::user()->strikes }} </h5>
@@ -167,34 +168,138 @@
                     </div>
 
 
+
                     <div class="card-body">
-                        <div class="row mb-2">
-                            <div class="col-3 fw-bold">Nombre:</div>
-                            <div class="col">{{ Auth::user()->surnames }}, {{ Auth::user()->name }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-3 fw-bold">Correo Electrónico:</div>
-                            <div class="col">{{ Auth::user()->email }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-3 fw-bold">Fecha de Nacimiento:</div>
-                            <div class="col">
-                                {{ Auth::user()->birth_date ? Auth::user()->birth_date->format('Y-m-d') : '...' }}</div>
-                        </div>
-                        <div class="row mb-2">
-                            <div class="col-3 fw-bold">País:</div>
-                            <div class="col">
-                                {{ Auth::user()->country_id ? Auth::user()->country->country_name : '...' }}</div>
+                        <div class="mb-2 row">
+                            <div class="col-12 col-md-3 fw-bold">Nombre:</div>
+                            <div class="col-12 col-md">{{ Auth::user()->surnames }}, {{ Auth::user()->name }}</div>
                         </div>
 
-                        <div class="mb-2" style="position: relative;">
+                        <div class="mb-2 row">
+                            <div class="col-12 col-md-3 fw-bold">Correo Electrónico:</div>
+                            <div class="col-12 col-md">{{ Auth::user()->email }}</div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <div class="col-12 col-md-3 fw-bold">Fecha de Nacimiento:</div>
+                            <div class="col-12 col-md">
+                                {{ Auth::user()->birth_date ? Auth::user()->birth_date->format('Y-m-d') : '...' }}
+                            </div>
+                        </div>
+
+                        <div class="mb-2 row">
+                            <div class="col-12 col-md-3 fw-bold">País:</div>
+                            <div class="col-12 col-md">
+                                {{ Auth::user()->country_id ? Auth::user()->country->country_name : '...' }}
+                            </div>
+                        </div>
+
+                        <div class="mb-2">
                             <div class="fw-bold">Biografía:</div>
                             <form action="{{ route('profile.update.biography') }}" method="POST" class="w-100">
                                 @csrf
                                 @method('PATCH')
-                                <div style="position: relative;">
+                                <div class="position-relative">
                                     <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
                                         style="max-height: 15vh; resize: none;">{{ Auth::user()->biography ?? '' }}</textarea>
+                                    <button type="submit" class="btn btn-primary position-absolute top-0 end-0 m-2"
+                                        data-bs-toggle="tooltip" data-bs-placement="left" title="Guardar">
+                                        <i class="bi bi-save"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+
+                    <div class="card-footer row justify-content-end m-0 p-3">
+                        @if (Auth::check())
+                            <div class="col-12 col-sm-4 mb-2 mb-sm-0">
+                                <a href="{{ route('profile.edit') }}" class="btn btn-secondary w-100">Editar perfil</a>
+                            </div>
+                        @endif
+                    </div>
+
+                    <!-- Modal de Confirmación de Borrado -->
+                    <div class="modal fade mt-5" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado de Cuenta</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="deleteAccountForm" action="{{ route('profile.deleteAccount') }}" method="POST">
+                                    @csrf
+                                    @method('PUT')
+
+                                    <div class="mb-3">
+                                        <label for="password" class="form-label">Contraseña:</label>
+                                        <input type="password" class="form-control" id="password" name="password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-danger w-100">Confirmar Borrado</button>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                </section>
+
+                @if (isset($author))
+                <section class="card mb-5 mx-auto" style="max-width: 42vw; width: 100%;">
+                    <div class="card-header row m-0 align-items-center justify-content-between">
+                        <div class="col-auto ms-1">
+                            @if ($author->photo)
+                                <img src="{{ asset('storage/' . $author->photo) }}"
+                                    alt="{{ $author->nickname }} Profile" class="img-fluid rounded-circle"
+                                    style="width: 4vw; height: 4vw; min-width:50px; min-height:50px; max-width: 50px; max-height: 50px;">
+                            @else
+                                <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
+                                    fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                    <path fill-rule="evenodd"
+                                        d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                </svg>
+                            @endif
+                        </div>
+                        <div class="col-6 text-left pe-4">
+                            <h3 id="user_nick" class="pe-4">
+                                {{ Auth::user()->nickname }}
+                            </h3>
+                        </div>
+                        <div class="col-2 ps-3"></div>
+                    </div>
+
+                    <div class="card-body">
+                        <div class="row mb-2">
+                            <div class="col-3 fw-bold">Nombre:</div>
+                            <div class="col">{{ $author->surnames }}, {{ $author->name }}</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-3 fw-bold">Fecha de Nacimiento:</div>
+                            <div class="col">{{ $author->birth_at ? $author->birth_at : '...' }}</div>
+                        </div>
+
+                        <div class="row mb-2">
+                            <div class="col-3 fw-bold">País:</div>
+                            <div class="col">{{ $author->country_id ? $author->country->country_name : '...' }}</div>
+                        </div>
+
+                        <div class="mb-2" style="position: relative;">
+                            <div class="fw-bold">Biografía:</div>
+                            <form action="{{ route('profile.author.update.biography') }}" method="POST" class="w-100">
+                                @csrf
+                                @method('PATCH')
+                                <div style="position: relative;">
+                                    <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
+                                        style="max-height: 15vh; resize: none;">{{ $author->biography ?? '' }}</textarea>
                                     <button type="submit" class="btn btn-primary"
                                         style="position: absolute; top: 0; right: 0; margin: 5px;"
                                         data-bs-toggle="tooltip" data-bs-placement="left" title="Guardar">
@@ -203,123 +308,20 @@
                                 </div>
                             </form>
                         </div>
-
                     </div>
 
-                    <div class="card-footer row justify-content-end m-0 p-3">
-                        @if (Auth::check())
-                            <a href="{{ route('profile.edit') }}" class="btn btn-secondary col-4">Editar perfil</a>
-                        @endif
+                    <div class="card-footer row justify-content-around m-0 p-3">
+                        <a href="{{ route('profile.publication.list') }}" class="btn btn-secondary col-12 col-md-4 mb-2 mb-md-0">Ver mis
+                            publicaciones</a>
 
+                        <button type="button" class="btn btn-secondary col-12 col-md-4" data-bs-toggle="modal"
+                            data-bs-target="#uploadModal">
+                            Publicar
+                        </button>
+                        @include('partials/dropzone_books')
                     </div>
-
-                    <!-- Modal de Confirmación de Borrado -->
-                    <div class="modal fade mt-5" id="confirmDeleteModal" tabindex="-1"
-                        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="confirmDeleteModalLabel">Confirmar Borrado de Cuenta</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    <form id="deleteAccountForm" action="{{ route('profile.deleteAccount') }}"
-                                        method="POST">
-                                        @csrf
-                                        @method('PUT') <!-- Cambiado de DELETE a PUT -->
-
-                                        <div class="mb-3">
-                                            <label for="password" class="form-label">Contraseña:</label>
-                                            <input type="password" class="form-control" id="password" name="password"
-                                                required>
-                                        </div>
-                                        <button type="submit" class="btn btn-danger">Confirmar Borrado</button>
-                                    </form>
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary"
-                                        data-bs-dismiss="modal">Cancelar</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </section>
 
-                @if (isset($author))
-                    <section class="card mb-5  mx-auto" style="width: 42vw">
-                        <div class="card-header row m-0 align-items-center justify-content-between">
-                            <div class="col-auto ms-1">
-                                @if ($author->photo)
-                                    <img src="{{ asset('storage/' . $author->photo) }}"
-                                        alt="{{ $author->nickname }} Profile" class="img-fluid rounded-circle"
-                                        style="width: 4vw; height: 4vw; min-width:50px; min-height:50px;">
-                                @else
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="3vw" height="auto"
-                                        fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
-                                        <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
-                                        <path fill-rule="evenodd"
-                                            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
-                                    </svg>
-                                @endif
-                            </div>
-                            <div class="col-6 text-left pe-4">
-                                <h3 id="user_nick" class="pe-4">
-                                    {{ Auth::user()->nickname }}
-                                </h3>
-                            </div>
-                            <div class="col-2 ps-3">
-                            </div>
-                        </div>
-
-
-                        <div class="card-body ">
-                            <div class="row mb-2">
-                                <div class="col-3 fw-bold">Nombre:</div>
-                                <div class="col">{{ $author->surnames }}, {{ $author->name }}</div>
-                            </div>
-
-                            <div class="row mb-2">
-                                <div class="col-3 fw-bold">Fecha de Nacimiento:</div>
-                                <div class="col">
-                                    {{ $author->birth_at ? $author->birth_at : '...' }}</div>
-                            </div>
-                            <div class="row mb-2">
-                                <div class="col-3 fw-bold">País:</div>
-                                <div class="col">
-                                    {{ $author->country_id ? $author->country->country_name : '...' }}</div>
-                            </div>
-
-                            <div class="mb-2" style="position: relative;">
-                                <div class="fw-bold">Biografía:</div>
-                                <form action="{{ route('profile.author.update.biography') }}" method="POST"
-                                    class="w-100">
-                                    @csrf
-                                    @method('PATCH')
-                                    <div style="position: relative;">
-                                        <textarea name="biography" id="biography" class="w-100 rounded" cols="30" rows="10"
-                                            style="max-height: 15vh; resize: none;">{{ $author->biography ?? '' }}</textarea>
-                                        <button type="submit" class="btn btn-primary"
-                                            style="position: absolute; top: 0; right: 0; margin: 5px;"
-                                            data-bs-toggle="tooltip" data-bs-placement="left" title="Guardar">
-                                            <i class="bi bi-save"></i>
-                                        </button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                        <div class="card-footer row justify-content-around m-0 p-3">
-                            <a href=" {{ route('profile.publication.list') }} " class="btn btn-secondary col-4">Ver mis
-                                publicaciones</a>
-
-                            <button type="button" class="btn btn-secondary col-4" data-bs-toggle="modal"
-                                data-bs-target="#uploadModal">
-                                Publicar
-                            </button>
-                            @include('partials/dropzone_books')
-                        </div>
-                    </section>
                 @endif
 
             </div>
