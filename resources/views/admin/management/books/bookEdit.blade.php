@@ -19,23 +19,46 @@
                             @csrf
                             @method('PATCH')
 
-
                             <div class="mb-3">
                                 <p class="form-label">Opciones de libro</p>
+                                <div class="d-flex">
 
-                                <input type="checkbox" class="border border-black form-check-input" id="self_published"
-                                    name="self_published" value="1"
-                                    {{ $editionBook->self_published ? 'checked' : '' }}>
-                                <label for="self_published" class="form-label me-3">{{ __('Autoedición') }}</label>
+                                    <div class="mb-3 form-check">
+                                        <input type="hidden" name="self_published" value="0">
+                                        <!-- Hidden input for self_published -->
+                                        <input type="checkbox" class="form-check-input  border border-black" id="self_published"
+                                            name="self_published" value="1"
+                                            {{ $editionBook->self_published ? 'checked' : '' }}>
+                                        <label for="self_published"
+                                            class="form-check-label me-3">{{ __('Autoedición') }}</label>
+                                    </div>
 
-                                <input type="checkbox" class="border border-black form-check-input" id="for_adults"
-                                    name="for_adults" value="1" {{ $editionBook->for_adults ? 'checked' : '' }}>
-                                <label for="for_adults" class="form-label  me-3">{{ __('Libro para adultos') }}</label>
+                                    <div class="mb-3 form-check">
+                                        <input type="hidden" name="for_adults" value="0">
+                                        <!-- Hidden input for for_adults -->
+                                        <input type="checkbox" class="form-check-input  border border-black" id="for_adults" name="for_adults"
+                                            value="1" {{ $editionBook->for_adults ? 'checked' : '' }}>
+                                        <label for="for_adults"
+                                            class="form-check-label me-3">{{ __('Libro para adultos') }}</label>
+                                    </div>
 
-                                <input type="checkbox" class="border border-black form-check-input" id="visible"
-                                    name="visible" value="1" {{ $editionBook->visible ? 'checked' : '' }}>
-                                <label for="visible" class="form-label">{{ __('Visible') }}</label>
+
+                                    <div class="mb-3 form-check">
+                                        <input type="hidden" name="visible" value="0">
+                                        <!-- Hidden input for visible -->
+                                        <input type="checkbox" class="form-check-input  border border-black" id="visible" name="visible"
+                                            value="1" {{ $editionBook->visible ? 'checked' : '' }}>
+                                        <label for="visible" class="form-check-label">{{ __('Visible') }}</label>
+                                    </div>
+                                </div>
+
+
                             </div>
+
+
+
+
+
 
 
                             <div class="mb-3">
@@ -80,8 +103,7 @@
                                 <label for="document" class="form-label">{{ __('Nuevo Documento (PDF)') }}</label>
                                 <input id="document" type="file"
                                     class="border border-black  form-control @error('document') is-invalid @enderror"
-                                    name="document" value="{{ old('document') }}"  autocomplete="document"
-                                    autofocus>
+                                    name="document" value="{{ old('document') }}" autocomplete="document" autofocus>
                                 @error('document')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -99,7 +121,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input text-black border-black  me-1" type="checkbox"
                                                 id="author_{{ $author->id }}" name="authors[]"
-                                                value="{{ $author->id }}" {{ $editionBook->authors->contains('id', $author->id) ? 'checked' : '' }}>
+                                                value="{{ $author->id }}"
+                                                {{ $editionBook->authors->contains('id', $author->id) ? 'checked' : '' }}>
                                             <label class="form-check-label text-black" for="author_{{ $author->id }}">
                                                 {{ $author->name }} {{ $author->surnames }}
                                             </label>
@@ -117,7 +140,8 @@
                                         <div class="form-check">
                                             <input class="form-check-input text-black border-black me-1" type="checkbox"
                                                 id="genre_{{ $genre->id }}" name="genres[]"
-                                                value="{{ $genre->id }}" {{ $editionBook->genres->contains('id', $genre->id) ? 'checked' : '' }}>
+                                                value="{{ $genre->id }}"
+                                                {{ $editionBook->genres->contains('id', $genre->id) ? 'checked' : '' }}>
                                             <label class="form-check-label text-black" for="genre_{{ $genre->id }}">
                                                 {{ $genre->genre_name }}
                                             </label>
@@ -153,8 +177,6 @@
                                 @enderror
                             </div>
 
-
-
                             <div class="mb-3">
                                 <label for="description" class="form-label">{{ __('Descripción') }}</label>
                                 <textarea id="description" class="border border-black  form-control @error('description') is-invalid @enderror"
@@ -171,8 +193,9 @@
                                 <label for="price" class="form-label">{{ __('Precio') }}</label>
                                 <input id="price" type="text"
                                     class="border border-black  form-control @error('price') is-invalid @enderror"
-                                    name="price" value="{{ $editionBook->price }}" required autocomplete="price" autofocus
-                                    min="0" max="9999" placeholder="formato: x.xxx,xx">
+                                    name="price" value="{{ number_format($editionBook->price, 2, ',', '.') }}" required
+                                    autocomplete="price" autofocus min="0" max="9999"
+                                    placeholder="formato: x.xxx,xx">
                                 @error('price')
                                     <div class="invalid-feedback">
                                         {{ $message }}

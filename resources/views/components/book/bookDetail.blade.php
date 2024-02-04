@@ -12,19 +12,22 @@
                     @auth
                         @if (Auth::user()->isSubscriber())
                             <p>
-                                Precio Normal: <del class="text-danger">{{ number_format($editionBook->price, 2, ',', '.') }} €</del>
+                                Precio Normal: <del class="text-danger">{{ number_format($editionBook->price, 2, ',', '.') }}
+                                    €</del>
                             </p>
                             <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">
                                 Precio para Suscriptores:
                             </a>
-                            <strong class="text-success">{{number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
+                            <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
                         @else
                             <p>
                                 Precio Normal: {{ number_format($editionBook->price, 2, ',', '.') }} €
                             </p>
                             <p>
-                                <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">Precio para Suscriptores:</a>
-                                <strong class="text-success">{{number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
+                                <a class="text-success" href="{{ route('subscribe.view') }}"
+                                    style="text-decoration: underline">Precio para Suscriptores:</a>
+                                <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2, ',', '.') }}
+                                    €</strong>
                             </p>
                         @endif
                     @else
@@ -32,8 +35,9 @@
                             Precio Normal: {{ number_format($editionBook->price, 2, ',', '.') }} €
                         </p>
                         <p>
-                            <a class="text-success" href="{{ route('subscribe.view') }}" style="text-decoration: underline">Precio para Suscriptores:</a>
-                            <strong class="text-success">{{number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
+                            <a class="text-success" href="{{ route('subscribe.view') }}"
+                                style="text-decoration: underline">Precio para Suscriptores:</a>
+                            <strong class="text-success">{{ number_format($editionBook->price * 0.8, 2, ',', '.') }} €</strong>
                         </p>
                     @endauth
                 </h3>
@@ -89,7 +93,7 @@
                             <div class="d-flex flex-wrap">
                                 @if ($editionBook->rating->count() > 0)
                                     <span class="badge bg-dark me-2 mb-2 p-2">
-                                        {{ $editionBook->averageRating()}}</span>
+                                        {{ $editionBook->averageRating() }}</span>
                                 @else
                                     <span class="badge bg-dark me-2 mb-2 p-2">- -</span>
                                 @endif
@@ -124,7 +128,7 @@
                                             @csrf
                                             @auth
                                                 <input type="hidden" name="price"
-                                                    value="{{ Auth::user()->isSubscriber() ?number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
+                                                    value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
                                             @endauth
                                             <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                             <input type="hidden" name="quantity" value="1">
@@ -169,7 +173,7 @@
                                     <form action="{{ route('shop.payment.stripe') }}" method="POST">
                                         @csrf
                                         <input type="hidden" name="price"
-                                            value="{{ Auth::user()->isSubscriber() ?number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
+                                            value="{{ Auth::user()->isSubscriber() ? number_format($editionBook->price * 0.8, 2, ',', '.') : number_format($editionBook->price, 2, ',', '.') }}">
                                         <input type="hidden" name="title" value="{{ $editionBook->title }}">
                                         <input type="hidden" name="quantity" value="1">
                                         <input type="hidden" name="editionBook_id" value="{{ $editionBook->id }}">
@@ -183,14 +187,15 @@
                                 <div class="col-md-6">
                                     <div class="d-flex align-items-center justify-content-center">
                                         @if ($editionBook->isInFavorites())
-                                            <form
+                                            pĺnew`jfòpepe
+                                            {{-- <form
                                                 action="{{ route('favorites.remove', ['editionBookId' => $editionBook->id]) }}"
                                                 method="POST">
                                                 @csrf
                                                 <button type="submit" class="btn btn-danger ">
                                                     Quitar de favoritos
                                                 </button>
-                                            </form>
+                                            </form> --}}
                                         @else
                                             <form
                                                 action=" {{ route('favorites.add', ['editionBookId' => $editionBook->id]) }}"

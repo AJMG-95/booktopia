@@ -1,4 +1,3 @@
-<!-- Partial: books_carousel.blade.php -->
 <style>
     /* Estilo para cambiar el color de los iconos a negro y hacerlos círculos */
     .carousel-control-prev,
@@ -28,25 +27,29 @@
         text-overflow: ellipsis;
     }
 </style>
+
+
+
+
 <div id="bestSellingBooksCarousel" class="carousel slide mt-4 text-center container-fluid ms-0 me-0 px-3 py-3 mt-2"
     style="height: 70vh">
     <h2 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);"> Top 3 en Ventas</h2>
-    <div class="carousel-inner rounded p-4 mx-auto" style="width:40vw; max-width: 40vw; max-height: 500px;">
+    <div class="carousel-inner rounded p-4 mx-auto" style="width: 100%; max-width: 100%;">
         @foreach ($bestSellingBooks as $index => $book)
             <div class="carousel-item {{ $index === 0 ? 'active' : '' }}">
                 <div class="container p-3 border border-black rounded"
-                    style="max-width: 40vw; background-color:rgba(247, 247, 247, 0.651)">
+                    style="background-color: rgba(247, 247, 247, 0.651)">
                     <div class="row align-items-center">
                         <div class="col-md-6">
                             <img src="{{ asset('storage/' . $book->cover) }}" alt="Imagen del Género"
                                 class="img-fluid rounded" style="max-height: 25vh;">
                         </div>
                         <div class="col-md-6">
-                            <div class="mb-3 ">
+                            <div class="mb-3">
                                 <h3>{{ $book->title }}</h3>
-                                <div >
+                                <div>
                                     @forelse ($book->authors as $author)
-                                        <p class="text-truncate text-muted ">
+                                        <p class="text-truncate text-muted">
                                             {{ $author->nickname ? $author->nickname : $author->surnames . ', ' . $author->name }}
                                         </p>
                                     @empty
@@ -55,15 +58,16 @@
                                 </div>
                             </div>
                             <div class="my-3 border border-black rounded p-2"
-                                style=" background-color:rgba(247, 247, 247, 0.795)">
+                                style="background-color: rgba(247, 247, 247, 0.795)">
                                 <p class="mt-2">
                                     Precio: <strong>{{ number_format($book->price, 2, ',', '.') }} €</strong>
                                 </p>
                                 <p class="text-success">
                                     <a class="text-success" href="{{ route('subscribe.view') }}"
-                                        style="text-decoration: underline"><strong><ins>Precio con
-                                                suscripción</ins></a>:
-                                    {{ number_format($book->price * 0.8, 2, ',', '.') }} €</>
+                                        style="text-decoration: underline">
+                                        <strong><ins>Precio con suscripción</ins></strong>
+                                    </a>:
+                                    {{ number_format($book->price * 0.8, 2, ',', '.') }} €
                                 </p>
                             </div>
                             <div>
@@ -93,8 +97,6 @@
                                     @endif
                                 @endauth
                             </div>
-
-
                         </div>
                     </div>
                 </div>
