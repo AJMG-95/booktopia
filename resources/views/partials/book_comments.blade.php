@@ -11,18 +11,20 @@
         <h3 class="mb-4 text-center text-primary">Comentarios</h3>
         <div class="comments-section w-100 mt-5 border border-dark rounded p-4 bg-light mb-5">
             @foreach ($comments as $comment)
-                <div class="comment mb-4 p-3 border border-dark rounded bg-white">
+                <div class="post mb-4 p-3 border border-dark rounded bg-white overflow-x-auto">
                     <div class="user-info mb-2 d-flex justify-content-between">
-                        <div class="fw-bold text-primary">{{ $comment->user->nickname ? $comment->user->nickname : "Usuario Eliminado"}}</div>
+                        <div class="fw-bold text-primary">
+                            {{ $comment->user->nickname ? $comment->user->nickname : 'Usuario Eliminado' }}</div>
                         <div class="text-muted">{{ $comment->created_at->diffForHumans() }}</div>
                     </div>
                     <div class="comment-body">
                         {{ $comment->body }}
                     </div>
                     <div class="interaction mt-3 d-flex justify-content-between align-items-center">
+
                         @auth
                             @if (Auth::check() && (Auth::id() == $comment->user_id || Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
-                                <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
+                                <button type="button" class="btn btn-sm btn-outline-danger me-3" title="Eliminar"
                                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $comment->id }}">
                                     <i class="bi bi-trash"></i> Eliminar
                                 </button>
@@ -69,7 +71,7 @@
                                 <form id="dislikeForm{{ $comment->id }}" method="POST"
                                     action="{{ route('comments.dislike.ajax', ['commentId' => $comment->id]) }}">
                                     @csrf
-                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn"
+                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn ms-2"
                                         title="No me gusta" onclick="dislikeComment({{ $comment->id }})">
                                         <i class="bi bi-hand-thumbs-down"></i> No me gusta
                                         <span class="badge bg-danger"
@@ -79,7 +81,7 @@
                                 <form id="reportForm{{ $comment->id }}" method="POST"
                                     action="{{ route('comments.report.ajax', ['commentId' => $comment->id]) }}">
                                     @csrf
-                                    <button type="button" class="btn btn-sm btn-outline-info ms-2" title="Reportar"
+                                    <button type="button" class="btn btn-sm btn-outline-info ms-2 me-3" title="Reportar"
                                         onclick="reportComment({{ $comment->id }})">
                                         Reportar
                                         <span class="badge bg-info"

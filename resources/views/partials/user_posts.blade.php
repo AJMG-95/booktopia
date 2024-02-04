@@ -11,10 +11,11 @@
         <h3 class="mb-4 text-center text-primary">Posts</h3>
         <div class="posts-section w-100 mt-5 border border-dark rounded p-4 bg-light mb-5">
             @foreach ($userPosts as $post)
-                <div class="post mb-4 p-3 border border-dark rounded bg-white">
+                <div class="post mb-4 p-3 border border-dark rounded bg-white overflow-x-auto">
                     <div class="user-info mb-2 d-flex justify-content-between">
                         <div class="fw-bold text-primary">{{ $post->user->nickname }} : <h4 class="text-black">
-                                <ins>{{ $post->post_title }}</ins> </h4>
+                                <ins>{{ $post->post_title }}</ins>
+                            </h4>
                         </div>
 
                         <div class="text-muted">{{ $post->created_at->diffForHumans() }}</div>
@@ -25,12 +26,13 @@
                     <div class="interaction mt-3 d-flex justify-content-between align-items-center">
                         @auth
                             @if (Auth::check() && (Auth::id() == $post->user_id || Auth::user()->is_admin))
-                                <!-- Add your delete button and modal here -->
-                                <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
+                                <!-- Delete Button and Modal -->
+                                <button type="button" class="btn btn-sm btn-outline-danger me-3" title="Eliminar"
                                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $post->id }}">
                                     <i class="bi bi-trash"></i> Eliminar
                                 </button>
-                                <!-- Modal de Confirmación -->
+
+                                <!-- Confirm Delete Modal -->
                                 <div class="modal fade" id="confirmDeleteModal{{ $post->id }}" tabindex="-1"
                                     aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
                                     <div class="modal-dialog">
@@ -59,9 +61,10 @@
                                 </div>
                             @endif
 
+                            <!-- Like, Dislike, Report Buttons -->
                             <div class="d-flex align-items-center">
                                 <form id="likeForm{{ $post->id }}" method="POST"
-                                    action=" {{ route('post.like.ajax', ['postId' => $post->id]) }}">
+                                    action="{{ route('post.like.ajax', ['postId' => $post->id]) }}">
                                     @csrf
                                     <button type="button" class="btn btn-sm btn-outline-success like-btn me-2"
                                         title="Me gusta" onclick="likePost({{ $post->id }})">
@@ -70,20 +73,22 @@
                                             id="likes-count-{{ $post->id }}">{{ $post->getLikes() }}</span>
                                     </button>
                                 </form>
+
                                 <form id="dislikeForm{{ $post->id }}" method="POST"
                                     action="{{ route('post.dislike.ajax', ['postId' => $post->id]) }}">
                                     @csrf
-                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn"
+                                    <button type="button" class="btn btn-sm btn-outline-danger dislike-btn me-2"
                                         title="No me gusta" onclick="dislikePost({{ $post->id }})">
                                         <i class="bi bi-hand-thumbs-down"></i> No me gusta
                                         <span class="badge bg-danger"
                                             id="dislikes-count-{{ $post->id }}">{{ $post->getDislikes() }}</span>
                                     </button>
                                 </form>
+
                                 <form id="reportForm{{ $post->id }}" method="POST"
                                     action="{{ route('post.report.ajax', ['postId' => $post->id]) }}">
                                     @csrf
-                                    <button type="button" class="btn btn-sm btn-outline-info ms-2" title="Reportar"
+                                    <button type="button" class="btn btn-sm btn-outline-info me-3" title="Reportar"
                                         onclick="reportPost({{ $post->id }})">
                                         Reportar
                                         <span class="badge bg-info"
@@ -91,18 +96,19 @@
                                     </button>
                                 </form>
                             </div>
-
                         @endauth
 
                         @guest
+                            <!-- Display Likes, Dislikes, Reports badges for guests -->
                             <div class="d-flex align-items-center">
-                                <span class="badge bg-success me-2" title="Likes">{{ $post->getlikes() }} Likes</span>
+                                <span class="badge bg-success me-2" title="Likes">{{ $post->getLikes() }} Likes</span>
                                 <span class="badge bg-danger me-2" title="Dislikes">{{ $post->getDislikes() }}
                                     Dislikes</span>
                                 <span class="badge bg-info" title="Reports">{{ $post->getReports() }} Reports</span>
                             </div>
                         @endguest
                     </div>
+
                 </div>
             @endforeach
         </div>
