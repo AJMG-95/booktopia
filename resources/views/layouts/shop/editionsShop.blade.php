@@ -109,7 +109,7 @@
                                     <option value="asc" @if (request('orderDirection') == 'asc') selected @endif>Más antiguo a más reciente</option>
                                 </select>
                             </div>
-                            <div class="col-md-12 col-lg-6 mt-md-0 ">
+                            <div class="col-md-12 col-lg-6 mt-md-0 mt-3">
                                 <button type="submit" class="btn btn-primary w-50">Ordenar</button>
                             </div>
                         </div>

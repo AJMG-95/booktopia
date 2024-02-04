@@ -5,7 +5,7 @@
     <div class="container-fluid ms-0 me-0 px-4 py-3 mt-3">
         <div class="mb-4 text-center p-2 bg-light">
             <h1 class="display-4 fw-bold">
-                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
+                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh" class="img-fluid">
                 <ins>Notificaciones:</ins> {{ $message->title }}
             </h1>
         </div>

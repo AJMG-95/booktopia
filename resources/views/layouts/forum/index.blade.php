@@ -53,18 +53,18 @@
     <div class="container-fluid ms-0 me-0 px-3 py-3 mt-2">
         <div class="ms-3 mb-4 text-center p-2" style="background-color:rgba(247, 247, 247, 0.651)">
             <h1 class="display-4 fw-bold" style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
-                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh">
+                <img src="{{ asset('assets/images/logos/logo2.png') }}" alt="Logo" style="max-height: 10vh" class="img-fluid">
                 <ins>
                     Bienvenido al foro
                 </ins>
             </h1>
         </div>
         @if (!Auth::user()->isAdmin() && !Auth::user()->isSubadmin())
-            <div class="ps-3 pe-3 mt-3">
-                <button type="button" class="btn btn-primary me-3" data-bs-toggle="modal" data-bs-target="#createPostModal">
+            <div class="ps-3 pe-3 ">
+                <button type="button" class="btn btn-primary me-3 mt-3" data-bs-toggle="modal" data-bs-target="#createPostModal">
                     Crear un nuevo post
                 </button>
-                <button id="draft_see" type="button" class="btn btn-info">Ver borrador</button>
+                <button id="draft_see" type="button" class="btn btn-info mt-3">Ver borrador</button>
             </div>
 
             <!-- Create Post Modal -->
@@ -102,7 +102,7 @@
         <!-- Display existing posts -->
         <div class="posts-section w-100 mt-5 border border-dark rounded p-4 bg-light mb-5">
             @foreach ($posts as $post)
-                <div class="post mb-4 p-3 border border-dark rounded bg-white">
+                <div class="post mb-4 p-3 border border-dark rounded bg-white overflow-x-auto">
                     <div class="user-info mb-2 d-flex justify-content-between">
                         <div class="fw-bold text-primary">{{ $post->user->nickname }} : <h4 class="text-black">
                                 <ins>{{ $post->post_title }}</ins>
@@ -118,7 +118,7 @@
                         @auth
                             @if (Auth::check() && (Auth::id() == $post->user_id || Auth::user()->isAdmin() || Auth::user()->isSubadmin()))
                                 <!-- Add your delete button and modal here -->
-                                <button type="button" class="btn btn-sm btn-outline-danger" title="Eliminar"
+                                <button type="button" class="btn btn-sm btn-outline-danger me-3" title="Eliminar"
                                     data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ $post->id }}">
                                     <i class="bi bi-trash"></i> Eliminar
                                 </button>
@@ -175,7 +175,7 @@
                                 <form id="reportForm{{ $post->id }}" method="POST"
                                     action="{{ route('post.report.ajax', ['postId' => $post->id]) }}">
                                     @csrf
-                                    <button type="button" class="btn btn-sm btn-outline-info ms-2" title="Reportar"
+                                    <button type="button" class="btn btn-sm btn-outline-info ms-2 me-3" title="Reportar"
                                         onclick="reportPost({{ $post->id }})">
                                         Reportar
                                         <span class="badge bg-info"
