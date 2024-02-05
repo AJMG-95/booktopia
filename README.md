@@ -17,6 +17,7 @@
   - [4. Instalacion de la aplicacion Booktopia](#4-instalacion-de-la-aplicacion-booktopia)
   - [6. Configuración del archivo .env](#6-configuración-del-archivo-env)
   - [7. Configuracion de la base de datos](#7-configuracion-de-la-base-de-datos)
+  - [8. Últimos pasos](#8-últimos-pasos)
 
 
 
@@ -114,5 +115,31 @@ CREATE EXTENSION pgcrypto;
 sudo -u postgres createdb booktopia
 sudo -u postgres createuser -P booktopia
 ```
+### 8. Últimos pasos
+```
+chmod -R 777 storage/*
+php artisan cache:clear
+```
+
+**Crear migracones**
+```
+php artisan migrate
+```
+Ojo puede que las migrciones no se creen en el orden correcto lo que podría dar errores ya que una migración intetaría hacer referencia a otra que aún no se ha generado. 
+Para solicionar esto solo se necesita extraer (ctrl+x, ctrl+v) los archivos conflictivos desde la carpeta migrations a un directorio externo a la app y luego volver a introducir esos archivos en el directorio migrations de la app.
+
+**Ejecutar seeders**
+```
+php artisan db:seed --class=LanguagesTableSeeder &&
+php artisan db:seed --class=RolesTableSeeder &&
+php artisan db:seed --class=CountriesTableSeeder &&
+php artisan db:seed --class=UsersTableSeeder
+```
 
 
+**Crear enlace simbolico para el almacenamiento**
+```
+php artisan storage:link
+```
+
+#[![Booktopia-1-removebg-preview.png](https://i.postimg.cc/7h9f6Gtx/Booktopia-1-removebg-preview.png)](https://postimg.cc/vx1Q2Bdj)
