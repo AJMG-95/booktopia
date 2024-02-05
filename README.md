@@ -1,23 +1,25 @@
  
-#[![Booktopia-1-removebg-preview.png](https://i.postimg.cc/7h9f6Gtx/Booktopia-1-removebg-preview.png)](https://postimg.cc/vx1Q2Bdj)
+# [![Booktopia-1-removebg-preview.png](https://i.postimg.cc/7h9f6Gtx/Booktopia-1-removebg-preview.png)](https://postimg.cc/vx1Q2Bdj)
 
 
 
-##Tabla de Contenido
+## Tabla de Contenido
 ***
-- [Descripción](#descripción)
-- [Funcionalidades Principales](#funcionalidades-principales)
-- [Objetivos Generales](#objetivos-generales)
-- [Tecnologías Utilizadas](#tecnologías-utilizadas)
-- [Elemento de Innovación](#elemento-de-innovación)
-- [Despliege de la Aplicación](#despliege-de-la-aplicación)
-  - [1. Instalación de PHP](#1-instalación-de-php)
-  - [2. Instalación de Composer](#2-instalación-de-composer)
-  - [3. Instalación de PosygreSQL](#3-instalación-de-posygresql)
-  - [4. Instalacion de la aplicacion Booktopia](#4-instalacion-de-la-aplicacion-booktopia)
-  - [6. Configuración del archivo .env](#6-configuración-del-archivo-env)
-  - [7. Configuracion de la base de datos](#7-configuracion-de-la-base-de-datos)
-  - [8. Últimos pasos](#8-últimos-pasos)
+- [](#)
+  - [Tabla de Contenido](#tabla-de-contenido)
+  - [Descripción](#descripción)
+  - [Funcionalidades Principales](#funcionalidades-principales)
+  - [Objetivos Generales](#objetivos-generales)
+  - [Tecnologías Utilizadas](#tecnologías-utilizadas)
+  - [Elemento de Innovación](#elemento-de-innovación)
+  - [Despliege de la Aplicación](#despliege-de-la-aplicación)
+    - [1. Instalación de PHP](#1-instalación-de-php)
+    - [2. Instalación de Composer](#2-instalación-de-composer)
+    - [3. Instalación de PosygreSQL](#3-instalación-de-posygresql)
+    - [4. Instalacion de la aplicacion Booktopia](#4-instalacion-de-la-aplicacion-booktopia)
+    - [6. Configuración del archivo .env](#6-configuración-del-archivo-env)
+    - [7. Configuracion de la base de datos](#7-configuracion-de-la-base-de-datos)
+    - [8. Últimos pasos](#8-últimos-pasos)
 
 
 
