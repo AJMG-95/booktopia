@@ -20,6 +20,7 @@
     - [6. Configuración del archivo .env](#6-configuración-del-archivo-env)
     - [7. Configuracion de la base de datos](#7-configuracion-de-la-base-de-datos)
     - [8. Últimos pasos](#8-últimos-pasos)
+- [](#-1)
 
 
 
@@ -144,6 +145,6 @@ php artisan db:seed --class=UsersTableSeeder
 php artisan storage:link
 ```
 
-#[![Booktopia-1-removebg-preview.png](https://i.postimg.cc/7h9f6Gtx/Booktopia-1-removebg-preview.png)](https://postimg.cc/vx1Q2Bdj)
+# [![Booktopia-1-removebg-preview.png](https://i.postimg.cc/7h9f6Gtx/Booktopia-1-removebg-preview.png)](https://postimg.cc/vx1Q2Bdj)
 
 [<sub>↑ Volver arriba</sub>](#tabla-de-contenido)
